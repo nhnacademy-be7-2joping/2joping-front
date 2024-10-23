@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthCheck {
 
+    @GetMapping("/")
+    public String indexCheck() {
+        return "index";
+    }
+
     @GetMapping("/hello")
-    public String healthCheck() {
+    public String helloCheck() {
         return "hello";
     }
 }
