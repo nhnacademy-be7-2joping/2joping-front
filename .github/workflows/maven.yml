@@ -41,7 +41,7 @@ jobs:
         username: ${{ secrets.SSH_ID }}
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
-        source: "target/*.jar"
+        source: "2joping-front/target/*.jar"
         target: "~/"
         rm: false
 
@@ -53,4 +53,4 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script_stop: true
-        script: "./startup.sh"
+        script: "./2joping-front/startup.sh"
