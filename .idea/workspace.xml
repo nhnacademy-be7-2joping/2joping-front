@@ -5,23 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/front/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/front/controller/IndexController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/front/controller/LoginController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/logo-light.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/fragments/apply-bootstrap.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/layout/menu-footer-layout.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/.gitattributes" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/main/java/com/nhnacademy/front/FrontApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/front/src/test/java/com/nhnacademy/front/FrontApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/front/FrontApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/front/FrontApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -31,18 +39,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Sauter001"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Sauter001&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/nhnacademy-be7-2joping/2joping-front.git",
-    "accountId": "ee133129-4683-46b5-9bcd-4552b5d04fa3"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/nhnacademy-be7-2joping/2joping-front.git&quot;,
+    &quot;accountId&quot;: &quot;ee133129-4683-46b5-9bcd-4552b5d04fa3&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -65,9 +73,9 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.FrontApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "feature/member",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/git study/2joping/front-server/feature#6 front-architecture/2joping-front",
+    "last_opened_file_path": "D:/JavaProject/SpringBoot/2joping-front/src/main/resources/static",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -77,10 +85,21 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\static" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\templates\layout" />
+      <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\templates\fragments" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="FrontApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateResources" />
       <module name="front" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhnacademy.front.FrontApplication" />
+      <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateResources" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.nhnacademy.front.*" />
@@ -115,6 +134,8 @@
       <updated>1729562753748</updated>
       <workItem from="1729562754881" duration="486000" />
       <workItem from="1729670687722" duration="514000" />
+      <workItem from="1729671209202" duration="958000" />
+      <workItem from="1729750385281" duration="12170000" />
     </task>
     <servers />
   </component>
