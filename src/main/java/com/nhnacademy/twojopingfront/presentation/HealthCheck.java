@@ -15,4 +15,9 @@ public class HealthCheck {
     public String helloCheck() {
         return "hello";
     }
+
+    @GetMapping("/bye")
+    public String byeCheck() {
+        return "bye";
+    }
 }
