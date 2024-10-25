@@ -30,7 +30,7 @@
         <java.version>21</java.version>
         <sonar.host.url>http://133.186.241.167:9000</sonar.host.url>
         <sonar.projectKey>2joping-front</sonar.projectKey>
-        <sonar.login>sqp_acdff57c7011bb67ff00bfdaa0a399a5e02e4ab3</sonar.login>
+        <sonar.token>sqp_acdff57c7011bb67ff00bfdaa0a399a5e02e4ab3</sonar.token>
         <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml
         </sonar.coverage.jacoco.xmlReportPaths>
     </properties>
