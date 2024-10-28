@@ -1,4 +1,4 @@
-package com.nhnacademy.front;
+package com.nhnacademy.twojopingfront;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
