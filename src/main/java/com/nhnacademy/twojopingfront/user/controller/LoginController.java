@@ -54,7 +54,7 @@ public class LoginController {
 
         model.addAttribute("token", accessToken);
         model.addAttribute(Objects.requireNonNull(responseDto));
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/logout")
@@ -71,6 +71,6 @@ public class LoginController {
             }
         }
 
-        return "index";
+        return "redirect:/";
     }
 }
