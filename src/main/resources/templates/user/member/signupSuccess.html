@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/menu-footer-layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입 성공</title>
+  <style>
+    .success-container {
+      max-width: 500px;
+      margin: 50px auto;
+      padding: 2rem;
+      background-color: #e9f7ef;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .success-container h1 {
+      color: #2c7a7b;
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .success-container p {
+      font-size: 1.125rem;
+      color: #333;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-primary {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      color: white;
+      background-color: #3182ce;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+      background-color: #2b6cb0;
+    }
+  </style>
+</head>
+<body>
+<div class="container" layout:fragment="content" style="min-height: 700px;">
+  <div class="success-container">
+    <h1>회원가입 완료 🎉</h1>
+    <p>
+      <span th:text="${responseMessage.nickname}"></span>님,
+      <span th:text="${responseMessage.MESSAGE}"></span>
+    </p>
+    <a href="/login" class="btn-primary">로그인 페이지로 이동</a>
+  </div>
+</div>
+</body>
+</html>

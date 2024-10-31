@@ -1,4 +1,4 @@
-package com.nhnacademy.twojopingfront.dto;
+package com.nhnacademy.twojopingfront.user.login.dto.response;
 
 public record LoginResponseDto(
         Long customerId, // 고객 ID
