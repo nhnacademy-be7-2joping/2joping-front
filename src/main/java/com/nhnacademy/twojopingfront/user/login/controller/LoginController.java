@@ -1,7 +1,7 @@
-package com.nhnacademy.twojopingfront.controller;
+package com.nhnacademy.twojopingfront.user.login.controller;
 
-import com.nhnacademy.twojopingfront.dto.LoginRequestDto;
-import com.nhnacademy.twojopingfront.service.LoginService;
+import com.nhnacademy.twojopingfront.user.login.dto.request.LoginRequestDto;
+import com.nhnacademy.twojopingfront.user.login.service.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
