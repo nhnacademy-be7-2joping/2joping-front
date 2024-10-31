@@ -13,6 +13,11 @@
             margin: 100px auto 0;
         }
 
+        .btn-full {
+            width: 100%;
+            padding: 10px 0;
+        }
+
         #login-form input[type=submit] {
             width: 100%;
             padding: 10px 0;
@@ -29,13 +34,14 @@
             <label for="id">ID</label>
         </div>
         <div class="form-floating">
-            <input type="text" name="password" id="password" placeholder="pwd" class="form-control">
+            <input type="password" name="password" id="password" placeholder="pwd" class="form-control">
             <label for="password">비밀번호</label>
         </div>
         <div>
-            <input type="submit" class="btn btn-primary mt-3">
+            <input type="submit" class="btn btn-primary mt-3" value="로그인">
         </div>
     </form>
+    <a href="/login/non-member" class="btn btn-outline-dark btn-full mt-3">비회원 주문조회</a>
 </div>
 </body>
 </html>

@@ -44,7 +44,9 @@
                 </li>
             </ul>
             <div class="ms-auto me-3">
-                <a href="/login" class="btn btn-light me-2">로그인</a>
+                <a th:href="${token != null and !#strings.isEmpty(token) ? '/logout' : '/login'}"
+                   class="btn btn-light me-2"
+                   th:text="${token != null and !#strings.isEmpty(token) ? '로그아웃' : '로그인'}"></a>
                 <a href="/signup" class="btn btn-light">회원가입</a>
             </div>
         </div>
