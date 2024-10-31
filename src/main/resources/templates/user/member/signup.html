@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/menu-footer-layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #343a40;
+        }
+        .form-container label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .form-container input, .form-container select, .form-container button {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+        }
+        .form-container button {
+            background-color: #007bff;
+            color: white;
+            font-size: 1rem;
+        }
+        .form-container small {
+            display: block;
+            color: #868e96;
+            margin-bottom: 0.5rem;
+        }
+        .error-message {
+            color: #d9534f;
+            font-size: 0.875rem;
+            margin-top: -0.5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <div class="form-container">
+        <h1>회원가입</h1>
+        <form action="/members" method="post">
+            <!-- 로그인 아이디 -->
+            <label for="loginId">로그인 아이디:</label>
+            <input type="text" id="loginId" name="loginId" th:value="${loginId != null ? loginId : ''}" minlength="4" maxlength="20" required>
+            <small th:if="${errors == null or errors['loginId'] == null}">아이디는 소문자와 숫자로만 구성되며 4자 이상, 20자 이하여야 합니다.</small>
+            <div class="error-message" th:if="${errors != null and errors['loginId'] != null}" th:text="${errors['loginId']}"></div>
+
+            <!-- 비밀번호 -->
+            <label for="password">비밀번호:</label>
+            <input type="password" id="password" name="password" th:value="${password != null ? password : ''}" minlength="8" maxlength="255" required>
+            <small th:if="${errors == null or errors['password'] == null}">비밀번호는 대문자, 소문자, 숫자, 특수 문자를 포함해야 합니다.</small>
+            <div class="error-message" th:if="${errors != null and errors['password'] != null}" th:text="${errors['password']}"></div>
+
+            <!-- 비밀번호 확인 -->
+            <label for="confirmPassword">비밀번호 확인:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" th:value="${confirmPassword != null ? confirmPassword : ''}" minlength="8" maxlength="255" required>
+            <small th:if="${errors == null or errors['passwordMatching'] == null}">비밀번호를 다시 입력해 주세요.</small>
+            <div class="error-message" th:if="${errors != null and errors['passwordMatching'] != null}" th:text="${errors['passwordMatching']}"></div>
+
+            <!-- 이름 -->
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name" th:value="${name != null ? name : ''}" required>
+            <small th:if="${errors == null or errors['name'] == null}">이름은 필수 입력 사항입니다.</small>
+            <div class="error-message" th:if="${errors != null and errors['name'] != null}" th:text="${errors['name']}"></div>
+
+            <!-- 전화번호 -->
+            <label for="phone">전화번호:</label>
+            <input type="text" id="phone" name="phone" pattern="010-[0-9]{3,4}-[0-9]{4}" th:value="${phone != null ? phone : ''}" required>
+            <small th:if="${errors == null or errors['phone'] == null}">전화번호는 '010-0000-0000' 형식이어야 합니다.</small>
+            <div class="error-message" th:if="${errors != null and errors['phone'] != null}" th:text="${errors['phone']}"></div>
+
+            <!-- 이메일 -->
+            <label for="email">이메일:</label>
+            <input type="email" id="email" name="email" th:value="${email != null ? email : ''}" required>
+            <small th:if="${errors == null or errors['email'] == null}">유효한 이메일 주소를 입력해 주세요.</small>
+            <div class="error-message" th:if="${errors != null and errors['email'] != null}" th:text="${errors['email']}"></div>
+
+            <!-- 닉네임 -->
+            <label for="nickName">닉네임:</label>
+            <input type="text" id="nickName" name="nickName" th:value="${nickName != null ? nickName : ''}" minlength="2" maxlength="20" required>
+            <small th:if="${errors == null or errors['nickName'] == null}">닉네임은 최소 2자 이상, 최대 20자까지 입력 가능합니다.</small>
+            <div class="error-message" th:if="${errors != null and errors['nickName'] != null}" th:text="${errors['nickName']}"></div>
+
+            <!-- 성별 -->
+            <label for="gender">성별:</label>
+            <select id="gender" name="gender" required>
+                <option value="" th:selected="${gender == null}">선택하세요</option>
+                <option value="M" th:selected="${gender != null and gender.toString() == 'M'}">남성</option>
+                <option value="F" th:selected="${gender != null and gender.toString() == 'F'}">여성</option>
+            </select>
+            <small th:if="${errors == null or errors['gender'] == null}">성별은 필수 입력 사항입니다.</small>
+            <div class="error-message" th:if="${errors != null and errors['gender'] != null}" th:text="${errors['gender']}"></div>
+
+            <!-- 생년월일 -->
+            <label for="birthday">생년월일:</label>
+            <input type="date" id="birthday" name="birthday" max="[[${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}]]" th:value="${birthday != null ? birthday : ''}" required>
+            <small th:if="${errors == null or errors['birthday'] == null}">생년월일은 과거 날짜만 가능합니다.</small>
+            <div class="error-message" th:if="${errors != null and errors['birthday'] != null}" th:text="${errors['birthday']}"></div>
+
+            <!-- 제출 버튼 -->
+            <button type="submit">회원가입</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
