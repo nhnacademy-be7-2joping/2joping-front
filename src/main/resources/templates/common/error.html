@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>오류 발생</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8d7da;
+            color: #721c24;
+            text-align: center;
+            padding: 50px;
+        }
+        .error-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            background-color: #f8d7da;
+        }
+        h1 {
+            font-size: 24px;
+        }
+        p {
+            font-size: 18px;
+        }
+        .error-details {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+<div class="error-container">
+    <h1>오류가 발생했습니다</h1>
+    <p>요청을 처리하는 중 오류가 발생했습니다.</p>
+    <div class="error-details">
+        <p><strong>오류 코드:</strong> <span th:text="${errorResponse.errorCode}"></span></p>
+        <p><strong>오류 메시지:</strong> <span th:text="${errorResponse.errorMessage}"></span></p>
+    </div>
+</div>
+
+</body>
+</html>
