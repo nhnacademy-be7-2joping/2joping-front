@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/controller/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/dto/request/LoginNonMemberRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/customer-orders.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/login-nonmember.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/controller/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/controller/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application-dev-mysql.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,10 +47,10 @@
     &quot;accountId&quot;: &quot;ee133129-4683-46b5-9bcd-4552b5d04fa3&quot;
   }
 }</component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -70,10 +77,10 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.FrontApplication.executor": "Run",
-    "Spring Boot.TwojopingFrontApplication.executor": "Debug",
-    "git-widget-placeholder": "feature/login",
+    "Spring Boot.TwojopingFrontApplication.executor": "Run",
+    "git-widget-placeholder": "feature/login에 #16개",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/JavaProject/SpringBoot/2joping-front/src/main/resources/static",
+    "last_opened_file_path": "D:/JavaProject/SpringBoot/2joping-front/src/main/resources/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -90,6 +97,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\templates" />
       <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\static" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -101,7 +109,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.TwojopingFrontApplication">
-    <configuration name="front | 회원 가입 처리" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/front.http" index="3" requestIdentifier="회원 가입 처리" runType="단일 요청 실행">
+    <configuration name="front | 로그인 요청" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/front.http" requestIdentifier="로그인 요청" runType="단일 요청 실행">
       <method v="2" />
     </configuration>
     <configuration name="front | #1" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/front.http" requestIdentifier="#1" runType="단일 요청 실행">
@@ -110,7 +118,7 @@
     <configuration name="front | feign client 동작" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/front.http" index="2" requestIdentifier="feign client 동작" runType="단일 요청 실행">
       <method v="2" />
     </configuration>
-    <configuration name="front | 로그인 요청" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/front.http" requestIdentifier="로그인 요청" runType="단일 요청 실행">
+    <configuration name="front | 회원 가입 처리" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/http/front.http" index="3" requestIdentifier="회원 가입 처리" runType="단일 요청 실행">
       <method v="2" />
     </configuration>
     <configuration name="TwojopingFrontApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
@@ -135,7 +143,6 @@
         <item itemvalue="HTTP 요청.front | feign client 동작" />
         <item itemvalue="HTTP 요청.front | 로그인 요청" />
         <item itemvalue="HTTP 요청.front | #1" />
-        <item itemvalue="Spring Boot.FrontApplication" />
       </list>
     </recent_temporary>
   </component>
@@ -165,7 +172,8 @@
       <workItem from="1729846757042" duration="1072000" />
       <workItem from="1730073768646" duration="5348000" />
       <workItem from="1730192209102" duration="27000" />
-      <workItem from="1730246314927" duration="15989000" />
+      <workItem from="1730246314927" duration="19700000" />
+      <workItem from="1730333086783" duration="6843000" />
     </task>
     <servers />
   </component>
@@ -205,7 +213,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/controller/LoginController.java</url>
-          <line>42</line>
+          <line>40</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">

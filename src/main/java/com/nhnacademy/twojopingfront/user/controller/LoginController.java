@@ -1,5 +1,6 @@
 package com.nhnacademy.twojopingfront.user.controller;
 
+import com.nhnacademy.twojopingfront.user.dto.request.LoginNonMemberRequestDto;
 import com.nhnacademy.twojopingfront.user.dto.request.LoginRequestDto;
 import com.nhnacademy.twojopingfront.user.dto.response.LoginResponseDto;
 import com.nhnacademy.twojopingfront.user.service.LoginService;
@@ -11,10 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -55,6 +53,15 @@ public class LoginController {
         model.addAttribute("token", accessToken);
         model.addAttribute(Objects.requireNonNull(responseDto));
         return "redirect:/";
+    }
+
+    /**
+     *
+     * @return 비회원 로그인 페이지 view
+     */
+    @GetMapping("/login/non-member")
+    public String loginNonMember() {
+        return "login-nonmember";
     }
 
     @GetMapping("/logout")
