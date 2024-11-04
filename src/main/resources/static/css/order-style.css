@@ -1,0 +1,50 @@
+.order-container {
+    width: 1000px;
+    display: inline-block;
+}
+
+.cost-container {
+    width: 300px;
+    position: fixed;
+    display: inline-block;
+    border: 1px solid black;
+    border-radius: 10px;
+    float: right;
+}
+
+.address-container > input {
+    margin-bottom: 10px;
+}
+
+.address-container > input[name="address"] {
+    width: 50%;
+}
+
+.cost-element .cost-title {
+    font-weight: bold;
+}
+
+.delivery {
+    color: dodgerblue;
+}
+
+.delivery::before {
+    content: "+";
+}
+
+.discount {
+    color: red;
+}
+
+.discount::before {
+    content: "-";
+}
+
+.cost-value::after {
+    content: " 원"
+}
+
+.p-price {
+    font-weight: bold;
+    font-size: 24px;
+}
