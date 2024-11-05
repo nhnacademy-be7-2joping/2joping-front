@@ -16,8 +16,24 @@
     <div class="order-container col-8 mt-3 p-3">
         <h3>주문 상품 정보</h3>
         <hr/>
-        <div class="product-container mb-3">
-            주문 상품 정보
+        <div class="container product-container mb-3">
+            <div class="card mb-3">
+                <div class="row g-0">
+                    <div class="col-md-1">
+                        <img class="img-fluid rounded-start" th:src="@{/no-image.png}" alt="default book image"/>
+                    </div>
+                    <div class="col-md-11">
+                        <div class="card-body">
+                            <h5 class="card-title">IT cookbook</h5>
+                            <span class="card-text cost-value me-3">
+                                <b>13,500</b>
+                            </span>
+                            <label for="book-quantity-1">수량</label>
+                            <input type="number" id="book-quantity-1" min="1" value="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <h3>배송지</h3>
@@ -31,6 +47,14 @@
             <input type="text" id="detail_address" name="detail_address" placeholder="상세주소">
         </div>
 
+        <!-- 쿠폰 정보 -->
+        <h3>쿠폰</h3>
+        <hr/>
+        <label for="coupon">쿠폰</label>
+        <select id="coupon" name="coupon" class="mb-3">
+            <option selected>쿠폰 옵션</option>
+        </select>
+
         <!-- 포장 정보 -->
         <h3>포장</h3>
         <hr/>
@@ -39,8 +63,8 @@
                 <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">대충 포장지</h5>
-                    <p class="card-text pack-price">
-                        3000 원
+                    <p class="card-text pack-price cost-value">
+                        3000
                     </p>
                     <input type="checkbox" name="package_checkbox" id="pack1">
                     <label for="pack1">포장지 선택</label>
@@ -50,8 +74,8 @@
                 <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">펭귄 포장지</h5>
-                    <p class="card-text pack-price">
-                        2000 원
+                    <p class="card-text pack-price cost-value">
+                        2000
                     </p>
                     <input type="checkbox" name="package_checkbox" id="pack2">
                     <label for="pack2">포장지 선택</label>
@@ -61,8 +85,8 @@
                 <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">좋은 포장지</h5>
-                    <p class="card-text pack-price">
-                        10000 원
+                    <p class="card-text pack-price cost-value">
+                        10000
                     </p>
                     <input type="checkbox" name="package_checkbox" id="pack3">
                     <label for="pack3">포장지 선택</label>
@@ -72,8 +96,8 @@
                 <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">좀 비싼 포장지</h5>
-                    <p class="card-text pack-price">
-                        50000 원
+                    <p class="card-text pack-price cost-value">
+                        50000
                     </p>
                     <input type="checkbox" name="package_checkbox" id="pack4">
                     <label for="pack4">포장지 선택</label>
@@ -101,7 +125,7 @@
                 <div class="cost-value discount">3000</div>
             </div>
         </div>
-        <p class="p-price text-end">0 원</p>
+        <p class="p-price cost-value text-end">0</p>
         <hr/>
         <button class="btn btn-dark w-100">결제하기</button>
     </div>
