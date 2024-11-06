@@ -44,7 +44,7 @@
                 </li>
             </ul>
             <div class="ms-auto me-3">
-                <a class="me-3" th:href="@{/cart}">
+                <a class="me-3" th:href="@{/cart}" style="text-decoration: none">
                     <img th:src="@{/icons/cart.png}" alt="cart" width="50">
                 </a>
                 <a th:href="${token != null and !#strings.isEmpty(token) ? '/logout' : '/login'}"

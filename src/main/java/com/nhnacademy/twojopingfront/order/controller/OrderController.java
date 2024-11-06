@@ -26,6 +26,6 @@ public class OrderController {
 
     @GetMapping("/form")
     public String form(Model model) {
-        return "order-form";
+        return "order/order-form";
     }
 }

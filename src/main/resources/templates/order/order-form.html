@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>주문서 작성</title>
     <link rel="stylesheet" th:href="@{/css/order-style.css}">
+    <script src="https://js.tosspayments.com/v2/standard"></script>
 </head>
 <body>
 <div layout:fragment="content">
@@ -42,10 +43,11 @@
         <div class="row delivery-container mb-3">
             <div class="col-lg-6">
                 <label for="receiver">받는이</label>
-                <input type="text" id="receiver" name="receiver" class="mb-3" required><br/>
+                <input type="text" id="receiver" name="receiver" class=" form-control" required><br/>
                 <label for="desired-date">희망배송일</label>
-                <input type="date" id="desired-date" name="desired-date" class="mb-3" required><br/>
+                <input type="date" id="desired-date" name="desired-date" class="form-control" required><br/>
                 <p class="alert alert-warning">※ 배송비는 30,000원 이상 구매 시 무료이며, 기본적으로는 <span>5000 </span>원 입니다. </p>
+                <p>배송 주소</p>
                 <!-- 다음 api 사용을 위한 입력 -->
                 <div class="address-container mb-3">
                     <input type="text" id="postal_code" name="postal_code" placeholder="우편번호" required>
@@ -55,16 +57,15 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <label for="name">이름</label>
-                <input type="tel" id="name" name="name"><br>
+                <label for="name" class="form-label">이름</label>
+                <input type="tel" id="name" name="name" class="form-control"><br>
                 <label for="phone">연락처</label>
-                <input type="tel" id="phone" name="phone"><br>
+                <input type="tel" id="phone" name="phone" class="form-control"><br>
                 <label for="email">이메일</label>
-                <input type="email" id="email" name="email">
+                <input type="email" id="email" name="email" class="form-control">
 
             </div>
         </div>
-
 
         <!-- 쿠폰 정보 -->
         <h3>쿠폰</h3>
@@ -125,6 +126,7 @@
             </div>
         </div>
 
+
     </div>
 
     <!-- 결제 컨테이너 -->
@@ -147,7 +149,24 @@
         </div>
         <p class="p-price cost-value text-end">0</p>
         <hr/>
-        <button class="btn btn-dark w-100">결제하기</button>
+        <button class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#payment-modal">결제하기</button>
+    </div>
+
+    <!-- 결제 Modal창 -->
+    <div class="modal fade" id="payment-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content w-100">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">결제</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div th:replace="component/toss-widget/checkout :: toss_checkout" class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
