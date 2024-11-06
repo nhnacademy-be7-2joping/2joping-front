@@ -36,16 +36,35 @@
             </div>
         </div>
 
-        <h3>배송지</h3>
+        <!-- 배송 -->
+        <h3>배송</h3>
         <hr/>
-        <p class="alert alert-warning">※ 배송비는 30,000원 이상 구매 시 무료이며, 기본적으로는 <span>5000 </span>원 입니다. </p>
-        <!-- 다음 api 사용을 위한 입력 -->
-        <div class="address-container mb-3">
-            <input type="text" id="postal_code" name="postal_code" placeholder="우편번호">
-            <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-            <input type="text" id="address" name="address" placeholder="주소"><br>
-            <input type="text" id="detail_address" name="detail_address" placeholder="상세주소">
+        <div class="row delivery-container mb-3">
+            <div class="col-lg-6">
+                <label for="receiver">받는이</label>
+                <input type="text" id="receiver" name="receiver" class="mb-3" required><br/>
+                <label for="desired-date">희망배송일</label>
+                <input type="date" id="desired-date" name="desired-date" class="mb-3" required><br/>
+                <p class="alert alert-warning">※ 배송비는 30,000원 이상 구매 시 무료이며, 기본적으로는 <span>5000 </span>원 입니다. </p>
+                <!-- 다음 api 사용을 위한 입력 -->
+                <div class="address-container mb-3">
+                    <input type="text" id="postal_code" name="postal_code" placeholder="우편번호" required>
+                    <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
+                    <input type="text" id="address" name="address" placeholder="주소" required><br>
+                    <input type="text" id="detail_address" name="detail_address" placeholder="상세주소">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <label for="name">이름</label>
+                <input type="tel" id="name" name="name"><br>
+                <label for="phone">연락처</label>
+                <input type="tel" id="phone" name="phone"><br>
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email">
+
+            </div>
         </div>
+
 
         <!-- 쿠폰 정보 -->
         <h3>쿠폰</h3>
@@ -58,49 +77,50 @@
         <!-- 포장 정보 -->
         <h3>포장</h3>
         <hr/>
+        <h4>상품 포장 선택</h4>
+        <div class="selected-pack-container">
+            <div class="selected-book-element" th:each="i : ${#numbers.sequence(1, 3)}">
+                <div style="font-weight: bold">IT cookbook</div>
+                <select id="book-pack-1" name="book-pack-1">
+                    <option selected>-- 포장 선택 --</option>
+                </select>
+            </div>
+        </div>
         <div class="package-container row mb-3">
-            <div class="card package-card col-lg-3 p-3 me-2">
+            <div class="card package-card col-lg-3 p-3">
                 <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">대충 포장지</h5>
                     <p class="card-text pack-price cost-value">
                         3000
                     </p>
-                    <input type="checkbox" name="package_checkbox" id="pack1">
-                    <label for="pack1">포장지 선택</label>
                 </div>
             </div>
-            <div class="card package-card col-lg-3 p-3 me-2">
+            <div class="card package-card col-lg-3 p-3">
                 <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">펭귄 포장지</h5>
                     <p class="card-text pack-price cost-value">
                         2000
                     </p>
-                    <input type="checkbox" name="package_checkbox" id="pack2">
-                    <label for="pack2">포장지 선택</label>
                 </div>
             </div>
-            <div class="card package-card col-lg-3 p-3 me-2">
+            <div class="card package-card col-lg-3 p-3">
                 <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">좋은 포장지</h5>
                     <p class="card-text pack-price cost-value">
                         10000
                     </p>
-                    <input type="checkbox" name="package_checkbox" id="pack3">
-                    <label for="pack3">포장지 선택</label>
                 </div>
             </div>
-            <div class="card package-card col-lg-3 p-3 me-2 mb-2">
+            <div class="card package-card col-lg-3 p-3 mb-2">
                 <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">좀 비싼 포장지</h5>
                     <p class="card-text pack-price cost-value">
                         50000
                     </p>
-                    <input type="checkbox" name="package_checkbox" id="pack4">
-                    <label for="pack4">포장지 선택</label>
                 </div>
             </div>
         </div>
@@ -133,35 +153,25 @@
 
 <div layout:fragment="script">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/get-road-address.js}"></script>
     <script>
-        /**
-         * @see 활용법: https://postcode.map.daum.net/guide
-         */
-        function execDaumPostcode() {
-            new daum.Postcode({
-                oncomplete: function (data) {
-                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                    // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                    var addr = ''; // 주소 변수
-                    var extraAddr = ''; // 참고항목 변수
-
-                    //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                    if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                    } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
-                    }
-
-                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                    document.getElementById('postal_code').value = data.zonecode;
-                    document.getElementById("address").value = addr;
-                    // 커서를 상세주소 필드로 이동한다.
-                    document.getElementById("detail_address").focus();
-                }
-            }).open();
+        /* 현재 날짜에서 7일 이후까지만 선택 가능 */
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
         }
+
+        const today = new Date();
+        const sixDaysLater = new Date();
+        sixDaysLater.setDate(today.getDate() + 6);
+        const minDate = formatDate(today);
+        const maxDate = formatDate(sixDaysLater);
+
+        const desiredDate = document.getElementById('desired-date');
+        desiredDate.min = minDate;
+        desiredDate.max = maxDate;
     </script>
 </div>
 

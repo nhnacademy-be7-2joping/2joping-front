@@ -20,6 +20,30 @@
     width: 50%;
 }
 
+.delivery-container label {
+    margin-bottom: 20px;
+}
+
+.selected-pack-container {
+    width: 100%;
+    border: 1px solid black;
+    height: 200px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    overflow: auto;
+}
+
+.selected-book-element {
+    width: 100%;
+    border: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
 .cost-element .cost-title {
     font-weight: bold;
 }
