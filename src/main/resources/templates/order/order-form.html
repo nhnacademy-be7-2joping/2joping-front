@@ -50,9 +50,9 @@
                 <p>배송 주소</p>
                 <!-- 다음 api 사용을 위한 입력 -->
                 <div class="address-container mb-3">
-                    <input type="text" id="postal_code" name="postal_code" placeholder="우편번호" required>
+                    <input type="text" id="postal_code" name="postal_code" placeholder="우편번호" required readonly>
                     <input type="button" onclick="execDaumPostcode()" value="우편번호 찾기"><br>
-                    <input type="text" id="address" name="address" placeholder="주소" required><br>
+                    <input type="text" id="address" name="address" placeholder="주소" required readonly><br>
                     <input type="text" id="detail_address" name="detail_address" placeholder="상세주소">
                 </div>
             </div>
@@ -147,7 +147,7 @@
                 <div class="cost-value discount">3000</div>
             </div>
         </div>
-        <p class="p-price cost-value text-end">0</p>
+        <p class="p-price cost-value text-end" id="total_cost">2000</p>
         <hr/>
         <button class="btn btn-dark w-100" data-bs-toggle="modal" data-bs-target="#payment-modal">결제하기</button>
     </div>
@@ -161,7 +161,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">결제</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div th:replace="component/toss-widget/checkout :: toss_checkout" class="modal-body"></div>
+                <div th:replace="~{component/toss-widget/checkout :: toss_checkout}" class="modal-body"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
