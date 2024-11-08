@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도서 상세 정보</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container mt-5">
+  <h1 class="mb-4" th:text="${books.title}">도서 제목</h1>
+  <div class="row">
+    <div class="col-md-4">
+      <img th:src="${books.thumbnail}" alt="도서 이미지" class="img-fluid">
+    </div>
+    <div class="col-md-8">
+      <table class="table table-bordered">
+        <tr>
+          <th>제목</th>
+          <td th:text="${books.title}">제목 정보</td>
+        </tr>
+        <tr>
+          <th>출판사</th>
+          <td th:text="${books.publisherName}">출판사</td>
+        </tr>
+        <tr>
+          <th>설명</th>
+          <td th:text="${books.description}">도서 설명</td>
+        </tr>
+        <tr>
+          <th>출판일</th>
+          <td th:text="${books.publishedDate}">출판일 정보</td>
+        </tr>
+        <tr>
+          <th>ISBN</th>
+          <td th:text="${books.isbn}">ISBN 정보</td>
+        </tr>
+        <tr>
+          <th>정가</th>
+          <td th:text="${books.retailPrice}">정가 정보</td>
+        </tr>
+        <tr>
+          <th>판매 가격</th>
+          <td th:text="${books.sellingPrice}">판매 가격 정보</td>
+        </tr>
+        <tr>
+          <th>포장 가능 여부</th>
+          <td th:text="${books.giftWrappable ? '포장 가능' : '포장 불가능'}">포장 여부</td>
+        </tr>
+        <tr>
+          <th>상태</th>
+          <td th:text="${books.isActive ? '판매 중' : '판매 중지'}">판매 상태</td>
+        </tr>
+        <tr>
+          <th>남은 수량</th>
+          <td th:text="${books.remainQuantity}">재고 수량 정보</td>
+        </tr>
+        <tr>
+          <th>조회수</th>
+          <td th:text="${books.views}">조회수 정보</td>
+        </tr>
+        <tr>
+          <th>좋아요 수</th>
+          <td th:text="${books.likes}">좋아요 수 정보</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Optional JavaScript -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -5,18 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dd4b4542-5020-4ad1-bd12-83fedfb81807" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/client/BookClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookSimpleResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/service/BookService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/dto/request/PublisherRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/dto/response/PublisherCreateResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/dto/response/PublisherResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/get-booklist.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/config/WebConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/controller/LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/dto/LoginRequestDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/dto/LoginResponseDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/presentation/HealthCheck.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/service/LoginService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/template/hello.html" beforeDir="false" />
-    <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/client/LoginClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/client/LoginClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,8 +31,8 @@
       <list>
         <option value="Record" />
         <option value="Enum" />
-        <option value="HTML File" />
         <option value="AnnotationType" />
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -72,37 +75,38 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "HTTP Request.generated-requests | #13.executor": "Run",
-    "HTTP Request.generated-requests | #14.executor": "Run",
-    "JUnit.MemberRestControllerTest.executor": "Coverage",
-    "JUnit.member in twojoping-front.executor": "Coverage",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.FrontApplication.executor": "Run",
-    "Spring Boot.TwojopingFrontApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/git study/2joping/2joping-eureka",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;HTTP Request.generated-requests | #13.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #14.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.MemberRestControllerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.member in twojoping-front.executor&quot;: &quot;Coverage&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.FrontApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.TwojopingFrontApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/get-booklist&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/PYTHON/nhn/teamproject/2joping-front&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\git study\2joping\front-server\feature\user-address-create-read-register\src\main\resources\properties" />
@@ -125,6 +129,21 @@
     </configuration>
     <configuration name="generated-requests | #14" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="14" requestIdentifier="#14" runType="Run single request">
       <method v="2" />
+    </configuration>
+    <configuration name="BookControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="twojoping-front" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nhnacademy.twojopingfront.bookset.book.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nhnacademy.twojopingfront.bookset.book.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.nhnacademy.twojopingfront.bookset.book.controller.BookControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="MemberRestControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="twojoping-front" />
@@ -149,22 +168,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="FrontApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateResources" />
-      <module name="front" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhnacademy.twojopingfront.FrontApplication" />
-      <option name="UPDATE_ACTION_UPDATE_POLICY" value="UpdateResources" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.nhnacademy.twojopingfront.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TwojopingFrontApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="8080" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="twojoping-front" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhnacademy.twojopingfront.TwojopingFrontApplication" />
@@ -172,28 +177,36 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="HTTP Request.generated-requests | #13" />
+      <item itemvalue="HTTP Request.generated-requests | #14" />
+      <item itemvalue="JUnit.BookControllerTest" />
+      <item itemvalue="JUnit.member in twojoping-front" />
+      <item itemvalue="JUnit.MemberRestControllerTest" />
+      <item itemvalue="Spring Boot.TwojopingFrontApplication" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BookControllerTest" />
         <item itemvalue="JUnit.member in twojoping-front" />
         <item itemvalue="JUnit.MemberRestControllerTest" />
         <item itemvalue="HTTP Request.generated-requests | #14" />
         <item itemvalue="HTTP Request.generated-requests | #13" />
-        <item itemvalue="Spring Boot.FrontApplication" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.387" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.387" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="" />
+      <changelist id="dd4b4542-5020-4ad1-bd12-83fedfb81807" name="Changes" comment="" />
       <created>1729562753748</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -210,6 +223,12 @@
       <workItem from="1730165934093" duration="19769000" />
       <workItem from="1730246922892" duration="23630000" />
       <workItem from="1730334452303" duration="16293000" />
+      <workItem from="1730852422589" duration="750000" />
+      <workItem from="1730853377539" duration="6571000" />
+      <workItem from="1730869489405" duration="13358000" />
+      <workItem from="1730893027689" duration="1744000" />
+      <workItem from="1730938374751" duration="11402000" />
+      <workItem from="1730965203328" duration="585000" />
     </task>
     <servers />
   </component>
@@ -230,100 +249,100 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/adaptor/MemberAdaptor.java</url>
           <line>30</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/adaptor/MemberAdaptor.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/adaptor/MemberAdaptor.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/adaptor/MemberAdaptor.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/controller/MemberViewController.java</url>
           <line>45</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/CustomResponseErrorHandler.java</url>
           <line>57</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/CustomResponseErrorHandler.java</url>
           <line>42</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
           <line>29</line>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
           <line>74</line>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
           <line>86</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/CustomResponseErrorHandler.java</url>
           <line>56</line>
           <option name="timeStamp" value="28" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/controller/MemberViewController.java</url>
           <line>34</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
           <line>62</line>
           <option name="timeStamp" value="57" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
           <line>43</line>
           <option name="timeStamp" value="58" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
           <line>42</line>
           <option name="timeStamp" value="59" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/CustomResponseErrorHandler.java</url>
           <line>55</line>
           <option name="timeStamp" value="60" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/exception/backServer/CustomApiException.java</url>
           <line>16</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/exception/backServer/CustomApiException.java</url>
           <line>17</line>
           <option name="timeStamp" value="62" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
           <line>40</line>
           <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookController.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookController.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/service/BookService.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="69" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
@@ -336,8 +355,16 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="this.h" custom="java.lang.reflect.Proxy" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/2joping_front$BookControllerTest.ic" NAME="BookControllerTest Coverage Results" MODIFIED="1730952998000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.nhnacademy.twojopingfront.bookset.book.controller.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/user_address_create_read_register$MemberRestControllerTest.ic" NAME="MemberRestControllerTest Coverage Results" MODIFIED="1730355281982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.nhnacademy.twojopingfront.user.member.*</FILTER>
     </SUITE>
