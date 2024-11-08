@@ -5,22 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/adaptor/CarrierAdaptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/controller/CarrierController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/dto/request/CarrierRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/dto/request/ShipmentRequestDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/dto/response/CarrierResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/service/CarrierService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/service/impl/CarrierServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shipment/carrierForm.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/shipment/carrierList.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/client/LoginClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/client/LoginClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Record" />
         <option value="Enum" />
-        <option value="HTML File" />
         <option value="AnnotationType" />
+        <option value="Interface" />
         <option value="Class" />
+        <option value="HTML File" />
+        <option value="Record" />
       </list>
     </option>
   </component>
@@ -41,7 +54,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/nhnacademy-be7-2joping/2joping-front.git&quot;,
-    &quot;accountId&quot;: &quot;a3167178-dcf4-4e37-8765-0b0d1b41466f&quot;
+    &quot;accountId&quot;: &quot;c8fc58ba-ae0f-4c16-bde5-f6301cd23d19&quot;
   }
 }</component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -54,6 +67,9 @@
         <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
       </MavenGeneralSettings>
     </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
@@ -69,6 +85,8 @@
     "HTTP Request.generated-requests | #14.executor": "Run",
     "JUnit.MemberRestControllerTest.executor": "Coverage",
     "JUnit.member in twojoping-front.executor": "Coverage",
+    "Maven.twojoping-front [clean].executor": "Run",
+    "Maven.twojoping-front [package].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -76,14 +94,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.FrontApplication.executor": "Run",
     "Spring Boot.TwojopingFrontApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "feature/admin-carrier",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/git study/2joping/2joping-eureka",
+    "last_opened_file_path": "C:/Users/dign5/2024NHN/2joping/2joping-eureka",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
     "vue.rearranger.settings.migration": "true"
   },
@@ -162,6 +183,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="HTTP Request.generated-requests | #13" />
+      <item itemvalue="HTTP Request.generated-requests | #14" />
+      <item itemvalue="JUnit.MemberRestControllerTest" />
+      <item itemvalue="JUnit.member in twojoping-front" />
+      <item itemvalue="Spring Boot.TwojopingFrontApplication" />
+      <item itemvalue="Spring Boot.FrontApplication" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.member in twojoping-front" />
@@ -175,8 +204,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.22855.74" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.22855.74" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.21829.142" />
+        <option value="bundled-js-predefined-d6986cc7102b-7c0b70fcd90d-JavaScript-IU-242.21829.142" />
       </set>
     </attachedChunks>
   </component>
@@ -200,6 +229,8 @@
       <workItem from="1730165934093" duration="19769000" />
       <workItem from="1730246922892" duration="23630000" />
       <workItem from="1730334452303" duration="16293000" />
+      <workItem from="1730958265553" duration="8384000" />
+      <workItem from="1731024380093" duration="8268000" />
     </task>
     <servers />
   </component>
@@ -211,7 +242,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -221,44 +264,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/adaptor/MemberAdaptor.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/adaptor/MemberAdaptor.java</url>
-          <line>36</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/adaptor/MemberAdaptor.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/adaptor/MemberAdaptor.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/controller/MemberViewController.java</url>
-          <line>45</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/CustomResponseErrorHandler.java</url>
           <line>57</line>
           <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/CustomResponseErrorHandler.java</url>
-          <line>42</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
@@ -274,11 +282,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/CustomResponseErrorHandler.java</url>
           <line>56</line>
           <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/user/member/controller/MemberViewController.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
@@ -314,6 +317,21 @@
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
           <line>40</line>
           <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/adaptor/CarrierAdaptor.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/controller/CarrierController.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/shipment/adaptor/CarrierAdaptor.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/common/error/handler/GlobalExceptionHandler.java</url>
