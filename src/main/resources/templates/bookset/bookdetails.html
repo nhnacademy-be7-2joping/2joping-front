@@ -21,6 +21,10 @@
           <td th:text="${books.title}">제목 정보</td>
         </tr>
         <tr>
+          <th>기여자</th>
+          <td th:text="${#strings.arrayJoin(books.contributorList, ', ')}">기여자</td>
+        </tr>
+        <tr>
           <th>출판사</th>
           <td th:text="${books.publisherName}">출판사</td>
         </tr>

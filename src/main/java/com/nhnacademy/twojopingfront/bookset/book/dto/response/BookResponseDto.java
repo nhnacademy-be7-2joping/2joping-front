@@ -19,7 +19,7 @@ public record BookResponseDto (
         int remainQuantity,
         int views,
         int likes,
-//        List<String> contributorList,
+        List<String> contributorList,
 //     List<CategoryResponseDto> categoryList,
 //     List<TagResponseDto> tagList,
         String thumbnail

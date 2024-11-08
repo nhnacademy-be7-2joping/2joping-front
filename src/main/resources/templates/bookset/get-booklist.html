@@ -16,6 +16,7 @@
             <th>썸네일</th>
             <th>제목</th>
             <th>출판사</th>
+            <th>기여자</th>
             <th>판매 가격</th>
             <th>정가</th>
         </tr>
@@ -25,6 +26,7 @@
             <td><img th:src="${book.thumbnail}" alt="썸네일" width="50"></td>
             <td><a th:href="@{/bookstore/books/get/book/{bookId}(bookId=${book.bookId})}" th:text="${book.title}">제목</a></td>
             <td th:text="${book.publisherName}">출판사</td>
+            <td th:text="${#strings.arrayJoin(book.contributorList, ', ')}">기여자</td>
             <td th:text="${book.sellingPrice}">판매 가격</td>
             <td th:text="${book.retailPrice}">정가</td>
         </tr>
