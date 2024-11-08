@@ -28,6 +28,7 @@
         <option value="Enum" />
         <option value="HTML File" />
         <option value="AnnotationType" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -75,8 +76,10 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "HTTP Request.generated-requests | #13.executor": "Run",
     "HTTP Request.generated-requests | #14.executor": "Run",
+    "HTTP Request.test | Add Item to Cart.executor": "Run",
     "JUnit.MemberRestControllerTest.executor": "Coverage",
     "JUnit.member in twojoping-front.executor": "Coverage",
+    "Maven.twojoping-front [clean].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
@@ -97,10 +100,14 @@
   },
   "keyToStringList": {
     "DatabaseDriversLRU": [
-      "mysql"
+      "mysql",
+      "redis"
     ]
   }
 }]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\templates\component\toss-widget" />
@@ -116,6 +123,8 @@
       <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\templates\layout" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.nhnacademy.twojopingfront.cart.entity" />
+      <recent name="com.nhnacademy.twojopingfront.common.config" />
       <recent name="com.nhnacademy.twojopingfront.common.error.dto" />
       <recent name="com.nhnacademy.twojopingfront.common.error.exception.base" />
       <recent name="com.nhnacademy.front.dto" />
