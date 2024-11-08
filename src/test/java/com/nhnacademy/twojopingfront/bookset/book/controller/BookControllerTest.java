@@ -42,7 +42,7 @@ class BookControllerTest {
     @Test
     @DisplayName("전체 도서 목록 조회 테스트")
     void getAllBooks() throws Exception {
-        Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"))));
+        Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"))));
         when(bookService.getAllBooks(0, 2)).thenReturn(bookPage);
 
         mockMvc.perform(get("/bookstore/books/get"))
@@ -55,7 +55,7 @@ class BookControllerTest {
     @Test
     @DisplayName("카테고리별 도서 목록 조회 테스트")
     void getBooksByCategoryId() throws Exception {
-        Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"))));
+        Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"))));
         when(bookService.getBooksByCategoryId(anyLong(), any(int.class), any(int.class))).thenReturn(bookPage);
 
         mockMvc.perform(get("/bookstore/books/get/category/1"))
@@ -68,7 +68,7 @@ class BookControllerTest {
     @Test
     @DisplayName("기여자별 도서 목록 조회 테스트")
     void getBooksByContributorId() throws Exception {
-        Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"))));
+        Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"))));
         when(bookService.getBooksByContributorId(anyLong(), any(int.class), any(int.class))).thenReturn(bookPage);
 
         mockMvc.perform(get("/bookstore/books/get/contributor/1"))
@@ -81,7 +81,7 @@ class BookControllerTest {
     @Test
     @DisplayName("도서 상세 조회 테스트")
     void getBookByBookId() throws Exception {
-        BookResponseDto bookResponse = new BookResponseDto(1L, "Title", "Description", "2023-10-01", LocalDate.now(), "1234567890123", 10000, 9000, true, true, 10, 0,0,List.of("Contributor 1", "Contributor 2"),"thumbnail");
+        BookResponseDto bookResponse = new BookResponseDto(1L, "Title", "Description", "2023-10-01", LocalDate.now(), "1234567890123", 10000, 9000, true, true, 10, 0,0,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"),"thumbnail");
         when(bookService.getBookById(anyLong())).thenReturn(bookResponse);
 
         mockMvc.perform(get("/bookstore/books/get/book/1"))

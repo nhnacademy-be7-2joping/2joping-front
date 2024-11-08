@@ -21,6 +21,10 @@
           <td th:text="${books.title}">제목 정보</td>
         </tr>
         <tr>
+          <th>카테고리</th>
+          <td th:text="${#strings.arrayJoin(books.categoryList, ', ')}">카테고리 정보</td>
+        </tr>
+        <tr>
           <th>기여자</th>
           <td th:text="${#strings.arrayJoin(books.contributorList, ', ')}">기여자</td>
         </tr>

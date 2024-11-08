@@ -114,7 +114,7 @@
       <recent name="com.nhnacademy.front.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BookControllerTest">
+  <component name="RunManager" selected="Spring Boot.TwojopingFrontApplication">
     <configuration name="generated-requests | #13" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="13" requestIdentifier="#13" runType="Run single request">
       <method v="2" />
     </configuration>
@@ -220,7 +220,7 @@
       <workItem from="1730893027689" duration="1744000" />
       <workItem from="1730938374751" duration="11402000" />
       <workItem from="1730965203328" duration="585000" />
-      <workItem from="1731030869210" duration="2002000" />
+      <workItem from="1731030869210" duration="3751000" />
     </task>
     <servers />
   </component>
@@ -359,7 +359,7 @@
     </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/2joping_front$BookControllerTest.ic" NAME="BookControllerTest Coverage Results" MODIFIED="1730952998000" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/2joping_front$BookControllerTest.ic" NAME="BookControllerTest Coverage Results" MODIFIED="1731032919344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.nhnacademy.twojopingfront.bookset.book.controller.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/user_address_create_read_register$MemberRestControllerTest.ic" NAME="MemberRestControllerTest Coverage Results" MODIFIED="1730355281982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
