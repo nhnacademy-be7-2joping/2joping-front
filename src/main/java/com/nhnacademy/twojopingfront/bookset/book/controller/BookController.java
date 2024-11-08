@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
-@RequestMapping("/bookstore")
+@RequestMapping()
 @RequiredArgsConstructor
 public class    BookController {
 
@@ -26,7 +26,7 @@ public class    BookController {
                               Model model) {
         Page<BookSimpleResponseDto> books = bookService.getAllBooks(page, size);
         model.addAttribute("books", books);
-        model.addAttribute("currentPath", "/bookstore/books/get");
+        model.addAttribute("currentPath", "/books/get");
         return "bookset/get-bookList";
     }
 
@@ -37,7 +37,7 @@ public class    BookController {
                                        Model model) {
         Page<BookSimpleResponseDto> books = bookService.getBooksByCategoryId(categoryId, page, size);
         model.addAttribute("books", books);
-        model.addAttribute("currentPath", "/bookstore/books/get/category/" + categoryId);
+        model.addAttribute("currentPath", "/books/get/category/" + categoryId);
         return "bookset/get-bookList";
     }
 
@@ -48,7 +48,7 @@ public class    BookController {
                                        Model model) {
         Page<BookSimpleResponseDto> books = bookService.getBooksByContributorId(contributorId, page, size);
         model.addAttribute("books", books);
-        model.addAttribute("currentPath", "/bookstore/books/get/contributor/" + contributorId);
+        model.addAttribute("currentPath", "/books/get/contributor/" + contributorId);
         return "bookset/get-bookList";
     }
 

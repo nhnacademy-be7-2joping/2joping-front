@@ -26,7 +26,7 @@
         <tr th:each="book : ${books.content}">
             <td><img th:src="${book.thumbnail}" alt="썸네일" width="50"></td>
             <td th:text="${#strings.arrayJoin(book.categoryList, ', ')}">카테고리</td>
-            <td><a th:href="@{/bookstore/books/get/book/{bookId}(bookId=${book.bookId})}" th:text="${book.title}">제목</a></td>
+            <td><a th:href="@{/books/get/book/{bookId}(bookId=${book.bookId})}" th:text="${book.title}">제목</a></td>
             <td th:text="${book.publisherName}">출판사</td>
             <td th:text="${#strings.arrayJoin(book.contributorList, ', ')}">기여자</td>
             <td th:text="${book.sellingPrice}">판매 가격</td>

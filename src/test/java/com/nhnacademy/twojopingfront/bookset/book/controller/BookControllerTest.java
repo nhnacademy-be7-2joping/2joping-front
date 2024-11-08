@@ -45,11 +45,11 @@ class BookControllerTest {
         Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"))));
         when(bookService.getAllBooks(0, 2)).thenReturn(bookPage);
 
-        mockMvc.perform(get("/bookstore/books/get"))
+        mockMvc.perform(get("/books/get"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bookset/get-bookList"))
                 .andExpect(model().attributeExists("books"))
-                .andExpect(model().attribute("currentPath", "/bookstore/books/get"));
+                .andExpect(model().attribute("currentPath", "/books/get"));
     }
 
     @Test
@@ -58,11 +58,11 @@ class BookControllerTest {
         Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"))));
         when(bookService.getBooksByCategoryId(anyLong(), any(int.class), any(int.class))).thenReturn(bookPage);
 
-        mockMvc.perform(get("/bookstore/books/get/category/1"))
+        mockMvc.perform(get("/books/get/category/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bookset/get-bookList"))
                 .andExpect(model().attributeExists("books"))
-                .andExpect(model().attribute("currentPath", "/bookstore/books/get/category/1"));
+                .andExpect(model().attribute("currentPath", "/books/get/category/1"));
     }
 
     @Test
@@ -71,11 +71,11 @@ class BookControllerTest {
         Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"))));
         when(bookService.getBooksByContributorId(anyLong(), any(int.class), any(int.class))).thenReturn(bookPage);
 
-        mockMvc.perform(get("/bookstore/books/get/contributor/1"))
+        mockMvc.perform(get("/books/get/contributor/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bookset/get-bookList"))
                 .andExpect(model().attributeExists("books"))
-                .andExpect(model().attribute("currentPath", "/bookstore/books/get/contributor/1"));
+                .andExpect(model().attribute("currentPath", "/books/get/contributor/1"));
     }
 
     @Test
@@ -84,7 +84,7 @@ class BookControllerTest {
         BookResponseDto bookResponse = new BookResponseDto(1L, "Title", "Description", "2023-10-01", LocalDate.now(), "1234567890123", 10000, 9000, true, true, 10, 0,0,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"),"thumbnail");
         when(bookService.getBookById(anyLong())).thenReturn(bookResponse);
 
-        mockMvc.perform(get("/bookstore/books/get/book/1"))
+        mockMvc.perform(get("/books/get/book/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bookset/bookdetails"))
                 .andExpect(model().attributeExists("books"));

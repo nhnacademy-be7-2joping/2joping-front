@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="dd4b4542-5020-4ad1-bd12-83fedfb81807" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookSimpleResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookSimpleResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bookset/get-booklist.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/get-booklist.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +71,7 @@
     &quot;JUnit.BookControllerTest.executor&quot;: &quot;Coverage&quot;,
     &quot;JUnit.MemberRestControllerTest.executor&quot;: &quot;Coverage&quot;,
     &quot;JUnit.member in twojoping-front.executor&quot;: &quot;Coverage&quot;,
+    &quot;Maven.twojoping-front [package].executor&quot;: &quot;Run&quot;,
     &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
     &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
     &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
@@ -220,7 +218,7 @@
       <workItem from="1730893027689" duration="1744000" />
       <workItem from="1730938374751" duration="11402000" />
       <workItem from="1730965203328" duration="585000" />
-      <workItem from="1731030869210" duration="3751000" />
+      <workItem from="1731030869210" duration="7154000" />
     </task>
     <servers />
   </component>
