@@ -33,4 +33,5 @@ build/
 .vscode/
 
 ### etc
+.idea/workspace.xml
 http/
