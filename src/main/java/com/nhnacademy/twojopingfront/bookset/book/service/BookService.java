@@ -3,9 +3,13 @@ package com.nhnacademy.twojopingfront.bookset.book.service;
 import com.nhnacademy.twojopingfront.bookset.book.client.BookClient;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.exception.BookNotFoundException;
+import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -50,8 +54,11 @@ public class BookService {
      * @return 도서의 상세 정보
      */
     public BookResponseDto getBookById(@PathVariable Long bookId) {
-
+        try{
         return bookClient.getBookById(bookId);
+        } catch (FeignException e) {
+            throw new BookNotFoundException(new ErrorResponseDto(HttpStatus.NOT_FOUND,"404","해당 도서를 찾을 수 없습니다."));
+        }
     }
 }
 

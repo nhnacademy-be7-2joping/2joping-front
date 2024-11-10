@@ -5,16 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/dto/request/PaymentRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/dto/response/PaymentResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/order-form.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookContributorResponseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/exception/BookNotFoundException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/component/toss-widget/checkout.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/component/toss-widget/checkout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/component/toss-widget/success.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/component/toss-widget/success.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/order/order-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/order/order-form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/order/payment-success.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/order/payment-success.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookSimpleResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookSimpleResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/service/BookService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/dto/request/PublisherRequestDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/dto/response/PublisherCreateResponseDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/dto/response/PublisherResponseDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bookset/get-booklist.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/get-booklist.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +30,7 @@
         <option value="Enum" />
         <option value="HTML File" />
         <option value="AnnotationType" />
+        <option value="Exception" />
         <option value="Class" />
       </list>
     </option>
@@ -70,37 +73,39 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "HTTP Request.generated-requests | #13.executor": "Run",
-    "HTTP Request.generated-requests | #14.executor": "Run",
-    "JUnit.MemberRestControllerTest.executor": "Coverage",
-    "JUnit.member in twojoping-front.executor": "Coverage",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.FrontApplication.executor": "Run",
-    "Spring Boot.TwojopingFrontApplication.executor": "Run",
-    "git-widget-placeholder": "feature/order",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/JavaProject/SpringBoot/2joping-front/src/main/resources/templates/component/toss-widget",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;HTTP Request.generated-requests | #13.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #14.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.BookControllerTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MemberRestControllerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.member in twojoping-front.executor&quot;: &quot;Coverage&quot;,
+    &quot;Maven.twojoping-front [package].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.FrontApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.TwojopingFrontApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/get-booklist&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/JavaProject/SpringBoot/2joping-front/src/main/resources/templates/component/toss-widget&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\templates\component\toss-widget" />
@@ -121,12 +126,24 @@
       <recent name="com.nhnacademy.front.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.TwojopingFrontApplication">
-    <configuration name="generated-requests | #13" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="13" requestIdentifier="#13">
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="JUnit.BookControllerTest">
     <configuration name="generated-requests | #14" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="14" requestIdentifier="#14">
       <method v="2" />
+    </configuration>
+    <configuration name="BookControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="twojoping-front" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nhnacademy.twojopingfront.bookset.book.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nhnacademy.twojopingfront.bookset.book.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.nhnacademy.twojopingfront.bookset.book.controller.BookControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="MemberRestControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="twojoping-front" />
@@ -168,15 +185,15 @@
     </configuration>
     <configuration name="TwojopingFrontApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="front" />
+      <module name="twojoping-front" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhnacademy.twojopingfront.TwojopingFrontApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="HTTP 요청.generated-requests | #13" />
-      <item itemvalue="HTTP 요청.generated-requests | #14" />
+      <item itemvalue="HTTP Request.generated-requests | #14" />
+      <item itemvalue="JUnit.BookControllerTest" />
       <item itemvalue="JUnit.MemberRestControllerTest" />
       <item itemvalue="JUnit.member in twojoping-front" />
       <item itemvalue="Spring Boot.TwojopingFrontApplication" />
@@ -184,19 +201,18 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BookControllerTest" />
         <item itemvalue="Spring Boot.FrontApplication" />
         <item itemvalue="JUnit.member in twojoping-front" />
         <item itemvalue="JUnit.MemberRestControllerTest" />
-        <item itemvalue="HTTP 요청.generated-requests | #14" />
-        <item itemvalue="HTTP 요청.generated-requests | #13" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.387" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.387" />
       </set>
     </attachedChunks>
   </component>
@@ -224,6 +240,7 @@
       <workItem from="1730851180568" duration="18246000" />
       <workItem from="1730937241220" duration="17440000" />
       <workItem from="1731024033982" duration="7674000" />
+      <workItem from="1731225076525" duration="4286000" />
     </task>
     <servers />
   </component>
@@ -242,6 +259,9 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/2joping_front$BookControllerTest.ic" NAME="BookControllerTest Coverage Results" MODIFIED="1731032919344" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>com.nhnacademy.twojopingfront.bookset.book.controller.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/user_address_create_read_register$MemberRestControllerTest.ic" NAME="MemberRestControllerTest Coverage Results" MODIFIED="1730355281982" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>com.nhnacademy.twojopingfront.user.member.*</FILTER>
     </SUITE>

@@ -28,7 +28,12 @@
             <td th:text="${#strings.arrayJoin(book.categoryList, ', ')}">카테고리</td>
             <td><a th:href="@{/books/get/book/{bookId}(bookId=${book.bookId})}" th:text="${book.title}">제목</a></td>
             <td th:text="${book.publisherName}">출판사</td>
-            <td th:text="${#strings.arrayJoin(book.contributorList, ', ')}">기여자</td>
+            <td>
+                <span th:each="contributor : ${book.contributorList}" th:text="${contributor.roleName} + ': ' + ${contributor.contributorName}">
+                    기여자
+                </span>
+                <br th:if="${!#lists.isEmpty(book.contributorList)}"/>
+            </td>
             <td th:text="${book.sellingPrice}">판매 가격</td>
             <td th:text="${book.retailPrice}">정가</td>
         </tr>

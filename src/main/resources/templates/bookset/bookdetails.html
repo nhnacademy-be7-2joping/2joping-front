@@ -26,7 +26,11 @@
         </tr>
         <tr>
           <th>기여자</th>
-          <td th:text="${#strings.arrayJoin(books.contributorList, ', ')}">기여자</td>
+          <td>
+            <div th:each="contributor : ${books.contributorList}">
+              <span th:text="${contributor.roleName} + ': ' + ${contributor.contributorName}"></span><br/>
+            </div>
+          </td>
         </tr>
         <tr>
           <th>출판사</th>

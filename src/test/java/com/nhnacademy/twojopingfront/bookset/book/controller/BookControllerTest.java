@@ -1,5 +1,6 @@
 package com.nhnacademy.twojopingfront.bookset.book.controller;
 
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookContributorResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
@@ -17,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,59 +35,74 @@ class BookControllerTest {
     @MockBean
     private BookService bookService;
 
+    private BookSimpleResponseDto bookSimpleDto;
+    private Page<BookSimpleResponseDto> bookPage;
+    private BookResponseDto bookResponse;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        bookSimpleDto = new BookSimpleResponseDto(
+                1L, "Thumbnail", "Title", 10000, "Publisher", 12000,
+                List.of(new BookContributorResponseDto(1L, "Contributor 1", 1L, "Author")),
+                List.of("Category 1", "Category 2")
+        );
+        bookPage = new PageImpl<>(List.of(bookSimpleDto));
+
+        bookResponse = new BookResponseDto(
+                1L, "Publisher", "Title", "Description", LocalDate.now(), "1234567890123",
+                10000, 9000, true, true, 10, 0, 0,
+                List.of(new BookContributorResponseDto(1L, "Contributor 1", 1L, "Author")),
+                List.of("Category 1", "Category 2"), "thumbnail"
+        );
     }
 
     @Test
     @DisplayName("전체 도서 목록 조회 테스트")
     void getAllBooks() throws Exception {
-        Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"))));
         when(bookService.getAllBooks(0, 2)).thenReturn(bookPage);
 
         mockMvc.perform(get("/books/get"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bookset/get-bookList"))
-                .andExpect(model().attributeExists("books"))
+                .andExpect(model().attribute("books", bookPage))
                 .andExpect(model().attribute("currentPath", "/books/get"));
     }
 
     @Test
     @DisplayName("카테고리별 도서 목록 조회 테스트")
     void getBooksByCategoryId() throws Exception {
-        Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"))));
-        when(bookService.getBooksByCategoryId(anyLong(), any(int.class), any(int.class))).thenReturn(bookPage);
+        when(bookService.getBooksByCategoryId(anyLong(), anyInt(), anyInt())).thenReturn(bookPage);
 
         mockMvc.perform(get("/books/get/category/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bookset/get-bookList"))
-                .andExpect(model().attributeExists("books"))
+                .andExpect(model().attribute("books", bookPage))
                 .andExpect(model().attribute("currentPath", "/books/get/category/1"));
     }
 
     @Test
     @DisplayName("기여자별 도서 목록 조회 테스트")
     void getBooksByContributorId() throws Exception {
-        Page<BookSimpleResponseDto> bookPage = new PageImpl<>(List.of(new BookSimpleResponseDto(1L, "Title", "Thumbnail", 10000, "Publisher", 12000,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"))));
-        when(bookService.getBooksByContributorId(anyLong(), any(int.class), any(int.class))).thenReturn(bookPage);
+        when(bookService.getBooksByContributorId(anyLong(), anyInt(), anyInt())).thenReturn(bookPage);
 
         mockMvc.perform(get("/books/get/contributor/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bookset/get-bookList"))
-                .andExpect(model().attributeExists("books"))
+                .andExpect(model().attribute("books", bookPage))
                 .andExpect(model().attribute("currentPath", "/books/get/contributor/1"));
     }
 
     @Test
     @DisplayName("도서 상세 조회 테스트")
     void getBookByBookId() throws Exception {
-        BookResponseDto bookResponse = new BookResponseDto(1L, "Title", "Description", "2023-10-01", LocalDate.now(), "1234567890123", 10000, 9000, true, true, 10, 0,0,List.of("Contributor 1", "Contributor 2"),List.of("Category 1", "Category 2"),"thumbnail");
         when(bookService.getBookById(anyLong())).thenReturn(bookResponse);
 
         mockMvc.perform(get("/books/get/book/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bookset/bookdetails"))
-                .andExpect(model().attributeExists("books"));
+                .andExpect(model().attribute("books", bookResponse));
     }
 }
+
