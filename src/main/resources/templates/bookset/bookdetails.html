@@ -41,6 +41,14 @@
           <td th:text="${books.description}">도서 설명</td>
         </tr>
         <tr>
+          <th>태그</th>
+          <td>
+            <div th:each="tag : ${books.tagList}">
+              <span th:text="${tag.tagName}"></span><br/>
+            </div>
+          </td>
+        </tr>
+        <tr>
           <th>출판일</th>
           <td th:text="${books.publishedDate}">출판일 정보</td>
         </tr>

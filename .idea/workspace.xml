@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookContributorResponseDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/exception/BookNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookTagResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookSimpleResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookSimpleResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/service/BookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/dto/request/PublisherRequestDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/dto/response/PublisherCreateResponseDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/dto/response/PublisherResponseDto.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bookset/get-booklist.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/get-booklist.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -126,7 +119,7 @@
       <recent name="com.nhnacademy.front.dto" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.BookControllerTest">
+  <component name="RunManager" selected="Spring Boot.TwojopingFrontApplication">
     <configuration name="generated-requests | #14" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="14" requestIdentifier="#14">
       <method v="2" />
     </configuration>
@@ -240,7 +233,8 @@
       <workItem from="1730851180568" duration="18246000" />
       <workItem from="1730937241220" duration="17440000" />
       <workItem from="1731024033982" duration="7674000" />
-      <workItem from="1731225076525" duration="4286000" />
+      <workItem from="1731225076525" duration="6447000" />
+      <workItem from="1731284855973" duration="3873000" />
     </task>
     <servers />
   </component>

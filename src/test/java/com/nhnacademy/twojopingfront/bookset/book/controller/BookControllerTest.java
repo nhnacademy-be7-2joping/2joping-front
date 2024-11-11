@@ -3,6 +3,7 @@ package com.nhnacademy.twojopingfront.bookset.book.controller;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookContributorResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookTagResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,7 +55,7 @@ class BookControllerTest {
                 1L, "Publisher", "Title", "Description", LocalDate.now(), "1234567890123",
                 10000, 9000, true, true, 10, 0, 0,
                 List.of(new BookContributorResponseDto(1L, "Contributor 1", 1L, "Author")),
-                List.of("Category 1", "Category 2"), "thumbnail"
+                List.of("Category 1", "Category 2"),List.of(new BookTagResponseDto(1L,"Tag 1")), "thumbnail"
         );
     }
 
