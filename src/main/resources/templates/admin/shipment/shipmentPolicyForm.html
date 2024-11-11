@@ -2,32 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>배송 정책 추가/수정</title>
-    <script>
-        // 폼 유효성 검사
-        function validateForm() {
-            const minOrderAmount = document.getElementById("minOrderAmount").value;
-            const shippingFee = document.getElementById("shippingFee").value;
-
-            if (minOrderAmount <= 0) {
-                alert("최소 주문 금액을 올바르게 입력하세요.");
-                return false;
-            }
-
-            if (shippingFee < 0) {
-                alert("배송비는 0 이상이어야 합니다.");
-                return false;
-            }
-
-            return true;  // 모든 검사를 통과하면 폼이 제출됨
-        }
-    </script>
 </head>
 <body>
 <h1 th:text="${policy?.shipmentPolicyId == null ? '배송 정책 추가' : '배송 정책 수정'}"></h1>
 
 <!-- 폼 전송 경로 결정: ID가 있으면 수정, 없으면 추가 -->
 <form th:action="${policy?.shipmentPolicyId == null ? '/admin/shipment-policies' : '/admin/shipment-policies/' + policy.shipmentPolicyId + '/edit'}"
-      th:object="${policy}" method="post" onsubmit="return validateForm()">
+      th:object="${policy}" method="post">
 
     <!-- 정책 이름 필드 -->
     <div>
@@ -38,7 +19,7 @@
     <!-- 최소 주문 금액 필드 -->
     <div>
         <label for="minOrderAmount">최소 주문 금액:</label>
-        <input type="number" id="minOrderAmount" th:field="*{minOrderAmount}" required min="0">
+        <input type="number" id="minOrderAmount" th:field="*{minOrderAmount}" required min="1" title="최소 주문 금액은 1 이상이어야 합니다.">
     </div>
 
     <!-- 회원 전용 여부 필드 -->
@@ -50,7 +31,7 @@
     <!-- 배송비 필드 -->
     <div>
         <label for="shippingFee">배송비:</label>
-        <input type="number" id="shippingFee" th:field="*{shippingFee}" required min="0">
+        <input type="number" id="shippingFee" th:field="*{shippingFee}" required min="0" title="배송비는 0 이상이어야 합니다.">
     </div>
 
     <!-- 제출 버튼 -->
