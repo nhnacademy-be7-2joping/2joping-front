@@ -27,7 +27,7 @@ public class ShipmentPolicyController {
 
     @GetMapping("/new")
     public String showAddShipmentPolicyForm(Model model) {
-        model.addAttribute("policy", new ShipmentPolicyRequestDto("", 0, true, 0));
+        model.addAttribute("policy", new ShipmentPolicyRequestDto(null, "", 0, true, 0));
         return "admin/shipment/shipmentPolicyForm";
     }
 
