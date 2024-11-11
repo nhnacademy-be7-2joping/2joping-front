@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/menu-footer-layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>장바구니</title>
+    <style>
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .cart-item-info {
+            flex: 2;
+        }
+        .cart-item-controls {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .quantity-control {
+            display: flex;
+            align-items: center;
+        }
+        .quantity-control input {
+            width: 40px;
+            text-align: center;
+        }
+        .cart-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+        .quantity-control input {
+            width: 40px;
+            text-align: center;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+        .quantity-btn, .remove-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+        }
+        .quantity-btn {
+            background-color: #b6b6b6;
+            transition: background-color 0.2s;
+        }
+        .quantity-btn:hover {
+            background-color: #4e4e4e;
+        }
+        .remove-btn {
+            background-color: #ff4d4d;
+        }
+        .remove-btn:hover {
+            background-color: #cc0000;
+        }
+    </style>
+</head>
+<body>
+
+<h1>장바구니</h1>
+
+<div class="container" layout:fragment="content">
+    <div class="cart-item" th:each="item : ${cart}">
+        <div class="cart-item-info">
+            <h4><strong th:text="${item.getBook().getTitle()}"></strong></h4>
+            <div>
+                <p>단가: <span th:text="${item.getBook().getSellingPrice()}"></span>원</p>
+            </div>
+            <strong><p>가격: <span th:text="${item.getBook().getSellingPrice() * item.getQuantity()}"></span>원</p></strong>
+        </div>
+
+        <div class="cart-item-controls">
+            <div class="quantity-control">
+                <button type="button" onclick="updateQuantity('minus', [[${item.id}]])" class="quantity-btn">-</button>
+                <input type="text" th:value="${item.quantity}" id="quantity-[[${item.id}]]" readonly>
+                <button type="button" onclick="updateQuantity('plus', [[${item.id}]])" class="quantity-btn">+</button>
+            </div>
+            <button type="button" onclick="removeItem([[${item.id}]])" class="remove-btn">삭제</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="cart-buttons">
+    <button type="button" onclick="checkout()">결제하기</button>
+</div>
+
+<div layout:fragment="script">
+    <script>
+        function updateQuantity(action, itemId) {
+            const quantityInput = document.getElementById(`quantity-${itemId}`);
+            let currentQuantity = parseInt(quantityInput.value);
+
+            if (action === 'plus') {
+                quantityInput.value = currentQuantity + 1;
+            } else if (action === 'minus' && currentQuantity > 1) {
+                quantityInput.value = currentQuantity - 1;
+            }
+
+            // 수량 업데이트 후 서버에 반영할 코드 추가 가능 (AJAX 사용)
+        }
+
+        function removeItem(itemId) {
+            if (confirm("이 상품을 장바구니에서 삭제하시겠습니까?")) {
+                // 삭제 요청 처리 (예: AJAX 요청 보내기)
+                console.log("상품 삭제:", itemId);
+            }
+        }
+
+        function checkout() {
+            // 결제 프로세스 처리 코드 추가 (예: AJAX 요청이나 페이지 이동)
+            alert("결제 페이지로 이동합니다.");
+        }
+    </script>
+</div>
+</body>
+</html>
