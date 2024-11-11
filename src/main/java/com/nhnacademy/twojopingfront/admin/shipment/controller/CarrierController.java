@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/carriers")
+@RequestMapping("/admin/carriers")
 public class CarrierController {
 
     private final CarrierService carrierService;
@@ -42,20 +42,20 @@ public class CarrierController {
     public String createCarrier(CarrierRequestDto carrierRequestDto, RedirectAttributes redirectAttributes) {
         carrierService.createCarrier(carrierRequestDto);
         redirectAttributes.addFlashAttribute("message", "배송업체가 성공적으로 추가되었습니다.");
-        return "redirect:/carriers";
+        return "redirect:/admin/carriers";
     }
 
     @PostMapping("/{carrierId}/edit")
     public String updateCarrier(@PathVariable Long carrierId, CarrierRequestDto carrierRequestDto, RedirectAttributes redirectAttributes) {
         carrierService.updateCarrier(carrierId, carrierRequestDto);
         redirectAttributes.addFlashAttribute("message", "배송업체가 성공적으로 수정되었습니다.");
-        return "redirect:/carriers";
+        return "redirect:/admin/carriers";
     }
 
     @PostMapping("/{carrierId}/delete")
     public String deleteCarrier(@PathVariable Long carrierId, RedirectAttributes redirectAttributes) {
         carrierService.deleteCarrier(carrierId);
         redirectAttributes.addFlashAttribute("message", "배송업체가 성공적으로 삭제되었습니다.");
-        return "redirect:/carriers";
+        return "redirect:/admin/carriers";
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/shipment-policies")
+@RequestMapping("/admin/shipment-policies")
 public class ShipmentPolicyController {
 
     private final ShipmentPolicyService shipmentPolicyService;
@@ -42,27 +42,27 @@ public class ShipmentPolicyController {
     public String createShipmentPolicy(ShipmentPolicyRequestDto requestDto, RedirectAttributes redirectAttributes) {
         shipmentPolicyService.createShipmentPolicy(requestDto);
         redirectAttributes.addFlashAttribute("message", "배송 정책이 성공적으로 추가되었습니다.");
-        return "redirect:/shipment-policies";
+        return "redirect:/admin/shipment-policies";
     }
 
     @PostMapping("/{policyId}/edit")
     public String updateShipmentPolicy(@PathVariable Long policyId, ShipmentPolicyRequestDto requestDto, RedirectAttributes redirectAttributes) {
         shipmentPolicyService.updateShipmentPolicy(policyId, requestDto);
         redirectAttributes.addFlashAttribute("message", "배송 정책이 성공적으로 수정되었습니다.");
-        return "redirect:/shipment-policies";
+        return "redirect:/admin/shipment-policies";
     }
 
     @PostMapping("/{policyId}/deactivate")
     public String deactivateShipmentPolicy(@PathVariable Long policyId, RedirectAttributes redirectAttributes) {
         shipmentPolicyService.deactivateShipmentPolicy(policyId);
         redirectAttributes.addFlashAttribute("message", "배송 정책이 성공적으로 비활성화되었습니다.");
-        return "redirect:/shipment-policies";
+        return "redirect:/admin/shipment-policies";
     }
 
     @PostMapping("/{policyId}/activate")
     public String activateShipmentPolicy(@PathVariable Long policyId, RedirectAttributes redirectAttributes) {
         shipmentPolicyService.activateShipmentPolicy(policyId);
         redirectAttributes.addFlashAttribute("message", "배송 정책이 성공적으로 활성화되었습니다.");
-        return "redirect:/shipment-policies";
+        return "redirect:/admin/shipment-policies";
     }
 }

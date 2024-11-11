@@ -35,7 +35,7 @@
 <h1 th:text="${carrier?.carrierId == null ? '배송업체 추가' : '배송업체 수정'}"></h1>
 
 <!-- 폼 전송 경로 결정: ID가 있으면 수정, 없으면 추가 -->
-<form th:action="${carrier?.carrierId == null ? '/carriers' : '/carriers/' + carrier.carrierId + '/edit'}"
+<form th:action="${carrier?.carrierId == null ? '/admin/carriers' : '/admin/carriers/' + carrier.carrierId + '/edit'}"
       th:object="${carrier}" method="post" onsubmit="return validateForm()">
 
   <!-- 이름 필드 -->
@@ -68,6 +68,6 @@
   </form>
 
 <!-- 취소 버튼 -->
-<a href="/carriers">목록으로 돌아가기</a>
+<a href="/admin/carriers">목록으로 돌아가기</a>
 </body>
 </html>
