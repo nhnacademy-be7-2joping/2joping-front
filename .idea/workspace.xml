@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookTagResponseDto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/dto/response/BookResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bookset/bookdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/book/bookdetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/bookset/get-booklist.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/bookset/book/get-booklist.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -107,11 +107,11 @@
       <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\static" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\PYTHON\nhn\teamproject\2joping-front\src\main\resources\templates\bookset\book" />
       <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\templates\order" />
       <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\static" />
       <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources" />
       <recent name="C:\git study\2joping\front-server\feature\user-address-create-read-register\src\main\resources\templates" />
-      <recent name="D:\JavaProject\SpringBoot\2joping-front\src\main\resources\templates\layout" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.nhnacademy.twojopingfront.common.error.dto" />
@@ -234,7 +234,7 @@
       <workItem from="1730937241220" duration="17440000" />
       <workItem from="1731024033982" duration="7674000" />
       <workItem from="1731225076525" duration="6447000" />
-      <workItem from="1731284855973" duration="3873000" />
+      <workItem from="1731284855973" duration="5505000" />
     </task>
     <servers />
   </component>
