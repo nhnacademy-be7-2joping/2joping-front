@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>배송 정책 목록</title>
+</head>
+<body>
+<h1>배송 정책 목록</h1>
+
+<!-- 성공 메시지 표시 -->
+<div th:if="${message}" th:text="${message}" style="color: green;"></div>
+
+<!-- 배송 정책 추가 버튼 -->
+<a href="/shipment-policies/new">배송 정책 추가</a>
+
+<!-- 배송 정책 목록 테이블 -->
+<table border="1">
+    <thead>
+    <tr>
+        <th>정책 ID</th>
+        <th>정책 이름</th>
+        <th>최소 주문 금액</th>
+        <th>회원 전용</th>
+        <th>배송비</th>
+        <th>상태</th>
+        <th>생성일</th>
+        <th>수정일</th>
+        <th>수정</th>
+        <th>비활성화</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="policy : ${policies}">
+        <td th:text="${policy.shipmentPolicyId}">1</td>
+        <td th:text="${policy.name}">정책 이름</td>
+        <td th:text="${policy.minOrderAmount}">10000</td>
+        <td th:text="${policy.isMemberOnly ? '예' : '아니오'}">예</td>
+        <td th:text="${policy.shippingFee}">2500</td>
+        <td th:text="${policy.isActive ? '활성화' : '비활성화'}">활성화</td>
+        <td th:text="${policy.createdAt}">2024-10-29</td>
+        <td th:text="${policy.updatedAt}">2024-11-01</td>
+        <td><a th:href="@{|/shipment-policies/${policy.shipmentPolicyId}/edit|}">수정</a></td>
+        <td>
+            <form th:action="@{|/shipment-policies/${policy.shipmentPolicyId}/deactivate|}" method="post">
+                <button type="submit" onclick="return confirm('정말 비활성화하시겠습니까?');">비활성화</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
