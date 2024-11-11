@@ -22,20 +22,20 @@ public class ShipmentPolicyController {
     public String getAllShipmentPolicies(Model model) {
         List<ShipmentPolicyResponseDto> policies = shipmentPolicyService.getAllShipmentPolicies();
         model.addAttribute("policies", policies);
-        return "admin/shipment/shipmentPolicyList";
+        return "admin/shipment/shipment-policy-list";
     }
 
     @GetMapping("/new")
     public String showAddShipmentPolicyForm(Model model) {
         model.addAttribute("policy", new ShipmentPolicyRequestDto(null, "", 0, true, 0));
-        return "admin/shipment/shipmentPolicyForm";
+        return "admin/shipment/shipment-policy-form";
     }
 
     @GetMapping("/{policyId}/edit")
     public String showEditShipmentPolicyForm(@PathVariable Long policyId, Model model) {
         ShipmentPolicyResponseDto policy = shipmentPolicyService.getShipmentPolicy(policyId);
         model.addAttribute("policy", policy);
-        return "admin/shipment/shipmentPolicyForm";
+        return "admin/shipment/shipment-policy-form";
     }
 
     @PostMapping

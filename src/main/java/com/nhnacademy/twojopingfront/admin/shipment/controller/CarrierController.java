@@ -22,20 +22,20 @@ public class CarrierController {
     public String getAllCarriers(Model model) {
         List<CarrierResponseDto> carriers = carrierService.getAllCarriers();
         model.addAttribute("carriers", carriers);
-        return "admin/shipment/carrierList";
+        return "admin/shipment/carrier-list";
     }
 
     @GetMapping("/new")
     public String showAddCarrierForm(Model model) {
         model.addAttribute("carrier",new CarrierRequestDto(null, "", "", "", ""));
-        return "admin/shipment/carrierForm";
+        return "admin/shipment/carrier-form";
     }
 
     @GetMapping("/{carrierId}/edit")
     public String showEditCarrierForm(@PathVariable Long carrierId, Model model) {
         CarrierResponseDto carrier = carrierService.getCarrier(carrierId);
         model.addAttribute("carrier", carrier);
-        return "admin/shipment/carrierForm";
+        return "admin/shipment/carrier-form";
     }
 
     @PostMapping
