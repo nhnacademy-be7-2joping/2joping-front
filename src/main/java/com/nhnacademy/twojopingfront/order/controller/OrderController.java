@@ -1,8 +1,12 @@
 package com.nhnacademy.twojopingfront.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.twojopingfront.cart.entity.Cart;
+import com.nhnacademy.twojopingfront.cart.service.CartService;
+import com.nhnacademy.twojopingfront.order.client.ShipmentPolicyRequestClient;
 import com.nhnacademy.twojopingfront.order.dto.request.PaymentRequest;
 import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
+import com.nhnacademy.twojopingfront.order.dto.response.ShipmentPolicyResponseDto;
 import com.nhnacademy.twojopingfront.user.dto.request.LoginNonMemberRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +26,8 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/orders")
@@ -29,6 +35,8 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class OrderController {
     private final ObjectMapper objectMapper;
+    private final CartService cartService;
+    private final ShipmentPolicyRequestClient shipmentPolicyRequestClient;
 
     @Value("${toss.widget-secret-key}")
     private String widgetSecretKey;
@@ -49,6 +57,27 @@ public class OrderController {
 
     @GetMapping("/form")
     public String form(Model model) {
+        List<Cart> cartItems = cartService.getCartByCustomerId(1);
+        int bookCost = cartItems.stream().map(i -> i.getBook().getSellingPrice() * i.getQuantity()).reduce(
+                0,
+                Integer::sum
+        );
+        List<ShipmentPolicyResponseDto> shipmentPolicyResponseDtos =
+                shipmentPolicyRequestClient.getAllShipmentPolicies().getBody();
+        int appliedDeliveryCost = 0;
+        // 배송 정책 최소 적용 가격 기준으로 정렬
+        Objects.requireNonNull(shipmentPolicyResponseDtos).sort((p1, p2) -> p1.minOrderAmount() - p2.minOrderAmount());
+        for (ShipmentPolicyResponseDto dto : shipmentPolicyResponseDtos ) {
+            if (bookCost >= dto.minOrderAmount()) {
+                appliedDeliveryCost = dto.shippingFee();
+            }
+        }
+
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("bookCost", bookCost);
+        model.addAttribute("deliveryCost", appliedDeliveryCost);
+        model.addAttribute("shipmentPolicies", shipmentPolicyResponseDtos);
+
         return "order/order-form";
     }
 

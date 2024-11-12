@@ -12,28 +12,34 @@
             padding: 10px;
             border-bottom: 1px solid #ddd;
         }
+
         .cart-item-info {
             flex: 2;
         }
+
         .cart-item-controls {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
+
         .quantity-control {
             display: flex;
             align-items: center;
         }
+
         .quantity-control input {
             width: 40px;
             text-align: center;
         }
+
         .cart-buttons {
             display: flex;
             justify-content: flex-end;
             margin-top: 20px;
         }
+
         .cart-item {
             display: flex;
             justify-content: space-between;
@@ -44,6 +50,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #f9f9f9;
         }
+
         .quantity-control input {
             width: 40px;
             text-align: center;
@@ -52,6 +59,7 @@
             border-radius: 4px;
             background-color: #fff;
         }
+
         .quantity-btn, .remove-btn {
             padding: 5px 10px;
             border: none;
@@ -59,16 +67,20 @@
             color: #fff;
             cursor: pointer;
         }
+
         .quantity-btn {
             background-color: #b6b6b6;
             transition: background-color 0.2s;
         }
+
         .quantity-btn:hover {
             background-color: #4e4e4e;
         }
+
         .remove-btn {
             background-color: #ff4d4d;
         }
+
         .remove-btn:hover {
             background-color: #cc0000;
         }
@@ -81,20 +93,30 @@
 <div class="container" layout:fragment="content">
     <div class="cart-item" th:each="item : ${cart}">
         <div class="cart-item-info">
-            <h4><strong th:text="${item.getBook().getTitle()}"></strong></h4>
+            <h4><strong th:text="${item.book.title}"></strong></h4>
             <div>
-                <p>단가: <span th:text="${item.getBook().getSellingPrice()}"></span>원</p>
+                <p>단가: <span th:text="${item.book.sellingPrice}" th:id="'unit-price-' + ${itemStat.index + 1}"></span>원
+                </p>
             </div>
-            <strong><p>가격: <span th:text="${item.getBook().getSellingPrice() * item.getQuantity()}"></span>원</p></strong>
+            <strong><p>가격: <span th:text="${item.book.sellingPrice * item.quantity}"
+                                 th:id="'total-price-' + ${itemStat.index + 1}"></span>원
+            </p></strong>
         </div>
 
         <div class="cart-item-controls">
             <div class="quantity-control">
-                <button type="button" onclick="updateQuantity('minus', [[${item.id}]])" class="quantity-btn">-</button>
-                <input type="text" th:value="${item.quantity}" id="quantity-[[${item.id}]]" readonly>
-                <button type="button" onclick="updateQuantity('plus', [[${item.id}]])" class="quantity-btn">+</button>
+                <!-- 버튼에 id를 추가 -->
+                <button type="button" class="quantity-btn minus-btn"
+                        th:attr="data-id=${itemStat.index + 1}">-
+                </button>
+                <input type="text" th:value="${item.quantity}" th:id="'quantity-' + ${itemStat.index + 1}" readonly>
+                <button type="button" class="quantity-btn plus-btn" th:id="'btn-plus-' + ${itemStat.index + 1}"
+                        th:attr="data-id=${itemStat.index + 1}">+
+                </button>
             </div>
-            <button type="button" onclick="removeItem([[${item.id}]])" class="remove-btn">삭제</button>
+            <button type="button" th:id="'btn-del-' + ${itemStat.index + 1}" class="remove-btn"
+                    th:attr="data-id=${itemStat.index + 1}">삭제
+            </button>
         </div>
     </div>
 </div>
@@ -106,6 +128,23 @@
 
 <div layout:fragment="script">
     <script>
+        // 증감 버튼의 event listener 추가
+        document.querySelectorAll('.quantity-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const operation = btn.classList.contains('minus-btn') ? 'minus' : 'plus';
+                const itemId = btn.getAttribute('data-id');
+                updateQuantity(operation, itemId);
+                updatePrice(itemId);
+            });
+        });
+
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const itemId = btn.getAttribute('data-id');
+                removeItem(itemId);
+            });
+        });
+
         function updateQuantity(action, itemId) {
             const quantityInput = document.getElementById(`quantity-${itemId}`);
             let currentQuantity = parseInt(quantityInput.value);
@@ -117,6 +156,14 @@
             }
 
             // 수량 업데이트 후 서버에 반영할 코드 추가 가능 (AJAX 사용)
+        }
+
+        function updatePrice(itemId) {
+            const unitPrice = Number(document.getElementById(`unit-price-${itemId}`).textContent);
+            const quantity = document.getElementById(`quantity-${itemId}`).value;
+            const cartItemPriceElement = document.getElementById(`total-price-${itemId}`);
+            console.log(unitPrice, quantity, cartItemPriceElement.textContent);
+            cartItemPriceElement.textContent = String(unitPrice * quantity);
         }
 
         function removeItem(itemId) {
