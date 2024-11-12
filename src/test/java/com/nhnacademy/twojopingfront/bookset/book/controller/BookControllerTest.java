@@ -66,7 +66,7 @@ class BookControllerTest {
 
         mockMvc.perform(get("/books/get"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("bookset/book/get-bookList"))
+                .andExpect(view().name("bookset/book/get-booklist"))
                 .andExpect(model().attribute("books", bookPage))
                 .andExpect(model().attribute("currentPath", "/books/get"));
     }
@@ -78,7 +78,7 @@ class BookControllerTest {
 
         mockMvc.perform(get("/books/get/category/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("bookset/book/get-bookList"))
+                .andExpect(view().name("bookset/book/get-booklist"))
                 .andExpect(model().attribute("books", bookPage))
                 .andExpect(model().attribute("currentPath", "/books/get/category/1"));
     }
@@ -90,7 +90,7 @@ class BookControllerTest {
 
         mockMvc.perform(get("/books/get/contributor/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("bookset/book/get-bookList"))
+                .andExpect(view().name("bookset/book/get-booklist"))
                 .andExpect(model().attribute("books", bookPage))
                 .andExpect(model().attribute("currentPath", "/books/get/contributor/1"));
     }
@@ -106,4 +106,3 @@ class BookControllerTest {
                 .andExpect(model().attribute("books", bookResponse));
     }
 }
-
