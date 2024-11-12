@@ -62,7 +62,7 @@ class BookControllerTest {
     @Test
     @DisplayName("전체 도서 목록 조회 테스트")
     void getAllBooks() throws Exception {
-        when(bookService.getAllBooks(0, 2)).thenReturn(bookPage);
+        when(bookService.getAllBooks(0, 10)).thenReturn(bookPage);
 
         mockMvc.perform(get("/books/get"))
                 .andExpect(status().isOk())
