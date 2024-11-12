@@ -2,41 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>배송업체 추가/수정</title>
-  <script>
-    // 폼 유효성 검사
-    function validateForm() {
-      const contactNumber = document.getElementById("contactNumber").value;
-      const contactEmail = document.getElementById("contactEmail").value;
-      const websiteUrl = document.getElementById("websiteUrl").value;
-
-      const contactNumberPattern = /^\d{3}-\d{4}-\d{4}$/;
-      if (!contactNumberPattern.test(contactNumber)) {
-        alert("올바른 연락처를 입력하세요.");
-        return false;
-      }
-
-      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // 간단한 이메일 패턴
-      if (contactEmail && !emailPattern.test(contactEmail)) {
-        alert("올바른 이메일 주소를 입력하세요.");
-        return false;
-      }
-
-      const urlPattern = /^(http|https):\/\/[^ "]+$/;  // URL 패턴
-      if (websiteUrl && !urlPattern.test(websiteUrl)) {
-        alert("올바른 웹사이트 URL을 입력하세요.");
-        return false;
-      }
-
-      return true;  // 모든 검사를 통과하면 폼이 제출됨
-    }
-  </script>
 </head>
 <body>
 <h1 th:text="${carrier?.carrierId == null ? '배송업체 추가' : '배송업체 수정'}"></h1>
 
 <!-- 폼 전송 경로 결정: ID가 있으면 수정, 없으면 추가 -->
-<form th:action="${carrier?.carrierId == null ? '/carriers' : '/carriers/' + carrier.carrierId + '/edit'}"
-      th:object="${carrier}" method="post" onsubmit="return validateForm()">
+<form th:action="${carrier?.carrierId == null ? '/admin/carriers' : '/admin/carriers/' + carrier.carrierId + '/edit'}"
+      th:object="${carrier}" method="post">
 
   <!-- 이름 필드 -->
   <div>
@@ -65,9 +37,9 @@
   <!-- 제출 버튼 -->
   <button type="submit" th:text="${#strings.isEmpty(carrier.carrierId) ? '추가' : '수정'}"></button>
 
-  </form>
+</form>
 
 <!-- 취소 버튼 -->
-<a href="/carriers">목록으로 돌아가기</a>
+<a href="/admin/carriers">목록으로 돌아가기</a>
 </body>
 </html>
