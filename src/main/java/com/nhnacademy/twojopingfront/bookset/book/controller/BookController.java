@@ -27,7 +27,7 @@ public class BookController {
         Page<BookSimpleResponseDto> books = bookService.getAllBooks(page, size);
         model.addAttribute("books", books);
         model.addAttribute("currentPath", "/books/get");
-        return "bookset/book/get-bookList";
+        return "bookset/book/get-booklist";
     }
 
     @GetMapping("/books/get/category/{categoryId}")
@@ -38,7 +38,7 @@ public class BookController {
         Page<BookSimpleResponseDto> books = bookService.getBooksByCategoryId(categoryId, page, size);
         model.addAttribute("books", books);
         model.addAttribute("currentPath", "/books/get/category/" + categoryId);
-        return "bookset/book/get-bookList";
+        return "bookset/book/get-booklist";
     }
 
     @GetMapping("/books/get/contributor/{contributorId}")
@@ -49,7 +49,7 @@ public class BookController {
         Page<BookSimpleResponseDto> books = bookService.getBooksByContributorId(contributorId, page, size);
         model.addAttribute("books", books);
         model.addAttribute("currentPath", "/books/get/contributor/" + contributorId);
-        return "bookset/book/get-bookList";
+        return "bookset/book/get-booklist";
     }
 
     @GetMapping("/books/get/book/{bookId}")
