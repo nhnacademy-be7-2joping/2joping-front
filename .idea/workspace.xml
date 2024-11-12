@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/client/ShipmentPolicyRequestClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/dto/response/ShipmentPolicyResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/order-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/order-style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/order-form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/order-form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/component/toss-widget/checkout.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/component/toss-widget/checkout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/order/order-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/order/order-form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/FrontApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/FrontApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/TwojopingFrontApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/TwojopingFrontApplicationTests.java" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +31,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="develop" />
+        <entry key="$PROJECT_DIR$" value="feature/publisher" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -130,11 +126,23 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.TwojopingFrontApplication">
-    <configuration name="generated-requests | #13" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="13" requestIdentifier="#13">
-      <method v="2" />
-    </configuration>
     <configuration name="generated-requests | #14" type="HttpClient.HttpRequestRunConfigurationType" factoryName="HTTP Request" temporary="true" nameIsGenerated="true" path="$APPLICATION_CONFIG_DIR$/scratches/generated-requests.http" index="14" requestIdentifier="#14">
       <method v="2" />
+    </configuration>
+    <configuration name="BookControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="twojoping-front" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nhnacademy.twojopingfront.bookset.book.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nhnacademy.twojopingfront.bookset.book.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.nhnacademy.twojopingfront.bookset.book.controller.BookControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <configuration name="MemberRestControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="twojoping-front" />
@@ -175,16 +183,17 @@
       </method>
     </configuration>
     <configuration name="TwojopingFrontApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="dev" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="front" />
+      <module name="twojoping-front" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhnacademy.twojopingfront.TwojopingFrontApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="HTTP 요청.generated-requests | #13" />
-      <item itemvalue="HTTP 요청.generated-requests | #14" />
+      <item itemvalue="HTTP Request.generated-requests | #14" />
+      <item itemvalue="JUnit.BookControllerTest" />
       <item itemvalue="JUnit.MemberRestControllerTest" />
       <item itemvalue="JUnit.member in twojoping-front" />
       <item itemvalue="Spring Boot.TwojopingFrontApplication" />
@@ -195,16 +204,16 @@
         <item itemvalue="Spring Boot.FrontApplication" />
         <item itemvalue="JUnit.member in twojoping-front" />
         <item itemvalue="JUnit.MemberRestControllerTest" />
-        <item itemvalue="HTTP 요청.generated-requests | #14" />
-        <item itemvalue="HTTP 요청.generated-requests | #13" />
+        <item itemvalue="JUnit.BookControllerTest" />
+        <item itemvalue="HTTP Request.generated-requests | #14" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.387" />
+        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.387" />
       </set>
     </attachedChunks>
   </component>
@@ -232,7 +241,9 @@
       <workItem from="1730851180568" duration="18246000" />
       <workItem from="1730937241220" duration="17440000" />
       <workItem from="1731024033982" duration="7674000" />
-      <workItem from="1731283358503" duration="26657000" />
+      <workItem from="1731331091694" duration="3906000" />
+      <workItem from="1731370535779" duration="12521000" />
+
     </task>
     <servers />
   </component>
