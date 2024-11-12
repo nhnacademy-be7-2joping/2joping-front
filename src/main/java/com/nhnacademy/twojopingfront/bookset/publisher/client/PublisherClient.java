@@ -8,9 +8,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@FeignClient(name = "publisher", url = "localhost:8082/api/v1/bookstore")
+@FeignClient(name = "publisher", url = "${url}")
 public interface PublisherClient {
 
     @PostMapping("/publishers")

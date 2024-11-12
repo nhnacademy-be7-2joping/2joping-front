@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "bookstore", url = "localhost:8082/api/v1/bookstore")
+@FeignClient(name = "bookstore", url = "${url}")
 public interface BookClient {
 
     /**
