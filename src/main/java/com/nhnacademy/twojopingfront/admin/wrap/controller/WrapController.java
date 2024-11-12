@@ -21,7 +21,7 @@ public class WrapController {
 
     @GetMapping
     public String wrap() {
-        return "admin/wrap/wrap"; // 이거 는 html
+        return "admin/wrap/wrap";
     }
 
     @PostMapping
@@ -46,11 +46,12 @@ public class WrapController {
         return "admin/wrap/wrap-list"; // 전체 목록을 표시할 HTML 템플릿
     }
 
-    @GetMapping("/edit/{wrapId}") // 기존에 있던 데이터를 불러와서 채워넣기 위한 controller
-    public String showEditForm(@PathVariable("wrapId") Long wrapId, Model model) {
-        WrapResponseDto wrap = wrapService.getWrap(wrapId); // 수정할 데이터를 가져옴
-        model.addAttribute("wrap", wrap); // 모델에 데이터 추가
-        return "admin/wrap/wrap-edit"; // 수정 화면으로 이동
+    //수정 wrapId-> wrap-id로
+    @GetMapping("/edit/{wrap-id}") // 기존에 있던 데이터를 불러와서 채워넣기 위한 controller
+    public String showEditForm(@PathVariable("wrap-id") Long wrapId, Model model) {
+        WrapResponseDto wrap = wrapService.getWrap(wrapId);
+        model.addAttribute("wrap", wrap);
+        return "admin/wrap/wrap-edit";
     }
 
     @PutMapping("/{wrap-id}")
@@ -69,7 +70,7 @@ public class WrapController {
     @DeleteMapping("/{wrap-id}")
     public String deleteWrap(@PathVariable("wrap-id") Long wrapId, RedirectAttributes redirectAttributes) {
         wrapService.deleteWrap(wrapId);
-        redirectAttributes.addFlashAttribute("message", "포장 정책이 성공적으로 삭제되었습니다.");
+        redirectAttributes.addFlashAttribute("message", "포장 상품이 성공적으로 삭제되었습니다.");
         return "redirect:/admin/wraps/list";
     }
 }

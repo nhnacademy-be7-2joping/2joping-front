@@ -34,6 +34,3 @@ public class WrapService {
     }
 }
 
-
-// api가 에러를 던지면 어떻게 될지?
-
