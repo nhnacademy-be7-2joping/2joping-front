@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application-dev.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application-prod.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/client/BookClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/client/BookClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/exception/BookNotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/exception/FeignClientServerFailConnectionException.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/service/BookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/book/service/BookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/client/PublisherClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/bookset/publisher/client/PublisherClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application-8081.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application-8081.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,6 +168,7 @@
       </method>
     </configuration>
     <configuration name="TwojopingFrontApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="dev" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="twojoping-front" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhnacademy.twojopingfront.TwojopingFrontApplication" />
@@ -231,7 +225,7 @@
       <workItem from="1730937241220" duration="17440000" />
       <workItem from="1731024033982" duration="7674000" />
       <workItem from="1731331091694" duration="3906000" />
-      <workItem from="1731370535779" duration="11194000" />
+      <workItem from="1731370535779" duration="12521000" />
     </task>
     <servers />
   </component>
