@@ -29,6 +29,13 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * 주문과 관련된 컨트롤러로, 주문 시 보여줄 view와 관련된 페이지
+ * 주문에 대한 조회, 등록, 결제 승인 등의 처리를 맡는다.
+ *
+ * @author Sauter001
+ * @since 1.0
+ */
 @Controller
 @RequestMapping("/orders")
 @Slf4j
