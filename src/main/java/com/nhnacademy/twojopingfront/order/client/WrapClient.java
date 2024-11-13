@@ -11,6 +11,6 @@ import java.util.List;
 public interface WrapClient {
     String prefix = "/v1/wraps";
 
-    @GetMapping(prefix + "/list")
+    @GetMapping(prefix)
     ResponseEntity<List<WrapResponseDto>> getAllWraps();
 }

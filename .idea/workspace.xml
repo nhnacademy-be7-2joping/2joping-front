@@ -5,14 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4554a67-97a0-4659-bda2-6b99ca03cc81" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/client/WrapClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/dto/response/WrapResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/client/ShipmentPolicyRequestClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/client/ShipmentPolicyRequestClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/controller/OrderController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/controller/OrderController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/dto/response/ShipmentPolicyResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/dto/response/ShipmentPolicyResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/order/order-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/order/order-form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/client/WrapClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/order/client/WrapClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/default-package-img.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/default-package-img.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/logo-light.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/logo-light.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/no-image.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/images/no-image.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/layout/menu-footer-layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/layout/menu-footer-layout.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,40 +68,40 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "HTTP Request.generated-requests | #13.executor": "Run",
-    "HTTP Request.generated-requests | #14.executor": "Run",
-    "HTTP Request.test | Add Item to Cart.executor": "Run",
-    "JUnit.MemberRestControllerTest.executor": "Coverage",
-    "JUnit.member in twojoping-front.executor": "Coverage",
-    "Maven.twojoping-front [clean].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.FrontApplication.executor": "Run",
-    "Spring Boot.TwojopingFrontApplication.executor": "Run",
-    "git-widget-placeholder": "feature/order-cart",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/JavaProject/SpringBoot/2joping-front/src/main/resources/templates/component/toss-widget",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.importing",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;HTTP Request.generated-requests | #13.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.generated-requests | #14.executor&quot;: &quot;Run&quot;,
+    &quot;HTTP Request.test | Add Item to Cart.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.MemberRestControllerTest.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.member in twojoping-front.executor&quot;: &quot;Coverage&quot;,
+    &quot;Maven.twojoping-front [clean].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.FrontApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.TwojopingFrontApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/order-cart에 #42개&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/JavaProject/SpringBoot/2joping-front/src/main/resources/templates/component/toss-widget&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.importing&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql",
-      "redis"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;,
+      &quot;redis&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -202,8 +201,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23726.103" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23726.103" />
       </set>
     </attachedChunks>
   </component>
@@ -232,6 +231,7 @@
       <workItem from="1730937241220" duration="17440000" />
       <workItem from="1731024033982" duration="7674000" />
       <workItem from="1731283358503" duration="26657000" />
+      <workItem from="1731494315254" duration="607000" />
     </task>
     <servers />
   </component>

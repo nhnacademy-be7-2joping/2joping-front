@@ -21,7 +21,7 @@
             <div class="card mb-3" th:each="item : ${cartItems}">
                 <div class="row g-0">
                     <div class="col-md-1">
-                        <img class="img-fluid rounded-start" th:src="@{/no-image.png}" alt="default book image"/>
+                        <img class="img-fluid rounded-start" th:src="@{/images/no-image.png}" alt="default book image"/>
                     </div>
                     <div class="col-md-11">
                         <div class="card-body">
@@ -96,17 +96,8 @@
         </div>
 
         <div class="package-container row mb-3">
-            <div class="card package-card col-lg-3 p-3">
-                <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">대충 포장지</h5>
-                    <p class="card-text pack-price cost-value">
-                        3000
-                    </p>
-                </div>
-            </div>
             <div class="card package-card col-lg-3 p-3" th:each="wrap : ${wraps}">
-                <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
+                <img th:src="@{/images/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold" th:text="${wrap.name()}"></h5>
                     <p class="card-text pack-price cost-value" th:text="${wrap.wrapPrice()}"></p>
