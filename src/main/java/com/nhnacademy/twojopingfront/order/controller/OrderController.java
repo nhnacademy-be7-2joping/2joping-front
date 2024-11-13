@@ -93,6 +93,7 @@ public class OrderController {
         model.addAttribute("wraps", wrapResponseDtos);
         model.addAttribute("wrappableBooks", wrappableBooks);
         model.addAttribute("shipmentPolicies", shipmentPolicyResponseDtos);
+        // 회원이 가진 쿠폰 정보 모델에 적용 필요
 
         return "order/order-form";
     }
