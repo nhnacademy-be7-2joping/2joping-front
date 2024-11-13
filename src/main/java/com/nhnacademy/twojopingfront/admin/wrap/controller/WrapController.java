@@ -40,8 +40,8 @@ public class WrapController {
     }
 
     @GetMapping("/list")
-    public String getAllWraps(Model model) {
-        List<WrapResponseDto> wraps = wrapService.getAllWraps();
+    public String findAllByIsActiveTrue(Model model) {
+        List<WrapResponseDto> wraps = wrapService.findAllByIsActiveTrue();
         model.addAttribute("wraps", wraps); // 모델에 전체 wrap 리스트 추가
         return "admin/wrap/wrap-list"; // 전체 목록을 표시할 HTML 템플릿
     }
@@ -67,12 +67,12 @@ public class WrapController {
         return "redirect:/admin/wraps/list";
     }
 
-    @DeleteMapping("/{wrap-id}")
-    public String deleteWrap(@PathVariable("wrap-id") Long wrapId, RedirectAttributes redirectAttributes) {
-        wrapService.deleteWrap(wrapId);
-        redirectAttributes.addFlashAttribute("message", "포장 상품이 성공적으로 삭제되었습니다.");
-        return "redirect:/admin/wraps/list";
-    }
+//    @DeleteMapping("/{wrap-id}")
+//    public String deleteWrap(@PathVariable("wrap-id") Long wrapId, RedirectAttributes redirectAttributes) {
+//        wrapService.deleteWrap(wrapId);
+//        redirectAttributes.addFlashAttribute("message", "포장 상품이 성공적으로 삭제되었습니다.");
+//        return "redirect:/admin/wraps/list";
+//    }
 }
 
 

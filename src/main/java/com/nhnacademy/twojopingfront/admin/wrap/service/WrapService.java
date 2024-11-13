@@ -21,16 +21,16 @@ public class WrapService {
         return wrapClient.getWrap(wrapId).getBody();
     }
 
-    public List<WrapResponseDto> getAllWraps() {
-        return wrapClient.getAllWrapPolicies().getBody();
+    public List<WrapResponseDto> findAllByIsActiveTrue() {
+        return wrapClient.findAllByIsActiveTrue().getBody();
     }
 
     public WrapResponseDto updateWrap(Long wrapId, WrapRequestDto wrapRequestDto) {
         return wrapClient.updateWrap(wrapId, wrapRequestDto).getBody();
     }
 
-    public void deleteWrap(Long WrapId) {
-        wrapClient.deleteWrap(WrapId);
-    }
+//    public void deleteWrap(Long WrapId) {
+//        wrapClient.deleteWrap(WrapId);
+//    }
 }
 

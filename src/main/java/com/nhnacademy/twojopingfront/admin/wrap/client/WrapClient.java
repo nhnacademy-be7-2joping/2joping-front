@@ -15,13 +15,16 @@ public interface WrapClient {
     ResponseEntity<WrapResponseDto> createWrap(@Valid @RequestBody WrapRequestDto requestDto);
 
     @GetMapping("/api/v1/wraps/{wrap-id}")
-    ResponseEntity<WrapResponseDto> getWrap (@PathVariable ("wrap-id") Long wrapId);
+    ResponseEntity<WrapResponseDto> getWrap(@PathVariable("wrap-id") Long wrapId);
 
-    @GetMapping("/api/v1/wraps/list")
-    ResponseEntity<List<WrapResponseDto>> getAllWrapPolicies();
+    @GetMapping("/api/v1/wraps")
+    ResponseEntity<List<WrapResponseDto>> findAllByIsActiveTrue();
 
-    @PutMapping("/api/v1/wraps/{wrap-id}") //수정
+    @PutMapping("/api/v1/wraps/{wrap-id}")
+        //수정
     ResponseEntity<WrapResponseDto> updateWrap(@PathVariable("wrap-id") Long wrapId, @RequestBody WrapRequestDto requestDto);
 
-    @DeleteMapping("/api/v1/wraps/{wrap-id}") // 이거는 백엔드 엔드포인트와 일치하게
-    ResponseEntity<Void> deleteWrap(@PathVariable("wrap-id") Long wrapId);}
+//    @DeleteMapping("/api/v1/wraps/{wrap-id}") // 이거는 백엔드 엔드포인트와 일치하게
+//    ResponseEntity<Void> deleteWrap(@PathVariable("wrap-id") Long wrapId);}
+
+}

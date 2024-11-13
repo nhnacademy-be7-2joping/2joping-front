@@ -32,12 +32,6 @@
                 <td>
                     <a th:href="'/admin/wraps/edit/' + ${wrap.wrapId}" class="btn btn-primary btn-sm">수정</a>
 
-                    <!-- 삭제 버튼을 DELETE 요청으로 수정 -->
-                    <form th:action="'/admin/wraps/' + ${wrap.wrapId}" method="post" style="display:inline;">
-                        <input type="hidden" name="_method" value="delete"/> <!-- DELETE 메서드 지정 -->
-                        <button type="submit" class="btn btn-danger btn-sm">삭제</button>
-                    </form>
-
                 </td>
             </tr>
             </tbody>
