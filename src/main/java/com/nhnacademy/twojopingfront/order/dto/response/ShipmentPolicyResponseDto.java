@@ -10,11 +10,6 @@ import java.time.LocalDateTime;
  */
 public record ShipmentPolicyResponseDto(
         Long shipmentPolicyId,
-        String name,
         Integer minOrderAmount,
-        Boolean isMemberOnly,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt,
-        Integer shippingFee,
-        Boolean isActive
+        Integer shippingFee
 ) {}

@@ -1,12 +1,15 @@
 package com.nhnacademy.twojopingfront.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.twojopingfront.cart.entity.Book;
 import com.nhnacademy.twojopingfront.cart.entity.Cart;
 import com.nhnacademy.twojopingfront.cart.service.CartService;
 import com.nhnacademy.twojopingfront.order.client.ShipmentPolicyRequestClient;
+import com.nhnacademy.twojopingfront.order.client.WrapClient;
 import com.nhnacademy.twojopingfront.order.dto.request.PaymentRequest;
 import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
 import com.nhnacademy.twojopingfront.order.dto.response.ShipmentPolicyResponseDto;
+import com.nhnacademy.twojopingfront.order.dto.response.WrapResponseDto;
 import com.nhnacademy.twojopingfront.user.dto.request.LoginNonMemberRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +47,7 @@ public class OrderController {
     private final ObjectMapper objectMapper;
     private final CartService cartService;
     private final ShipmentPolicyRequestClient shipmentPolicyRequestClient;
+    private final WrapClient wrapClient;
 
     @Value("${toss.widget-secret-key}")
     private String widgetSecretKey;
@@ -62,19 +66,29 @@ public class OrderController {
         return "customer-orders";
     }
 
+    /**
+     * 주문 작성 폼
+     *
+     * @param model 주문 시 필요한 정보를 가져올 모델이다. 장바구니에 담은 책, 총 가격, 배송비, 포장 종류,
+     *              포장 가능한 도서, 배송 정책 정보 필요
+     * @return 주문 페이지 뷰
+     * @author 이승준
+     */
     @GetMapping("/form")
     public String form(Model model) {
         List<Cart> cartItems = cartService.getCartByCustomerId(1);
         int bookCost = cartItems.stream().map(i -> i.getBook().getSellingPrice() * i.getQuantity()).reduce(
                 0,
                 Integer::sum
-        );
+        ); // 주문한 상품들의 총 가격
+        List<WrapResponseDto> wrapResponseDtos = wrapClient.getAllWraps().getBody();
+        List<Book> wrappableBooks = cartItems.stream().map(Cart::getBook).filter(Book::isGiftWrappable).toList();
         List<ShipmentPolicyResponseDto> shipmentPolicyResponseDtos =
-                shipmentPolicyRequestClient.getAllShipmentPolicies().getBody();
+                shipmentPolicyRequestClient.getAllShipmentPolicies(true).getBody();
         int appliedDeliveryCost = 0;
         // 배송 정책 최소 적용 가격 기준으로 정렬
         Objects.requireNonNull(shipmentPolicyResponseDtos).sort((p1, p2) -> p1.minOrderAmount() - p2.minOrderAmount());
-        for (ShipmentPolicyResponseDto dto : shipmentPolicyResponseDtos ) {
+        for (ShipmentPolicyResponseDto dto : shipmentPolicyResponseDtos) {
             if (bookCost >= dto.minOrderAmount()) {
                 appliedDeliveryCost = dto.shippingFee();
             }
@@ -83,7 +97,10 @@ public class OrderController {
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("bookCost", bookCost);
         model.addAttribute("deliveryCost", appliedDeliveryCost);
+        model.addAttribute("wraps", wrapResponseDtos);
+        model.addAttribute("wrappableBooks", wrappableBooks);
         model.addAttribute("shipmentPolicies", shipmentPolicyResponseDtos);
+        // 회원이 가진 쿠폰 정보 모델에 적용 필요
 
         return "order/order-form";
     }
