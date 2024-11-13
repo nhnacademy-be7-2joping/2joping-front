@@ -16,40 +16,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping()
 @RequiredArgsConstructor
-public class    BookController {
+public class BookController {
 
     private final BookService bookService;
 
     @GetMapping("/books/get")
     public String getAllBooks(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "2") int size,
+                              @RequestParam(defaultValue = "10") int size,
                               Model model) {
         Page<BookSimpleResponseDto> books = bookService.getAllBooks(page, size);
         model.addAttribute("books", books);
         model.addAttribute("currentPath", "/books/get");
-        return "bookset/book/get-bookList";
+        return "bookset/book/get-booklist";
     }
 
     @GetMapping("/books/get/category/{categoryId}")
     public String getBooksByCategoryId(@PathVariable Long categoryId,
                                        @RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "2") int size,
+                                       @RequestParam(defaultValue = "10") int size,
                                        Model model) {
         Page<BookSimpleResponseDto> books = bookService.getBooksByCategoryId(categoryId, page, size);
         model.addAttribute("books", books);
         model.addAttribute("currentPath", "/books/get/category/" + categoryId);
-        return "bookset/book/get-bookList";
+        return "bookset/book/get-booklist";
     }
 
     @GetMapping("/books/get/contributor/{contributorId}")
     public String getBooksByContributorId(@PathVariable Long contributorId,
                                        @RequestParam(defaultValue = "0") int page,
-                                       @RequestParam(defaultValue = "2") int size,
+                                       @RequestParam(defaultValue = "10") int size,
                                        Model model) {
         Page<BookSimpleResponseDto> books = bookService.getBooksByContributorId(contributorId, page, size);
         model.addAttribute("books", books);
         model.addAttribute("currentPath", "/books/get/contributor/" + contributorId);
-        return "bookset/book/get-bookList";
+        return "bookset/book/get-booklist";
     }
 
     @GetMapping("/books/get/book/{bookId}")

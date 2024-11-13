@@ -62,11 +62,11 @@ class BookControllerTest {
     @Test
     @DisplayName("전체 도서 목록 조회 테스트")
     void getAllBooks() throws Exception {
-        when(bookService.getAllBooks(0, 2)).thenReturn(bookPage);
+        when(bookService.getAllBooks(0, 10)).thenReturn(bookPage);
 
         mockMvc.perform(get("/books/get"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("bookset/book/get-bookList"))
+                .andExpect(view().name("bookset/book/get-booklist"))
                 .andExpect(model().attribute("books", bookPage))
                 .andExpect(model().attribute("currentPath", "/books/get"));
     }
@@ -78,7 +78,7 @@ class BookControllerTest {
 
         mockMvc.perform(get("/books/get/category/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("bookset/book/get-bookList"))
+                .andExpect(view().name("bookset/book/get-booklist"))
                 .andExpect(model().attribute("books", bookPage))
                 .andExpect(model().attribute("currentPath", "/books/get/category/1"));
     }
@@ -90,7 +90,7 @@ class BookControllerTest {
 
         mockMvc.perform(get("/books/get/contributor/1"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("bookset/book/get-bookList"))
+                .andExpect(view().name("bookset/book/get-booklist"))
                 .andExpect(model().attribute("books", bookPage))
                 .andExpect(model().attribute("currentPath", "/books/get/contributor/1"));
     }
