@@ -25,3 +25,4 @@ document.addEventListener("DOMContentLoaded", function() {
 
     setInterval(showNextSlide2, 4000); // 슬라이더 2: 4초마다 전환
 });
+

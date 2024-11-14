@@ -1,7 +1,7 @@
-package com.nhnacademy.twojopingfront.user.client;
+package com.nhnacademy.twojopingfront.user.login.client;
 
-import com.nhnacademy.twojopingfront.user.dto.request.LoginRequestDto;
-import com.nhnacademy.twojopingfront.user.dto.response.LoginResponseDto;
+import com.nhnacademy.twojopingfront.user.login.dto.request.LoginRequestDto;
+import com.nhnacademy.twojopingfront.user.login.dto.response.LoginResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

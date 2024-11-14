@@ -36,3 +36,5 @@ build/
 ### etc
 http/
 apis/
+.idea/workspace.xml
+.idea/misc.xml

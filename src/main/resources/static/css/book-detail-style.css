@@ -1,0 +1,141 @@
+/* 상위 content 컨테이너를 flex로 설정하여 좌우 배치 */
+body{
+    overflow: visible
+}
+.thumbnail-container {
+    display: flex;
+    justify-content: space-between; /* 좌우 공간을 채우도록 설정 */
+    gap: 20px;
+    max-width: 1250px;
+    margin: 50px auto; /* 화면 중앙 정렬 */
+    border: 1px solid #ddd;
+}
+.bookDetail-container {
+    flex: 1; /* 상세 정보가 너비를 유연하게 차지하도록 설정 */
+    height: 600px;
+    display: flex;
+    justify-content: space-between; /* 좌우 공간을 채우도록 설정 */
+    gap: 20px;
+
+
+}
+
+
+
+.purchase-container {
+    width: 250px;
+    height: auto; /* 고정 높이를 제거하여 sticky가 제대로 작동하게 설정 */
+    position: relative; /* 내부 고정 위치의 기준이 됨 */
+}
+
+.purchase-button-container {
+    position: sticky;
+    top: 300px; /* 상단에서 고정될 위치 */
+    width: 100%;
+}
+
+.purchase-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #ff6600;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.book-detail-container2{
+    width: 100%;
+    height: 1000px;
+}
+.book-detail-thumbnail-container1{
+    width: 400px;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column; /* 수직 방향으로 정렬 */
+    align-items: center; /* 중앙 정렬 (필요 시) */
+
+}
+.book-detail-info-container1{
+    width: 550px;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column; /* 수직 방향으로 정렬 */
+    align-items: flex-start; /* 중앙 정렬 (필요 시) */
+    gap: 10px; /* 요소 간 간격 추가 (선택 사항) */
+
+}
+.book-detail-image1{
+    width: 400px;
+    height: 400px;
+}
+.book-detail-title{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px; /* 요소 간 간격 추가 (선택 사항) */
+    justify-content: space-between; /* 좌우 공간을 채우도록 설정 */
+
+
+}
+.book-detail-heart{
+    width: 70px;
+    height: 70px;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: center; /* 수평 가운데 정렬 */
+
+}
+.font-category{
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 3px 10px;
+}
+.font-book-detail-category{
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: bold; /* 약간 굵게 설정 */
+    font-size: 28px;
+}
+.font-price-normal{
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: 600; /* 약간 굵게 설정 */
+    font-size: 16px;
+
+}
+.font-price-red{
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: 600; /* 약간 굵게 설정 */
+    font-size: 22px;
+    color: red;
+}
+.book-detail-rate-container{
+    min-height: 40px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 10px; /* 요소 간 간격 추가 (선택 사항) */
+    border-bottom: 1px solid #ddd;
+
+
+}
+.book-detail-price-container{
+    min-height: 150px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start; /* 수직 가운데 정렬 */
+    gap: 10px; /* 요소 간 간격 추가 (선택 사항) */
+    border: 1px solid #ddd;
+
+}
+.purchase-box{
+    min-height: 200px;
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    flex-direction: column;
+    align-items: flex-start; /* 수직 가운데 정렬 */
+    padding: 10px;
+}

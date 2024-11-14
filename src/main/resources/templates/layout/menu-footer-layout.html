@@ -50,10 +50,28 @@
     </div>
     <!-- 사용자 정보 UI -->
     <div class="navbar-actions">
-      <a href="/login" class="nav-action-link">로그인</a>
-      <span class="separator">|</span> <!-- 경계선 -->
-      <a href="/signup" class="nav-action-link">회원가입</a>
+      <!-- 로그인 상태일 때 보이는 코드 -->
+      <div th:if="${token != null and !#strings.isEmpty(token)}">
+
+
+
+      </div>
+
+      <!-- 로그인 상태가 아닐 때 보이는 코드 -->
+      <div th:unless="${token != null and !#strings.isEmpty(token)}">
+
+
+
+        <a href="/login" class="nav-action-link">로그인</a>
+        <span class="separator">|</span> <!-- 경계선 -->
+        <a href="/signup" class="nav-action-link">회원가입</a>
+
+
+
+      </div>
     </div>
+
+
   </div>
 </nav>
 
