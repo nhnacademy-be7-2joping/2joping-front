@@ -38,19 +38,9 @@ public class JwtAuthentitactionFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        String accessToken = null;
-        String refreshToken = null;
-
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("accessToken")) {
-                    accessToken = cookie.getValue();
-                } else if (cookie.getName().equals("refreshToken")) {
-                    refreshToken = cookie.getValue();
-                }
-            }
-        }
+        Map<String, String> tokens = getTokensFromCookies(request);
+        String accessToken = tokens.get("accessToken");
+        String refreshToken = tokens.get("refreshToken");
 
         // Access Token이 없는 경우 필터 체인 계속 진행
         if (accessToken == null) {
@@ -64,48 +54,60 @@ public class JwtAuthentitactionFilter extends OncePerRequestFilter {
             if (dto == null || dto.role() == null) {
                 throw new InvalidTokenException("Invalid token");
             }
-
             authenticateUser(dto);
         } catch (FeignException fe) {
             log.info(fe.getMessage());
-            if (fe.status() == 401) {
-                ErrorResponseDto errorResponseDto = objectMapper.readValue(fe.contentUTF8(), ErrorResponseDto.class);
-                String errorCode = errorResponseDto.getErrorCode();
-
-                // Refresh Token이 없는 경우 로그인 실패로 간주
-                if (refreshToken == null) {
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    response.getWriter().flush();
-                    return;
-                }
-
-                if (errorCode.startsWith("TOKEN_EXPIRED")) {
-                    ResponseEntity<?> jwtResponse = jwtDecodeClient.refreshToken(refreshToken);
-                    List<String> responseCookies = jwtResponse.getHeaders().get(HttpHeaders.SET_COOKIE);
-
-                    if (responseCookies != null) {
-                        for (String cookieValue : responseCookies) {
-                            Cookie cookie = parseSetCookieHeader(cookieValue);
-                            if (cookie.getName().equals("accessToken")) {
-                                accessToken = cookie.getValue();
-                            }
-                            response.addCookie(cookie);
-                        }
-
-                        JwtUserInfoResponseDto dto = jwtDecodeClient.getUserInfo(accessToken);
-                        authenticateUser(dto);
-                    } else {
-                        throw new InvalidTokenException("Failed to refresh access token. No cookies returned.");
-                    }
-                } else if (errorCode.startsWith("INVALID_TOKEN")) {
-                    throw new InvalidTokenException("Access token is invalid");
-                }
-            } else {
-                throw fe;
-            }
+            handleFeignException(response, fe, refreshToken, accessToken);
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private Map<String, String> getTokensFromCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            return Map.of();
+        }
+
+        return Arrays.stream(cookies).collect(Collectors.toMap(Cookie::getName, Cookie::getValue));
+    }
+
+    private void handleFeignException(HttpServletResponse response, FeignException fe, String refreshToken,
+                                      String accessToken) throws IOException {
+        if (fe.status() != 401) {
+            throw fe;
+        }
+
+        ErrorResponseDto errorResponseDto = objectMapper.readValue(fe.contentUTF8(), ErrorResponseDto.class);
+        String errorCode = errorResponseDto.getErrorCode();
+
+        // Refresh Token이 없는 경우 로그인 실패로 간주
+        if (refreshToken == null) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            throw new InvalidTokenException("Refresh token is invalid");
+        }
+
+        if (errorCode.startsWith("TOKEN_EXPIRED")) {
+            ResponseEntity<?> jwtResponse = jwtDecodeClient.refreshToken(refreshToken);
+            List<String> responseCookies = jwtResponse.getHeaders().get(HttpHeaders.SET_COOKIE);
+
+            if (responseCookies == null) {
+                throw new InvalidTokenException("Failed to refresh access token. No cookies returned.");
+            }
+
+            for (String cookieValue : responseCookies) {
+                Cookie cookie = parseSetCookieHeader(cookieValue);
+                if (cookie.getName().equals("accessToken")) {
+                    accessToken = cookie.getValue();
+                }
+                response.addCookie(cookie);
+            }
+
+            JwtUserInfoResponseDto newDto = jwtDecodeClient.getUserInfo(accessToken);
+            authenticateUser(newDto);
+        } else if (errorCode.startsWith("INVALID_TOKEN")) {
+            throw new InvalidTokenException("Access token is invalid");
+        }
     }
 
     /**
