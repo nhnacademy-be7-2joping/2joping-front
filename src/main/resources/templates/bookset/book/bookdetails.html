@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/mainpage-layout}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>도서 상세 페이지</title>
+  <link rel="stylesheet" th:href="@{/css/index-style.css}">
+  <link rel="stylesheet" th:href="@{/css/book-detail-style.css}">
+</head>
+<body>
+<div layout:fragment="content" class="content">
+
+  <div class="thumbnail-container">
+    <div class="bookDetail-container">
+
+      <!-- 도서 이미지 및 설명 -->
+      <div class="book-detail-thumbnail-container1">
+        <div class="book-detail-image1">
+          <img th:src="${books.thumbnail != null ? books.thumbnail : '/images/default-book-image.jpg'}"
+               alt="도서 이미지" class="book-image">
+        </div>
+        <p th:text="${books.description != null ? books.description : '설명이 없습니다.'}">이미지 설명</p>
+      </div>
+
+      <!-- 도서 정보 -->
+      <div class="book-detail-info-container1">
+
+        <!-- 제목, 카테고리, 좋아요 -->
+        <div class="book-detail-title">
+          <div>
+            <p class="font-category" th:text="'카테고리 >' + ${books.categoryList != null ? #strings.arrayJoin(books.categoryList, ' > ') : '카테고리 정보 없음'}">
+            </p>
+            <p class="font-book-detail-category" th:text="${books.title != null ? books.title : '제목 정보 없음'}">제목</p>
+          </div>
+          <div class="book-detail-heart">
+            <button th:text="'좋아요 ' + (books.likes != null ? books.likes : 0)">좋아요 수</button>
+          </div>
+        </div>
+
+        <!-- 평점, 지은이, 출판사 -->
+        <div class="book-detail-rate-container">
+          <p>평점 : </p>
+          <p th:text="${#books != null and #books.containsProperty('rating') and books.rating != null ? books.rating : '정보 없음'}">
+            0
+          </p>
+
+          <span th:if="${!#lists.isEmpty(books.contributorList)}">
+                            <span th:text="${books.contributorList[0].contributorName} + ' 저'"></span>
+                        </span>
+          <span class="separator">|</span>
+          <p th:text="${books.publisherName != null ? books.publisherName : ' '}"></p>
+        </div>
+
+        <!-- 정가 및 판매가 -->
+        <div class="book-detail-price-container">
+          <p class="font-price-normal" th:text="'정가: ' + ${books.retailPrice != null ? books.retailPrice : '정보 없음'}"></p>
+          <p class="font-price-red" th:text="'판매가: ' + ${books.sellingPrice != null ? books.sellingPrice : '정보 없음'}"></p>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 결제하기 버튼 -->
+    <div class="purchase-container">
+      <div class="purchase-button-container">
+
+
+        <div class="purchase-box">
+
+        <button class="purchase-button" th:disabled="${books.isActive != true}">결제하기</button>
+
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+</body>
+</html>

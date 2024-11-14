@@ -30,7 +30,7 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping
-    public String Cart(HttpServletRequest request, Model model) {
+    public String getCart(HttpServletRequest request, Model model) {
         // 세션 ID를 키로 사용하여 저장된 데이터를 가져옵니다.
         Map<Object, Object> cartMap = redisTemplate.opsForHash().entries("test");
         List<Cart> cart = cartService.getCartByCustomerId(1);
