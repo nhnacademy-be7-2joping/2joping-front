@@ -331,7 +331,6 @@ body {
     color: var(--primary-color);
 }
 
-
 .user-profile-container {
     width: 100%;
     min-width: 120px;
@@ -402,3 +401,4 @@ body {
 .dropdown-menu a:hover {
     background-color: #f0f0f0;
 }
+
