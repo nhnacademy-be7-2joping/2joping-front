@@ -1,11 +1,6 @@
 package com.nhnacademy.twojopingfront.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-<<<<<<< HEAD
-import com.nhnacademy.twojopingfront.order.dto.request.PaymentRequest;
-import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
-import com.nhnacademy.twojopingfront.user.dto.request.LoginNonMemberRequestDto;
-=======
 import com.nhnacademy.twojopingfront.cart.entity.Book;
 import com.nhnacademy.twojopingfront.cart.entity.Cart;
 import com.nhnacademy.twojopingfront.cart.service.CartService;
@@ -16,7 +11,6 @@ import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
 import com.nhnacademy.twojopingfront.order.dto.response.ShipmentPolicyResponseDto;
 import com.nhnacademy.twojopingfront.order.dto.response.WrapResponseDto;
 import com.nhnacademy.twojopingfront.user.login.dto.request.LoginNonMemberRequestDto;
->>>>>>> develop
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +29,8 @@ import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 주문과 관련된 컨트롤러로, 주문 시 보여줄 view와 관련된 페이지
@@ -49,12 +45,9 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class OrderController {
     private final ObjectMapper objectMapper;
-<<<<<<< HEAD
-=======
     private final CartService cartService;
     private final ShipmentPolicyRequestClient shipmentPolicyRequestClient;
     private final WrapClient wrapClient;
->>>>>>> develop
 
     @Value("${toss.widget-secret-key}")
     private String widgetSecretKey;
@@ -83,8 +76,6 @@ public class OrderController {
      */
     @GetMapping("/form")
     public String form(Model model) {
-<<<<<<< HEAD
-=======
         List<Cart> cartItems = cartService.getCartByCustomerId(1);
         int bookCost = cartItems.stream().map(i -> i.getBook().getSellingPrice() * i.getQuantity()).reduce(
                 0,
@@ -111,7 +102,6 @@ public class OrderController {
         model.addAttribute("shipmentPolicies", shipmentPolicyResponseDtos);
         // 회원이 가진 쿠폰 정보 모델에 적용 필요
 
->>>>>>> develop
         return "order/order-form";
     }
 
