@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+
+  <!-- Pretendard Variable 불러오기 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <title>메인페이지 레이아웃</title>
+
+  <style>
+    .main-page-container-1{
+      display: flex;
+      justify-content: space-between; /* 양 끝에 붙도록 설정 */
+      padding: 2rem 0; /* 상하 여백 추가 */
+      max-width: 1250px; /* 최대 너비 설정 */
+      margin: 0 auto; /* 화면 중앙 정렬 */
+      min-height: 800px;
+
+    }
+
+  </style>
+</head>
+<body>
+<!-- 공통 Navigation Bar -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-container">
+    <!-- 로고 -->
+    <a class="navbar-brand" href="/">
+      <img th:src="@{/images/logo.png}" alt="logo" width="200"/>
+    </a>
+
+    <!-- 네비게이션 항목 -->
+    <div class="navbar-links">
+      <a class="nav-link" href="#">베스트</a>
+      <a class="nav-link" href="#">신상품</a>
+      <a class="nav-link" href="#">이벤트</a>
+      <a class="nav-link" href="#">고객센터</a>
+    </div>
+
+    <!-- 검색 바 -->
+    <div class="navbar-search">
+      <input type="text" placeholder="검색어를 입력하세요">
+    </div>
+    <div class="navbar-cart">
+      <a href="/cart" class="cart-icon">
+        <?xml version="1.0" ?>
+        <svg enable-background="new 0 0 128 128" id="Layer_1" version="1.1" viewBox="0 0 128 128" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <circle cx="89" cy="101" fill="none" r="8" stroke="#00AEEF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4"/>
+          <circle cx="49" cy="101" fill="none" r="8" stroke="#00AEEF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4"/>
+          <path d="M29,33h83.0800705c2.8071136,0,4.7410736,2.8159065,3.7333832,5.4359169L99.8765564,79.8718338 C98.6882782,82.9613724,95.7199707,85,92.4097977,85H45.6081238c-3.8357391,0-7.1316795-2.722496-7.8560524-6.4892197L29,33z" fill="none" stroke="#00AEEF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4"/>
+          <path d="M28.9455147,33.0107765l-1.5162468-7.5799599C26.6812878,21.6915436,23.3980236,19,19.5846729,19h-7.2409086" fill="none" stroke="#00AEEF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4"/>
+          <line fill="none" stroke="#00AEEF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4" x1="89.9039841" x2="92.9041901" y1="45" y2="45"/>
+          <line fill="none" stroke="#00AEEF" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4" x1="32" x2="80.9041901" y1="45" y2="45"/>
+                     </svg>
+      </a>
+    </div>
+    <!-- 사용자 정보 UI -->
+    <div class="navbar-actions">
+      <a href="/login" class="nav-action-link">로그인</a>
+      <span class="separator">|</span> <!-- 경계선 -->
+      <a href="/signup" class="nav-action-link">회원가입</a>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- 두 번째 네비게이션 바 -->
+<div class="sub-navbar">
+  <div class="sub-navbar-container">
+    <a href="#" class="sub-nav-link">인기도서</a>
+    <a href="#" class="sub-nav-link">국내도서</a>
+    <a href="#" class="sub-nav-link">외국도서</a>
+  </div>
+</div>
+
+<div class="main-page-container-1">
+  <!-- 중앙 컨테이너 -->
+  <div  layout:fragment="content">
+    <!-- 각 페이지에서 여기를 채움 -->
+
+  </div>
+  </div>
+
+
+
+<!-- 공통 푸터 -->
+<footer class="footer">
+  <div class="footer-container">
+    <p>NHN Academy</p>
+  </div>
+</footer>
+
+<div layout:fragment="script"></div>
+<script th:src="@{/js/mypage-script.js}"></script>
+
+
+<script th:src="@{/js/index-script.js}"></script>
+
+</body>
+</html>

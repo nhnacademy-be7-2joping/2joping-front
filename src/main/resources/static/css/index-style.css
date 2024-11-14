@@ -1,0 +1,148 @@
+.image-main-container {
+    width: 1250px;
+    display: flex;
+    height: 500px;
+    justify-content: space-between;
+    align-items: center; /* 세로 가운데 정렬 */
+
+
+}
+
+.main-image-1, .main-image-2 {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
+
+}
+
+.main-image-1 {
+    width: 900px;
+    height: 500px;
+
+    overflow: hidden;
+    position: relative;
+    display: flex; /* 슬라이더 중앙 정렬을 위한 설정 */
+    align-items: center;
+}
+
+
+.slide-container-1, .slide-container-2 {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 100%; /* 이미지 3개에 맞춰 300%로 설정 */
+}
+
+.responsive-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex-shrink: 0; /* 슬라이드 이미지 크기 고정 */
+}
+
+.main-image-2 {
+    width: 300px;
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+    display: flex; /* 슬라이더 중앙 정렬을 위한 설정 */
+    align-items: center;
+}
+/* 카드 목록 스타일 */
+.card-container {
+    width: 1250px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 35px 0;
+    justify-content: space-between;
+}
+
+.book-card {
+    width: 280px;
+    min-height: 380px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.book-image {
+    width: 100%;
+    height: 270px;
+    background-color: #f0f0f0;
+    margin: 0 auto;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.book-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: left;
+    padding-left: 10px;
+    white-space: nowrap; /* 한 줄로 표시 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 텍스트에 '...' 추가 */
+}
+
+.book-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-top: 5px;
+    padding: 10px 5px 10px 5px;
+}
+
+.book-author {
+    display: block; /* 블록 요소로 설정하여 줄바꿈이 가능하게 함 */
+    white-space: normal; /* 줄 바꿈 허용 */
+    overflow-wrap: break-word; /* 단어 단위로 줄 바꿈 */
+    max-width: 100%; /* 바깥 박스를 넘지 않도록 제한 */
+    word-break: keep-all; /* 단어가 끊기지 않도록 설정 */
+}
+
+.book-category {
+    color: #888;
+}
+
+.book-price {
+    padding : 10px 10px 5px 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-top: auto;
+    text-align: right;
+}
+
+
+/* 가짜 카드 스타일 (보이지 않게 설정) */
+.spacer-card {
+    width: 280px;
+    height: 380px;
+    visibility: hidden;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination-link {
+    margin: 0 5px;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.pagination-link.active {
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
