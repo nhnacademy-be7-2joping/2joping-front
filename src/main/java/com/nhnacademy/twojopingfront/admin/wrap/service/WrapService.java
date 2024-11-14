@@ -29,8 +29,5 @@ public class WrapService {
         return wrapClient.updateWrap(wrapId, wrapRequestDto).getBody();
     }
 
-//    public void deleteWrap(Long WrapId) {
-//        wrapClient.deleteWrap(WrapId);
-//    }
 }
 

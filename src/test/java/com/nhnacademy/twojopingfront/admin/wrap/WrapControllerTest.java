@@ -119,13 +119,4 @@ class WrapControllerTest {
                 .andExpect(redirectedUrl("/admin/wraps/list"));
     }
 
-    //    /**
-    //     * 포장 상품을 삭제한 후 리디렉션이 정상적으로 이루어지는지 확인합니다.
-    //     */
-//    @Test
-//    void testDeleteWrap() throws Exception {
-//        mockMvc.perform(delete("/admin/wraps/1"))
-//                .andExpect(status().is3xxRedirection())
-//                .andExpect(redirectedUrl("/admin/wraps/list"));
-//    }
 }

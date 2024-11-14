@@ -67,12 +67,6 @@ public class WrapController {
         return "redirect:/admin/wraps/list";
     }
 
-//    @DeleteMapping("/{wrap-id}")
-//    public String deleteWrap(@PathVariable("wrap-id") Long wrapId, RedirectAttributes redirectAttributes) {
-//        wrapService.deleteWrap(wrapId);
-//        redirectAttributes.addFlashAttribute("message", "포장 상품이 성공적으로 삭제되었습니다.");
-//        return "redirect:/admin/wraps/list";
-//    }
 }
 
 

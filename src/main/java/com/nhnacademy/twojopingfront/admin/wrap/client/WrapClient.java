@@ -24,7 +24,4 @@ public interface WrapClient {
         //수정
     ResponseEntity<WrapResponseDto> updateWrap(@PathVariable("wrap-id") Long wrapId, @RequestBody WrapRequestDto requestDto);
 
-//    @DeleteMapping("/api/v1/wraps/{wrap-id}") // 이거는 백엔드 엔드포인트와 일치하게
-//    ResponseEntity<Void> deleteWrap(@PathVariable("wrap-id") Long wrapId);}
-
 }
