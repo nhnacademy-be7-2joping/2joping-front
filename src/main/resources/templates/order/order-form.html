@@ -96,11 +96,38 @@
         </div>
 
         <div class="package-container row mb-3">
-            <div class="card package-card col-lg-3 p-3" th:each="wrap : ${wraps}">
-                <img th:src="@{/images/default-package-img.png}" alt="package-img" class="card-img-top">
+            <div class="card package-card col-lg-3 p-3">
+                <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title fw-bold" th:text="${wrap.name()}"></h5>
                     <p class="card-text pack-price cost-value" th:text="${wrap.wrapPrice()}"></p>
+                </div>
+            </div>
+            <div class="card package-card col-lg-3 p-3">
+                <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">펭귄 포장지</h5>
+                    <p class="card-text pack-price cost-value">
+                        2000
+                    </p>
+                </div>
+            </div>
+            <div class="card package-card col-lg-3 p-3">
+                <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">좋은 포장지</h5>
+                    <p class="card-text pack-price cost-value">
+                        10000
+                    </p>
+                </div>
+            </div>
+            <div class="card package-card col-lg-3 p-3 mb-2">
+                <img th:src="@{/default-package-img.png}" alt="package-img" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold">좀 비싼 포장지</h5>
+                    <p class="card-text pack-price cost-value">
+                        50000
+                    </p>
                 </div>
             </div>
         </div>

@@ -1,8 +1,8 @@
 package com.nhnacademy.twojopingfront.user.service;
 
-import com.nhnacademy.twojopingfront.user.client.LoginClient;
-import com.nhnacademy.twojopingfront.user.dto.request.LoginRequestDto;
-import com.nhnacademy.twojopingfront.user.dto.response.LoginResponseDto;
+import com.nhnacademy.twojopingfront.user.login.client.LoginClient;
+import com.nhnacademy.twojopingfront.user.login.dto.request.LoginRequestDto;
+import com.nhnacademy.twojopingfront.user.login.dto.response.LoginResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

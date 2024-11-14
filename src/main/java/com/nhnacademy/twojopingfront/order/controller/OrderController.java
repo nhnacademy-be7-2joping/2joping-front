@@ -10,7 +10,7 @@ import com.nhnacademy.twojopingfront.order.dto.request.PaymentRequest;
 import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
 import com.nhnacademy.twojopingfront.order.dto.response.ShipmentPolicyResponseDto;
 import com.nhnacademy.twojopingfront.order.dto.response.WrapResponseDto;
-import com.nhnacademy.twojopingfront.user.dto.request.LoginNonMemberRequestDto;
+import com.nhnacademy.twojopingfront.user.login.dto.request.LoginNonMemberRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -63,7 +63,7 @@ public class OrderController {
     public String orders(@RequestBody LoginNonMemberRequestDto nonMemberRequestDto, Model model) {
         // order 조회 API 필요
 
-        return "customer-orders";
+        return "nonmember-orders";
     }
 
     /**

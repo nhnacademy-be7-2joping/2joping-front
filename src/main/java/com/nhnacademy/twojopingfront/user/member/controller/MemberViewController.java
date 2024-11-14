@@ -48,4 +48,15 @@ public class MemberViewController {
     }
 
 
+    @GetMapping("/member/find-id")
+    public String memberFindId(Model model) {
+
+        return "user/member/find-id";
+    }
+
+    @GetMapping("/member/find-pwd")
+    public String memberFindPwd(Model model) {
+        return "user/member/find-password";
+    }
+
 }

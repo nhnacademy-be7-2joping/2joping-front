@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>로그인</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link rel="stylesheet" th:href="@{/css/login-style.css}">
+</head>
+<body>
+
+<div class="login-container">
+  <div class = "login-logo-container">
+    <a class="navbar-brand" href="/">
+      <img th:src="@{/images/logo.png}" alt="logo" width="200"/>
+    </a>
+  </div>
+  <div class="login-tabs">
+    <div class="login-tab active" onclick="showMemberLogin()">회원 로그인</div>
+    <div class="login-tab" onclick="showGuestLogin()">비회원 주문조회</div>
+  </div>
+
+  <form id="member-login" class="login-form" method="POST" action="/login" >
+    <input type="text" placeholder="아이디" name="id" required>
+    <input type="password" placeholder="비밀번호" name="password" required>
+    <button type="submit">로그인</button>
+  </form>
+
+  <form id="guest-login" class="login-form" style="display: none;" method="POST" action="/login/non-member" >
+    <input type="text" placeholder="이름" required>
+    <input type="text" placeholder="주문 번호" required>
+    <button type="submit">비회원 주문조회</button>
+  </form>
+
+  <div class="login-service-container">
+    <a href="/member/find-id">ID찾기</a>
+    <span class="separator">|</span>
+    <a href="/member/find-pwd">비밀번호 찾기</a>
+
+  </div>
+</div>
+
+<script>
+  function showMemberLogin() {
+    document.getElementById('member-login').style.display = 'flex';
+    document.getElementById('guest-login').style.display = 'none';
+    document.querySelectorAll('.login-tab')[0].classList.add('active');
+    document.querySelectorAll('.login-tab')[1].classList.remove('active');
+  }
+
+  function showGuestLogin() {
+    document.getElementById('member-login').style.display = 'none';
+    document.getElementById('guest-login').style.display = 'flex';
+    document.querySelectorAll('.login-tab')[0].classList.remove('active');
+    document.querySelectorAll('.login-tab')[1].classList.add('active');
+  }
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.nhnacademy.twojopingfront.user.dto.request;
+package com.nhnacademy.twojopingfront.user.login.dto.request;
 
 public record LoginNonMemberRequestDto(
         String name,

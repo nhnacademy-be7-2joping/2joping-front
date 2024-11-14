@@ -1,7 +1,7 @@
-package com.nhnacademy.twojopingfront.user.controller;
+package com.nhnacademy.twojopingfront.user.login.controller;
 
-import com.nhnacademy.twojopingfront.user.dto.request.LoginRequestDto;
-import com.nhnacademy.twojopingfront.user.dto.response.LoginResponseDto;
+import com.nhnacademy.twojopingfront.user.login.dto.request.LoginRequestDto;
+import com.nhnacademy.twojopingfront.user.login.dto.response.LoginResponseDto;
 import com.nhnacademy.twojopingfront.user.service.LoginService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,7 +42,7 @@ public class LoginController {
     @GetMapping("/login")
     public String login(@CookieValue(value = "accessToken",
             defaultValue = "") String accessToken, Model model) {
-        return "login";
+        return "login/login";
     }
 
     /**
@@ -81,13 +81,6 @@ public class LoginController {
         return "redirect:/";
     }
 
-    /**
-     * @return 비회원 로그인 페이지 view
-     */
-    @GetMapping("/login/non-member")
-    public String loginNonMember() {
-        return "login-nonmember";
-    }
 
     /**
      * 사용자의 로그아웃 요청을 처리하는 메서드.

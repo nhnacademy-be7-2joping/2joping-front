@@ -11,16 +11,13 @@
   <title>메인페이지 레이아웃</title>
 
   <style>
-    .main-page-container-1{
-      display: flex;
-      justify-content: space-between; /* 양 끝에 붙도록 설정 */
-      padding: 2rem 0; /* 상하 여백 추가 */
-      max-width: 1250px; /* 최대 너비 설정 */
-      margin: 0 auto; /* 화면 중앙 정렬 */
-      min-height: 800px;
 
-    }
+.layout-main-container{
+  max-width: 1250px; /* 최대 너비 설정 */
+  margin: 0 auto; /* 화면 중앙 정렬 */
+  min-height: 800px;
 
+}
   </style>
 </head>
 <body>
@@ -59,10 +56,41 @@
     </div>
     <!-- 사용자 정보 UI -->
     <div class="navbar-actions">
-      <a href="/login" class="nav-action-link">로그인</a>
-      <span class="separator">|</span> <!-- 경계선 -->
-      <a href="/signup" class="nav-action-link">회원가입</a>
+      <!-- 로그인 상태일 때 보이는 코드 -->
+      <div th:if="${token != null and !#strings.isEmpty(token)}">
+
+        <div class="user-profile-container">
+          <div class="user-profile-image-container">
+            <img th:src="${userProfile != null and userProfile.imageUrl != null and !#strings.isEmpty(userProfile.imageUrl) ? userProfile.imageUrl : '/images/profile-default-image.png'}"
+                 alt="회원 사진" class="profile-image" />
+          </div>
+
+          <span class="user-name"
+                th:text="${userProfile != null and userProfile.name != null and !#strings.isEmpty(userProfile.name) ? userProfile.name + ' 님' : '홍길동 님'}">
+          </span>
+
+
+          <!-- 선택 창 박스 -->
+          <div class="dropdown-menu hidden">
+            <a href="/mypage">마이페이지</a>
+            <a href="/settings">설정</a>
+            <a href="/logout">로그아웃</a>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- 로그인 상태가 아닐 때 보이는 코드 -->
+      <div th:unless="${token != null and !#strings.isEmpty(token)}">
+        <a href="/login" class="nav-action-link">로그인</a>
+        <span class="separator">|</span> <!-- 경계선 -->
+        <a href="/signup" class="nav-action-link">회원가입</a>
+      </div>
     </div>
+
+
+
   </div>
 </nav>
 
@@ -77,13 +105,14 @@
   </div>
 </div>
 
-<div class="main-page-container-1">
+<div class="layout-main-container">
+
   <!-- 중앙 컨테이너 -->
   <div  layout:fragment="content">
     <!-- 각 페이지에서 여기를 채움 -->
 
   </div>
-  </div>
+</div>
 
 
 
@@ -99,6 +128,9 @@
 
 
 <script th:src="@{/js/index-script.js}"></script>
+<script th:src="@{/js/profile-drop-down.js}"></script>
+
+
 
 </body>
 </html>

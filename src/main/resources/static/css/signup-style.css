@@ -1,0 +1,97 @@
+
+.form-container {
+    max-width: 1250px;
+    width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.form-container h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #343a40;
+}
+.form-container label {
+    font-weight: bold;
+    color: #495057;
+}
+.form-container input, .form-container select, .form-container button {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+.form-container button {
+    background-color:  var(--primary-color);
+    color: white;
+    font-size: 1rem;
+}
+.form-container small {
+    display: block;
+    color: #868e96;
+    margin-bottom: 0.5rem;
+}
+.error-message {
+    color: #d9534f;
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+}
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+select:focus {
+    border-color:  var(--primary-color); /* 원하는 테두리 색상 */
+    outline: none; /* 기본 외곽선 제거 */
+    box-shadow: 0 0 5px rgba(148, 76, 255, 0.5); /* 부드러운 외곽 효과 */
+}
+
+
+
+
+.success-container {
+    width: 500px;
+    height: 250px;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 2rem;
+    background-color: #e9f7ef;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.success-container h1 {
+    color: #2c7a7b;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.success-container p {
+    font-size: 1.125rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #3182ce;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2b6cb0;
+}
