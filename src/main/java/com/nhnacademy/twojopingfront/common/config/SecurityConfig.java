@@ -1,6 +1,6 @@
 package com.nhnacademy.twojopingfront.common.config;
 
-import com.nhnacademy.twojopingfront.common.filter.JwtAuthentitactionFilter;
+import com.nhnacademy.twojopingfront.common.filter.JitAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final JwtAuthentitactionFilter jwtAuthentitactionFilter;
+    private final JitAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -23,7 +23,7 @@ public class SecurityConfig {
                             .anyRequest().permitAll();
                 }
         );
-        http.addFilterBefore(jwtAuthentitactionFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         // 외부 인증 처리를 위한 비활성화
         http.formLogin(AbstractHttpConfigurer::disable)
