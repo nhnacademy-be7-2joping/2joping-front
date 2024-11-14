@@ -19,7 +19,7 @@
     <!-- 최소 주문 금액 필드 -->
     <div>
         <label for="minOrderAmount">최소 주문 금액:</label>
-        <input type="number" id="minOrderAmount" th:field="*{minOrderAmount}" required min="1" title="최소 주문 금액은 1 이상이어야 합니다.">
+        <input type="number" id="minOrderAmount" th:field="*{minOrderAmount}" required min="0" title="최소 주문 금액은 0 이상이어야 합니다.">
     </div>
 
     <!-- 회원 전용 여부 필드 -->
