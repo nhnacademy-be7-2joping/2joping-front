@@ -12,6 +12,5 @@ public interface JwtDecodeClient {
     JwtUserInfoResponseDto getUserInfo(@CookieValue("accessToken") String accessToken);
 
     @GetMapping("/refreshToken")
-    ResponseEntity<?> refreshToken(@CookieValue("accessToken") String accessToken,
-                                   @CookieValue("refreshToken") String refreshToken);
+    ResponseEntity<?> refreshToken(@CookieValue("refreshToken") String refreshToken);
 }

@@ -13,6 +13,7 @@ public class IndexController {
     public String index(@CookieValue(name = "accessToken", defaultValue = "") String accessToken, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth != null ? auth.getName() : "anonymous";
+        model.addAttribute("token", accessToken);
 
         return "index";
     }

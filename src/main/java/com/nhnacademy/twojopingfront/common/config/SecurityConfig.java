@@ -28,7 +28,8 @@ public class SecurityConfig {
         // 외부 인증 처리를 위한 비활성화
         http.formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
-                .sessionManagement(AbstractHttpConfigurer::disable);
+                .sessionManagement(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable);
 
         // CSRF 비활성화
         http.csrf(AbstractHttpConfigurer::disable);
