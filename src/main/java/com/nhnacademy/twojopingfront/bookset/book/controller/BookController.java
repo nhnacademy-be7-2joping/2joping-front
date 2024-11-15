@@ -52,7 +52,7 @@ public class BookController {
         return "bookset/book/get-booklist";
     }
 
-    @GetMapping("/books/get/book/{bookId}")
+    @GetMapping("/books/{bookId}")
     public String getBookByBookId(@PathVariable Long bookId, Model model) {
         BookResponseDto books = bookService.getBookById(bookId);
         model.addAttribute("books", books);

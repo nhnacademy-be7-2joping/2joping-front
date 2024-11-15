@@ -11,8 +11,10 @@
 <div class="mypage-container" layout:fragment="content">
 
   <div class="mypage-form-container">
-    <h1>회원 정보 수정</h1>
-    <form action="/members/update" method="post">
+    <div class = "edit-form-container">
+
+    <form action="/members/update" method="post" class = "user-edit-form">
+      <h1>회원 정보 수정</h1>
       <!-- 수정 불가한 필드 -->
       <label for="name">이름:</label>
       <input type="text" id="name" name="name" th:value="${name != null ? name : ''}" readonly>
@@ -44,6 +46,7 @@
       <!-- 제출 버튼 -->
       <button type="submit">정보 수정</button>
     </form>
+  </div>
   </div>
 </div>
 </body>
