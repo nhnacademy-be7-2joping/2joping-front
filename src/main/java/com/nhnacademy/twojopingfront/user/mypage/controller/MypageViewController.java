@@ -1,15 +1,21 @@
 package com.nhnacademy.twojopingfront.user.mypage.controller;
 
+import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
+import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/mypage")
 public class MypageViewController {
+    private final MemberAdaptor memberAdaptor;
+
 
     @GetMapping
     public String mypageView(Model model) {
@@ -38,6 +44,8 @@ public class MypageViewController {
     @GetMapping("/address-list")
     public String addressListView(Model model) {
 
+        List<MemberAddressResponseDto> addresses = memberAdaptor.getMemberAddresses();
+        model.addAttribute("addresses", addresses);
         return "user/mypage/address-list";
     }
 
