@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82d8f3c6-2bd1-449a-9d35-d88d1f8f9887" name="Changes" comment="refactor: 포장 정책 -&gt; 포장 상품으로 이름 수정">
+    <list default="true" id="82d8f3c6-2bd1-449a-9d35-d88d1f8f9887" name="Changes" comment="merge from develop">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/wrap/client/WrapClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/wrap/client/AdminWrapClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/wrap/controller/WrapController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/wrap/controller/WrapController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/wrap/service/WrapService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nhnacademy/twojopingfront/admin/wrap/service/WrapService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/properties/gateway.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/properties/gateway.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/index-style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/index-style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/admin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/admin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/admin/wrap/WrapControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/admin/wrap/WrapControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/admin/wrap/WrapControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/nhnacademy/twojopingfront/bookset/book/controller/BookControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,29 +30,64 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JUnit.WrapControllerTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.WrapControllerTest.testWrap.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.twojoping-front [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.twojoping-front [package].executor&quot;: &quot;Run&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.TwojopingFrontApplication.executor&quot;: &quot;Run&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/admin-wrap&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JUnit.BookControllerTest.executor": "Run",
+    "JUnit.MemberAdaptorTest.executor": "Run",
+    "JUnit.MemberRestControllerTest.executor": "Run",
+    "JUnit.MemberViewControllerTest.executor": "Run",
+    "JUnit.TwojopingFrontApplicationTests.executor": "Run",
+    "JUnit.WrapControllerTest.executor": "Run",
+    "JUnit.WrapControllerTest.testWrap.executor": "Run",
+    "Maven.twojoping-front [clean].executor": "Run",
+    "Maven.twojoping-front [package].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.TwojopingFrontApplication.executor": "Run",
+    "git-widget-placeholder": "feature/admin-wrap",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Spring Boot.TwojopingFrontApplication">
+}]]></component>
+  <component name="RunManager" selected="JUnit.BookControllerTest">
+    <configuration name="BookControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="twojoping-front" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nhnacademy.twojopingfront.bookset.book.controller.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nhnacademy.twojopingfront.bookset.book.controller" />
+      <option name="MAIN_CLASS_NAME" value="com.nhnacademy.twojopingfront.bookset.book.controller.BookControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TwojopingFrontApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="twojoping-front" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.nhnacademy.twojopingfront.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.nhnacademy.twojopingfront" />
+      <option name="MAIN_CLASS_NAME" value="com.nhnacademy.twojopingfront.TwojopingFrontApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WrapControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="twojoping-front" />
       <extension name="coverage">
@@ -90,7 +120,6 @@
       </method>
     </configuration>
     <configuration name="TwojopingFrontApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="ACTIVE_PROFILES" value="dev" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="twojoping-front" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nhnacademy.twojopingfront.TwojopingFrontApplication" />
@@ -105,13 +134,17 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="JUnit.BookControllerTest" />
+      <item itemvalue="JUnit.TwojopingFrontApplicationTests" />
       <item itemvalue="JUnit.WrapControllerTest" />
       <item itemvalue="JUnit.WrapControllerTest.testWrap" />
       <item itemvalue="Spring Boot.TwojopingFrontApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.BookControllerTest" />
         <item itemvalue="Spring Boot.TwojopingFrontApplication" />
+        <item itemvalue="JUnit.TwojopingFrontApplicationTests" />
         <item itemvalue="JUnit.WrapControllerTest" />
         <item itemvalue="JUnit.WrapControllerTest.testWrap" />
       </list>
@@ -133,15 +166,44 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1731630276548</updated>
-      <workItem from="1731630285440" duration="7850000" />
+      <workItem from="1731630285440" duration="12644000" />
     </task>
+    <task id="LOCAL-00001" summary="refactor: wrap client gateway.base사용으로 수정">
+      <option name="closed" value="true" />
+      <created>1731651598351</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1731651598351</updated>
+    </task>
+    <task id="LOCAL-00002" summary="merge from develop">
+      <option name="closed" value="true" />
+      <created>1731651674728</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731651674728</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="refactor: 포장 정책 -&gt; 포장 상품으로 이름 수정" />
+    <MESSAGE value="refactor: wrap client gateway.base사용으로 수정" />
     <MESSAGE value="merge from develop" />
     <option name="LAST_COMMIT_MESSAGE" value="merge from develop" />
   </component>

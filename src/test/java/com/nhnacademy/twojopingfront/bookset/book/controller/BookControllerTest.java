@@ -5,6 +5,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookTagResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
+import com.nhnacademy.twojopingfront.common.client.JwtDecodeClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -38,6 +40,8 @@ class BookControllerTest {
     @MockBean
     private BookService bookService;
 
+    @MockBean
+    private JwtDecodeClient jwtDecodeClient;
     private BookSimpleResponseDto bookSimpleDto;
     private Page<BookSimpleResponseDto> bookPage;
     private BookResponseDto bookResponse;
@@ -62,6 +66,7 @@ class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     @DisplayName("전체 도서 목록 조회 테스트")
     void getAllBooks() throws Exception {
         when(bookService.getAllBooks(0, 10)).thenReturn(bookPage);
@@ -74,6 +79,7 @@ class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     @DisplayName("카테고리별 도서 목록 조회 테스트")
     void getBooksByCategoryId() throws Exception {
         when(bookService.getBooksByCategoryId(anyLong(), anyInt(), anyInt())).thenReturn(bookPage);
@@ -86,6 +92,7 @@ class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     @DisplayName("기여자별 도서 목록 조회 테스트")
     void getBooksByContributorId() throws Exception {
         when(bookService.getBooksByContributorId(anyLong(), anyInt(), anyInt())).thenReturn(bookPage);
@@ -98,6 +105,7 @@ class BookControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = "ADMIN")
     @DisplayName("도서 상세 조회 테스트")
     void getBookByBookId() throws Exception {
         when(bookService.getBookById(anyLong())).thenReturn(bookResponse);
