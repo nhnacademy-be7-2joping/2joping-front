@@ -1,6 +1,5 @@
 package com.nhnacademy.twojopingfront.common.base.controller;
 
-
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
 import lombok.RequiredArgsConstructor;
