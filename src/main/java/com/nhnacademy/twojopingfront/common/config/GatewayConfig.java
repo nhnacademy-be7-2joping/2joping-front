@@ -2,11 +2,14 @@ package com.nhnacademy.twojopingfront.common.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.common.error.handler.CustomResponseErrorHandler;
+import com.nhnacademy.twojopingfront.common.interceptor.AccessTokenRestTemplateInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.beans.factory.annotation.Value;
+
+import java.util.List;
 
 /**
  * GatewayConfig 클래스는 게이트웨이 서버와의 통신을 위한 설정을 제공합니다.
@@ -30,6 +33,7 @@ public class GatewayConfig {
     @Bean
     public RestTemplate restTemplate(ObjectMapper objectMapper) {
         RestTemplate restTemplate = new RestTemplate();
+        restTemplate.setInterceptors(List.of(new AccessTokenRestTemplateInterceptor()));
         restTemplate.setErrorHandler(new CustomResponseErrorHandler(objectMapper));
         return restTemplate;
     }

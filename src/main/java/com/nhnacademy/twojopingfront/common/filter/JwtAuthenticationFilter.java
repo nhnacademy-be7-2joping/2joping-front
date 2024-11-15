@@ -54,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (dto == null || dto.role() == null) {
                 throw new InvalidTokenException("Invalid token");
             }
-            authenticateUser(dto);
+            authenticateUser(dto, accessToken);
         } catch (FeignException fe) {
             log.info(fe.getMessage());
             handleFeignException(response, fe, refreshToken, accessToken);
@@ -104,7 +104,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             JwtUserInfoResponseDto newDto = jwtDecodeClient.getUserInfo(accessToken);
-            authenticateUser(newDto);
+            authenticateUser(newDto, accessToken);
         } else if (errorCode.startsWith("INVALID_TOKEN")) {
             throw new InvalidTokenException("Access token is invalid");
         }
@@ -145,11 +145,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return cookie;
     }
 
-    private void authenticateUser(JwtUserInfoResponseDto userInfo) {
+    private void authenticateUser(JwtUserInfoResponseDto userInfo, String accessToken) {
         List<GrantedAuthority> authorities = List.of(
                 new SimpleGrantedAuthority(userInfo.role().toUpperCase()));
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(userInfo.id(), null, authorities);
+                new UsernamePasswordAuthenticationToken(userInfo.id(), accessToken, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

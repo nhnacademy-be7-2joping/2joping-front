@@ -48,7 +48,7 @@ public interface BookClient {
      * @return 도서의 상세 정보
      */
     @GetMapping("/books/get/book/{bookId}")
-    BookResponseDto getBookById(@PathVariable Long bookId);
+    BookResponseDto getBookById(@PathVariable("bookId") Long bookId);
 }
 
 

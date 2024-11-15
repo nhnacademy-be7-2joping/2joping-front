@@ -43,7 +43,8 @@ public class MemberAdaptor {
     public List<MemberAddressResponseDto> getMemberAddresses() {
 
         ResponseEntity<List<MemberAddressResponseDto>> response = gatewayClient.sendToGateway(
-                HttpMethod.GET, MEMBER_ENDPOINT + "/addresses", null,new ParameterizedTypeReference<List<MemberAddressResponseDto>>() {}
+                HttpMethod.GET, MEMBER_ENDPOINT + "/addresses", null,
+                new ParameterizedTypeReference<List<MemberAddressResponseDto>>() {}
         );
         return response.getBody();
     }
