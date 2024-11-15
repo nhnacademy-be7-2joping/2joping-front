@@ -11,7 +11,11 @@
     <title>기본 레이아웃</title>
 
     <style>
+        .sidebar-container{
+            padding-top: 30px;
+            position: relative; /* 부모 컨테이너의 기준을 명확히 지정 */
 
+        }
     </style>
 </head>
 <body>
@@ -61,41 +65,47 @@
 <!-- 콘텐츠 영역 (동적으로 변경됨) -->
 <main class="page-layout">
     <!-- 왼쪽 사이드바 -->
+    <div class="sidebar-container">
     <div class="sidebar">
-        <h2>마이페이지</h2>
+        <a href="/mypage" class="mypage-button">
+        마이페이지
+        </a>
         <ul>
             <li>
-                <a href="/mypage/edit-profile"
+                <a href="/mypage/edit-profile" class="font-default"
                    th:classappend="${activePage == 'edit-profile'} ? 'active' : ''">
                     내 정보
                 </a>
             </li>
             <li>
-                <a href="/mypage/order-list"
+                <a href="/mypage/order-list" class="font-default"
                    th:classappend="${activePage == 'order-list'} ? 'active' : ''">
                     주문 조회
                 </a>
             </li>
             <li>
-                <a href="/mypage/return-exchange-history"
+                <a href="/mypage/return-exchange-history" class="font-default"
                    th:classappend="${activePage == 'return-exchange-history'} ? 'active' : ''">
                     반품/교환 조회
                 </a>
             </li>
             <li>
-                <a href="/mypage/address-list"
+                <a href="/mypage/address-list" class="font-default"
                    th:classappend="${activePage == 'address-list'} ? 'active' : ''">
                     배송지 등록 / 수정
                 </a>
             </li>
             <li>
-                <a href="/mypage/review-history"
+                <a href="/mypage/review-history" class="font-default"
                    th:classappend="${activePage == 'review-history'} ? 'active' : ''">
                     리뷰 내역
                 </a>
             </li>
         </ul>
     </div>
+
+    </div>
+
 
     <!-- 중앙 컨테이너 -->
     <div class="main-container" layout:fragment="content">

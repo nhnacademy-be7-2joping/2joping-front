@@ -5,11 +5,114 @@
     <meta charset="UTF-8">
     <title>마이페이지</title>
     <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+
+
 </head>
 <body>
 <!-- 메인 컨텐츠 영역 -->
 <div class="mypage-container" layout:fragment="content">
     <div class="mypage-form-container">
+
+        <div class="user-info-container">
+            <div class="tier-container">
+                <p class="font-user-info-title bold">나의 등급</p>
+                <div class="tier-image-container">
+
+                </div>
+                <div class="font-user-info-title flex-left">
+
+                <p>다음 등급까지:&nbsp;</p>
+                    <p>100,000원</p>
+
+                </div>
+                <div class="align-right">
+                    <a href= "#" class="tier-info-button">
+                        등급 정보 보기
+                    </a>
+                </div>
+
+            </div>
+
+            <div class="point-container">
+
+                <div class="font-user-info-title bold flex-left">
+
+                <p >보유 포인트&nbsp; : &nbsp; </p> <p>10000</p><p>P</p>
+
+                </div>
+                <div class="point-history-container">
+
+                </div>
+                <a href="#"  class="point-info-button">
+                    포인트 내역 보기
+                </a>
+
+
+
+
+            </div>
+
+            <div class="coupon-container">
+                <p class="font-user-info-title bold">보유 쿠폰 </p>
+
+                    <div class="coupon-info-container1">
+
+                        <a href="#" class="coupon-info-container2">
+
+                        </a>
+                        <a href="#" class="coupon-info-container2">
+
+                        </a>
+                    </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="order-delivery-container1">
+            <div class="mypage-title1">
+                <p class="font-default">주문내역</p>
+            </div>
+
+            <div class="mypage-order-table">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>주문일자</th>
+                        <th>주문번호</th>
+                        <th>주문내역</th>
+                        <th>주문상태</th>
+                        <th>배송상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>2024-11-15</td>
+                        <td>12345678</td>
+                        <td>상품 A, 상품 B</td>
+                        <td>결제완료</td>
+                        <td>배송중</td>
+                    </tr>
+                    <tr>
+                        <td>2024-11-14</td>
+                        <td>87654321</td>
+                        <td>상품 C</td>
+                        <td>취소완료</td>
+                        <td>-</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+        </div>
+
+
+
     </div>
 
 
