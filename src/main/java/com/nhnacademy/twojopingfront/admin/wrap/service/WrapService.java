@@ -1,6 +1,6 @@
 package com.nhnacademy.twojopingfront.admin.wrap.service;
 
-import com.nhnacademy.twojopingfront.admin.wrap.client.WrapClient;
+import com.nhnacademy.twojopingfront.admin.wrap.client.AdminWrapClient;
 import com.nhnacademy.twojopingfront.admin.wrap.dto.WrapRequestDto;
 import com.nhnacademy.twojopingfront.admin.wrap.dto.WrapResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class WrapService {
-    private final WrapClient wrapClient;
+    private final AdminWrapClient wrapClient;
 
     public void createWrap(WrapRequestDto requestDto) {
         wrapClient.createWrap(requestDto);
