@@ -72,7 +72,6 @@ public class GatewayClient {
 
             HttpHeaders headers = new HttpHeaders();
             headers.set("Content-Type", "application/json");
-            headers.set("X-Customer-Id", "1");
 
             HttpEntity<T> requestEntity = new HttpEntity<>(data, headers);
 
