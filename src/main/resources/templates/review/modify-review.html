@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>리뷰 수정</title>
+</head>
+<body>
+<h1>리뷰 수정</h1>
+<form action="/reviews/{reviewId}" method="post">
+    <label for="ratingValue">평점 (1~5):</label>
+    <input type="number" id="ratingValue" name="ratingValue" min="1" max="5" required><br><br>
+
+    <label for="title">리뷰 제목:</label>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <label for="text">리뷰 내용:</label>
+    <textarea id="text" name="text" required></textarea><br><br>
+
+    <label for="imageUrl">이미지 URL:</label>
+    <input type="text" id="imageUrl" name="imageUrl"><br><br>
+
+    <button type="submit">수정</button>
+</form>
+</body>
+</html>

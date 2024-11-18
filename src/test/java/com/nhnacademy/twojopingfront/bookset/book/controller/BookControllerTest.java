@@ -102,7 +102,7 @@ class BookControllerTest {
     void getBookByBookId() throws Exception {
         when(bookService.getBookById(anyLong())).thenReturn(bookResponse);
 
-        mockMvc.perform(get("/books/get/book/1"))
+        mockMvc.perform(get("/books/1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("bookset/book/bookdetails"))
                 .andExpect(model().attribute("books", bookResponse));
