@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/menu-footer-layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서 검색</title>
+    <link rel="stylesheet" th:href="@{/css/search-style.css}">
+</head>
+<body>
+
+<div class="container" layout:fragment="content">
+    <!-- 검색 입력 -->
+    <div class="search-container">
+        <form action="/books/search" method="get">
+            <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
+            <button type="submit" class="btn btn-primary">검색</button>
+        </form>
+    </div>
+
+    <!-- 정렬 버튼 -->
+    <div class="sort-buttons-section">
+        <div class="sort-buttons">
+            <form action="/books/search" method="get">
+                <input type="hidden" name="keyword" th:value="${keyword}">
+                <input type="hidden" name="sort" value="popularity">
+                <button type="submit" class="btn btn-outline-secondary">인기도순</button>
+            </form>
+            <form action="/books/search" method="get">
+                <input type="hidden" name="keyword" th:value="${keyword}">
+                <input type="hidden" name="sort" value="newest">
+                <button type="submit" class="btn btn-outline-secondary">신상품순</button>
+            </form>
+            <form action="/books/search" method="get">
+                <input type="hidden" name="keyword" th:value="${keyword}">
+                <input type="hidden" name="sort" value="lowest_price">
+                <button type="submit" class="btn btn-outline-secondary">최저가순</button>
+            </form>
+            <form action="/books/search" method="get">
+                <input type="hidden" name="keyword" th:value="${keyword}">
+                <input type="hidden" name="sort" value="highest_price">
+                <button type="submit" class="btn btn-outline-secondary">최고가순</button>
+            </form>
+            <form action="/books/search" method="get">
+                <input type="hidden" name="keyword" th:value="${keyword}">
+                <input type="hidden" name="sort" value="rating">
+                <button type="submit" class="btn btn-outline-secondary">평점순</button>
+            </form>
+            <form action="/books/search" method="get">
+                <input type="hidden" name="keyword" th:value="${keyword}">
+                <input type="hidden" name="sort" value="reviews">
+                <button type="submit" class="btn btn-outline-secondary">리뷰순</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 도서 목록 -->
+    <div class="card-container">
+        <div class="book-card" th:each="book : ${books.content}">
+            <!-- 썸네일 -->
+          <img th:src="${book.thumbnail != null and book.thumbnail != '' ? book.thumbnail : '/images/default-book-image.jpg'}"
+               alt="썸네일"
+               class="book-thumbnail">
+
+
+          <!-- 도서 정보 -->
+            <div class="book-info">
+                <a th:href="@{/books/{bookId}(bookId=${book.bookId})}"
+                   th:title="${book.bookTitle}"
+                   th:text="${book.bookTitle}"
+                   class="book-title">
+                </a>
+
+                <!-- 기여자 -->
+                <div class="book-contributors">
+                <span th:each="contributor : ${book.bookContributor}"
+                      th:text="'[' + ${contributor.role} + '] ' + ${contributor.name} + ' '"></span>
+                </div>
+
+                <!-- 카테고리 -->
+                <div class="book-category" th:each="category : ${book.bookCategory}"
+                     th:text="'카테고리: ' + ${category.name}"></div>
+
+                <!-- 출판사 -->
+                <div class="book-publisher" th:text="'출판사: ' + ${book.bookPublisher}"></div>
+
+                <!-- 정가 -->
+                <div class="book-price" th:text="'정가: ' + ${book.bookRetailPrice} + '원'"></div>
+
+                <!-- 판매가 -->
+                <div class="book-price" th:text="'판매가: ' + ${book.bookSellingPrice} + '원'"></div>
+
+                <!-- 태그 -->
+                <div class="book-tags">
+                    <span th:each="tag : ${book.bookTag}" th:text="' #' + ${tag.name}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 페이징 네비게이션 -->
+    <nav aria-label="Page navigation" th:if="${books.totalElements > 0}">
+        <ul class="pagination">
+            <!-- 이전 페이지 -->
+            <li class="page-item" th:classappend="${!books.hasPrevious()} ? 'disabled'">
+                <a class="page-link"
+                   th:if="${books.hasPrevious()}"
+                   th:href="@{${currentPath}(keyword=${keyword}, sort=${sort}, page=${books.number - 1}, size=${books.size})}"
+                   aria-label="Previous">&laquo; 이전</a>
+                <span class="page-link disabled" th:if="${!books.hasPrevious()}">&laquo; 이전</span>
+            </li>
+
+            <!-- 페이지 번호 -->
+            <li class="page-item"
+                th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}"
+                th:classappend="${i == books.number} ? 'active'">
+                <a class="page-link"
+                   th:href="@{${currentPath}(keyword=${keyword}, sort=${sort}, page=${i}, size=${books.size})}"
+                   th:text="${i + 1}">1</a>
+            </li>
+
+            <!-- 다음 페이지 -->
+            <li class="page-item" th:classappend="${!books.hasNext()} ? 'disabled'">
+                <a class="page-link"
+                   th:if="${books.hasNext()}"
+                   th:href="@{${currentPath}(keyword=${keyword}, sort=${sort}, page=${books.number + 1}, size=${books.size})}"
+                   aria-label="Next">다음 &raquo;</a>
+                <span class="page-link disabled" th:if="${!books.hasNext()}">다음 &raquo;</span>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+</body>
+</html>
