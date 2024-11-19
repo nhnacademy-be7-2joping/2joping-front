@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-menu-footer-layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>포장 상품 등록</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container mt-4">
+        <h2>포장 상품 등록</h2>
+        <!-- action 속성을 비워두어 기본 폼 제출로 URL 파라미터가 붙는 현상을 방지 -->
+        <form id="createWrapForm" method="post">
+            <div class="mb-3">
+                <label for="name" class="form-label">포장 상품 이름</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="포장 상품 이름 입력" required>
+            </div>
+            <div class="mb-3">
+                <label for="wrapPrice" class="form-label">가격</label>
+                <input type="number" class="form-control" id="wrapPrice" name="wrapPrice" placeholder="가격 입력" required min="1">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">활성화 여부</label>
+                <div class="form-check">
+                    <!-- 활성화 라디오 버튼 -->
+                    <input type="radio" class="form-check-input" id="isActiveTrue" name="isActive" value="true" checked>
+                    <label class="form-check-label" for="isActiveTrue">활성화</label>
+                </div>
+                <div class="form-check">
+                    <!-- 비활성화 라디오 버튼 -->
+                    <input type="radio" class="form-check-input" id="isActiveFalse" name="isActive" value="false">
+                    <label class="form-check-label" for="isActiveFalse">비활성화</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">등록</button>
+            <a href="/admin/wraps/list" class="btn btn-secondary">목록으로 이동하기</a>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.getElementById('createWrapForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const wrapPrice = parseInt(document.getElementById('wrapPrice').value);
+        const isActive = document.getElementById('isActive').checked;
+
+        const wrapData = { name, wrapPrice, isActive };
+
+        try {
+            const response = await fetch('/admin/wraps', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(wrapData)
+            });
+
+            if (response.ok) {
+                alert("포장 상품이 성공적으로 등록되었습니다.");
+                document.getElementById('createWrapForm').reset();
+            } else {
+                alert("포장 상품 등록에 실패했습니다.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("오류가 발생했습니다.");
+        }
+    });
+</script>
+
+
+</body>
+</html>
