@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.cart.entity.Book;
 import com.nhnacademy.twojopingfront.cart.entity.Cart;
 import com.nhnacademy.twojopingfront.cart.service.CartService;
+import com.nhnacademy.twojopingfront.common.error.exception.user.UnauthorizedException;
+import com.nhnacademy.twojopingfront.common.util.MemberUtils;
 import com.nhnacademy.twojopingfront.order.client.ShipmentPolicyRequestClient;
 import com.nhnacademy.twojopingfront.order.client.WrapClient;
 import com.nhnacademy.twojopingfront.order.dto.request.PaymentRequest;

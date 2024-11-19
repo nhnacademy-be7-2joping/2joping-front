@@ -5,6 +5,7 @@ import com.nhnacademy.twojopingfront.common.client.JwtDecodeClient;
 import com.nhnacademy.twojopingfront.common.dto.JwtUserInfoResponseDto;
 import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
 import com.nhnacademy.twojopingfront.common.error.exception.jwt.InvalidTokenException;
+import com.nhnacademy.twojopingfront.common.security.MemberUserDetails;
 import feign.FeignException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -50,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             // JWT 디코딩 및 사용자 정보 가져오기
-            JwtUserInfoResponseDto dto = jwtDecodeClient.getUserInfo(accessToken);
+            JwtUserInfoResponseDto dto = jwtDecodeClient.getUserInfo(accessToken).getBody();
             if (dto == null || dto.role() == null) {
                 throw new InvalidTokenException("Invalid token");
             }
@@ -103,7 +104,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 response.addCookie(cookie);
             }
 
-            JwtUserInfoResponseDto newDto = jwtDecodeClient.getUserInfo(accessToken);
+            JwtUserInfoResponseDto newDto = jwtDecodeClient.getUserInfo(accessToken).getBody();
             authenticateUser(newDto, accessToken);
         } else if (errorCode.startsWith("INVALID_TOKEN")) {
             throw new InvalidTokenException("Access token is invalid");
@@ -148,8 +149,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private void authenticateUser(JwtUserInfoResponseDto userInfo, String accessToken) {
         List<GrantedAuthority> authorities = List.of(
                 new SimpleGrantedAuthority(userInfo.role().toUpperCase()));
+        MemberUserDetails memberUserDetails = new MemberUserDetails(
+                userInfo.id(), userInfo.nickName(), accessToken, authorities
+        );
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(userInfo.id(), accessToken, authorities);
+                new UsernamePasswordAuthenticationToken(memberUserDetails, accessToken, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
