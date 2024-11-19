@@ -1,34 +1,32 @@
 package com.nhnacademy.twojopingfront.common.error.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import org.springframework.http.HttpStatus;
+
+import com.nhnacademy.twojopingfront.common.error.enums.RedirectType;
 
 /**
- * ErrorResponseDto는 백엔드 서버에서 발생한 오류 메시지를 클라이언트에서 수신하기 위한 DTO입니다.
- * 이 클래스는 상태 코드, 오류 코드, 오류 메시지, 리다이렉트 방식, 그리고 리다이렉트 URL을 포함합니다.
+ * ErrorResponseDto
+ *
+ * 이 클래스는 API 응답에서 발생하는 오류에 대한 정보를 포함하는 DTO입니다.
+ * 상태 코드, 오류 코드 및 메시지, 리디렉션 타입, URL, 그리고 관련 데이터를 담고 있습니다.
+ *
+ * @param <T> 오류 발생 시 추가적으로 반환할 데이터 타입
+ * @param status HTTP 상태 코드
+ * @param errorCode 사용자 정의 오류 코드
+ * @param errorMessage 오류 메시지
+ * @param redirectType 리디렉션 타입 ("REDIRECT", "FORWARD", "NONE")
+ * @param url 리디렉션 URL
+ * @param data 추가 데이터
+ *
  * @author Luha
  * @since 1.0
  */
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
-public class ErrorResponseDto {
-    private HttpStatus status;
-    private String errorCode;
-    private String errorMessage;
-    private String redirectType; // "REDIRECT" or "FORWARD" or "NONE"
-    private String url;
+public record ErrorResponseDto<T>(
+        int  status,
+        String errorCode,
+        String errorMessage,
+        RedirectType redirectType, // "REDIRECT" or "FORWARD" or "NONE"
+        String url,
+        T data
+) {
 
-
-    /**
-     * 기본 리다이렉트 없이 오류 정보를 포함하는 생성자.
-     * @param status 오류 상태 코드
-     * @param errorCode 오류 코드
-     * @param errorMessage 오류 메시지
-     */
-    public ErrorResponseDto(HttpStatus status, String errorCode, String errorMessage) {
-        this(status, errorCode, errorMessage, "NONE", null);
-    }
 }
