@@ -1,20 +1,104 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>리뷰 조회</title>
+    <title>도서 리뷰 목록</title>
+    <style>
+        .stars {
+            display: flex;
+            justify-content: center;
+        }
+
+        .star {
+            font-size: 1.5rem;
+            color: lightgray;
+        }
+
+        .star.selected {
+            color: gold;
+        }
+    </style>
+    <script>
+        function renderStarsForRow(rating, rowIndex) {
+            const stars = document.querySelectorAll(`.stars[data-row='${rowIndex}'] .star`);
+            stars.forEach((star, index) => {
+                star.classList.toggle('selected', index < rating);
+            });
+        }
+
+        function renderAllStars() {
+            const rows = document.querySelectorAll('.stars');
+            rows.forEach((row) => {
+                const rating = row.dataset.rating;
+                const rowIndex = row.dataset.row;
+                renderStarsForRow(rating, rowIndex);
+            });
+        }
+    </script>
 </head>
-<body>
-<h1>리뷰 상세 정보</h1>
+<body onload="renderAllStars()">
+<h1>도서 리뷰 목록</h1>
+
+<!-- 도서 정보 -->
 <div>
-    <p><strong>리뷰 ID:</strong> <span th:text="${review.reviewId}"></span></p>
-    <p><strong>회원 ID:</strong> <span th:text="${review.customerId}"></span></p>
-    <p><strong>도서 ID:</strong> <span th:text="${review.bookId}"></span></p>
-    <p><strong>평점:</strong> <span th:text="${review.ratingValue}"></span></p>
-    <p><strong>제목:</strong> <span th:text="${review.title}"></span></p>
-    <p><strong>내용:</strong> <span th:text="${review.text}"></span></p>
-    <p><strong>이미지:</strong> <img th:src="${review.imageUrl}" alt="이미지"></p>
-    <p><strong>작성일:</strong> <span th:text="${review.createdAt}"></span></p>
+    <h2>도서 ID: <span th:text="${bookId}"></span></h2>
 </div>
-<a href="/reviews">리뷰 목록으로 돌아가기</a>
+
+<!-- 리뷰 목록 -->
+<div>
+    <table border="1">
+        <thead>
+        <tr>
+            <th>리뷰 ID</th>
+            <th>회원 ID</th>
+            <th>평점</th>
+            <th>제목</th>
+            <th>작성일</th>
+            <th>상세보기</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="review, rowStat : ${reviews.content}">
+            <td th:text="${review.reviewId}"></td>
+            <td th:text="${review.customerId}"></td>
+            <td>
+                <div class="stars" th:data-rating="${review.ratingValue}" th:data-row="${rowStat.index}">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+            </td>
+            <td th:text="${review.title}"></td>
+            <td th:text="${review.createdAt}"></td>
+            <td>
+                <a th:href="@{/reviews/{reviewId}(reviewId=${review.reviewId})}">상세보기</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(reviews.content)}">
+            <td colspan="6">리뷰가 없습니다.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- 페이지네이션 -->
+<div>
+    <button th:if="${reviews.hasPrevious()}"
+            th:onclick="|window.location.href='?page=${reviews.number - 1}&size=${reviews.size}'|">
+        이전
+    </button>
+    <button th:if="${reviews.hasNext()}"
+            th:onclick="|window.location.href='?page=${reviews.number + 1}&size=${reviews.size}'|">
+        다음
+    </button>
+    <p>현재 페이지: <span th:text="${reviews.number + 1}"></span> / <span th:text="${reviews.totalPages}"></span></p>
+</div>
+
+<a th:href="@{/books/{bookId}(bookId=${bookId})}">도서 상세 페이지로 돌아가기</a>
+
+<script>
+    renderAllStars();
+</script>
 </body>
 </html>

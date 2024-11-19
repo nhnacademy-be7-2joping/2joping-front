@@ -2,22 +2,73 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>리뷰 수정</title>
+    <style>
+        .stars {
+            display: flex;
+            cursor: pointer;
+        }
+
+        .star {
+            font-size: 2rem;
+            color: lightgray;
+        }
+
+        .star.selected {
+            color: gold;
+        }
+    </style>
+    <script>
+        function setRating(rating) {
+            const stars = document.querySelectorAll('.star');
+            document.getElementById('ratingValue').value = rating; // 숨겨진 필드에 값 설정
+            stars.forEach((star, index) => {
+                star.classList.toggle('selected', index < rating); // 별 색 변경
+            });
+        }
+
+        // 초기 평점 설정
+        function initializeStars(rating) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                star.classList.toggle('selected', index < rating); // 초기 별 색 변경
+            });
+        }
+    </script>
 </head>
-<body>
+<body onload="initializeStars(/*[[${review.ratingValue}]]*/)">
 <h1>리뷰 수정</h1>
-<form action="/reviews/{reviewId}" method="post">
-    <label for="ratingValue">평점 (1~5):</label>
-    <input type="number" id="ratingValue" name="ratingValue" min="1" max="5" required><br><br>
+<form th:action="@{/reviews/{reviewId}(reviewId=${review.reviewId})}" method="post">
+    <!-- HTTP 메서드 PUT으로 처리 -->
+    <input type="hidden" name="_method" value="PUT"/>
 
+    <!-- reviewId 히든 필드 추가 -->
+    <input type="hidden" name="reviewId" th:value="${review.reviewId}"/>
+
+    <!-- 평점 -->
+    <label for="ratingValue">평점:</label>
+    <div class="stars">
+        <span class="star" onclick="setRating(1)">★</span>
+        <span class="star" onclick="setRating(2)">★</span>
+        <span class="star" onclick="setRating(3)">★</span>
+        <span class="star" onclick="setRating(4)">★</span>
+        <span class="star" onclick="setRating(5)">★</span>
+    </div>
+    <input type="hidden" id="ratingValue" name="ratingValue" th:value="${review.ratingValue}" required> <!-- 실제 값 저장용 -->
+    <br><br>
+
+    <!-- 제목 -->
     <label for="title">리뷰 제목:</label>
-    <input type="text" id="title" name="title" required><br><br>
+    <input type="text" id="title" name="title" th:value="${review.title}" required><br><br>
 
+    <!-- 내용 -->
     <label for="text">리뷰 내용:</label>
-    <textarea id="text" name="text" required></textarea><br><br>
+    <textarea id="text" name="text" required th:text="${review.text}"></textarea><br><br>
 
+    <!-- 이미지 URL -->
     <label for="imageUrl">이미지 URL:</label>
-    <input type="text" id="imageUrl" name="imageUrl"><br><br>
+    <input type="text" id="imageUrl" name="imageUrl" th:value="${review.imageUrl}"><br><br>
 
+    <!-- 제출 버튼 -->
     <button type="submit">수정</button>
 </form>
 </body>

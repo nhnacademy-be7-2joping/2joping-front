@@ -15,20 +15,19 @@ import org.springframework.web.bind.annotation.*;
 
 public interface ReviewClient {
 
-
     @PostMapping("/reviews")
     ReviewCreateResponseDto registerReview(ReviewCreateRequestDto reviewCreateRequestDto);
 
-    @PatchMapping("/reviews/{reviewId}")
+    @PutMapping("/reviews/{reviewId}")
     ReviewModifyResponseDto modifyReview(@PathVariable Long reviewId, @RequestBody ReviewModifyRequestDto reviewModifyRequestDto);
 
     @GetMapping("/reviews/{reviewId}")
     ReviewResponseDto getReview(@PathVariable Long reviewId);
 
-    @GetMapping("reviews/books/{bookId}")
+    @GetMapping("reviews/book/{bookId}")
     Page<ReviewResponseDto> getReviewsByBookId(@RequestParam("page") int page, @RequestParam("size") int size,@PathVariable Long bookId);
 
-    @GetMapping("reviews/books/{customerId}")
+    @GetMapping("reviews/customer/{customerId}")
     Page<ReviewResponseDto> getReviewsByCustomerId(@RequestParam("page") int page, @RequestParam("size") int size, @PathVariable("id") Long customerId);
 
 }

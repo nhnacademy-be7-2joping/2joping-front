@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>리뷰 상세 정보</title>
+    <style>
+        .stars {
+            display: inline-flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .star {
+            font-size: 2rem;
+            color: lightgray;
+            margin: 0 2px;
+        }
+
+        .star.selected {
+            color: gold;
+        }
+
+        .rating-label {
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+    </style>
+    <script>
+        function renderStars(rating) {
+            // 선택된 평점만큼 별 색칠
+            const stars = document.querySelectorAll('.stars .star');
+            stars.forEach((star, index) => {
+                star.classList.toggle('selected', index < rating);
+            });
+        }
+    </script>
+</head>
+<body>
+<h1>리뷰 상세 정보</h1>
+<div>
+    <p><strong>리뷰 ID:</strong> <span th:text="${review.reviewId}">리뷰 ID 없음</span></p>
+    <p><strong>회원 ID:</strong> <span th:text="${review.customerId}">회원 ID 없음</span></p>
+    <p><strong>도서 ID:</strong> <span th:text="${review.bookId}">도서 ID 없음</span></p>
+
+    <p>
+        <span class="rating-label"><strong>평점:</strong></span>
+    <div class="stars" id="rating-stars" th:attr="data-rating=${review.ratingValue}">
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+        <span class="star">★</span>
+    </div>
+    </p>
+
+    <p><strong>제목:</strong> <span th:text="${review.title}">제목 없음</span></p>
+    <p><strong>내용:</strong> <span th:text="${review.text}">내용 없음</span></p>
+    <p><strong>이미지:</strong> <img th:src="${review.imageUrl}" alt="이미지" /></p>
+    <p><strong>작성일:</strong> <span th:text="${review.createdAt}">작성일 없음</span></p>
+    <p><strong>수정일:</strong> <span th:text="${review.updatedAt}">작성일 없음</span></p>
+</div>
+
+<a th:href="@{/reviews/book/{bookId}(bookId=${review.bookId})}">리뷰 목록으로 돌아가기</a>
+
+<script>
+    // HTML 데이터 속성에서 평점 값을 가져와 별 색칠
+    const ratingElement = document.getElementById('rating-stars');
+    const ratingValue = parseInt(ratingElement.getAttribute('data-rating'), 10) || 0; // 평점 값 읽기
+    renderStars(ratingValue);
+</script>
+</body>
+</html>
