@@ -78,6 +78,7 @@ public class OrderController {
      */
     @GetMapping("/form")
     public String form(Model model) {
+        String name = MemberUtils.getNickname();
         List<Cart> cartItems = cartService.getCartByCustomerId(1);
         int bookCost = cartItems.stream().map(i -> i.getBook().getSellingPrice() * i.getQuantity()).reduce(
                 0,

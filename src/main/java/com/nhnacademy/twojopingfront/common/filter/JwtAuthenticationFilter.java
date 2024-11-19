@@ -150,7 +150,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         List<GrantedAuthority> authorities = List.of(
                 new SimpleGrantedAuthority(userInfo.role().toUpperCase()));
         MemberUserDetails memberUserDetails = new MemberUserDetails(
-                userInfo.id(), userInfo.nickName(), accessToken, authorities
+                userInfo.id(), accessToken, userInfo.nickName(), authorities
         );
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(memberUserDetails, accessToken, authorities);
