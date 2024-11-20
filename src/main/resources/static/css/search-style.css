@@ -217,3 +217,10 @@
     color: #ccc;
     pointer-events: none;
 }
+
+.no-results {
+    text-align: center;
+    color: #666;
+    margin-top: 20px;
+    font-size: 18px;
+}

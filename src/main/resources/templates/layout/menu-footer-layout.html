@@ -25,15 +25,18 @@
 
     <!-- 네비게이션 항목 -->
     <div class="navbar-links">
-      <a class="nav-link" href="#">베스트</a>
-      <a class="nav-link" href="#">신상품</a>
+      <a class="nav-link" href="/books/search?keyword=&sort=popularity">베스트</a>
+      <a class="nav-link" href="/books/search?keyword=&sort=newest">신상품</a>
       <a class="nav-link" href="#">이벤트</a>
       <a class="nav-link" href="#">고객센터</a>
     </div>
 
     <!-- 검색 바 -->
     <div class="navbar-search">
-      <input type="text" placeholder="검색어를 입력하세요">
+      <form action="/books/search" method="get">
+        <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
+        <button type="submit" class="btn btn-primary">검색</button>
+      </form>
     </div>
     <div class="navbar-cart">
       <a href="/cart" class="cart-icon">
