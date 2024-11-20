@@ -35,35 +35,27 @@ btnPay.addEventListener('click', () => {
     console.log(booksInCart);
 });
 
-const bookUnitPrices = document.querySelectorAll('.product-container .card .cost-value');
-const bookQuantities = document.querySelectorAll('.product-container .card input[type=number]');
+// 쿠폰 선택 시 처리
+const couponSelect = document.getElementById('coupon');
+const couponDiscount = document.getElementById('discount-cost');
+couponSelect.addEventListener('change', (e) => {
+    const selectedOption = couponSelect.options[couponSelect.selectedIndex];
+    if (selectedOption.value === 'none') {
+        couponDiscount.textContent = '0';
+    } else {
+        const selectedCost = Number(selectedOption.getAttribute('cost'));
+        const bookCost = Number(document.getElementById('book-cost').textContent);
 
-/* 주문 수량에 따른 가격 처리 */
-bookQuantities.forEach((item) => {
-    item.addEventListener('change', () => {
-        // 도서의 총 가격 계산
-        let bookCost = 0;
-        bookQuantities.forEach((item, idx) => {
-            const quantity = Number(item.value);
-            const unitPrice = Number(bookUnitPrices[idx].textContent);
-            bookCost += quantity * unitPrice;
-        });
-
-        // 배송 정책 기준 가격을 초과하면 배송비 조정 (e.g. 도서 30000 원 초과 시 배송비 무료)
-        const deliveryCost = document.getElementById('delivery-cost');
-        let applicableShippingFee = 0;
-        for (let p of shipmentPolicies) {
-            if (bookCost < p.minOrderAmount) {
+        switch (selectedOption.getAttribute('discount-type')) {
+            case 'PERCENT':
+                couponDiscount.textContent = String(bookCost * selectedCost / 100);
                 break;
-            }
-
-            applicableShippingFee = p.shippingFee;
+            case 'ACTUAL':
+                couponDiscount.textContent = String(selectedCost);
+                break;
         }
-
-        deliveryCost.textContent = applicableShippingFee;
-        document.getElementById('book-cost').textContent = bookCost;
-        updateTotalCost();
-    });
+    }
+    updateTotalPrice();
 });
 
 /* 함수 */
@@ -84,7 +76,7 @@ function validateForm() {
     return true;
 }
 
-function updateTotalCost() {
+function updateTotalPrice() {
     // 도서 금액, 배송비, 할인 기준으로 최종 가격 적용
     const bookCost = Number(document.getElementById("book-cost").textContent);
     const deliveryCost = Number(document.getElementById("delivery-cost").textContent);

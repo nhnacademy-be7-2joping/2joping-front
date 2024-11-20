@@ -6,9 +6,12 @@ import com.nhnacademy.twojopingfront.cart.entity.Cart;
 import com.nhnacademy.twojopingfront.cart.service.CartService;
 import com.nhnacademy.twojopingfront.common.error.exception.user.UnauthorizedException;
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
+import com.nhnacademy.twojopingfront.coupon.dto.MemberCouponResponseDto;
+import com.nhnacademy.twojopingfront.order.client.MemberCouponClient;
 import com.nhnacademy.twojopingfront.order.client.ShipmentPolicyRequestClient;
 import com.nhnacademy.twojopingfront.order.client.WrapClient;
 import com.nhnacademy.twojopingfront.order.dto.request.PaymentRequest;
+import com.nhnacademy.twojopingfront.order.dto.response.OrderCouponResponse;
 import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
 import com.nhnacademy.twojopingfront.order.dto.response.ShipmentPolicyResponseDto;
 import com.nhnacademy.twojopingfront.order.dto.response.WrapResponseDto;
@@ -50,6 +53,7 @@ public class OrderController {
     private final CartService cartService;
     private final ShipmentPolicyRequestClient shipmentPolicyRequestClient;
     private final WrapClient wrapClient;
+    private final MemberCouponClient memberCouponClient;
 
     @Value("${toss.widget-secret-key}")
     private String widgetSecretKey;
@@ -78,18 +82,20 @@ public class OrderController {
      */
     @GetMapping("/form")
     public String form(Model model) {
-        String name = MemberUtils.getNickname();
         List<Cart> cartItems = cartService.getCartByCustomerId(1);
-        int bookCost = cartItems.stream().map(i -> i.getBook().getSellingPrice() * i.getQuantity()).reduce(
-                0,
-                Integer::sum
-        ); // 주문한 상품들의 총 가격
         List<WrapResponseDto> wrapResponseDtos = wrapClient.getAllWraps().getBody();
         List<Book> wrappableBooks = cartItems.stream().map(Cart::getBook).filter(Book::isGiftWrappable).toList();
         List<ShipmentPolicyResponseDto> shipmentPolicyResponseDtos =
                 shipmentPolicyRequestClient.getAllShipmentPolicies(true).getBody();
+        List<OrderCouponResponse> coupons = getMemberCoupons();
+
         int appliedDeliveryCost = 0;
-        // 배송 정책 최소 적용 가격 기준으로 정렬
+        int bookCost = cartItems.stream().map(i -> i.getBook().getSellingPrice() * i.getQuantity()).reduce(
+                0,
+                Integer::sum
+        ); // 주문한 상품들의 총 가격
+
+        // 배송 정책 최소 적용 가격 기준으로 정렬 및 책정
         Objects.requireNonNull(shipmentPolicyResponseDtos).sort((p1, p2) -> p1.minOrderAmount() - p2.minOrderAmount());
         for (ShipmentPolicyResponseDto dto : shipmentPolicyResponseDtos) {
             if (bookCost >= dto.minOrderAmount()) {
@@ -102,10 +108,28 @@ public class OrderController {
         model.addAttribute("deliveryCost", appliedDeliveryCost);
         model.addAttribute("wraps", wrapResponseDtos);
         model.addAttribute("wrappableBooks", wrappableBooks);
+        model.addAttribute("memberCoupons", coupons);
         model.addAttribute("shipmentPolicies", shipmentPolicyResponseDtos);
-        // 회원이 가진 쿠폰 정보 모델에 적용 필요
 
         return "order/order-form";
+    }
+
+    private List<OrderCouponResponse> getMemberCoupons() {
+        if (MemberUtils.getCustomerId() < 0) {
+            // 익명 사용자인 경우 빈 리스트
+            return List.of();
+        } else {
+           return memberCouponClient.getMemberCoupon().getBody().stream().map(
+                    coupon -> new OrderCouponResponse(
+                            coupon.couponUsageId(),
+                            coupon.couponResponseDto().name(),
+                            coupon.invalidTime(),
+                            coupon.couponResponseDto().couponPolicyResponseDto().discountType(),
+                            coupon.couponResponseDto().couponPolicyResponseDto().discountValue(),
+                            coupon.couponResponseDto().couponPolicyResponseDto().maxDiscount()
+                    )
+            ).toList();
+        }
     }
 
     /**

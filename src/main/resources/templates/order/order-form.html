@@ -32,7 +32,7 @@
                             </span>
                             <label th:for="'book-quantity-' + ${itemStat.index + 1}">수량</label>
                             <input type="number" th:id="'book-quantity-' + ${itemStat.index + 1}" min="1"
-                                   th:value="${item.quantity}">
+                                   th:value="${item.quantity}" readonly>
                         </div>
                     </div>
                 </div>
@@ -79,6 +79,10 @@
         <label for="coupon">쿠폰</label>
         <select id="coupon" name="coupon" class="mb-3">
             <option selected value="none">쿠폰 옵션</option>
+            <option th:each="coupon : ${memberCoupons}" th:text="${coupon.name()}"
+                    th:value="${coupon.couponUsageId()}"
+                    th:cost="${coupon.discountValue()}"
+            th:discount-type="${coupon.discountType()}"></option>
         </select>
 
         <!-- 포장 정보 -->
@@ -107,8 +111,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <!-- 결제 컨테이너 -->
@@ -126,7 +128,7 @@
             </div>
             <div class="cost-element d-flex justify-content-between">
                 <div class="cost-title">할인</div>
-                <div class="cost-value discount" id="discount-cost">3000</div>
+                <div class="cost-value discount" id="discount-cost">0</div>
             </div>
         </div>
         <p class="p-price cost-value text-end" id="total-cost">0</p>
