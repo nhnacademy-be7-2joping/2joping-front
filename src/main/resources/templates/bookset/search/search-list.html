@@ -59,47 +59,67 @@
         <div class="no-results" th:if="${books.totalElements == 0}">
             <p>검색 결과가 없습니다.</p>
         </div>
-        <div class="book-card" th:each="book : ${books.content}">
-            <!-- 썸네일 -->
-          <img th:src="${book.thumbnail != null and book.thumbnail != '' ? book.thumbnail : '/images/default-book-image.jpg'}"
-               alt="썸네일"
-               class="book-thumbnail">
+        <div th:each="book, iterStat : ${books.content}" class="book-card-wrapper">
+            <!-- 번호 표시 -->
+            <div class="book-index" th:text="${(books.number * books.size) + iterStat.index + 1}"></div>
 
+            <!-- 도서 카드 -->
+            <a class="book-card" th:href="@{/books/{bookId}(bookId=${book.bookId})}">
 
-          <!-- 도서 정보 -->
-            <div class="book-info">
-                <a th:href="@{/books/{bookId}(bookId=${book.bookId})}"
-                   th:title="${book.bookTitle}"
-                   th:text="${book.bookTitle}"
-                   class="book-title">
-                </a>
+                <!-- 썸네일 -->
+                <img th:src="${book.thumbnail != null and book.thumbnail != '' ? book.thumbnail : '/images/default-book-image.jpg'}"
+                     alt="썸네일"
+                     class="book-thumbnail">
 
-                <!-- 기여자 -->
-                <div class="book-contributors">
-                <span th:each="contributor : ${book.bookContributor}"
-                      th:text="'[' + ${contributor.role} + '] ' + ${contributor.name} + ' '"></span>
+                <!-- 도서 정보 -->
+                <div class="book-info">
+                    <div class="book-title" th:title="${book.bookTitle}" th:text="${book.bookTitle}"></div>
+
+                    <!-- 기여자, 출판사, 출판일시 -->
+                    <div class="book-cpp">
+                    <span th:each="contributor, iterStat : ${book.bookContributor}">
+                        <span th:text="'[' + ${contributor.role} + '] ' + ${contributor.name}"></span>
+                        <span th:if="!${iterStat.last}" th:text="'| '"></span>
+                    </span>
+                        <span class="book-separator">|</span>
+                        <span class="book-publisher" th:text="${book.bookPublisher}"></span>
+                        <span class="book-separator">|</span>
+                        <span class="book-published-at"
+                              th:text="${#strings.substring(book.bookPublishedAt, 0, 10)}"></span>
+                    </div>
+
+                    <!-- 카테고리 -->
+                    <div class="book-category" th:each="category : ${book.bookCategory}"
+                         th:text="${category.name}"></div>
+
+                    <!-- 정가 -->
+                    <div class="book-price">
+                        <span class="book-retail-price" th:text="'정가: ' + ${book.bookRetailPrice} + '원'"></span>
+                        <span class="discount-percentage"
+                              th:if="${book.bookRetailPrice > 0 and book.bookSellingPrice < book.bookRetailPrice}"
+                              th:text="'(' + ${T(java.lang.String).format('%.1f', ((book.bookRetailPrice - book.bookSellingPrice) * 100.0) / book.bookRetailPrice)} + '% 할인)'">
+                    </span>
+                    </div>
+
+                    <!-- 판매가 -->
+                    <div class="book-selling-price" th:text="'판매가: ' + ${book.bookSellingPrice} + '원'"></div>
+
+                    <!-- 태그 -->
+                    <span class="book-tags">
+                        <span th:each="tag : ${book.bookTag}" th:text="' #' + ${tag.name}"></span>
+                    </span>
+
+                    <!-- 평점 -->
+                    <div class="book-rating" th:if="${book.bookRatingAvg != null}">
+                        <span th:text="${#strings.repeat('★', T(java.lang.Math).round(book.bookRatingAvg)) + #strings.repeat('☆', 5 - T(java.lang.Math).round(book.bookRatingAvg))}"></span>
+                        <span th:text="${book.bookRatingAvg}"></span>
+                    </div>
                 </div>
-
-                <!-- 카테고리 -->
-                <div class="book-category" th:each="category : ${book.bookCategory}"
-                     th:text="'카테고리: ' + ${category.name}"></div>
-
-                <!-- 출판사 -->
-                <div class="book-publisher" th:text="'출판사: ' + ${book.bookPublisher}"></div>
-
-                <!-- 정가 -->
-                <div class="book-price" th:text="'정가: ' + ${book.bookRetailPrice} + '원'"></div>
-
-                <!-- 판매가 -->
-                <div class="book-price" th:text="'판매가: ' + ${book.bookSellingPrice} + '원'"></div>
-
-                <!-- 태그 -->
-                <div class="book-tags">
-                    <span th:each="tag : ${book.bookTag}" th:text="' #' + ${tag.name}"></span>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
+
+
 
 
     <!-- 페이징 네비게이션 -->

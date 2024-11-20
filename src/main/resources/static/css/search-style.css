@@ -9,7 +9,7 @@
     height: 50px;
     font-size: 1.2rem;
     padding: 10px;
-    border: 2px solid #007bff;
+    border: 2px solid #944cff;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -19,7 +19,7 @@
     font-size: 1.2rem;
     padding: 10px 20px;
     margin-left: 10px;
-    background-color: #007bff;
+    background-color: #944cff;
     color: white;
     border: none;
     border-radius: 8px;
@@ -39,27 +39,47 @@
     padding: 20px;
 }
 
-.book-card {
+.book-card-wrapper {
     display: flex;
+    align-items: center;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
     overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
-    background-color: #fff;
     height: 250px;
 }
 
-.book-card:hover {
+.book-card {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    height: 100%;
+}
+
+.book-card-wrapper:hover {
     transform: scale(1.02);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.book-index {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+    width: 40px;
+    text-align: center;
 }
 
 .book-thumbnail {
     width: 200px;
     height: 100%;
-    object-fit: cover;
-    border-right: 1px solid #ddd; /* 썸네일과 정보 구분 */
+    object-fit: contain;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
 }
 
 .book-info {
@@ -79,6 +99,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
+    margin-bottom: 10px;
 }
 
 
@@ -102,8 +123,7 @@
 
 
 .book-category,
-.book-price,
-.book-publisher {
+.book-price {
     margin: 5px 0;
     font-size: 1rem;
     color: #555;
@@ -118,18 +138,6 @@
     color: #000;
 }
 
-/* 기여자 섹션 스타일 */
-.book-contributors {
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 10px;
-}
-
-.book-contributors span {
-    display: inline-block;
-    margin-right: 5px;
-}
-
 /* 태그 섹션 스타일 */
 .book-tags {
     font-size: 0.9rem;
@@ -139,7 +147,7 @@
 .book-tags span {
     display: inline-block;
     background-color: #f0f0f0;
-    color: #007bff;
+    color: #944cff;
     padding: 3px 8px;
     border-radius: 15px;
     margin-right: 5px;
@@ -149,17 +157,9 @@
 
 /* 정렬 기준 섹션 */
 .sort-buttons-section {
-    margin-top: 30px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     text-align: center;
-}
-
-.sort-buttons-section h3 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
 }
 
 .sort-buttons {
@@ -169,21 +169,31 @@
 }
 
 .sort-buttons button {
-    background-color: #f8f9fa;
-    border: 1px solid #ddd;
+    background: none;
+    color: #333;
     padding: 10px 20px;
     font-size: 1rem;
-    color: #007bff;
-    border-radius: 5px;
-    transition: all 0.3s ease-in-out;
+    border: none;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.5;
     cursor: pointer;
+    transition: color 0.3s ease;
 }
 
 .sort-buttons button:hover {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
+    color: #944cff;
 }
+
+.sort-buttons button:focus {
+    outline: none;
+}
+
+.sort-buttons button:disabled {
+    color: #aaa; /* 비활성화된 버튼 색상 */
+    cursor: not-allowed; /* 비활성화 시 클릭 불가 표시 */
+}
+
 
 /* 페이징 스타일 */
 .pagination {
@@ -223,4 +233,66 @@
     color: #666;
     margin-top: 20px;
     font-size: 18px;
+}
+
+.book-retail-price {
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 10px;
+    font-size: 0.9rem;
+}
+
+.discount-percentage {
+    color: #ff4c4c;
+    font-size: 0.9rem;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.book-selling-price {
+    font-weight: bold;
+    color: #000;
+}
+
+/* 기여자, 출판사, 출판일시 구분 스타일 */
+.book-cpp {
+    font-size: 0.9rem;
+    color: #333;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.book-separator {
+    color: #999;
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+/* 기여자 스타일 */
+.book-contributors {
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 10px;
+}
+
+/* 출판사 스타일 */
+.book-publisher {
+    color: #3a0067;
+    font-weight: bold;
+}
+
+/* 출판일시 스타일 */
+.book-published-at {
+    color: #ff612b;
+    font-weight: bold;
+}
+
+/* 평점 스타일 */
+.book-rating span:first-child {
+    font-size: 1.2rem;
+    color: #ffdb00;
 }
