@@ -511,10 +511,11 @@ body {
     width: 100%;
     height: 80px;
     border: 1px solid #ddd;
-
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 12px;
     display: flex;
     flex-direction: row;
-    gap: 10px;
 }
 .tier-info-button{
     height: 20px;
@@ -545,6 +546,9 @@ body {
 }
 .bold{
     font-weight: bold;
+}
+.font-18px{
+    font-size: 18px;
 }
 .point-info-button{
     height: 20px;
