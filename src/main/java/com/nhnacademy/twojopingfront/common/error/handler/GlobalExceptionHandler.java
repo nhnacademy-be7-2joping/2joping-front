@@ -92,5 +92,4 @@ public class GlobalExceptionHandler {
             return "common/error";
         }
     }
-
 }
