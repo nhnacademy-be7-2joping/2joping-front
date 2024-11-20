@@ -294,3 +294,56 @@
     margin-left: 5px;
 }
 
+/* 컨테이너 스타일 */
+.content-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+/* 카테고리 사이드바 */
+.category-sidebar {
+    width: 250px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-item > a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.category-item > a:hover {
+    color: #944cff;
+}
+
+.sub-category-item > a {
+    text-decoration: none;
+    color: #555;
+    margin-left: 20px;
+    display: block;
+    padding: 3px;
+    transition: all 0.3s ease;
+}
+
+.sub-category-item > a:hover {
+    color: #472178;
+}
+
+/* 메인 콘텐츠 */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    overflow-x: auto;
+}
