@@ -28,7 +28,7 @@ public class TagController {
      * @param model 뷰에 데이터를 전달하기 위한 모델
      * @return 태그 리스트 페이지 이름
      */
-    @GetMapping("/list")
+    @GetMapping
     public String getAllTags(Model model) {
         List<TagResponseDto> tagList = tagService.getAllTags();
         model.addAttribute("tags", tagList);
@@ -40,7 +40,7 @@ public class TagController {
      *
      * @return 태그 생성 페이지 이름
      */
-    @GetMapping
+    @GetMapping("create-tag")
     public String getCreateTagForm() {
         return "admin/tag/create-tag";
     }
@@ -54,7 +54,7 @@ public class TagController {
     @PostMapping
     public String createTag(@Valid TagRequestDto requestDto) {
         tagService.createTag(requestDto);
-        return "redirect:/admin/tags/list"; // 태그 리스트 페이지로 리다이렉트
+        return "redirect:/admin/tags";
     }
 
     /**
@@ -81,7 +81,7 @@ public class TagController {
     @PutMapping("/{tag-id}")
     public String updateTag(@PathVariable("tag-id") Long tagId, @Valid TagRequestDto requestDto) {
         tagService.updateTag(tagId, requestDto);
-        return "redirect:/admin/tags/list"; // 수정 후 리스트 페이지로 리다이렉트
+        return "redirect:/admin/tags";
     }
 
     /**
@@ -93,7 +93,7 @@ public class TagController {
     @DeleteMapping("/{tag-id}")
     public String deleteTag(@PathVariable("tag-id") Long tagId) {
         tagService.deleteTag(tagId);
-        return "redirect:/admin/tags/list"; // 삭제 후 리스트 페이지로 리다이렉트
+        return "redirect:/admin/tags";
     }
 }
 
