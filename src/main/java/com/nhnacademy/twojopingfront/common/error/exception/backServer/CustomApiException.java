@@ -14,7 +14,7 @@ public class CustomApiException extends RuntimeException {
     private final ErrorResponseDto errorResponse;
 
     public CustomApiException(ErrorResponseDto errorResponse) {
-        super(errorResponse.getErrorMessage());
+        super(errorResponse.errorMessage());
         this.errorResponse = errorResponse;
     }
 
