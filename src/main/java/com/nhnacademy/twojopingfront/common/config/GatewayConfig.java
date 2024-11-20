@@ -60,7 +60,7 @@ public class GatewayConfig {
                 }
 
                 // Cookie 헤더 추가
-                if (!cookiesBuilder.isEmpty()) {
+                if (cookiesBuilder.length() > 0) {
                     // 마지막 "; " 제거
                     cookiesBuilder.setLength(cookiesBuilder.length() - 2);
                     httpRequest.getHeaders().add("Cookie", cookiesBuilder.toString());

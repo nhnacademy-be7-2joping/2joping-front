@@ -5,6 +5,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.exception.FeignClientServerFailConnectionException;
 import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
+import com.nhnacademy.twojopingfront.common.error.enums.RedirectType;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 
@@ -58,7 +59,7 @@ public class BookService {
         return bookClient.getBookById(bookId);
         } catch (FeignException e) {
             throw new FeignClientServerFailConnectionException(
-                    new ErrorResponseDto(HttpStatus.NOT_FOUND,"404","해당 도서를 찾을 수 없습니다.","REDIRECT","/books/get"));
+                    new ErrorResponseDto(404,"404","해당 도서를 찾을 수 없습니다.", RedirectType.REDIRECT,"/books/get", null));
         }
     }
 }

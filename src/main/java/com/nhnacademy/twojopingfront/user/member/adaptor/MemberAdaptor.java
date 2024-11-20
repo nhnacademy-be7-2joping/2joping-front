@@ -2,8 +2,10 @@ package com.nhnacademy.twojopingfront.user.member.adaptor;
 
 import com.nhnacademy.twojopingfront.common.gateway.GatewayClient;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberCreateRequestDto;
+import com.nhnacademy.twojopingfront.user.member.dto.request.MemberUpdateRequesteDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCreateSuccessResponseDto;
+import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -45,6 +47,19 @@ public class MemberAdaptor {
         ResponseEntity<List<MemberAddressResponseDto>> response = gatewayClient.sendToGateway(
                 HttpMethod.GET, MEMBER_ENDPOINT + "/addresses", null,
                 new ParameterizedTypeReference<List<MemberAddressResponseDto>>() {}
+        );
+        return response.getBody();
+    }
+    public MemberUpdateResponseDto updateMember(MemberUpdateRequesteDto requestDto) {
+        ResponseEntity<MemberUpdateResponseDto> response = gatewayClient.sendToGateway(
+                HttpMethod.POST, MEMBER_ENDPOINT + "/update" ,requestDto, MemberUpdateResponseDto.class
+        );
+        return response.getBody();
+    }
+
+    public MemberUpdateResponseDto getMember( ) {
+        ResponseEntity<MemberUpdateResponseDto> response = gatewayClient.sendToGateway(
+                HttpMethod.GET, MEMBER_ENDPOINT ,null, MemberUpdateResponseDto.class
         );
         return response.getBody();
     }

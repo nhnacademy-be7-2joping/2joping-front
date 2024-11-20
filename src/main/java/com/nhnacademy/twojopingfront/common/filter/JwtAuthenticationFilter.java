@@ -80,7 +80,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         ErrorResponseDto errorResponseDto = objectMapper.readValue(fe.contentUTF8(), ErrorResponseDto.class);
-        String errorCode = errorResponseDto.getErrorCode();
+        String errorCode = errorResponseDto.errorCode();
 
         // Refresh Token이 없는 경우 로그인 실패로 간주
         if (refreshToken == null) {
