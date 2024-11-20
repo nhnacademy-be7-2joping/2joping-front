@@ -1,5 +1,7 @@
 package com.nhnacademy.twojopingfront.user.mypage.controller;
 
+import com.nhnacademy.twojopingfront.tier.adaptor.TierAdaptor;
+import com.nhnacademy.twojopingfront.tier.dto.response.MemberTierResponse;
 import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
@@ -25,7 +27,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/mypage")
 public class MypageViewController {
+
     private final MemberAdaptor memberAdaptor;
+    private final TierAdaptor tierAdaptor;
 
     /**
      * 마이페이지 메인 화면으로 이동합니다.
@@ -36,6 +40,8 @@ public class MypageViewController {
     @Operation(summary = "마이페이지 메인 화면", description = "사용자의 마이페이지 메인 화면으로 이동합니다.")
     @GetMapping
     public String mypageView(Model model) {
+        MemberTierResponse tierResponse = tierAdaptor.getMemberTier();
+        model.addAttribute("tier", tierResponse);
 
         return "user/mypage/mypage";
     }
