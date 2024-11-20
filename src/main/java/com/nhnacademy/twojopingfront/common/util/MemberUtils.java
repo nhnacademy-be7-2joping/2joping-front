@@ -82,4 +82,12 @@ public class MemberUtils {
             return "";
         }
     }
+
+    public static boolean isAdmin() {
+        try {
+            return getCurrentUser().getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } catch (UnauthorizedException e) {
+            return false;
+        }
+    }
 }
