@@ -27,7 +27,7 @@
 }
 
 .search-container button:hover {
-    background-color: #0056b3;
+    background-color: #472178;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -95,7 +95,6 @@
     font-weight: bold;
     color: #007bff;
     text-decoration: none;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
@@ -182,7 +181,7 @@
 }
 
 .sort-buttons button:hover {
-    color: #944cff;
+    color: #3a0067;
 }
 
 .sort-buttons button:focus {
@@ -243,7 +242,7 @@
 }
 
 .discount-percentage {
-    color: #ff4c4c;
+    color: #ff1111;
     font-size: 0.9rem;
     margin-left: 5px;
     font-weight: bold;
@@ -260,35 +259,27 @@
     color: #333;
     margin-top: 10px;
     margin-bottom: 10px;
-    display: flex;
-    gap: 5px;
+    font-weight: bold;
 }
 
 .book-separator {
     color: #999;
     margin: 0 5px;
-    font-weight: bold;
 }
 
 /* 기여자 스타일 */
 .book-contributors {
-    display: inline-block;
-    margin-right: 5px;
-    font-size: 0.9rem;
     color: #666;
-    margin-top: 10px;
 }
 
 /* 출판사 스타일 */
 .book-publisher {
     color: #3a0067;
-    font-weight: bold;
 }
 
 /* 출판일시 스타일 */
 .book-published-at {
-    color: #ff612b;
-    font-weight: bold;
+    color: #300000;
 }
 
 /* 평점 스타일 */
@@ -296,3 +287,10 @@
     font-size: 1.2rem;
     color: #ffdb00;
 }
+
+.book-rating .review-count {
+    color: #ff5733;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
