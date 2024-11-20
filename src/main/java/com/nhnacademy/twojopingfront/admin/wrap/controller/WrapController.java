@@ -47,7 +47,6 @@ public class WrapController {
         return "admin/wrap/wrap-list"; // 전체 목록을 표시할 HTML 템플릿
     }
 
-    //수정 wrapId-> wrap-id로
     @GetMapping("/edit/{wrap-id}") // 기존에 있던 데이터를 불러와서 채워넣기 위한 controller
     public String showEditForm(@PathVariable("wrap-id") Long wrapId, Model model) {
         WrapResponseDto wrap = wrapService.getWrap(wrapId);
