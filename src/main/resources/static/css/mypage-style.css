@@ -547,8 +547,11 @@ body {
 .bold{
     font-weight: bold;
 }
-.font-18px{
-    font-size: 18px;
+.font-16px{
+    width: fit-content;
+    font-size: 14px;
+    white-space: nowrap; /* 줄바꿈 방지 */
+
 }
 .point-info-button{
     height: 20px;
