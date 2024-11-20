@@ -30,6 +30,21 @@ public class BookController {
         return "bookset/book/get-booklist";
     }
 
+    /**
+     * 관리자 용 도서 조회로 가기 위해서 추가
+     *
+     */
+    @GetMapping("/admin/books/get")
+    public String adminGetAllBooks(@RequestParam(defaultValue = "0") int page,
+                                   @RequestParam(defaultValue = "10") int size,
+                                   Model model) {
+        Page<BookSimpleResponseDto> books = bookService.getAllBooks(page, size);
+        model.addAttribute("books", books);
+        model.addAttribute("currentPath", "/admin/books/get");
+        return "bookset/book/admin-get-booklist";
+    }
+
+
     @GetMapping("/books/get/category/{categoryId}")
     public String getBooksByCategoryId(@PathVariable Long categoryId,
                                        @RequestParam(defaultValue = "0") int page,

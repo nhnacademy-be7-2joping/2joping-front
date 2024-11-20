@@ -51,23 +51,35 @@
     <!-- 사용자 정보 UI -->
     <div class="navbar-actions">
       <!-- 로그인 상태일 때 보이는 코드 -->
-      <div th:if="${token != null and !#strings.isEmpty(token)}">
+      <div th:if="${isLogin}">
 
+        <div class="user-profile-container">
+          <div class="user-profile-image-container">
+            <img th:src="${userProfile != null and userProfile.imageUrl != null and !#strings.isEmpty(userProfile.imageUrl) ? userProfile.imageUrl : '/images/profile-default-image.png'}"
+                 alt="회원 사진" class="profile-image" />
+          </div>
+
+          <span class="user-name"
+                th:text="${isLogin ? memberNickname + ' 님' : '홍길동 님'}">
+          </span>
+
+
+          <!-- 선택 창 박스 -->
+          <div class="dropdown-menu hidden">
+            <a href="/mypage">마이페이지</a>
+            <a href="/settings">설정</a>
+            <a href="/logout">로그아웃</a>
+          </div>
+        </div>
 
 
       </div>
 
       <!-- 로그인 상태가 아닐 때 보이는 코드 -->
-      <div th:unless="${token != null and !#strings.isEmpty(token)}">
-
-
-
+      <div th:unless="${isLogin}">
         <a href="/login" class="nav-action-link">로그인</a>
         <span class="separator">|</span> <!-- 경계선 -->
         <a href="/signup" class="nav-action-link">회원가입</a>
-
-
-
       </div>
     </div>
 
@@ -96,6 +108,7 @@
 
 <div layout:fragment="script"></div>
 <script th:src="@{/js/mypage-script.js}"></script>
+<script th:src="@{/js/profile-drop-down.js}"></script>
 
 </body>
 </html>
