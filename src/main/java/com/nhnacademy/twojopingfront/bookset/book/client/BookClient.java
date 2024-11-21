@@ -1,16 +1,34 @@
 package com.nhnacademy.twojopingfront.bookset.book.client;
 
 
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @FeignClient(name = "bookstore", url = "${url}")
 public interface BookClient {
+
+    /**
+     * 도서 등록
+     * @param bookCreateRequestDto 도서 등록 요청 정보
+     * @return 등록된 도서에 대한 응답 정보
+     */
+    @PostMapping(value = "/admin/books/register")
+    BookCreateResponseDto createBook(@RequestBody BookCreateRequestDto bookCreateRequestDto);
+
+    /**
+     * 태그 데이터를 가져오는 메서드
+     * @return 모든 태그 리스트
+     */
+    @GetMapping("/tags")
+    List<TagResponseDto> getAllTags();
 
     /**
      * 전체 도서 목록 조회
@@ -49,6 +67,7 @@ public interface BookClient {
      */
     @GetMapping("/books/get/book/{bookId}")
     BookResponseDto getBookById(@PathVariable("bookId") Long bookId);
+
 }
 
 
