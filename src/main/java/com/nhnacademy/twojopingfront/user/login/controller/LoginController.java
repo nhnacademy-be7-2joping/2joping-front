@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -93,9 +95,12 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
+        Map<String, String> jwtCookieMap = new HashMap<>();
+
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("accessToken") || cookie.getName().equals("refreshToken")) {
+                    jwtCookieMap.put(cookie.getName(), cookie.getValue());
                     cookie.setMaxAge(0);
                     cookie.setPath("/");
                     cookie.setHttpOnly(true);
@@ -103,6 +108,8 @@ public class LoginController {
                 }
             }
         }
+
+        loginService.logout(jwtCookieMap);
 
         return "redirect:/";
     }
