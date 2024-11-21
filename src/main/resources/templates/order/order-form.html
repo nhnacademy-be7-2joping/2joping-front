@@ -80,10 +80,21 @@
         <select id="coupon" name="coupon" class="mb-3">
             <option selected value="none">쿠폰 옵션</option>
             <option th:each="coupon : ${memberCoupons}" th:text="${coupon.name()}"
-                    th:value="${coupon.couponUsageId()}"
-                    th:cost="${coupon.discountValue()}"
-            th:discount-type="${coupon.discountType()}"></option>
+                    th:value="${coupon.couponUsageId()}"></option>
         </select>
+        <div class="card mb-3" id="coupon-info">
+            <div class="card-body">
+                <h5 class="card-title fw-bold" id="coupon-name">할인 쿠폰</h5>
+                <h6 class="card-subtitle text-body-secondary mb-3"><span id="discount-value"></span><span
+                        id="discount-type"></span> 할인
+                </h6>
+                <p class="text-grey">
+                    최소 주문 금액: <span class="cost-value" id="usage-limit">0</span>
+                    <br>
+                    최대 할인 금액: <span class="cost-value" id="max-discount">0</span></p>
+            </div>
+            <div class="ribbon"></div>
+        </div>
 
         <!-- 포장 정보 -->
         <h3>포장</h3>

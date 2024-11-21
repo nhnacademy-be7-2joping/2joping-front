@@ -38,22 +38,26 @@ btnPay.addEventListener('click', () => {
 // 쿠폰 선택 시 처리
 const couponSelect = document.getElementById('coupon');
 const couponDiscount = document.getElementById('discount-cost');
-couponSelect.addEventListener('change', (e) => {
+const couponInfoContainer = document.getElementById("coupon-info");
+couponSelect.addEventListener('change', async () => {
     const selectedOption = couponSelect.options[couponSelect.selectedIndex];
     if (selectedOption.value === 'none') {
+        couponInfoContainer.style.display = 'none';
         couponDiscount.textContent = '0';
     } else {
-        const selectedCost = Number(selectedOption.getAttribute('cost'));
+        couponInfoContainer.style.display = 'block';
+        const selectedCouponId = Number(selectedOption.value);
         const bookCost = Number(document.getElementById('book-cost').textContent);
 
-        switch (selectedOption.getAttribute('discount-type')) {
-            case 'PERCENT':
-                couponDiscount.textContent = String(bookCost * selectedCost / 100);
-                break;
-            case 'ACTUAL':
-                couponDiscount.textContent = String(selectedCost);
-                break;
+        const res = await fetch(`/api/coupons/${selectedCouponId}`)
+        if (!res.ok) {
+            alert(res.message);
+            return;
         }
+
+        let data = await res.json();
+        console.log(data);
+        showCouponInfo(data);
     }
     updateTotalPrice();
 });
@@ -83,5 +87,42 @@ function updateTotalPrice() {
     const discountCost = Number(document.getElementById("discount-cost").textContent);
     const cost = (bookCost + deliveryCost - discountCost);
     const totalCostElement = document.getElementById("total-cost");
-    totalCostElement.textContent = cost;
+    totalCostElement.textContent = cost.toLocaleString('ko-KR');
 }
+
+const PERCENT_TYPE = 'PERCENT';
+const ACTUAL_TYPE = 'ACTUAL';
+const showCouponInfo = (data) => {
+    const {
+        couponUsageId, detail, discountType, discountValue, invalidTime, maxDiscount, name, usageLimit
+    } = data;
+    const couponNameText = document.getElementById('coupon-name');
+    const discountValueText = document.getElementById('discount-value');
+    const discountTypeText = document.getElementById('discount-type');
+    const usageLimitText = document.getElementById('usage-limit');
+    const maxDiscountText = document.getElementById('max-discount');
+
+    couponNameText.textContent = name;
+    discountValueText.textContent = discountValue;
+    discountTypeText.textContent = (discountType === PERCENT_TYPE) ? '%' : '원';
+    usageLimitText.textContent = usageLimit;
+    maxDiscountText.textContent = maxDiscount;
+
+    setDiscountCost(discountType, discountValue, maxDiscount, usageLimit);
+}
+
+const setDiscountCost = (discountType, discountValue, maxDiscount, usageLimit) => {
+    const discountedCostText = document.getElementById("discount-cost");
+    const totalCost = Number(document.getElementById("total-cost").textContent.replace(',', ''));
+    let discountedCost = discountType === PERCENT_TYPE ? discountValue * totalCost / 100 : discountValue;
+
+    if (usageLimit && totalCost < usageLimit) {
+        return;
+    }
+
+    if (maxDiscount && maxDiscount < discountedCost) {
+        discountedCost = maxDiscount;
+    }
+
+    discountedCostText.textContent = discountedCost;
+};

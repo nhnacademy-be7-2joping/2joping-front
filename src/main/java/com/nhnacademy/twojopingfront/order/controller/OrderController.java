@@ -4,9 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.cart.entity.Book;
 import com.nhnacademy.twojopingfront.cart.entity.Cart;
 import com.nhnacademy.twojopingfront.cart.service.CartService;
-import com.nhnacademy.twojopingfront.common.error.exception.user.UnauthorizedException;
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
-import com.nhnacademy.twojopingfront.coupon.dto.MemberCouponResponseDto;
 import com.nhnacademy.twojopingfront.order.client.MemberCouponClient;
 import com.nhnacademy.twojopingfront.order.client.ShipmentPolicyRequestClient;
 import com.nhnacademy.twojopingfront.order.client.WrapClient;
@@ -115,21 +113,7 @@ public class OrderController {
     }
 
     private List<OrderCouponResponse> getMemberCoupons() {
-        if (MemberUtils.getCustomerId() < 0) {
-            // 익명 사용자인 경우 빈 리스트
-            return List.of();
-        } else {
-           return memberCouponClient.getMemberCoupon().getBody().stream().map(
-                    coupon -> new OrderCouponResponse(
-                            coupon.couponUsageId(),
-                            coupon.couponResponseDto().name(),
-                            coupon.invalidTime(),
-                            coupon.couponResponseDto().couponPolicyResponseDto().discountType(),
-                            coupon.couponResponseDto().couponPolicyResponseDto().discountValue(),
-                            coupon.couponResponseDto().couponPolicyResponseDto().maxDiscount()
-                    )
-            ).toList();
-        }
+        return MemberUtils.getCustomerId() < 0 ? List.of() : memberCouponClient.getMemberCoupon().getBody();
     }
 
     /**
