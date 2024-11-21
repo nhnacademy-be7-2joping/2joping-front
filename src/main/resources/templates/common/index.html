@@ -1,69 +1,105 @@
-<div class="card-container">
-    <!-- books.content가 비어있지 않을 때만 실제 데이터 반복 출력 -->
-    <div th:each="book : ${books?.content}">
-        <a th:href="@{/books/{bookId}(bookId=${book.bookId})}" class="book-card-link">
-            <div class="book-card">
-                <!-- 책 썸네일 -->
-                <img th:src="${(book.thumbnail != null && book.thumbnail != '') ? book.thumbnail : '/images/default-book-image.jpg'}"
-                     alt="썸네일" class="book-image">
+<!doctype html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mainpage-layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Two-Joping</title>
+    <link rel="stylesheet" th:href="@{/css/index-style.css}">
+</head>
+<body>
+<div class="main-page-container-1">
 
-                <!-- 책 제목 -->
-                <div class="book-title" th:text="${book.bookTitle != null ? book.bookTitle : '제목 없음'}">책 제목</div>
+    <div layout:fragment="content">
+        <!-- 메인 이미지 레이아웃 -->
+        <div class="image-main-container">
+            <div class="main-image-1">
+                <div class="slide-container-1">
+                    <img src="/images/index-example1.jpg" alt="Main Image 1" class="responsive-image">
+                    <img src="/images/index-example2.jpg" alt="Main Image 2" class="responsive-image">
+                    <img src="/images/index-example3.jpg" alt="Main Image 3" class="responsive-image">
+                </div>
+            </div>
+            <div class="main-image-2">
+                <div class="slide-container-2">
+                    <img src="/images/another-example1.jpg" alt="Secondary Image 1" class="responsive-image">
+                    <img src="/images/another-example2.jpg" alt="Secondary Image 2" class="responsive-image">
+                    <img src="/images/another-example3.jpg" alt="Secondary Image 3" class="responsive-image">
+                </div>
+            </div>
+        </div>
 
-                <div class="book-info">
-                    <!-- 저자 목록 -->
-                    <div class="book-author">
+        <!-- 도서 카드 컨테이너 -->
+        <div class="card-container">
+            <!-- books.content가 비어있지 않을 때만 실제 데이터 반복 출력 -->
+            <div th:each="book : ${books?.content}">
+                <a th:href="@{/books/{bookId}(bookId=${book.bookId})}" class="book-card-link">
+                    <div class="book-card">
+                        <!-- 책 썸네일 -->
+                        <img th:src="${(book.thumbnail != null && book.thumbnail != '') ? book.thumbnail : '/images/default-book-image.jpg'}"
+                             alt="썸네일" class="book-image">
+
+                        <!-- 책 제목 -->
+                        <div class="book-title" th:text="${book.bookTitle != null ? book.bookTitle : '제목 없음'}">책 제목</div>
+
+                        <div class="book-info">
+                            <!-- 저자 목록 -->
+                            <div class="book-author">
                         <span th:if="${!#lists.isEmpty(book.bookContributor)}"
                               th:each="contributor, iterStat : ${book.bookContributor}">
                             <span th:text="${contributor.name} + ' 저'"></span>
                             <span th:if="${!iterStat.last}">, </span>
                         </span>
-                        <span th:if="${#lists.isEmpty(book.bookContributor)}">저자 정보 없음</span>
-                        <span class="separator">|</span>
-                        <!-- 출판사 이름 -->
-                        <span th:text="${book.bookPublisher != null ? book.bookPublisher : ' '}"></span>
-                    </div>
+                                <span th:if="${#lists.isEmpty(book.bookContributor)}">저자 정보 없음</span>
+                                <span class="separator">|</span>
+                                <!-- 출판사 이름 -->
+                                <span th:text="${book.bookPublisher != null ? book.bookPublisher : ' '}"></span>
+                            </div>
 
-                    <!-- 카테고리 목록 -->
-                    <div class="book-category">
+                            <!-- 카테고리 목록 -->
+                            <div class="book-category">
                         <span th:if="${!#lists.isEmpty(book.bookCategory)}"
                               th:each="category, catStat : ${book.bookCategory}">
                             <span th:text="${category.name}"></span>
                             <span th:if="${!catStat.last}">> </span>
                         </span>
-                        <span th:if="${#lists.isEmpty(book.bookCategory)}">카테고리 없음</span>
+                                <span th:if="${#lists.isEmpty(book.bookCategory)}">카테고리 없음</span>
+                            </div>
+                        </div>
+
+                        <!-- 판매 가격 -->
+                        <div class="book-price"
+                             th:text="${book.bookSellingPrice != null ? '₩ ' + book.bookSellingPrice : '가격 정보 없음'}">₩ 0
+                        </div>
                     </div>
-                </div>
+                </a>
+            </div>
 
-                <!-- 판매 가격 -->
-                <div class="book-price"
-                     th:text="${book.bookSellingPrice != null ? '₩ ' + book.bookSellingPrice : '가격 정보 없음'}">₩ 0
+            <!-- 마지막 줄이 4의 배수가 되도록 가짜 카드 추가 -->
+            <div th:if="${books?.content?.size() % 4 != 0}"
+                 th:each="i : ${#numbers.sequence(1, 4 - (books.content.size() % 4))}">
+                <div class="spacer-card"></div>
+            </div>
+
+            <!-- books가 null이거나 books.content가 비어있는 경우 예시 카드 12개 출력 -->
+            <div th:if="${books == null || #lists.isEmpty(books.content)}" th:each="i : ${#numbers.sequence(1, 12)}">
+                <div class="book-card">
+                    <img src="/images/default-book-image.jpg" alt="예시 썸네일" class="book-image">
+                    <div class="book-title">예시 제목</div>
+                    <div class="book-info">
+                        <div class="book-author">예시 지은이 / 예시 출판사</div>
+                        <div class="book-category">예시 카테고리</div>
+                    </div>
+                    <div class="book-price">₩ 0</div>
                 </div>
             </div>
-        </a>
-    </div>
 
-    <!-- 마지막 줄이 4의 배수가 되도록 가짜 카드 추가 -->
-    <div th:if="${books?.content?.size() % 4 != 0}"
-         th:each="i : ${#numbers.sequence(1, 4 - (books.content.size() % 4))}">
-        <div class="spacer-card"></div>
-    </div>
-
-    <!-- books가 null이거나 books.content가 비어있는 경우 예시 카드 12개 출력 -->
-    <div th:if="${books == null || #lists.isEmpty(books.content)}" th:each="i : ${#numbers.sequence(1, 12)}">
-        <div class="book-card">
-            <img src="/images/default-book-image.jpg" alt="예시 썸네일" class="book-image">
-            <div class="book-title">예시 제목</div>
-            <div class="book-info">
-                <div class="book-author">예시 지은이 / 예시 출판사</div>
-                <div class="book-category">예시 카테고리</div>
+            <!-- 예시 카드 12개가 4의 배수가 되도록 가짜 카드 추가 -->
+            <div th:if="${12 % 4 != 0}" th:each="i : ${#numbers.sequence(1, 4 - (12 % 4))}">
+                <div class="spacer-card"></div>
             </div>
-            <div class="book-price">₩ 0</div>
         </div>
     </div>
-
-    <!-- 예시 카드 12개가 4의 배수가 되도록 가짜 카드 추가 -->
-    <div th:if="${12 % 4 != 0}" th:each="i : ${#numbers.sequence(1, 4 - (12 % 4))}">
-        <div class="spacer-card"></div>
-    </div>
 </div>
+</body>
+</html>
