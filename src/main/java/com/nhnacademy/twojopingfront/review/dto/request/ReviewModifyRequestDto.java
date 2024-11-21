@@ -6,10 +6,7 @@ import jakarta.validation.constraints.Positive;
 
 
 public record ReviewModifyRequestDto (
-        Long reviewId,
-        int ratingValue,
-        String title,
-        String text,
-        String imageUrl  // TODO 임시
+        ReviewModifyDetailRequestDto reviewModifyDetailRequestDto,
+        ReviewImageUrlRequestDto reviewImageUrlRequestDto
 )
 {}

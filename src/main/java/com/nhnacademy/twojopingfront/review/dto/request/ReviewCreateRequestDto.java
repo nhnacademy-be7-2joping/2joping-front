@@ -3,6 +3,7 @@ package com.nhnacademy.twojopingfront.review.dto.request;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -13,12 +14,7 @@ import jakarta.validation.constraints.Positive;
  */
 
 public record ReviewCreateRequestDto (
-         Long orderDetailId,
-         Long customerId,
-         Long bookId,
-         int ratingValue,
-         String title,
-         String text,
-         String imageUrl // TODO 임시
+    ReviewDetailRequestDto reviewDetailRequestDto,
+    ReviewImageUrlRequestDto reviewImageUrlRequestDto
 )
 {}

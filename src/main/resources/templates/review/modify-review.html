@@ -18,6 +18,10 @@
         }
     </style>
     <script>
+        /**
+         * 평점 설정 함수
+         * @param {number} rating - 선택된 평점 값
+         */
         function setRating(rating) {
             const stars = document.querySelectorAll('.star');
             document.getElementById('ratingValue').value = rating; // 숨겨진 필드에 값 설정
@@ -26,7 +30,10 @@
             });
         }
 
-        // 초기 평점 설정
+        /**
+         * 초기 별점 렌더링 함수
+         * @param {number} rating - 초기 평점 값
+         */
         function initializeStars(rating) {
             const stars = document.querySelectorAll('.star');
             stars.forEach((star, index) => {
@@ -37,12 +44,12 @@
 </head>
 <body onload="initializeStars(/*[[${review.ratingValue}]]*/)">
 <h1>리뷰 수정</h1>
-<form th:action="@{/reviews/{reviewId}(reviewId=${review.reviewId})}" method="post">
+<form th:action="@{/reviews/{reviewId}(reviewId=${review.reviewId})}" method="post" enctype="multipart/form-data">
     <!-- HTTP 메서드 PUT으로 처리 -->
     <input type="hidden" name="_method" value="PUT"/>
 
-    <!-- reviewId 히든 필드 추가 -->
-    <input type="hidden" name="reviewId" th:value="${review.reviewId}"/>
+    <!-- reviewId 히든 필드 -->
+    <input type="hidden" id="reviewId" name="reviewId" th:value="${review.reviewId}"/>
 
     <!-- 평점 -->
     <label for="ratingValue">평점:</label>
@@ -53,7 +60,8 @@
         <span class="star" onclick="setRating(4)">★</span>
         <span class="star" onclick="setRating(5)">★</span>
     </div>
-    <input type="hidden" id="ratingValue" name="ratingValue" th:value="${review.ratingValue}" required> <!-- 실제 값 저장용 -->
+    <input type="hidden" id="ratingValue" name="ratingValue"
+           th:value="${review.ratingValue}" required> <!-- 실제 평점 값 저장 -->
     <br><br>
 
     <!-- 제목 -->
@@ -64,9 +72,9 @@
     <label for="text">리뷰 내용:</label>
     <textarea id="text" name="text" required th:text="${review.text}"></textarea><br><br>
 
-    <!-- 이미지 URL -->
-    <label for="imageUrl">이미지 URL:</label>
-    <input type="text" id="imageUrl" name="imageUrl" th:value="${review.imageUrl}"><br><br>
+    <!-- 이미지 업로드 -->
+    <label for="reviewImage">이미지 업로드:</label>
+    <input type="file" id="reviewImage" name="reviewImage" accept="image/*"><br><br>
 
     <!-- 제출 버튼 -->
     <button type="submit">수정</button>

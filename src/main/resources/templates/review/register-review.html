@@ -29,16 +29,20 @@
 </head>
 <body>
 <h1>리뷰 등록</h1>
-<form th:action="@{/reviews}" method="post">
+<form th:action="@{/reviews}" method="post" enctype="multipart/form-data">
+  <!-- 도서 ID -->
   <label for="bookId">도서 ID:</label>
   <input type="text" id="bookId" name="bookId" required><br><br>
 
+  <!-- 회원 ID -->
   <label for="customerId">회원 ID:</label>
   <input type="text" id="customerId" name="customerId" required><br><br>
 
+  <!-- 주문 상세 ID -->
   <label for="orderDetailId">주문 상세 ID:</label>
   <input type="text" id="orderDetailId" name="orderDetailId" required><br><br>
 
+  <!-- 평점 -->
   <label for="ratingValue">평점:</label>
   <div class="stars">
     <span class="star" onclick="setRating(1)">★</span>
@@ -50,15 +54,19 @@
   <input type="hidden" id="ratingValue" name="ratingValue" required> <!-- 실제 값 저장용 -->
   <br><br>
 
+  <!-- 리뷰 제목 -->
   <label for="title">리뷰 제목:</label>
   <input type="text" id="title" name="title" required><br><br>
 
+  <!-- 리뷰 내용 -->
   <label for="text">리뷰 내용:</label>
   <textarea id="text" name="text" required></textarea><br><br>
 
-  <label for="imageUrl">이미지 URL:</label>
-  <input type="text" id="imageUrl" name="imageUrl"><br><br>
+  <!-- 이미지 업로드 -->
+  <label for="reviewImage">이미지 업로드:</label>
+  <input type="file" id="reviewImage" name="reviewImage" accept="image/*"><br><br>
 
+  <!-- 제출 버튼 -->
   <button type="submit">등록</button>
 </form>
 </body>

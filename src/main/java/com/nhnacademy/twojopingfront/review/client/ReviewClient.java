@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.*;
 public interface ReviewClient {
 
     @PostMapping("/reviews")
-    ReviewCreateResponseDto registerReview(ReviewCreateRequestDto reviewCreateRequestDto);
+    ReviewCreateResponseDto registerReview(@RequestBody ReviewCreateRequestDto reviewCreateRequestDto);
 
     @PutMapping("/reviews/{reviewId}")
-    ReviewModifyResponseDto modifyReview(@PathVariable Long reviewId, @RequestBody ReviewModifyRequestDto reviewModifyRequestDto);
+    ReviewModifyResponseDto modifyReview(@PathVariable Long reviewId,
+                                         @RequestBody ReviewModifyRequestDto reviewModifyRequestDto);
 
     @GetMapping("/reviews/{reviewId}")
     ReviewResponseDto getReview(@PathVariable Long reviewId);
