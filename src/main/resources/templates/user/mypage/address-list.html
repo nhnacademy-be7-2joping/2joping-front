@@ -5,11 +5,81 @@
     <meta charset="UTF-8">
     <title>배송지 목록</title>
     <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+    <style>
+        .address-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3열 레이아웃 */
+            gap: 20px; /* 카드 간격 */
+            width: 100%;
+            max-width: 1200px; /* 최대 너비 설정 */
+            margin: 0 auto; /* 가운데 정렬 */
+            padding: 10px; /* 목록 안쪽 여백 */
+        }
+
+        .address-card {
+            height: 180px;
+            background-color: #f8f9fa; /* 카드 배경색 */
+            border: 1px solid #ddd; /* 테두리 */
+            border-radius: 8px; /* 모서리 둥글게 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            padding: 15px; /* 카드 내용 여백 */
+            display: flex;
+            flex-direction: column; /* 세로 방향 내용 정렬 */
+            justify-content: flex-start; /* 세로 가운데 정렬 */
+            align-items: center; /* 가로 가운데 정렬 */
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            gap:5px;
+        }
+
+        .address-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .address-content {
+            font-size: 14px;
+            color: #555;
+            text-align: left;
+            width: 100%;
+        }
+        .default-address-card{
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
 <!-- 메인 컨텐츠 영역 -->
 <div class="mypage-container" layout:fragment="content">
     <div class="mypage-form-container">
+
+        <div class="address-list" th:if="${addresses != null && addresses.size() > 0}">
+            <!-- Thymeleaf 반복문 -->
+            <div class="address-card"
+                 th:classappend="${address.isDefaultAddress} ? 'default-address-card' : ''"
+                 th:each="address : ${addresses}">
+                <div class="address-title" th:text="${address.addressAlias ?: '주소 별칭 없음'}">주소 별칭</div>
+                <div class="address-content" th:text="'받는이 : '+${address.receiver ?: '수신인 없음'}">수신인</div>
+                <div class="address-content" th:text="'우편번호 : ' + ${address.postalCode ?: '우편번호 없음'}">우편번호</div>
+                <div class="address-content" th:text="'도로명 : ' + ${address.roadAddress ?: '도로명 주소 없음'}">도로명 주소</div>
+                <div class="address-content" th:text="'상세주소 : ' + ${address.detailAddress ?: '상세 주소 없음'}">상세 주소</div>
+                <div>
+                    <span th:if="${address.isDefaultAddress}" style="color: green;">[기본 배송지]</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 주소가 없을 경우 -->
+        <div class="no-address" th:if="${addresses == null || addresses.size() == 0}">
+            등록된 배송지가 없습니다.
+        </div>
+
+
     </div>
 
 

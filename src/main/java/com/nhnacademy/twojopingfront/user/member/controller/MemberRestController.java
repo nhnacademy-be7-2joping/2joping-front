@@ -4,16 +4,17 @@ package com.nhnacademy.twojopingfront.user.member.controller;
 import com.nhnacademy.twojopingfront.common.annotation.RedirectOnError;
 import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberCreateRequestDto;
+import com.nhnacademy.twojopingfront.user.member.dto.request.MemberUpdateRequesteDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCreateSuccessResponseDto;
+import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
@@ -27,7 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Tag(name = "회원 데이터 처리 컨트롤러", description = "회원 가입, 삭제, 업데이트와 같은 데이터를 처리합니다.")
 @Controller
 @RequiredArgsConstructor
-@RequestMapping
+@RequestMapping("/members")
 public class MemberRestController {
 
     private final MemberAdaptor memberAdaptor;
@@ -47,7 +48,7 @@ public class MemberRestController {
      * 이를 통해 사용자 입력과 함께 에러 메시지가 전달되어, 동일한 페이지에서 오류를 확인하고 다시 시도할 수 있도록 합니다.
      */
     @Operation(summary = "회원 생성", description = "회원 가입 요청을 처리하고 성공 시 가입 성공 페이지로 리다이렉트합니다.")
-    @PostMapping("/members")
+    @PostMapping
     @RedirectOnError(url = "/signup")
     public String createUser(
             @Parameter(description = "회원 생성 요청 정보를 담고 있는 DTO", required = true)
@@ -62,5 +63,31 @@ public class MemberRestController {
 
         return "redirect:/signup/success";
     }
+
+    /**
+     * 회원 정보 수정 요청을 처리합니다.
+     * 성공적으로 수정된 회원 정보를 리다이렉트된 페이지에서 확인할 수 있습니다.
+     *
+     * @param requestDto 회원 정보 수정 요청 데이터를 담은 DTO
+     * @param redirectAttributes 리다이렉트 시 전달할 데이터를 저장하는 객체
+     * @return 성공 시 회원 정보 수정 페이지로 리다이렉트
+     */
+    @Operation(
+            summary = "회원 정보 수정",
+            description = "회원 정보 수정 요청을 처리하고 성공 시 프로필 수정 페이지로 리다이렉트합니다."
+    )
+    @RedirectOnError(url = "/members")
+    @PostMapping("/update")
+    public String updateMember(@Valid @ModelAttribute MemberUpdateRequesteDto requestDto,
+                               RedirectAttributes redirectAttributes){
+
+        MemberUpdateResponseDto responseDto = memberAdaptor.updateMember(requestDto);
+
+        redirectAttributes.addFlashAttribute("memberInfo", responseDto);
+
+        return "redirect:/mypage/edit-profile";
+
+    }
+
 
 }

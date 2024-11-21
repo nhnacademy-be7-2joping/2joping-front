@@ -9,42 +9,62 @@
 <body>
 <!-- 메인 컨텐츠 영역 -->
 <div class="mypage-container" layout:fragment="content">
+  <div id="error-container"
+       th:if="${errorCode != null and errorMessage != null}"
+       th:attr="data-error-code=${errorCode}, data-error-message=${errorMessage}">
+  </div>
 
   <div class="mypage-form-container">
-    <h1>회원 정보 수정</h1>
-    <form action="/members/update" method="post">
-      <!-- 수정 불가한 필드 -->
-      <label for="name">이름:</label>
-      <input type="text" id="name" name="name" th:value="${name != null ? name : ''}" readonly>
-      <div class="mypage-error-message" th:if="${errors != null and errors['name'] != null}" th:text="${errors['name']}"></div>
+    <div class="edit-form-container">
+      <div th:if="${memberInfo == null}">
+        <p>수정할 회원 정보가 없습니다. 다시 시도해 주세요.</p>
+      </div>
 
-      <label for="gender">성별:</label>
-      <select id="gender" name="gender" disabled>
-        <option value="" th:selected="${gender == null}">선택하세요</option>
-        <option value="M" th:selected="${gender == 'M'}">남성</option>
-        <option value="F" th:selected="${gender == 'F'}">여성</option>
-      </select>
+      <div th:if="${memberInfo != null}">
 
-      <label for="birthday">생년월일:</label>
-      <input type="date" id="birthday" name="birthday" max="[[${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}]]" th:value="${birthday != null ? birthday : ''}" readonly>
+      <form action="/members/update" method="post" class="user-edit-form">
+        <h1>회원 정보 수정</h1>
+        <!-- 수정 불가한 필드 -->
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" th:value="${memberInfo.name}" readonly>
+        <div class="mypage-error-message" th:if="${errors != null and errors['name'] != null}" th:text="${errors['name']}"></div>
 
-      <!-- 수정 가능한 필드 -->
-      <label for="phone">전화번호:</label>
-      <input type="text" id="phone" name="phone" pattern="010-[0-9]{3,4}-[0-9]{4}" th:value="${phone != null ? phone : ''}" required>
-      <div class="mypage-error-message" th:if="${errors != null and errors['phone'] != null}" th:text="${errors['phone']}"></div>
+        <label for="gender">성별:</label>
+        <select id="gender" name="gender" aria-readonly="true">
+          <option value="" th:selected="${memberInfo.gender == null}">선택하세요</option>
+          <option value="M" th:selected="${memberInfo.gender?.toString() == 'M'}">남성</option>
+          <option value="F" th:selected="${memberInfo.gender?.toString() == 'F'}">여성</option>
+        </select>
+        <input type="hidden" name="gender" th:value="${memberInfo.gender}" />
 
-      <label for="email">이메일:</label>
-      <input type="email" id="email" name="email" th:value="${email != null ? email : ''}" required>
-      <div class="mypage-error-message" th:if="${errors != null and errors['email'] != null}" th:text="${errors['email']}"></div>
+        <label for="birthday">생년월일:</label>
+        <input type="date" id="birthday" name="birthday"
+               max="[[${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}]]"
+               th:value="${memberInfo.birthday}" readonly>
 
-      <label for="nickName">닉네임:</label>
-      <input type="text" id="nickName" name="nickName" th:value="${nickName != null ? nickName : ''}" minlength="2" maxlength="20" required>
-      <div class="mypage-error-message" th:if="${errors != null and errors['nickName'] != null}" th:text="${errors['nickName']}"></div>
+        <!-- 수정 가능한 필드 -->
+        <label for="phone">전화번호:</label>
+        <input type="text" id="phone" name="phone" pattern="010-[0-9]{3,4}-[0-9]{4}"
+               th:value="${memberInfo.phone}" required>
+        <div class="mypage-error-message" th:if="${errors != null and errors['phone'] != null}" th:text="${errors['phone']}"></div>
 
-      <!-- 제출 버튼 -->
-      <button type="submit">정보 수정</button>
-    </form>
+        <label for="email">이메일:</label>
+        <input type="email" id="email" name="email" th:value="${memberInfo.email}" required>
+        <div class="mypage-error-message" th:if="${errors != null and errors['email'] != null}" th:text="${errors['email']}"></div>
+
+        <label for="nickName">닉네임:</label>
+        <input type="text" id="nickName" name="nickName" th:value="${memberInfo.nickName}"
+               minlength="2" maxlength="20" required>
+        <div class="mypage-error-message" th:if="${errors != null and errors['nickName'] != null}" th:text="${errors['nickName']}"></div>
+
+        <!-- 제출 버튼 -->
+        <button type="submit">정보 수정</button>
+      </form>
+      </div>
+    </div>
   </div>
 </div>
+
+
 </body>
 </html>

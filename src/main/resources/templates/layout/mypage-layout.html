@@ -11,7 +11,11 @@
     <title>기본 레이아웃</title>
 
     <style>
+        .sidebar-container{
+            padding-top: 30px;
+            position: relative; /* 부모 컨테이너의 기준을 명확히 지정 */
 
+        }
     </style>
 </head>
 <body>
@@ -25,15 +29,18 @@
 
         <!-- 네비게이션 항목 -->
         <div class="navbar-links">
-            <a class="nav-link" href="#">베스트</a>
-            <a class="nav-link" href="#">신상품</a>
+            <a class="nav-link" href="/books/search?keyword=&sort=popularity">베스트</a>
+            <a class="nav-link" href="/books/search?keyword=&sort=newest">신상품</a>
             <a class="nav-link" href="#">이벤트</a>
             <a class="nav-link" href="#">고객센터</a>
         </div>
 
         <!-- 검색 바 -->
         <div class="navbar-search">
-            <input type="text" placeholder="검색어를 입력하세요">
+            <form action="/books/search" method="get">
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
+                <button type="submit" class="btn btn-primary">검색</button>
+            </form>
         </div>
         <div class="navbar-cart">
             <a href="/cart" class="cart-icon">
@@ -50,10 +57,42 @@
         </div>
         <!-- 사용자 정보 UI -->
         <div class="navbar-actions">
-            <a href="/login" class="nav-action-link">로그인</a>
-            <span class="separator">|</span> <!-- 경계선 -->
-            <a href="/signup" class="nav-action-link">회원가입</a>
+            <!-- 로그인 상태일 때 보이는 코드 -->
+            <div th:if="${isLogin}">
+
+                <div class="user-profile-container">
+                    <div class="user-profile-image-container">
+                        <img th:src="${userProfile != null and userProfile.imageUrl != null and !#strings.isEmpty(userProfile.imageUrl) ? userProfile.imageUrl : '/images/profile-default-image.png'}"
+                             alt="회원 사진" class="profile-image" />
+                    </div>
+
+                    <span class="user-name"
+                          th:text="${isLogin ? memberNickname + ' 님' : '홍길동 님'}">
+          </span>
+
+
+                    <!-- 선택 창 박스 -->
+                    <div class="dropdown-menu hidden">
+                        <a href="/mypage">마이페이지</a>
+                        <a href="/settings">설정</a>
+                        <a href="/logout">로그아웃</a>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- 로그인 상태가 아닐 때 보이는 코드 -->
+            <div th:unless="${isLogin}">
+                <a href="/login" class="nav-action-link">로그인</a>
+                <span class="separator">|</span> <!-- 경계선 -->
+                <a href="/signup" class="nav-action-link">회원가입</a>
+            </div>
         </div>
+
+
+
+
     </div>
 </nav>
 
@@ -61,41 +100,47 @@
 <!-- 콘텐츠 영역 (동적으로 변경됨) -->
 <main class="page-layout">
     <!-- 왼쪽 사이드바 -->
+    <div class="sidebar-container">
     <div class="sidebar">
-        <h2>마이페이지</h2>
+        <a href="/mypage" class="mypage-button">
+        마이페이지
+        </a>
         <ul>
             <li>
-                <a href="/mypage/edit-profile"
+                <a href="/mypage/edit-profile" class="font-default"
                    th:classappend="${activePage == 'edit-profile'} ? 'active' : ''">
                     내 정보
                 </a>
             </li>
             <li>
-                <a href="/mypage/order-list"
+                <a href="/mypage/order-list" class="font-default"
                    th:classappend="${activePage == 'order-list'} ? 'active' : ''">
                     주문 조회
                 </a>
             </li>
             <li>
-                <a href="/mypage/return-exchange-history"
+                <a href="/mypage/return-exchange-history" class="font-default"
                    th:classappend="${activePage == 'return-exchange-history'} ? 'active' : ''">
                     반품/교환 조회
                 </a>
             </li>
             <li>
-                <a href="/mypage/address-list"
+                <a href="/mypage/address-list" class="font-default"
                    th:classappend="${activePage == 'address-list'} ? 'active' : ''">
                     배송지 등록 / 수정
                 </a>
             </li>
             <li>
-                <a href="/mypage/review-history"
+                <a href="/mypage/review-history" class="font-default"
                    th:classappend="${activePage == 'review-history'} ? 'active' : ''">
                     리뷰 내역
                 </a>
             </li>
         </ul>
     </div>
+
+    </div>
+
 
     <!-- 중앙 컨테이너 -->
     <div class="main-container" layout:fragment="content">
@@ -115,6 +160,8 @@
 
 <div layout:fragment="script"></div>
 <script th:src="@{/js/mypage-script.js}"></script>
+<script th:src="@{/js/error-alert.js}"></script>
+<script th:src="@{/js/profile-drop-down.js}"></script>
 
 </body>
 </html>

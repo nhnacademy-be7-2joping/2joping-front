@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.cart.entity.Book;
 import com.nhnacademy.twojopingfront.cart.entity.Cart;
 import com.nhnacademy.twojopingfront.cart.service.CartService;
+import com.nhnacademy.twojopingfront.common.error.exception.user.UnauthorizedException;
+import com.nhnacademy.twojopingfront.common.util.MemberUtils;
 import com.nhnacademy.twojopingfront.order.client.ShipmentPolicyRequestClient;
 import com.nhnacademy.twojopingfront.order.client.WrapClient;
 import com.nhnacademy.twojopingfront.order.dto.request.PaymentRequest;
@@ -76,6 +78,7 @@ public class OrderController {
      */
     @GetMapping("/form")
     public String form(Model model) {
+        String name = MemberUtils.getNickname();
         List<Cart> cartItems = cartService.getCartByCustomerId(1);
         int bookCost = cartItems.stream().map(i -> i.getBook().getSellingPrice() * i.getQuantity()).reduce(
                 0,
