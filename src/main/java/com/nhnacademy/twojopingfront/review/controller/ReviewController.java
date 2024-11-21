@@ -49,7 +49,7 @@ public class ReviewController {
                                      Model model) {
         Page<ReviewResponseDto> reviews = reviewService.getReviewsByBookId(page, size, bookId);
         model.addAttribute("reviews", reviews);
-        return "review/get-reviews"; // 도서별 리뷰 목록 페이지
+        return "review/get-reviews";
     }
 
     /**
@@ -67,27 +67,28 @@ public class ReviewController {
                                          Model model) {
         Page<ReviewResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size, customerId);
         model.addAttribute("reviews", reviews);
-        return "review/get-reviews"; // 회원별 리뷰 목록 페이지
+        return "review/get-reviews";
     }
 
-//    /**
-//     * 새로운 리뷰를 등록하는 폼 페이지를 제공
-//     * @param model 뷰에 데이터를 전달하기 위한 모델 객체
-//     * @return 리뷰 등록 폼 페이지 뷰 이름
-//     */
+    /**
+     * 새로운 리뷰를 등록하기 위한 폼 페이지를 제공.
+     * @param model 뷰에 데이터를 전달하기 위한 모델 객체
+     * @return 리뷰 등록 폼 페이지 뷰 이름
+     */
 
     @GetMapping("/new")
     public String showRegisterReviewForm(Model model) {
         model.addAttribute("review", new ReviewCreateRequestDto(
-                new ReviewDetailRequestDto(null,null,null,0,"",""),new ReviewImageUrlRequestDto("")));
-        return "review/register-review"; // 리뷰 등록 폼 페이지
+                new ReviewDetailRequestDto(null,null, null,  0,"",""),new ReviewImageUrlRequestDto("")));
+        return "review/register-review";
     }
 
-//    /**
-//     * 새로운 리뷰를 등록
-//     * @param reviewCreateRequestDto 등록할 리뷰 정보
-//     * @return 등록 후 도서별 리뷰 목록 페이지로 리다이렉트
-//     */
+    /**
+     * 새로운 리뷰를 등록.
+     * @param reviewDetailRequestDto 등록할 리뷰 정보
+     * @param reviewImage            리뷰에 추가할 이미지 (선택사항)
+     * @return 등록 후 리뷰 상세 페이지로 리다이렉트
+     */
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String registerReview(@ModelAttribute ReviewDetailRequestDto reviewDetailRequestDto,
                                  @RequestPart(value = "reviewImage", required = false) MultipartFile reviewImage) {
@@ -123,7 +124,6 @@ public class ReviewController {
 
         ReviewImageUploadRequestDto imageUploadRequestDto = new ReviewImageUploadRequestDto(reviewImage);
 
-        // Service 호출
         ReviewModifyResponseDto responseDto = reviewService.modifyReview(
                 reviewId,
                 reviewModifyDetailRequestDto,
@@ -131,7 +131,6 @@ public class ReviewController {
                 deleteImage
         );
 
-        // 수정된 리뷰 상세 페이지로 리다이렉트
         return "redirect:/reviews/" + responseDto.reviewId();
     }
 

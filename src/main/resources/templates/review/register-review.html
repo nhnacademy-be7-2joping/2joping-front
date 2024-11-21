@@ -30,9 +30,6 @@
 <body>
 <h1>리뷰 등록</h1>
 <form th:action="@{/reviews}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
-  <!-- 도서 ID -->
-  <label for="bookId">도서 ID:</label>
-  <input type="text" id="bookId" name="bookId" required><br><br>
 
   <!-- 회원 ID -->
   <label for="customerId">회원 ID:</label>
