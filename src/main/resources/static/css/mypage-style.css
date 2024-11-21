@@ -357,6 +357,9 @@ body {
 .sub-nav-link:hover {
     color: var(--primary-color);
 }
+.sub-nav-link.active{
+    color:var(--primary-color);
+}
 
 .user-profile-container {
     width: 100%;
