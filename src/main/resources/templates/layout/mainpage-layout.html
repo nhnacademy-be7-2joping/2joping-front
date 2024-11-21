@@ -103,8 +103,8 @@
 <div class="sub-navbar">
   <div class="sub-navbar-container">
     <a href="/books/search?keyword=&sort=popularity" class="sub-nav-link">인기도서</a>
-    <a href="#" class="sub-nav-link">국내도서</a>
-    <a href="#" class="sub-nav-link">외국도서</a>
+    <a href="/books/search?categoryId=1&keyword=&sort=relevance" class="sub-nav-link">국내도서</a>
+    <a href="/books/search?categoryId=2&keyword=&sort=relevance" class="sub-nav-link">외국도서</a>
   </div>
 </div>
 
@@ -132,6 +132,7 @@
 
 <script th:src="@{/js/index-script.js}"></script>
 <script th:src="@{/js/profile-drop-down.js}"></script>
+<script th:src="@{/js/book-detail-button.js}"></script>
 
 
 
