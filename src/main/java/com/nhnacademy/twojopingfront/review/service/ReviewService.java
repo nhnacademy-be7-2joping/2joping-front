@@ -43,10 +43,23 @@ public class ReviewService {
 
     public ReviewModifyResponseDto modifyReview(Long reviewId,
                                                  ReviewModifyDetailRequestDto reviewModifyDetailRequestDto,
-                                                ReviewImageUploadRequestDto reviewImageUploadRequestDto){
-        String reviewImageUrl = saveImage(reviewImageUploadRequestDto.reviewImage());
+                                                ReviewImageUploadRequestDto reviewImageUploadRequestDto,
+                                                boolean deleteImage){
+        String reviewImageUrl = null;
+
+        // 이미지 삭제 여부에 따라 처리
+        if (!deleteImage && reviewImageUploadRequestDto.reviewImage() != null) {
+            reviewImageUrl = saveImage(reviewImageUploadRequestDto.reviewImage());
+        }
+
         ReviewImageUrlRequestDto urlRequestDto = new ReviewImageUrlRequestDto(reviewImageUrl);
-        return reviewClient.modifyReview(reviewId,new ReviewModifyRequestDto(reviewModifyDetailRequestDto,urlRequestDto));
+
+        ReviewModifyRequestDto requestDto = new ReviewModifyRequestDto(
+                reviewModifyDetailRequestDto,
+                urlRequestDto,
+                deleteImage
+        );
+        return reviewClient.modifyReview(reviewId, requestDto);
     }
 
     public ReviewResponseDto getReview(Long reviewId) {

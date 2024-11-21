@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Positive;
 
 public record ReviewModifyRequestDto (
         ReviewModifyDetailRequestDto reviewModifyDetailRequestDto,
-        ReviewImageUrlRequestDto reviewImageUrlRequestDto
+        ReviewImageUrlRequestDto reviewImageUrlRequestDto,
+        boolean deleteImage
 )
 {}

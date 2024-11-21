@@ -115,13 +115,24 @@ public class ReviewController {
      * @param reviewModifyDetailRequestDto 수정할 리뷰 정보
      * @return 수정 후 리뷰 상세 페이지로 리다이렉트
      */
-    @PutMapping(value ="/{reviewId}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/{reviewId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String modifyReview(@PathVariable Long reviewId,
                                @ModelAttribute ReviewModifyDetailRequestDto reviewModifyDetailRequestDto,
-                               @RequestPart(value = "reviewImage", required = false) MultipartFile reviewImage) {
+                               @RequestPart(value = "reviewImage", required = false) MultipartFile reviewImage,
+                               @RequestParam(value = "deleteImage", required = false, defaultValue = "false") boolean deleteImage) {
+
         ReviewImageUploadRequestDto imageUploadRequestDto = new ReviewImageUploadRequestDto(reviewImage);
-        ReviewModifyResponseDto responseDto = reviewService.modifyReview(reviewId, reviewModifyDetailRequestDto,imageUploadRequestDto);
-        return "redirect:/reviews/" + responseDto.reviewId(); // 수정된 리뷰 상세 페이지로 리다이렉트
+
+        // Service 호출
+        ReviewModifyResponseDto responseDto = reviewService.modifyReview(
+                reviewId,
+                reviewModifyDetailRequestDto,
+                imageUploadRequestDto,
+                deleteImage
+        );
+
+        // 수정된 리뷰 상세 페이지로 리다이렉트
+        return "redirect:/reviews/" + responseDto.reviewId();
     }
 
 }
