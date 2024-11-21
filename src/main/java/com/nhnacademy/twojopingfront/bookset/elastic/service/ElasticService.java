@@ -13,7 +13,7 @@ public class ElasticService {
 
     private final ElasticRepositoryCustom elasticRepository;
 
-    public Page<ElasticSearchResponseDto> searchBooks(String keyword, Pageable pageable, String sort) {
-        return elasticRepository.searchByKeyword(keyword, pageable, sort);
+    public Page<ElasticSearchResponseDto> searchBooks(String keyword, Long categoryId, Pageable pageable, String sort) {
+        return elasticRepository.searchByKeyword(keyword, categoryId, pageable, sort);
     }
 }

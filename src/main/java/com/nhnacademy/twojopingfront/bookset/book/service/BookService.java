@@ -150,7 +150,7 @@ public class BookService {
         return bookClient.getBookById(bookId);
         } catch (FeignException e) {
             throw new FeignClientServerFailConnectionException(
-                    new ErrorResponseDto(404,"404","해당 도서를 찾을 수 없습니다.", RedirectType.REDIRECT,"/books/get", null));
+                    new ErrorResponseDto(404,"404","해당 도서를 찾을 수 없습니다.", RedirectType.REDIRECT,"/books/search", null));
         }
     }
 }
