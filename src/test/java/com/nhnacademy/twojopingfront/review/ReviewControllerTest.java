@@ -1,5 +1,6 @@
 package com.nhnacademy.twojopingfront.review;
 
+import com.nhnacademy.twojopingfront.common.security.MemberUserDetails;
 import com.nhnacademy.twojopingfront.review.controller.ReviewController;
 import com.nhnacademy.twojopingfront.review.dto.request.*;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewCreateResponseDto;
@@ -15,6 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -22,7 +26,10 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -107,27 +114,44 @@ class ReviewControllerStandaloneTest {
     }
 
     @Test
-    @DisplayName("리뷰 등록 테스트")
+    @DisplayName("리뷰 등록 테스트 - MemberUtils.getCustomerId() 연동")
     void registerReview() throws Exception {
+        // Mock SecurityContextHolder to return a mocked Authentication
+        SecurityContext securityContext = mock(SecurityContext.class);
+        Authentication authentication = mock(Authentication.class);
+        MemberUserDetails userDetails = mock(MemberUserDetails.class);
+
+        // Set up mocked behavior
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authentication.getPrincipal()).thenReturn(userDetails);
+        when(userDetails.getId()).thenReturn(1L); // Mocked customer ID
+
+        // Set SecurityContextHolder with mocked SecurityContext
+        SecurityContextHolder.setContext(securityContext);
+
         ReviewCreateResponseDto reviewCreateResponseDto = new ReviewCreateResponseDto(
                 1L, 5, "Test Title", "Test Text", "image_url",
                 Timestamp.valueOf(LocalDateTime.now())
         );
 
+        // Mock service method
         when(reviewService.registerReview(any(ReviewDetailRequestDto.class), any(ReviewImageUploadRequestDto.class)))
                 .thenReturn(reviewCreateResponseDto);
 
         mockMvc.perform(multipart("/reviews")
                         .file(reviewImage)
                         .param("orderDetailId", "1")
-                        .param("customerId", "1")
                         .param("bookId", "1")
                         .param("ratingValue", "5")
                         .param("title", "Test Title")
                         .param("text", "Test Text"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/reviews/" + reviewCreateResponseDto.reviewId()));
+
+        // Verify that getCustomerId() was invoked and the returned ID was used
+        verify(userDetails, times(1)).getId();
     }
+
 
     @Test
     @DisplayName("리뷰 수정 폼 페이지 제공 테스트")
