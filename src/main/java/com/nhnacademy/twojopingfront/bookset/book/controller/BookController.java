@@ -1,11 +1,14 @@
 package com.nhnacademy.twojopingfront.bookset.book.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateHtmlRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
+import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +20,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -26,42 +33,41 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
-
     @PostMapping(value = "/admin/books/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String createBook(@ModelAttribute BookCreateHtmlRequestDto bookCreateHtmlRequestDto,
+    public String createBook(@RequestParam("contributorList") String contributorListJson,
+                             @ModelAttribute BookCreateHtmlRequestDto bookCreateHtmlRequestDto,
                              @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
-                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage,
-                             RedirectAttributes redirectAttributes,
-                             Model model) {
+                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
         try {
+            String contributorList = contributorListJson;
+
+            // DTO에 기여자 리스트 추가
+            BookCreateHtmlRequestDto updatedDto = new BookCreateHtmlRequestDto(
+                    bookCreateHtmlRequestDto.publisherName(),
+                    bookCreateHtmlRequestDto.title(),
+                    bookCreateHtmlRequestDto.description(),
+                    bookCreateHtmlRequestDto.publishedDate(),
+                    bookCreateHtmlRequestDto.isbn(),
+                    bookCreateHtmlRequestDto.retailPrice(),
+                    bookCreateHtmlRequestDto.sellingPrice(),
+                    bookCreateHtmlRequestDto.giftWrappable(),
+                    bookCreateHtmlRequestDto.isActive(),
+                    bookCreateHtmlRequestDto.remainQuantity(),
+                    contributorList,
+                    bookCreateHtmlRequestDto.category(),
+                    bookCreateHtmlRequestDto.tagList()
+            );
+
+            // 이미지 처리
             ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
-            BookCreateResponseDto response = bookService.createBook(bookCreateHtmlRequestDto, imageUploadRequestDto);
+            bookService.createBook(updatedDto, imageUploadRequestDto);
 
-            // admin-get-booklist 템플릿에 필요한 데이터 설정
-            int page = 0; // 기본 페이지 번호
-            int size = 10; // 기본 페이지 크기
-            Page<BookSimpleResponseDto> books = bookService.getAllBooks(page, size); // 도서 목록 가져오기
-            model.addAttribute("books", books);
-            model.addAttribute("currentPath", "/admin/books/get");
-
-            // 성공적으로 등록되었으면 템플릿으로 이동
-            // 리턴 경로는 임시
-            if (response != null) {
-                return "bookset/book/admin-get-booklist";
-            } else {
-                return "bookset/book/admin-get-booklist"; // 실패 시에도 동일한 템플릿 반환
-            }
+            // 리다이렉트 경로로 이동
+            return "redirect:/admin/books/get";
         } catch (Exception ex) {
             ex.printStackTrace();
-
-            // 예외 발생 시에도 데이터를 설정한 뒤 템플릿 반환
-            int page = 0; // 기본 페이지 번호
-            int size = 10; // 기본 페이지 크기
-            Page<BookSimpleResponseDto> books = bookService.getAllBooks(page, size); // 도서 목록 가져오기
-            model.addAttribute("books", books);
-            model.addAttribute("currentPath", "/admin/books/get");
-
-            return "bookset/book/admin-get-booklist";
+            // 오류 발생 시에도 리다이렉트
+            return "redirect:/admin/books/get";
         }
     }
 
@@ -71,6 +77,8 @@ public class BookController {
         model.addAttribute("tags", tagList);
         List<PublisherResponseDto> publisherList = bookService.getAllPublishersForRegister();
         model.addAttribute("publishers", publisherList);
+        List<ContributorNameRoleResponseDto> contributorList = bookService.getActiveContributors();
+        model.addAttribute("contributors", contributorList);
         return "bookset/book/book-register";
     }
 

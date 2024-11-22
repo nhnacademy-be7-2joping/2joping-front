@@ -5,6 +5,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestD
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -37,6 +38,13 @@ public interface BookClient {
      */
     @GetMapping("/publishers/list")
     List<PublisherResponseDto> getAllPublishersForRegister();
+
+    /**
+     * 기여자 데이터를 가져오는 메서드
+     * @return 모든 기여자와 역할 리스트
+     */
+    @GetMapping("/contributors/active")
+    List<ContributorNameRoleResponseDto> getActiveContributors();
 
     /**
      * 전체 도서 목록 조회

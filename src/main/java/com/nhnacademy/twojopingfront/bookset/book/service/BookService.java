@@ -11,6 +11,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateRespons
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.exception.FeignClientServerFailConnectionException;
+import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
@@ -119,6 +120,14 @@ public class BookService {
      */
     public List<PublisherResponseDto> getAllPublishersForRegister() {
         return bookClient.getAllPublishersForRegister();
+    }
+
+    /**
+     * 기여자명과 기여자 역할 데이터를 가져오는 메서드
+     * @return 모든 기여자명과 역할 리스트
+     */
+    public List<ContributorNameRoleResponseDto> getActiveContributors() {
+        return bookClient.getActiveContributors();
     }
 
     /**
