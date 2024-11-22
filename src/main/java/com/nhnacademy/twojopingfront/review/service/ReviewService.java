@@ -82,9 +82,6 @@ public class ReviewService {
 
         try {
             String folderPath = "review/";
-//            if ("detail".equalsIgnoreCase(type)) {
-//                folderPath = "detail/";
-//            }
 
             InputStream inputStream = image.getInputStream();
             String fileName = UUID.randomUUID().toString() + ".jpg";

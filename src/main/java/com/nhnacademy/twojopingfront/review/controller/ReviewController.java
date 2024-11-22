@@ -1,6 +1,7 @@
 package com.nhnacademy.twojopingfront.review.controller;
 
 
+import com.nhnacademy.twojopingfront.common.util.MemberUtils;
 import com.nhnacademy.twojopingfront.review.dto.request.*;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewCreateResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewModifyResponseDto;
@@ -92,8 +93,19 @@ public class ReviewController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String registerReview(@ModelAttribute ReviewDetailRequestDto reviewDetailRequestDto,
                                  @RequestPart(value = "reviewImage", required = false) MultipartFile reviewImage) {
+
+        Long customerId = MemberUtils.getCustomerId();
+
+        ReviewDetailRequestDto updatedReviewDetailRequestDto = new ReviewDetailRequestDto(
+                reviewDetailRequestDto.orderDetailId(),
+                customerId,
+                reviewDetailRequestDto.bookId(),
+                reviewDetailRequestDto.ratingValue(),
+                reviewDetailRequestDto.title(),
+                reviewDetailRequestDto.text()
+        );
         ReviewImageUploadRequestDto imageUploadRequestDto = new ReviewImageUploadRequestDto(reviewImage);
-        ReviewCreateResponseDto responseDto = reviewService.registerReview(reviewDetailRequestDto,imageUploadRequestDto);
+        ReviewCreateResponseDto responseDto = reviewService.registerReview(updatedReviewDetailRequestDto,imageUploadRequestDto);
         return "redirect:/reviews/" + responseDto.reviewId();
     }
 
