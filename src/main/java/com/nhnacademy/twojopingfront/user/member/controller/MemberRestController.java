@@ -2,11 +2,10 @@ package com.nhnacademy.twojopingfront.user.member.controller;
 
 
 import com.nhnacademy.twojopingfront.common.annotation.RedirectOnError;
-import com.nhnacademy.twojopingfront.common.error.dto.ClientErrorMessage;
 import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberCreateRequestDto;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberUpdateRequesteDto;
-import com.nhnacademy.twojopingfront.user.member.dto.request.MemberWithdrawRequesteDto;
+import com.nhnacademy.twojopingfront.user.member.dto.request.MemberWithdrawRequestDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCreateSuccessResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberWithdrawResponseDto;
@@ -19,7 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -102,7 +100,7 @@ public class MemberRestController {
     }
 
     @PutMapping("/withdraw")
-    public String withdrawMember(@ModelAttribute MemberWithdrawRequesteDto requestDto,
+    public String withdrawMember(@ModelAttribute MemberWithdrawRequestDto requestDto,
                                  HttpServletRequest request, HttpServletResponse response,
                                  Model model) {
 

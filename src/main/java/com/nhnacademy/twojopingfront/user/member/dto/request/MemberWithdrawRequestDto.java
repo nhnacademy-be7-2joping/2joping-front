@@ -1,6 +1,6 @@
 package com.nhnacademy.twojopingfront.user.member.dto.request;
 
-public record MemberWithdrawRequesteDto(
+public record MemberWithdrawRequestDto(
         String password
 
 ) {

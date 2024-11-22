@@ -3,7 +3,7 @@ package com.nhnacademy.twojopingfront.user.member.adaptor;
 import com.nhnacademy.twojopingfront.common.gateway.GatewayClient;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberCreateRequestDto;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberUpdateRequesteDto;
-import com.nhnacademy.twojopingfront.user.member.dto.request.MemberWithdrawRequesteDto;
+import com.nhnacademy.twojopingfront.user.member.dto.request.MemberWithdrawRequestDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCreateSuccessResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
@@ -66,7 +66,7 @@ public class MemberAdaptor {
         return response.getBody();
     }
 
-    public MemberWithdrawResponseDto withdrawMember(MemberWithdrawRequesteDto requestDto) {
+    public MemberWithdrawResponseDto withdrawMember(MemberWithdrawRequestDto requestDto) {
         ResponseEntity<MemberWithdrawResponseDto> response = gatewayClient.sendToGateway(
                 HttpMethod.PUT, MEMBER_ENDPOINT +"/withdraw" ,requestDto, MemberWithdrawResponseDto.class
         );
