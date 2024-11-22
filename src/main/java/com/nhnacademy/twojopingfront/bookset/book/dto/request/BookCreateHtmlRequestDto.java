@@ -1,6 +1,7 @@
 package com.nhnacademy.twojopingfront.bookset.book.dto.request;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public record BookCreateHtmlRequestDto(
         String publisherName,
@@ -15,5 +16,5 @@ public record BookCreateHtmlRequestDto(
         int remainQuantity,
         String contributorList,
         String category,
-        String tagList
+        List<String> tagList
 ) {}

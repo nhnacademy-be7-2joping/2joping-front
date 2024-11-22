@@ -168,17 +168,94 @@
             </div>
 
             <!-- 사용 가능한 태그 -->
+<!--            <div class="mb-3">-->
+<!--                <label for="availableTags" class="form-label">사용 가능한 태그</label>-->
+<!--                <div id="availableTags" class="tag-container">-->
+<!--                    <span th:each="tag : ${tags}" th:text="${tag.name}" class="tag-item"></span>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="mb-3">-->
+<!--                <label for="tagList" class="form-label">태그</label>-->
+<!--                <input type="text" class="form-control" id="tagList" name="tagList" placeholder="입력 형식: 따뜻한, 감동적인" required>-->
+<!--            </div>-->
             <div class="mb-3">
                 <label for="availableTags" class="form-label">사용 가능한 태그</label>
                 <div id="availableTags" class="tag-container">
-                    <span th:each="tag : ${tags}" th:text="${tag.name}" class="tag-item"></span>
+                    <!-- 사용 가능한 태그 리스트 -->
+                    <span th:each="tag : ${tags}"
+                          th:text="${tag.name}"
+                          th:attr="data-tag-name=${tag.name}"
+                          class="tag-item available-tag"
+                          onclick="addTag(this)">
+        </span>
                 </div>
             </div>
 
             <div class="mb-3">
-                <label for="tagList" class="form-label">태그</label>
-                <input type="text" class="form-control" id="tagList" name="tagList" placeholder="입력 형식: 따뜻한, 감동적인" required>
+                <label for="selectedTags" class="form-label">선택된 태그</label>
+                <div id="selectedTags" class="tag-container">
+                    <!-- 선택된 태그가 여기에 추가됩니다 -->
+                </div>
             </div>
+
+            <input type="hidden" id="tagList" name="tagList" value="">
+
+            <script>
+                // 선택된 태그를 배열로 관리
+                let selectedTags = [];
+
+                // 태그 추가 함수
+                function addTag(tagElement) {
+                    const tagName = tagElement.getAttribute('data-tag-name');
+
+                    // 이미 선택된 태그인지 확인
+                    if (!selectedTags.includes(tagName)) {
+                        selectedTags.push(tagName);
+
+                        // 선택된 태그 UI 추가
+                        const selectedTagsContainer = document.getElementById('selectedTags');
+                        const newTagElement = document.createElement('span');
+                        newTagElement.classList.add('tag-item');
+                        newTagElement.textContent = tagName;
+                        newTagElement.setAttribute('data-tag-name', tagName);
+                        newTagElement.onclick = function () {
+                            removeTag(newTagElement);
+                        };
+                        selectedTagsContainer.appendChild(newTagElement);
+
+                        // hidden input에 태그 값 업데이트
+                        updateTagList();
+                    }
+                }
+
+                // 태그 제거 함수
+                function removeTag(tagElement) {
+                    const tagName = tagElement.getAttribute('data-tag-name');
+                    selectedTags = selectedTags.filter(tag => tag !== tagName);
+
+                    // 선택된 태그 UI에서 제거
+                    tagElement.remove();
+
+                    // hidden input에 태그 값 업데이트
+                    updateTagList();
+                }
+
+                // // hidden input 업데이트
+                // function updateTagList() {
+                //     const tagListInput = document.getElementById('tagList');
+                //     tagListInput.value = JSON.stringify(selectedTags); // JSON 배열로 저장
+                // }
+
+                // hidden input 업데이트 함수 수정
+                function updateTagList() {
+                    const tagListInput = document.getElementById('tagList');
+                    // JSON.stringify로 배열이 이중으로 직렬화되는 문제 방지
+                    tagListInput.value = selectedTags.join(","); // 콤마로 구분된 문자열로 전달
+                }
+
+            </script>
+
 
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable">
