@@ -5,6 +5,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestD
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,13 @@ public interface BookClient {
      */
     @GetMapping("/tags")
     List<TagResponseDto> getAllTags();
+
+    /**
+     * 출판사 데이터를 가져오는 메서드
+     * @return 모든 출판사 리스트
+     */
+    @GetMapping("/publishers/list")
+    List<PublisherResponseDto> getAllPublishersForRegister();
 
     /**
      * 전체 도서 목록 조회

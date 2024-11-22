@@ -6,6 +6,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateRespons
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
+import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -68,6 +69,8 @@ public class BookController {
     public String showBookRegisterForm(Model model) {
         List<TagResponseDto> tagList = bookService.getAllTags();
         model.addAttribute("tags", tagList);
+        List<PublisherResponseDto> publisherList = bookService.getAllPublishersForRegister();
+        model.addAttribute("publishers", publisherList);
         return "bookset/book/book-register";
     }
 
