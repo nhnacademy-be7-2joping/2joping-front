@@ -4,9 +4,11 @@ import com.nhnacademy.twojopingfront.common.gateway.GatewayClient;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberAddressRequestDto;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberCreateRequestDto;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberUpdateRequesteDto;
+import com.nhnacademy.twojopingfront.user.member.dto.request.MemberWithdrawRequestDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCreateSuccessResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
+import com.nhnacademy.twojopingfront.user.member.dto.response.MemberWithdrawResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -53,7 +55,7 @@ public class MemberAdaptor {
     }
     public MemberUpdateResponseDto updateMember(MemberUpdateRequesteDto requestDto) {
         ResponseEntity<MemberUpdateResponseDto> response = gatewayClient.sendToGateway(
-                HttpMethod.POST, MEMBER_ENDPOINT + "/update" ,requestDto, MemberUpdateResponseDto.class
+                HttpMethod.PUT, MEMBER_ENDPOINT + "/update" ,requestDto, MemberUpdateResponseDto.class
         );
         return response.getBody();
     }
@@ -68,6 +70,10 @@ public class MemberAdaptor {
         ResponseEntity<List<MemberAddressResponseDto>> response = gatewayClient.sendToGateway(
                 HttpMethod.POST, MEMBER_ENDPOINT + "/addresses", requestDto,
                 new ParameterizedTypeReference<List<MemberAddressResponseDto>>() {}
+
+    public MemberWithdrawResponseDto withdrawMember(MemberWithdrawRequestDto requestDto) {
+        ResponseEntity<MemberWithdrawResponseDto> response = gatewayClient.sendToGateway(
+                HttpMethod.PUT, MEMBER_ENDPOINT +"/withdraw" ,requestDto, MemberWithdrawResponseDto.class
         );
         return response.getBody();
     }
