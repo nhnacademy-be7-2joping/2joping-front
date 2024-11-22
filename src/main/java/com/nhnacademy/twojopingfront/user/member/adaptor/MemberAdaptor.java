@@ -1,6 +1,7 @@
 package com.nhnacademy.twojopingfront.user.member.adaptor;
 
 import com.nhnacademy.twojopingfront.common.gateway.GatewayClient;
+import com.nhnacademy.twojopingfront.user.member.dto.request.MemberAddressRequestDto;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberCreateRequestDto;
 import com.nhnacademy.twojopingfront.user.member.dto.request.MemberUpdateRequesteDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
@@ -60,6 +61,13 @@ public class MemberAdaptor {
     public MemberUpdateResponseDto getMember( ) {
         ResponseEntity<MemberUpdateResponseDto> response = gatewayClient.sendToGateway(
                 HttpMethod.GET, MEMBER_ENDPOINT ,null, MemberUpdateResponseDto.class
+        );
+        return response.getBody();
+    }
+    public List<MemberAddressResponseDto> createAddress(MemberAddressRequestDto requestDto) {
+        ResponseEntity<List<MemberAddressResponseDto>> response = gatewayClient.sendToGateway(
+                HttpMethod.POST, MEMBER_ENDPOINT + "/addresses", requestDto,
+                new ParameterizedTypeReference<List<MemberAddressResponseDto>>() {}
         );
         return response.getBody();
     }
