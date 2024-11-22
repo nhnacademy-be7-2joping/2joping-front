@@ -1,0 +1,349 @@
+/* 검색창 스타일 */
+.search-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-container input[type="text"] {
+    width: 60%;
+    height: 50px;
+    font-size: 1.2rem;
+    padding: 10px;
+    border: 2px solid #944cff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-container button {
+    height: 50px;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #944cff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.search-container button:hover {
+    background-color: #472178;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 도서 카드 스타일 */
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(1200px, 1fr)); /* 반응형 레이아웃 */
+    gap: 20px;
+    padding: 20px;
+}
+
+.book-card-wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 250px;
+}
+
+.book-card {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    height: 100%;
+}
+
+.book-card-wrapper:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.book-index {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333;
+    width: 40px;
+    text-align: center;
+}
+
+.book-thumbnail {
+    width: 200px;
+    height: 100%;
+    object-fit: contain;
+    background-color: #f9f9f9;
+    border-right: 1px solid #ddd;
+}
+
+.book-info {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    margin-bottom: 10px;
+}
+
+
+.book-title:hover {
+    text-decoration: underline;
+}
+
+.book-title:hover::after {
+    content: attr(title);
+    position: absolute;
+    left: 0;
+    top: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.book-category,
+.book-price {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #555;
+    display: -webkit-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.book-price {
+    font-weight: bold;
+    color: #000;
+}
+
+/* 태그 섹션 스타일 */
+.book-tags {
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.book-tags span {
+    display: inline-block;
+    background-color: #f0f0f0;
+    color: #944cff;
+    padding: 3px 8px;
+    border-radius: 15px;
+    margin-right: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* 정렬 기준 섹션 */
+.sort-buttons-section {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sort-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.sort-buttons button {
+    background: none;
+    color: #333;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.sort-buttons button:hover {
+    color: #3a0067;
+}
+
+.sort-buttons button:focus {
+    outline: none;
+}
+
+.sort-buttons button:disabled {
+    color: #aaa; /* 비활성화된 버튼 색상 */
+    cursor: not-allowed; /* 비활성화 시 클릭 불가 표시 */
+}
+
+
+/* 페이징 스타일 */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 15px 0;
+    list-style: none;
+    margin: 0;
+}
+
+.pagination .page-link {
+    margin: 0 5px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #007bff;
+    border: 1px solid #ddd;
+}
+
+.pagination .page-link:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination .disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
+}
+
+.no-results {
+    text-align: center;
+    color: #666;
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.book-retail-price {
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 10px;
+    font-size: 0.9rem;
+}
+
+.discount-percentage {
+    color: #ff1111;
+    font-size: 0.9rem;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.book-selling-price {
+    font-weight: bold;
+    color: #000;
+}
+
+/* 기여자, 출판사, 출판일시 구분 스타일 */
+.book-cpp {
+    font-size: 0.9rem;
+    color: #333;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.book-separator {
+    color: #999;
+    margin: 0 5px;
+}
+
+/* 기여자 스타일 */
+.book-contributors {
+    color: #666;
+}
+
+/* 출판사 스타일 */
+.book-publisher {
+    color: #3a0067;
+}
+
+/* 출판일시 스타일 */
+.book-published-at {
+    color: #300000;
+}
+
+/* 평점 스타일 */
+.book-rating span:first-child {
+    font-size: 1.2rem;
+    color: #ffdb00;
+}
+
+.book-rating .review-count {
+    color: #ff5733;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* 컨테이너 스타일 */
+.content-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+/* 카테고리 사이드바 */
+.category-sidebar {
+    width: 250px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-item > a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+    padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.category-item > a:hover {
+    color: #944cff;
+}
+
+.sub-category-item > a {
+    text-decoration: none;
+    color: #555;
+    margin-left: 20px;
+    display: block;
+    padding: 3px;
+    transition: all 0.3s ease;
+}
+
+.sub-category-item > a:hover {
+    color: #472178;
+}
+
+/* 메인 콘텐츠 */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    overflow-x: auto;
+}

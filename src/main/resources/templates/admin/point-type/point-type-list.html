@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포인트 타입 생성</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin-index-style.css}">
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>포인트 타입 목록</h1>
+    <a href="/admin/points/create" class="btn btn-primary mb-3">포인트 타입 생성</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>이름</th>
+            <th>적립 값</th>
+            <th>유형</th>
+            <th>상태</th>
+            <th>수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="pointType : ${pointTypes}">
+            <td th:text="${pointType.id}"></td>
+            <td th:text="${pointType.name}"></td>
+            <td th:text="${pointType.accVal}"></td>
+            <td th:text="${pointType.type}"></td>
+            <td th:text="${pointType.isActive ? '활성' : '비활성'}"></td>
+            <td><a th:href="@{/admin/points/edit/{id}(id=${pointType.id})}" class="btn btn-success btn-sm">수정</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

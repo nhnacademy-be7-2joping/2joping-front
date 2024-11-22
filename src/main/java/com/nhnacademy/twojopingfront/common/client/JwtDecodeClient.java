@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient(name = "jwtDecodeClient", url = "${gateway.auth-url}")
 public interface JwtDecodeClient {
     @GetMapping("/user-info")
-    JwtUserInfoResponseDto getUserInfo(@CookieValue("accessToken") String accessToken);
+    ResponseEntity<JwtUserInfoResponseDto> getUserInfo(@CookieValue("accessToken") String accessToken);
 
     @GetMapping("/refreshToken")
     ResponseEntity<?> refreshToken(@CookieValue("refreshToken") String refreshToken);

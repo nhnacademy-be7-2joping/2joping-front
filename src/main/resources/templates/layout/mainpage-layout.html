@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  >
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,6 +18,7 @@
   min-height: 800px;
 
 }
+
   </style>
 </head>
 <body>
@@ -31,15 +32,18 @@
 
     <!-- 네비게이션 항목 -->
     <div class="navbar-links">
-      <a class="nav-link" href="#">베스트</a>
-      <a class="nav-link" href="#">신상품</a>
+      <a class="nav-link" href="/books/search?keyword=&sort=popularity">베스트</a>
+      <a class="nav-link" href="/books/search?keyword=&sort=newest">신상품</a>
       <a class="nav-link" href="#">이벤트</a>
       <a class="nav-link" href="#">고객센터</a>
     </div>
 
     <!-- 검색 바 -->
     <div class="navbar-search">
-      <input type="text" placeholder="검색어를 입력하세요">
+      <form action="/books/search" method="get">
+        <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
+        <button type="submit" class="btn btn-primary">검색</button>
+      </form>
     </div>
     <div class="navbar-cart">
       <a href="/cart" class="cart-icon">
@@ -57,7 +61,7 @@
     <!-- 사용자 정보 UI -->
     <div class="navbar-actions">
       <!-- 로그인 상태일 때 보이는 코드 -->
-      <div th:if="${token != null and !#strings.isEmpty(token)}">
+      <div th:if="${isLogin}">
 
         <div class="user-profile-container">
           <div class="user-profile-image-container">
@@ -66,7 +70,7 @@
           </div>
 
           <span class="user-name"
-                th:text="${userProfile != null and userProfile.name != null and !#strings.isEmpty(userProfile.name) ? userProfile.name + ' 님' : '홍길동 님'}">
+                th:text="${isLogin ? memberNickname + ' 님' : '홍길동 님'}">
           </span>
 
 
@@ -82,7 +86,7 @@
       </div>
 
       <!-- 로그인 상태가 아닐 때 보이는 코드 -->
-      <div th:unless="${token != null and !#strings.isEmpty(token)}">
+      <div th:unless="${isLogin}">
         <a href="/login" class="nav-action-link">로그인</a>
         <span class="separator">|</span> <!-- 경계선 -->
         <a href="/signup" class="nav-action-link">회원가입</a>
@@ -99,9 +103,10 @@
 <!-- 두 번째 네비게이션 바 -->
 <div class="sub-navbar">
   <div class="sub-navbar-container">
-    <a href="#" class="sub-nav-link">인기도서</a>
-    <a href="#" class="sub-nav-link">국내도서</a>
-    <a href="#" class="sub-nav-link">외국도서</a>
+
+    <a href="/" class="sub-nav-link" th:classappend="${activePage == 'index'} ? 'active' : ''">인기도서</a>
+    <a href="/books/search?categoryId=1&keyword=&sort=relevance" class="sub-nav-link" th:classappend="${activePage == 'domestic'} ? 'active' : ''">국내도서</a>
+    <a href="/books/search?categoryId=2&keyword=&sort=relevance" class="sub-nav-link" th:classappend="${activePage == 'foreign'} ? 'active' : ''">외국도서</a>
   </div>
 </div>
 
@@ -129,6 +134,7 @@
 
 <script th:src="@{/js/index-script.js}"></script>
 <script th:src="@{/js/profile-drop-down.js}"></script>
+<script th:src="@{/js/book-detail-button.js}"></script>
 
 
 

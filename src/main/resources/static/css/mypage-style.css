@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #944cff;
+    --primary-color: #a36afa;
     --primary-hover-color: #944cff;
     --primary-color-rgb: 148, 76, 255;
 
@@ -252,11 +252,15 @@ body {
     padding: 0 40px;
 }
 
+/* 버튼 숨기기 */
+.navbar-search button {
+    display: none;
+}
 
 
 .navbar-search input[type="text"] {
     border: 1px solid #ddd; /* 기본 테두리 색상 */
-    width: 100%;
+    width: 160%;
     padding: 8px;
     border-radius: 4px;
 
@@ -352,6 +356,9 @@ body {
 }
 .sub-nav-link:hover {
     color: var(--primary-color);
+}
+.sub-nav-link.active{
+    color:var(--primary-color);
 }
 
 .user-profile-container {
@@ -511,10 +518,11 @@ body {
     width: 100%;
     height: 80px;
     border: 1px solid #ddd;
-
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 12px;
     display: flex;
     flex-direction: row;
-    gap: 10px;
 }
 .tier-info-button{
     height: 20px;
@@ -545,6 +553,12 @@ body {
 }
 .bold{
     font-weight: bold;
+}
+.font-16px{
+    width: fit-content;
+    font-size: 14px;
+    white-space: nowrap; /* 줄바꿈 방지 */
+
 }
 .point-info-button{
     height: 20px;
