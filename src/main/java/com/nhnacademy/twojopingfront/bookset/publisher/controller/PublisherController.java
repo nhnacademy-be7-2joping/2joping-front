@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping()
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class PublisherController {
 
@@ -30,7 +30,7 @@ public class PublisherController {
                                    Model model) {
         Page<PublisherResponseDto> publishers = publisherService.getAllPublishers(page,size);
         model.addAttribute("publishers", publishers);
-        return "bookset/publisher/publishers-list"; // 전체 출판사 목록을 표시할 템플릿 경로
+        return "admin/publisher/publishers-list"; // 전체 출판사 목록을 표시할 템플릿 경로
     }
 
 
@@ -42,7 +42,7 @@ public class PublisherController {
     @PostMapping("/register")
     public String registerPublisher(PublisherRequestDto publisherRequestDto) {
         publisherService.registerPublisher(publisherRequestDto);
-        return "redirect:/publishers";
+        return "redirect:/admin/publishers";
     }
 
     /**
@@ -53,7 +53,7 @@ public class PublisherController {
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
         model.addAttribute("publisher", new PublisherRequestDto(null));
-        return "bookset/publisher/publisher-register"; // 등록 폼 페이지
+        return "admin/publisher/publisher-register"; // 등록 폼 페이지
     }
 
 
@@ -66,7 +66,7 @@ public class PublisherController {
     @PatchMapping("/{id}")
     public String updatePublisher(@PathVariable("id") Long id, PublisherRequestDto publisherRequestDto) {
         publisherService.updatePublisher(id, publisherRequestDto);
-        return "redirect:/publishers";
+        return "redirect:/admin/publishers";
     }
 
     /**
@@ -79,7 +79,7 @@ public class PublisherController {
     public String showEditPage(@PathVariable("id") Long id, Model model) {
         PublisherResponseDto publisher = publisherService.getPublisher(id); // 출판사 정보 조회
         model.addAttribute("publisher", publisher); // 뷰에 전달
-        return "bookset/publisher/publisher-edit"; // 수정 폼 페이지
+        return "admin/publisher/publisher-edit"; // 수정 폼 페이지
     }
 
 
@@ -91,7 +91,7 @@ public class PublisherController {
     @DeleteMapping("/{id}")
     public String deletePublisher(@PathVariable("id") Long id) {
         publisherService.deletePublisher(id);
-        return "redirect:/publishers";
+        return "redirect:/admin/publishers";
     }
 
     /**
@@ -104,6 +104,6 @@ public class PublisherController {
     public String showDeletePage(@PathVariable("id") Long id, Model model) {
         PublisherResponseDto publisher = publisherService.getPublisher(id);
         model.addAttribute("publisher", publisher);
-        return "bookset/publisher/publisher-delete";
+        return "admin/publisher/publisher-delete";
     }
 }
