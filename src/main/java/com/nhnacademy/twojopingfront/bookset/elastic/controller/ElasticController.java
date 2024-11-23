@@ -1,6 +1,6 @@
 package com.nhnacademy.twojopingfront.bookset.elastic.controller;
 
-import com.nhnacademy.twojopingfront.bookset.category.dto.GetAllCategoriesResponse;
+import com.nhnacademy.twojopingfront.bookset.category.dto.response.GetAllCategoriesResponse;
 import com.nhnacademy.twojopingfront.bookset.category.service.CategoryService;
 import com.nhnacademy.twojopingfront.bookset.elastic.dto.response.ElasticSearchResponseDto;
 import com.nhnacademy.twojopingfront.bookset.elastic.service.ElasticService;

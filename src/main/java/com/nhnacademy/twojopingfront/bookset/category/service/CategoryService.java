@@ -1,7 +1,7 @@
 package com.nhnacademy.twojopingfront.bookset.category.service;
 
 import com.nhnacademy.twojopingfront.bookset.category.client.CategoryClient;
-import com.nhnacademy.twojopingfront.bookset.category.dto.GetAllCategoriesResponse;
+import com.nhnacademy.twojopingfront.bookset.category.dto.response.GetAllCategoriesResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

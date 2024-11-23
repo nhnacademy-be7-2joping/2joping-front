@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @FeignClient(name = "CategoryClient", url = "${gateway.base-url}")
-public interface CategoryClient {
+public interface AdminCategoryClient {
+
     @GetMapping("/v1/bookstore/categories")
     ResponseEntity<List<GetAllCategoriesResponse>> getAllCategories();
 }

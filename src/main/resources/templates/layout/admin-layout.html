@@ -9,12 +9,10 @@
   <title>메인페이지 레이아웃</title>
 
   <style>
-
-    .layout-main-container{
+    .layout-main-container {
       max-width: 1250px; /* 최대 너비 설정 */
       margin: 0 auto; /* 화면 중앙 정렬 */
       min-height: 800px;
-
     }
   </style>
 </head>
@@ -29,8 +27,6 @@
   </div>
 </nav>
 
-
-
 <!-- 두 번째 네비게이션 바 -->
 <div class="sub-navbar">
   <div class="sub-navbar-container">
@@ -40,20 +36,16 @@
     <a href="/admin/shipment-policies" class="sub-nav-link">배송 정책 설정</a>
     <a href="/admin/tags" class="sub-nav-link">태그 설정</a>
     <a href="/admin/points" class="sub-nav-link">포인트 타입 설정</a>
-
+    <a href="/admin/categories" class="sub-nav-link">카테고리 관리</a> <!-- 카테고리 관리 링크 추가 -->
   </div>
 </div>
 
 <div class="layout-main-container">
-
   <!-- 중앙 컨테이너 -->
-  <div  layout:fragment="content">
+  <div layout:fragment="content">
     <!-- 각 페이지에서 여기를 채움 -->
-
   </div>
 </div>
-
-
 
 <!-- 공통 푸터 -->
 <footer class="footer">
@@ -64,12 +56,7 @@
 
 <div layout:fragment="script"></div>
 <script th:src="@{/js/mypage-script.js}"></script>
-
-
 <script th:src="@{/js/index-script.js}"></script>
 <script th:src="@{/js/profile-drop-down.js}"></script>
-
-
-
 </body>
 </html>
