@@ -178,23 +178,23 @@
             </div>
 
             <div class="mb-3">
-                <label for="isbn" class="form-label">ISBN</label>
+                <label for="isbn" class="form-label">ISBN (13자리)</label>
                 <input type="text" class="form-control" id="isbn" name="isbn" placeholder="ISBN 번호를 입력하세요" required>
             </div>
 
             <div class="mb-3">
                 <label for="retailPrice" class="form-label">정가</label>
-                <input type="number" class="form-control" id="retailPrice" name="retailPrice" placeholder="정가를 입력하세요" required>
+                <input type="number" class="form-control" id="retailPrice" name="retailPrice" placeholder="정가를 입력하세요" min="0" required>
             </div>
 
             <div class="mb-3">
                 <label for="sellingPrice" class="form-label">판매가</label>
-                <input type="number" class="form-control" id="sellingPrice" name="sellingPrice" placeholder="판매가를 입력하세요" required>
+                <input type="number" class="form-control" id="sellingPrice" name="sellingPrice" placeholder="판매가를 입력하세요" min="0" required>
             </div>
 
             <div class="mb-3">
                 <label for="remainQuantity" class="form-label">재고 수량</label>
-                <input type="number" class="form-control" id="remainQuantity" name="remainQuantity" placeholder="재고 수량을 입력하세요" required>
+                <input type="number" class="form-control" id="remainQuantity" name="remainQuantity" placeholder="재고 수량을 입력하세요" min="0" required>
             </div>
 
             <div class="mb-3">
@@ -232,9 +232,10 @@
             </div>
 
             <script>
+                // 상위 카테고리가 변경될 때 중위 카테고리 로드
                 document.getElementById('topCategory').addEventListener('change', function () {
                     const topCategoryId = this.value;
-                    fetch(`/api/categories/${topCategoryId}/children`) // 프론트 서버로 요청
+                    fetch(`/admin/api/categories/${topCategoryId}/children`)
                         .then(response => {
                             console.log("Content-Type:", response.headers.get('Content-Type'));
                             if (!response.ok) {
@@ -243,17 +244,39 @@
                             return response.json();
                         })
                         .then(data => {
-                            console.log(data);
+                            console.log("Middle Categories:", data);
                             const middleCategory = document.getElementById('middleCategory');
                             middleCategory.innerHTML = '<option value="" disabled selected>중위 카테고리를 선택하세요</option>';
                             data.forEach(category => {
                                 middleCategory.innerHTML += `<option value="${category.categoryId}">${category.name}</option>`;
                             });
 
-                            // 하위 카테고리 초기화
+                            // 중위 카테고리 변경 시 하위 카테고리 초기화
                             document.getElementById('bottomCategory').innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';
                         })
                         .catch(error => console.error("Error fetching middle categories:", error));
+                });
+
+                // 중위 카테고리가 변경될 때 하위 카테고리 로드
+                document.getElementById('middleCategory').addEventListener('change', function () {
+                    const middleCategoryId = this.value;
+                    fetch(`/admin/api/categories/${middleCategoryId}/children`)
+                        .then(response => {
+                            console.log("Content-Type:", response.headers.get('Content-Type'));
+                            if (!response.ok) {
+                                throw new Error("Failed to fetch bottom categories");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log("Bottom Categories:", data);
+                            const bottomCategory = document.getElementById('bottomCategory');
+                            bottomCategory.innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';
+                            data.forEach(category => {
+                                bottomCategory.innerHTML += `<option value="${category.categoryId}">${category.name}</option>`;
+                            });
+                        })
+                        .catch(error => console.error("Error fetching bottom categories:", error));
                 });
             </script>
 
@@ -412,5 +435,17 @@
         </form>
     </div>
 </div>
+<script>
+    document.getElementById('bookRegisterForm').addEventListener('submit', function(event) {
+        const retailPrice = document.getElementById('retailPrice').value;
+        const sellingPrice = document.getElementById('sellingPrice').value;
+        const remainQuantity = document.getElementById('remainQuantity').value;
+
+        if (retailPrice < 0 || sellingPrice < 0 || remainQuantity < 0) {
+            alert("모든 숫자 입력은 음수일 수 없습니다.");
+            event.preventDefault();
+        }
+    });
+</script>
 </body>
 </html>

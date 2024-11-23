@@ -82,7 +82,7 @@ public class BookController {
         return "bookset/book/book-register";
     }
 
-    @GetMapping(value = "/api/categories/{categoryId}/children", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/admin/api/categories/{categoryId}/children", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<CategoryResponseDto> getChildCategories(@PathVariable Long categoryId) {
         return bookService.getChildCategories(categoryId);
