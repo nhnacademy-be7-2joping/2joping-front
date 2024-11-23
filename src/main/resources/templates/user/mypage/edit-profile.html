@@ -9,10 +9,7 @@
 <body>
 <!-- 메인 컨텐츠 영역 -->
 <div class="mypage-container" layout:fragment="content">
-  <div id="error-container"
-       th:if="${errorCode != null and errorMessage != null}"
-       th:attr="data-error-code=${errorCode}, data-error-message=${errorMessage}">
-  </div>
+
 
   <div class="mypage-form-container">
     <div class="edit-form-container">
@@ -23,6 +20,8 @@
       <div th:if="${memberInfo != null}">
 
       <form action="/members/update" method="post" class="user-edit-form">
+        <input type="hidden" name="_method" value="PUT">
+
         <h1>회원 정보 수정</h1>
         <!-- 수정 불가한 필드 -->
         <label for="name">이름:</label>
