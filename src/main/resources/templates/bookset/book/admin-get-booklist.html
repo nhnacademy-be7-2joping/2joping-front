@@ -45,7 +45,10 @@
                 <button>수정</button>
             </td>
             <td>
-                <button>삭제</button>
+                <form th:action="@{/admin/books/{book-id}/deactivate(book-id=${book.bookId})}" method="post">
+                    <input type="hidden" name="_method" value="put">
+                    <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                </form>
             </td>
         </tr>
         </tbody>
