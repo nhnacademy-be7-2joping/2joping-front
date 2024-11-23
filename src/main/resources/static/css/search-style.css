@@ -327,6 +327,9 @@
 .category-item > a:hover {
     color: #944cff;
 }
+.active-category a{
+    color:var(--primary-color);
+}
 
 .sub-category-item > a {
     text-decoration: none;

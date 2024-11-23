@@ -98,10 +98,11 @@
 
                             <!-- 기여자, 출판사, 출판일시 -->
                             <div class="book-cpp">
-                    <span class="book-contributors" th:each="contributor, iterStat : ${book.bookContributor}">
-                        <span th:text="'[' + ${contributor.role} + '] ' + ${contributor.name}"></span>
-                        <span th:if="!${iterStat.last}" th:text="'| '"></span>
-                    </span>
+                                <span class="book-contributors"
+                                      th:each="contributor, iterStat : ${book.bookContributor}">
+                                    <span th:text="'[' + ${contributor.role} + '] ' + ${contributor.name}"></span>
+                                    <span th:if="!${iterStat.last}" th:text="'| '"></span>
+                                </span>
                                 <span class="book-separator">|</span>
                                 <span class="book-publisher" th:text="${book.bookPublisher}"></span>
                                 <span class="book-separator">|</span>
@@ -111,10 +112,10 @@
 
                             <!-- 카테고리 -->
                             <div class="book-category">
-                        <span th:each="category, iterStat : ${book.bookCategory}">
-                            <span th:text="${category.name}"></span>
-                            <span th:if="!${iterStat.last}" th:text="' > '"></span>
-                        </span>
+                                <span th:each="category, iterStat : ${book.bookCategory}">
+                                    <span th:text="${category.name}"></span>
+                                    <span th:if="!${iterStat.last}" th:text="' > '"></span>
+                                </span>
                             </div>
 
                             <!-- 정가 -->
@@ -123,7 +124,7 @@
                                 <span class="discount-percentage"
                                       th:if="${book.bookRetailPrice > 0 and book.bookSellingPrice < book.bookRetailPrice}"
                                       th:text="'(' + ${T(java.lang.String).format('%.1f', ((book.bookRetailPrice - book.bookSellingPrice) * 100.0) / book.bookRetailPrice)} + '% 할인)'">
-                    </span>
+                                </span>
                             </div>
 
                             <!-- 판매가 -->
@@ -131,7 +132,7 @@
 
                             <!-- 평점, 리뷰수 -->
                             <div class="book-rating">
-                        <span th:text="${book.bookRatingAvg != null ? #strings.repeat('★', T(java.lang.Math).round(book.bookRatingAvg)) +
+                               <span th:text="${book.bookRatingAvg != null ? #strings.repeat('★', T(java.lang.Math).round(book.bookRatingAvg)) +
                                         #strings.repeat('☆', 5 - T(java.lang.Math).round(book.bookRatingAvg)) : '☆☆☆☆☆'}"></span>
                                 <span th:text="${book.bookRatingAvg != null ? book.bookRatingAvg : '0.0'}"></span>
                                 <span class="review-count"
@@ -140,8 +141,8 @@
 
                             <!-- 태그 -->
                             <span class="book-tags">
-                        <span th:each="tag : ${book.bookTag}" th:text="' #' + ${tag.name}"></span>
-                    </span>
+                                <span th:each="tag : ${book.bookTag}" th:text="' #' + ${tag.name}"></span>
+                            </span>
                         </div>
                     </a>
                 </div>
