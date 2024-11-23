@@ -1,21 +1,3 @@
-// /**
-//  * 별점 렌더링 함수
-//  * @param rating 평점 값
-//  */
-// function renderStars(rating) {
-//     const stars = document.querySelectorAll('.stars .star');
-//     stars.forEach((star, index) => {
-//         star.classList.toggle('selected', index < rating); // 선택된 별만 노란색으로 변경
-//     });
-// }
-//
-// // 페이지 로드 시 별점 렌더링
-// document.addEventListener('DOMContentLoaded', function () {
-//     const ratingElement = document.getElementById('rating-stars');
-//     const ratingValue = parseInt(ratingElement.getAttribute('data-rating'), 10) || 0; // 평점값 가져오기
-//     renderStars(ratingValue);
-// });
-
 /**
  * 별점 렌더링 함수
  * @param {HTMLElement} container - 별점 컨테이너
