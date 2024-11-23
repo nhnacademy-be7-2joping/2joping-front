@@ -33,11 +33,7 @@ public class CategoryController {
             model.addAttribute("categories", categories.getContent());
             model.addAttribute("page", categories);
         } catch (CustomApiException ex) {
-            Page<CategoryResponseDto> categories = categoryService.getAllCategoriesPage(pageable.getPageNumber(), pageable.getPageSize());
             model.addAttribute("errorMessage", ex.getErrorResponse().errorMessage());
-            model.addAttribute("categories", categories.getContent());
-            model.addAttribute("page", categories);
-            return  "admin/categories/category-list";
         }
         return "admin/categories/category-list";
     }
@@ -50,16 +46,8 @@ public class CategoryController {
      */
     @GetMapping("/create")
     public String showCreateCategoryForm(Model model) {
-        try {
-            model.addAttribute("category", new CategoryRequestDto(null, null, ""));
-        } catch (CustomApiException ex) {
-            model.addAttribute("errorMessage", ex.getErrorResponse().errorMessage());
-            model.addAttribute("category", new CategoryRequestDto(null, null, ""));
-            return "admin/categories/category-form";
-        }
+        model.addAttribute("category", new CategoryRequestDto(null, null, ""));
         return "admin/categories/category-form";
-
-
     }
 
     /**
@@ -70,15 +58,13 @@ public class CategoryController {
      * @return 카테고리 수정 페이지
      */
     @GetMapping("/{categoryId}/edit")
-    public String showEditCategoryForm(@PathVariable Long categoryId, Model model) {
+    public String showEditCategoryForm(@PathVariable Long categoryId, Model model, RedirectAttributes redirectAttributes) {
         try {
             CategoryResponseDto category = categoryService.getCategory(categoryId);
             model.addAttribute("category", category);
         } catch (CustomApiException ex) {
-            CategoryResponseDto category = categoryService.getCategory(categoryId);
-            model.addAttribute("errorMessage", ex.getErrorResponse().errorMessage());
-            model.addAttribute("category", category);
-            return "admin/categories/category-form";
+            redirectAttributes.addFlashAttribute("errorMessage", ex.getErrorResponse().errorMessage());
+            return "redirect:/admin/categories";
         }
         return "admin/categories/category-form";
     }
@@ -95,9 +81,9 @@ public class CategoryController {
             categoryService.createCategory(request);
             redirectAttributes.addFlashAttribute("message", "카테고리가 성공적으로 생성되었습니다.");
         } catch (CustomApiException ex) {
-            model.addAttribute("errorMessage", ex.getErrorResponse().errorMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", ex.getErrorResponse().errorMessage());
             model.addAttribute("category", request);
-            return "admin/categories/category-form";
+            return "redirect:/admin/categories/create";
         }
         return "redirect:/admin/categories";
     }
@@ -110,15 +96,13 @@ public class CategoryController {
      * @return 카테고리 목록 페이지로 리다이렉트
      */
     @PostMapping("/{categoryId}/edit")
-    public String updateCategory(@PathVariable Long categoryId, @ModelAttribute CategoryRequestDto request,
-                                 RedirectAttributes redirectAttributes, Model model) {
+    public String updateCategory(@PathVariable Long categoryId, @ModelAttribute CategoryRequestDto request, RedirectAttributes redirectAttributes) {
         try {
             categoryService.updateCategory(categoryId, request);
             redirectAttributes.addFlashAttribute("message", "카테고리가 성공적으로 수정되었습니다.");
         } catch (CustomApiException ex) {
-            model.addAttribute("errorMessage", ex.getErrorResponse().errorMessage());
-            model.addAttribute("category", request);
-            return "admin/categories/category-form";
+            redirectAttributes.addFlashAttribute("errorMessage", ex.getErrorResponse().errorMessage());
+            return "redirect:/admin/categories/" + categoryId + "/edit";
         }
         return "redirect:/admin/categories";
     }
@@ -130,14 +114,14 @@ public class CategoryController {
      * @return 카테고리 목록 페이지로 리다이렉트
      */
     @PostMapping("/{categoryId}/deactivate")
-    public String deactivateCategory(@PathVariable Long categoryId, RedirectAttributes redirectAttributes, Model model) {
+    public String deactivateCategory(@PathVariable Long categoryId, RedirectAttributes redirectAttributes) {
         try {
             categoryService.deactivateCategory(categoryId);
             redirectAttributes.addFlashAttribute("message", "카테고리가 성공적으로 비활성화 되었습니다.");
         } catch (CustomApiException ex) {
-            model.addAttribute("errorMessage", ex.getErrorResponse().errorMessage());
-            return "admin/category/categories-list";
+            redirectAttributes.addFlashAttribute("errorMessage", ex.getErrorResponse().errorMessage());
         }
         return "redirect:/admin/categories";
     }
+
 }

@@ -27,7 +27,7 @@ public class CategoryService {
         try {
             return categoryClient.getCategory(categoryId).getBody();
         } catch (Exception e) {
-            throw createCustomApiException("CATEGORY_FETCH_SINGLE_ERROR", "카테고리를 불러올 수 없습니다.");
+            throw categoriesCustomApiException("CATEGORY_FETCH_SINGLE_ERROR", "카테고리를 불러올 수 없습니다.");
         }
     }
 
@@ -40,7 +40,7 @@ public class CategoryService {
         try {
             return categoryClient.getAllCategories().getBody();
         } catch (Exception e) {
-            throw createCustomApiException("CATEGORY_FETCH_ERROR", "카테고리 목록을 불러올 수 없습니다.");
+            throw categoriesCustomApiException("CATEGORY_FETCH_ERROR", "카테고리 목록을 불러올 수 없습니다.");
         }
     }
 
@@ -55,7 +55,7 @@ public class CategoryService {
         try {
             return categoryClient.getAllCategoriesPage(page, size).getBody();
         } catch (Exception e) {
-            throw createCustomApiException("CATEGORY_FETCH_PAGE_ERROR", "카테고리 목록을 불러올 수 없습니다.");
+            throw categoriesCustomApiException("CATEGORY_FETCH_PAGE_ERROR", "카테고리 목록을 불러올 수 없습니다.");
         }
     }
 
@@ -68,7 +68,7 @@ public class CategoryService {
         try {
             categoryClient.createCategory(request);
         } catch (Exception e) {
-            throw createCustomApiException("CATEGORY_CREATE_ERROR", "이미 카테고리 이름이 있거나, 부모 카테고리 아이디가 존재 하지 않아, 카테고리를 생성할 수 없습니다.");
+            throw categoriesCustomApiException("CATEGORY_CREATE_ERROR", "이미 카테고리 이름이 있거나, 부모 카테고리 아이디가 존재 하지 않아, 카테고리를 생성할 수 없습니다.");
         }
     }
 
@@ -83,7 +83,7 @@ public class CategoryService {
         try {
             return categoryClient.updateCategory(categoryId, request).getBody();
         } catch (Exception e) {
-            throw createCustomApiException("CATEGORY_UPDATE_ERROR", "이미 카테고리 이름이 있거나, 부모 카테고리 아이디가 존재 하지 않아, 카테고리를 업데이트할 수 없습니다.");
+            throw categoriesCustomApiException("CATEGORY_UPDATE_ERROR", "이미 카테고리 이름이 있거나, 부모 카테고리 아이디가 존재 하지 않아, 카테고리를 업데이트할 수 없습니다.");
         }
     }
 
@@ -91,13 +91,12 @@ public class CategoryService {
      * 카테고리 비활성화
      *
      * @param categoryId 비활성화할 카테고리 ID
-     * @return 비활성화된 카테고리 ID
      */
-    public Long deactivateCategory(Long categoryId) {
+    public void deactivateCategory(Long categoryId) {
         try {
-            return categoryClient.deactivateCategory(categoryId).getBody();
+            categoryClient.deactivateCategory(categoryId);
         } catch (Exception e) {
-            throw createCustomApiException("CATEGORY_DEACTIVATE_ERROR", "하위 카테고리가 존재하여, 해당 카테고리를 비활성화할 수 없습니다.");
+            throw categoriesCustomApiException("CATEGORY_DEACTIVATE_ERROR", "하위 카테고리가 존재하여, 해당 카테고리를 비활성화할 수 없습니다.");
         }
     }
 
@@ -108,7 +107,7 @@ public class CategoryService {
      * @param errorMessage 오류 메시지
      * @return 생성된 CustomApiException
      */
-    private CustomApiException createCustomApiException(String errorCode, String errorMessage) {
+    private CustomApiException categoriesCustomApiException(String errorCode, String errorMessage) {
         ErrorResponseDto<?> errorResponse = new ErrorResponseDto<>(
                 500,
                 errorCode,
