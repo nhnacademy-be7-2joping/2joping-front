@@ -1,5 +1,7 @@
 package com.nhnacademy.twojopingfront.bookset.book.dto.response;
 
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewResponseDto;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -28,5 +30,6 @@ public record BookResponseDto (
         List<BookContributorResponseDto> contributorList,
         List<String> categoryList,
         List<BookTagResponseDto> tagList,
-        String thumbnail
+        String thumbnail,
+        List<ReviewResponseDto> reviewList
 ) {}
