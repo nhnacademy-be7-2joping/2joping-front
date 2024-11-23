@@ -8,6 +8,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateRespons
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
+import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
@@ -39,9 +40,6 @@ public class BookController {
                              @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
                              @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
         try {
-            String contributorList = contributorListJson;
-
-            // DTO에 기여자 리스트 추가
             BookCreateHtmlRequestDto updatedDto = new BookCreateHtmlRequestDto(
                     bookCreateHtmlRequestDto.publisherName(),
                     bookCreateHtmlRequestDto.title(),
@@ -53,16 +51,16 @@ public class BookController {
                     bookCreateHtmlRequestDto.giftWrappable(),
                     bookCreateHtmlRequestDto.isActive(),
                     bookCreateHtmlRequestDto.remainQuantity(),
-                    contributorList,
-                    bookCreateHtmlRequestDto.category(),
+                    contributorListJson,
+                    bookCreateHtmlRequestDto.topCategoryId(),
+                    bookCreateHtmlRequestDto.middleCategoryId(),
+                    bookCreateHtmlRequestDto.bottomCategoryId(),
                     bookCreateHtmlRequestDto.tagList()
             );
 
-            // 이미지 처리
             ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
             bookService.createBook(updatedDto, imageUploadRequestDto);
 
-            // 리다이렉트 경로로 이동
             return "redirect:/admin/books/get";
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -79,7 +77,15 @@ public class BookController {
         model.addAttribute("publishers", publisherList);
         List<ContributorNameRoleResponseDto> contributorList = bookService.getActiveContributors();
         model.addAttribute("contributors", contributorList);
+        List<CategoryResponseDto> topCategories = bookService.getTopCategories();
+        model.addAttribute("topCategories", topCategories);
         return "bookset/book/book-register";
+    }
+
+    @GetMapping(value = "/api/categories/{categoryId}/children", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<CategoryResponseDto> getChildCategories(@PathVariable Long categoryId) {
+        return bookService.getChildCategories(categoryId);
     }
 
     @GetMapping("/books/get")

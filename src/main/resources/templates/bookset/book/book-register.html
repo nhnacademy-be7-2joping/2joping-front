@@ -207,10 +207,55 @@
                 <input type="file" class="form-control" id="detailImage" name="detailImage" accept="image/*">
             </div>
 
+<!--            <div class="mb-3">-->
+<!--                <label for="category" class="form-label">카테고리</label>-->
+<!--                <input type="text" class="form-control" id="category" name="category" placeholder="입력 형식: 국내도서>어린이>어린이 영어" required>-->
+<!--            </div>-->
             <div class="mb-3">
-                <label for="category" class="form-label">카테고리</label>
-                <input type="text" class="form-control" id="category" name="category" placeholder="입력 형식: 국내도서>어린이>어린이 영어" required>
+                <label for="topCategory" class="form-label">상위 카테고리</label>
+                <select class="form-control" id="topCategory" name="topCategoryId" required>
+                    <option value="" disabled selected>상위 카테고리를 선택하세요</option>
+                    <option th:each="category : ${topCategories}" th:value="${category.categoryId}" th:text="${category.name}"></option>
+                </select>
             </div>
+            <div class="mb-3">
+                <label for="middleCategory" class="form-label">중위 카테고리</label>
+                <select class="form-control" id="middleCategory" name="middleCategoryId">
+                    <option value="" disabled selected>중위 카테고리를 선택하세요</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="bottomCategory" class="form-label">하위 카테고리</label>
+                <select class="form-control" id="bottomCategory" name="bottomCategoryId">
+                    <option value="" disabled selected>하위 카테고리를 선택하세요</option>
+                </select>
+            </div>
+
+            <script>
+                document.getElementById('topCategory').addEventListener('change', function () {
+                    const topCategoryId = this.value;
+                    fetch(`/api/categories/${topCategoryId}/children`) // 프론트 서버로 요청
+                        .then(response => {
+                            console.log("Content-Type:", response.headers.get('Content-Type'));
+                            if (!response.ok) {
+                                throw new Error("Failed to fetch middle categories");
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log(data);
+                            const middleCategory = document.getElementById('middleCategory');
+                            middleCategory.innerHTML = '<option value="" disabled selected>중위 카테고리를 선택하세요</option>';
+                            data.forEach(category => {
+                                middleCategory.innerHTML += `<option value="${category.categoryId}">${category.name}</option>`;
+                            });
+
+                            // 하위 카테고리 초기화
+                            document.getElementById('bottomCategory').innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';
+                        })
+                        .catch(error => console.error("Error fetching middle categories:", error));
+                });
+            </script>
 
             <div id="contributors" class="mb-3">
                 <label for="existingContributors" class="form-label">기존 기여자 선택</label>
@@ -352,7 +397,6 @@
                 }
 
             </script>
-
 
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable">
