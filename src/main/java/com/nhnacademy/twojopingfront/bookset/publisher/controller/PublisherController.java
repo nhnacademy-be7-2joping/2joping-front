@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping()
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class PublisherController {
 
@@ -42,7 +42,7 @@ public class PublisherController {
     @PostMapping("/register")
     public String registerPublisher(PublisherRequestDto publisherRequestDto) {
         publisherService.registerPublisher(publisherRequestDto);
-        return "redirect:/publishers";
+        return "redirect:/admin/publishers";
     }
 
     /**
@@ -66,7 +66,7 @@ public class PublisherController {
     @PatchMapping("/{id}")
     public String updatePublisher(@PathVariable("id") Long id, PublisherRequestDto publisherRequestDto) {
         publisherService.updatePublisher(id, publisherRequestDto);
-        return "redirect:/publishers";
+        return "redirect:/admin/publishers";
     }
 
     /**
@@ -91,7 +91,7 @@ public class PublisherController {
     @DeleteMapping("/{id}")
     public String deletePublisher(@PathVariable("id") Long id) {
         publisherService.deletePublisher(id);
-        return "redirect:/publishers";
+        return "redirect:/admin/publishers";
     }
 
     /**

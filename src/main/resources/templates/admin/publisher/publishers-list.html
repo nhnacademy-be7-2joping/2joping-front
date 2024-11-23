@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/menu-footer-layout}">
+      layout:decorate="~{layout/admin-layout}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,15 +25,15 @@
       <td th:text="${publisher.id}"> 출판사 ID</td>
       <td th:text="${publisher.name}">출판사 이름</td>
       <td>
-        <a th:href="@{/{id}/edit(id=${publisher.id})}" class="btn btn-primary">수정</a>
-        <a th:href="@{/{id}/delete(id=${publisher.id})}" class="btn btn-danger">삭제</a>
+        <a th:href="@{/admin/{id}/edit(id=${publisher.id})}" class="btn btn-primary">수정</a>
+        <a th:href="@{/admin/{id}/delete(id=${publisher.id})}" class="btn btn-danger">삭제</a>
       </td>
     </tr>
     </tbody>
   </table>
 
   <!-- 새 출판사 추가 버튼 -->
-  <a href="/register" class="btn btn-success mb-3">새 출판사 추가</a>
+  <a href="/admin/register" class="btn btn-success mb-3">새 출판사 추가</a>
 
   <!-- 페이징 네비게이션 -->
   <nav aria-label="Page navigation" class="mt-4">
@@ -41,7 +41,7 @@
       <!-- 이전 페이지 -->
       <li class="page-item" th:classappend="${!publishers.hasPrevious()} ? 'disabled'">
         <a class="page-link"
-           th:href="@{/publishers(page=${publishers.number - 1}, size=${publishers.size})}"
+           th:href="@{/admin/publishers(page=${publishers.number - 1}, size=${publishers.size})}"
            aria-label="Previous">
           <span aria-hidden="true">&laquo; 이전</span>
         </a>
@@ -51,14 +51,14 @@
       <li class="page-item" th:each="i : ${#numbers.sequence(0, publishers.totalPages - 1)}"
           th:classappend="${i == publishers.number} ? 'active'">
         <a class="page-link"
-           th:href="@{/publishers(page=${i}, size=${publishers.size})}"
+           th:href="@{/admin/publishers(page=${i}, size=${publishers.size})}"
            th:text="${i + 1}">1</a>
       </li>
 
       <!-- 다음 페이지 -->
       <li class="page-item" th:classappend="${!publishers.hasNext()} ? 'disabled'">
         <a class="page-link"
-           th:href="@{/publishers(page=${publishers.number + 1}, size=${publishers.size})}"
+           th:href="@{/admin/publishers(page=${publishers.number + 1}, size=${publishers.size})}"
            aria-label="Next">
           <span aria-hidden="true">다음 &raquo;</span>
         </a>
