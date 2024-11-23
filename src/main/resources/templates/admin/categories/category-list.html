@@ -9,7 +9,7 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <h1>카테고리 목록</h1>
+    <h1 class="mb-4">카테고리 목록</h1>
 
     <!-- 에러 메시지 표시 -->
     <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
@@ -38,10 +38,10 @@
             <td th:text="${category.categoryId}"></td>
             <td th:text="${category.name}"></td>
             <td th:text="${category.parentCategoryId != null ? category.parentCategoryId : '없음'}"></td>
-            <td><a th:href="@{|/admin/categories/${category.categoryId}/edit|}" class="btn btn-secondary">수정</a></td>
+            <td><a class="btn btn-sm btn-warning bth-secondary" th:href="@{|/admin/categories/${category.categoryId}/edit|}">수정</a></td>
             <td>
                 <form th:action="@{|/admin/categories/${category.categoryId}/deactivate|}" method="post">
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('정말 비활성화하시겠습니까?');">비활성화
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('정말 비활성화하시겠습니까?');">비활성화
                     </button>
                 </form>
             </td>
