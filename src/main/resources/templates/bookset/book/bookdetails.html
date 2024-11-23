@@ -6,7 +6,8 @@
   <title>도서 상세 페이지</title>
   <link rel="stylesheet" th:href="@{/css/index-style.css}">
   <link rel="stylesheet" th:href="@{/css/book-detail-style.css}">
-
+  <link rel="stylesheet" th:href="@{/css/review-star-style.css}">
+  <script th:src="@{/js/review-detail.js}" defer></script>
 </head>
 <body>
 <div layout:fragment="content" class="content">
@@ -173,15 +174,21 @@
   <div class="review-container">
     <h2>리뷰 목록</h2>
     <div class="slider-wrapper">
-
       <!-- 리뷰 목록 컨테이너 -->
-      <div class="review-list-flex" id="review-list">
-        <div th:each="review, rowStat : ${books.reviewList}" class="review-card"
-             th:onclick="|window.location.href='@{/reviews/{reviewId}(reviewId=${review.reviewId})}'|">
-          <p class="review-title" th:text="${review.title}">리뷰 제목</p>
+      <div th:each="review, rowStat : ${books.reviewList}" class="review-card"
+           th:onclick="|window.location.href='@{/reviews/{reviewId}(reviewId=${review.reviewId})}'|">
+        <p class="review-title" th:text="${review.title}">리뷰 제목</p>
+        <div>
+          <p class="rating-label"><strong>평점:</strong></p>
+          <div class="stars" th:attr="data-rating=${review.ratingValue}">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
         </div>
       </div>
-
     </div>
 
     <!-- 리뷰가 없는 경우 출력 -->

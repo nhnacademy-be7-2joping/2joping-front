@@ -421,19 +421,19 @@ body{
     height: fit-content;
     width: 100%;
 }
+
+
+
+
+
+
+
+
+
 .review-list-flex {
     display: flex; /* Flex 컨테이너로 설정하여 자식 요소가 좌우로 정렬되게 함 */
     flex-wrap: wrap; /* 카드가 화면 너비를 초과하면 다음 줄로 이동하도록 설정 */
     gap: 20px; /* 각 리뷰 카드 간의 간격 설정 */
-}
-
-.review-card {
-    border: 1px solid #ddd;
-    padding: 10px;
-    cursor: pointer;
-    background-color: #f9f9f9;
-    width: 200px; /* 각 리뷰 카드의 너비 설정 */
-    transition: background-color 0.3s ease;
 }
 
 .review-card:hover {
@@ -444,7 +444,6 @@ body{
     display: flex;
     align-items: center;
 }
-
 .review-list-flex {
     display: flex;
     flex-wrap: nowrap; /* 줄 바꿈 방지 */
@@ -452,7 +451,6 @@ body{
     scroll-behavior: smooth;
     width: 80%; /* 전체 너비의 80%로 설정하여 좌우 버튼 공간 확보 */
 }
-
 .review-card {
     border: 1px solid #ddd;
     padding: 10px;
@@ -462,6 +460,23 @@ body{
     margin-right: 10px; /* 카드 간 간격 설정 */
     transition: background-color 0.3s ease;
     flex: 0 0 auto; /* 카드들이 줄 바꿈되지 않도록 설정 */
+    display: flex;
+    flex-direction: column; /* 콘텐츠를 세로로 배치 */
+    justify-content: space-between; /* 제목과 평점 사이 공간 확보 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+}
+.review-title {
+    font-size: 1.2rem; /* 제목 크기 */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px; /* 제목과 평점 사이 간격 추가 */
+}
+
+.review-rating-container {
+    display: flex;
+    flex-direction: column; /* 평점 표시를 세로로 정렬 */
+    align-items: flex-start;
+    gap: 5px; /* 평점과 별점 사이 간격 추가 */
 }
 
 .review-card:hover {
@@ -475,7 +490,6 @@ body{
     height: 200px; /* 높이를 설정해 영역 확보 */
     text-align: center;
 }
-
 .no-review-message {
     font-size: 2rem; /* 글자 크기 키움 */
     font-weight: bold; /* 글자 굵게 */
