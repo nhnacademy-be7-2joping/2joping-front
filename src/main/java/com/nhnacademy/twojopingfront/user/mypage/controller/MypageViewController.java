@@ -116,4 +116,9 @@ public class MypageViewController {
 
         return "user/mypage/review-history";
     }
+    @GetMapping("/withdraw")
+    public String withdrawView(Model model) {
+
+        return "user/mypage/withdraw";
+    }
 }
