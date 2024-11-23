@@ -40,29 +40,31 @@
                              alt="썸네일" class="book-image">
 
                         <!-- 책 제목 -->
-                        <div class="book-title" th:text="${book.bookTitle != null ? book.bookTitle : '제목 없음'}">책 제목</div>
+                        <div class="book-title" th:text="${book.bookTitle != null ? book.bookTitle : '제목 없음'}">책 제목
+                        </div>
 
                         <div class="book-info">
                             <!-- 저자 목록 -->
                             <div class="book-author">
-                        <span th:if="${!#lists.isEmpty(book.bookContributor)}"
-                              th:each="contributor, iterStat : ${book.bookContributor}">
-                            <span th:text="${contributor.name} + ' 저'"></span>
-                            <span th:if="${!iterStat.last}">, </span>
-                        </span>
+                                <span th:if="${!#lists.isEmpty(book.bookContributor)}"
+                                      th:each="contributor, iterStat : ${book.bookContributor}">
+                                    <span th:text="${contributor.name} + ' 저'"></span>
+                                    <span th:if="${!iterStat.last}">, </span>
+                                </span>
                                 <span th:if="${#lists.isEmpty(book.bookContributor)}">저자 정보 없음</span>
                                 <span class="separator">|</span>
                                 <!-- 출판사 이름 -->
-                                <span th:text="${book.bookPublisher != null ? book.bookPublisher : ' '}"></span>
+                                <span class="book-publisher"
+                                      th:text="${book.bookPublisher != null ? book.bookPublisher : ' '}"></span>
                             </div>
 
                             <!-- 카테고리 목록 -->
                             <div class="book-category">
-                        <span th:if="${!#lists.isEmpty(book.bookCategory)}"
-                              th:each="category, catStat : ${book.bookCategory}">
-                            <span th:text="${category.name}"></span>
-                            <span th:if="${!catStat.last}">> </span>
-                        </span>
+                                <span th:if="${!#lists.isEmpty(book.bookCategory)}"
+                                      th:each="category, catStat : ${book.bookCategory}">
+                                    <span th:text="${category.name}"></span>
+                                    <span th:if="${!catStat.last}">> </span>
+                                </span>
                                 <span th:if="${#lists.isEmpty(book.bookCategory)}">카테고리 없음</span>
                             </div>
                         </div>
@@ -99,6 +101,39 @@
                 <div class="spacer-card"></div>
             </div>
         </div>
+
+        <!-- 페이징 네비게이션 -->
+        <nav aria-label="Page navigation" th:if="${books.totalElements > 0}">
+            <ul class="pagination">
+                <!-- 이전 페이지 -->
+                <li class="page-item" th:classappend="${!books.hasPrevious()} ? 'disabled'">
+                    <a class="page-link"
+                       th:if="${books.hasPrevious()}"
+                       th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${books.number - 1}, size=${books.size})}"
+                       aria-label="Previous">&laquo; 이전</a>
+                    <span class="page-link disabled" th:if="${!books.hasPrevious()}">&laquo; 이전</span>
+                </li>
+
+                <!-- 페이지 번호 -->
+                <li class="page-item"
+                    th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}"
+                    th:classappend="${i == books.number} ? 'active'">
+                    <a class="page-link"
+                       th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${i}, size=${books.size})}"
+                       th:text="${i + 1}">1</a>
+                </li>
+
+                <!-- 다음 페이지 -->
+                <li class="page-item" th:classappend="${!books.hasNext()} ? 'disabled'">
+                    <a class="page-link"
+                       th:if="${books.hasNext()}"
+                       th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${books.number + 1}, size=${books.size})}"
+                       aria-label="Next">다음 &raquo;</a>
+                    <span class="page-link disabled" th:if="${!books.hasNext()}">다음 &raquo;</span>
+                </li>
+            </ul>
+        </nav>
+
     </div>
 </div>
 </body>
