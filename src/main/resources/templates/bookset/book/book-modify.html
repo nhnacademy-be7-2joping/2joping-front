@@ -151,7 +151,10 @@
 <div class="container" layout:fragment="content">
     <h2>책 수정</h2>
     <div class="card">
-        <form id="bookModifyForm" action="/admin/books/modify/{bookId}" method="post" enctype="multipart/form-data">
+        <form id="bookModifyForm" th:action="@{/admin/books/modify/{bookId}(bookId=${book.bookId ?: 0})}" method="post" enctype="multipart/form-data">
+
+<!--              action="/admin/books/register"-->
+            <input type="hidden" name="_method" value="put">
             <div class="mb-3">
                 <label for="title" class="form-label">책 제목</label>
                 <input type="text" class="form-control" id="title" name="title" th:value="${book.title}" placeholder="책 제목을 입력하세요" required>
@@ -418,6 +421,83 @@
                 });
             </script>
 
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // 수정된 JavaScript 코드 추가
+                    const contributorListInput = document.getElementById("contributorList");
+                    let contributors = [];
+
+                    // 1. 기존 기여자 초기화
+                    document.querySelectorAll("#existingContributorsList .selected-contributor-item").forEach(item => {
+                        const name = item.getAttribute("data-contributor-key").split("|")[0];
+                        const role = item.getAttribute("data-contributor-key").split("|")[1];
+                        contributors.push({ name, role });
+                    });
+
+                    // 2. 숨겨진 input 업데이트
+                    contributorListInput.value = JSON.stringify(contributors);
+
+                    // 3. 기존 기여자 삭제 기능
+                    document.querySelectorAll("#existingContributorsList button").forEach(button => {
+                        button.addEventListener("click", function () {
+                            const name = button.parentElement.getAttribute("data-contributor-key").split("|")[0];
+                            const role = button.parentElement.getAttribute("data-contributor-key").split("|")[1];
+
+                            // contributors 배열에서 해당 항목 제거
+                            contributors = contributors.filter(contributor => !(contributor.name === name && contributor.role === role));
+
+                            // UI에서 제거
+                            button.parentElement.remove();
+
+                            // 숨겨진 input 업데이트
+                            contributorListInput.value = JSON.stringify(contributors);
+                        });
+                    });
+
+                    // 4. 새로운 기여자 추가 기능
+                    document.getElementById("addContributorButton").addEventListener("click", function () {
+                        const select = document.getElementById("existingContributors");
+                        Array.from(select.selectedOptions).forEach(option => {
+                            const [name, role] = option.value.split("|");
+
+                            // 중복 방지
+                            if (!contributors.some(contributor => contributor.name === name && contributor.role === role)) {
+                                contributors.push({ name, role });
+
+                                // 선택된 항목을 UI에 표시
+                                const selectedContributors = document.getElementById("selectedContributors");
+                                const div = document.createElement("div");
+                                div.classList.add("selected-contributor-item");
+                                div.setAttribute("data-contributor-key", `${name}|${role}`);
+
+                                const span = document.createElement("span");
+                                span.textContent = `[${role}] ${name}`;
+
+                                // 삭제 버튼 추가
+                                const deleteButton = document.createElement("button");
+                                deleteButton.textContent = "삭제";
+                                deleteButton.classList.add("btn", "btn-danger", "btn-sm");
+                                deleteButton.addEventListener("click", function () {
+                                    contributors = contributors.filter(contributor => !(contributor.name === name && contributor.role === role));
+                                    div.remove();
+                                    contributorListInput.value = JSON.stringify(contributors);
+                                });
+
+                                div.appendChild(span);
+                                div.appendChild(deleteButton);
+                                selectedContributors.appendChild(div);
+                            }
+                        });
+
+                        // 숨겨진 input 업데이트
+                        contributorListInput.value = JSON.stringify(contributors);
+
+                        // 선택 초기화
+                        select.selectedIndex = -1;
+                    });
+                });
+            </script>
+
             <style>
                 .contributor-container {
                     display: flex;
@@ -619,7 +699,7 @@
     </div>
 </div>
 <script>
-    document.getElementById('bookRegisterForm').addEventListener('submit', function(event) {
+    document.getElementById('bookUpdateForm').addEventListener('submit', function(event) {
         const retailPrice = document.getElementById('retailPrice').value;
         const sellingPrice = document.getElementById('sellingPrice').value;
         const remainQuantity = document.getElementById('remainQuantity').value;

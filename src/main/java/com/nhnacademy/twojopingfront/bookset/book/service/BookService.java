@@ -3,10 +3,7 @@ package com.nhnacademy.twojopingfront.bookset.book.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.bookset.book.client.BookClient;
-import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateHtmlRequestDto;
-import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestDto;
-import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequestDto;
-import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUrlRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.*;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
@@ -193,5 +190,19 @@ public class BookService {
 
     public BookUpdateResponseDto getUpdateBookById(Long bookId) {
         return bookClient.getUpdateBookById(bookId);
+    }
+
+    /**
+     * 도서를 수정하는 메서드
+     *
+     * @param bookUpdateHtmlRequestDto
+     * @param imageUploadRequestDto
+     * @return 수정된 도서에 대한 응답 정보
+     */
+    public BookUpdateResponseDto updateBook(BookUpdateHtmlRequestDto bookUpdateHtmlRequestDto, ImageUploadRequestDto imageUploadRequestDto) {
+        String thumbnailImageUrl = saveImage(imageUploadRequestDto.thumbnailImage(), "thumbnail");
+        String detailImageUrl = saveImage(imageUploadRequestDto.detailImage(), "detail");
+        ImageUrlRequestDto imageUrlRequestDto = new ImageUrlRequestDto(thumbnailImageUrl, detailImageUrl);
+        return bookClient.updateBook(new BookUpdateRequestDto(bookUpdateHtmlRequestDto, imageUrlRequestDto));
     }
 }

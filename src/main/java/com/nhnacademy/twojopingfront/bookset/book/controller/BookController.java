@@ -3,6 +3,7 @@ package com.nhnacademy.twojopingfront.bookset.book.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateHtmlRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookUpdateHtmlRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
@@ -10,6 +11,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleRespons
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookUpdateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
+import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorDtoForJson;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
@@ -22,10 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -161,5 +160,77 @@ public class BookController {
         model.addAttribute("tags", tagList);
 
         return "bookset/book/book-modify";
+    }
+
+    @PutMapping(value = "/admin/books/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String updateBook(@RequestParam("contributorList") String contributorListJson,
+                             @ModelAttribute BookCreateHtmlRequestDto bookCreateHtmlRequestDto,
+                             @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
+                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
+        try {
+            BookCreateHtmlRequestDto updatedDto = new BookCreateHtmlRequestDto(
+                    bookCreateHtmlRequestDto.publisherName(),
+                    bookCreateHtmlRequestDto.title(),
+                    bookCreateHtmlRequestDto.description(),
+                    bookCreateHtmlRequestDto.publishedDate(),
+                    bookCreateHtmlRequestDto.isbn(),
+                    bookCreateHtmlRequestDto.retailPrice(),
+                    bookCreateHtmlRequestDto.sellingPrice(),
+                    bookCreateHtmlRequestDto.giftWrappable(),
+                    bookCreateHtmlRequestDto.isActive(),
+                    bookCreateHtmlRequestDto.remainQuantity(),
+                    contributorListJson,
+                    bookCreateHtmlRequestDto.topCategoryId(),
+                    bookCreateHtmlRequestDto.middleCategoryId(),
+                    bookCreateHtmlRequestDto.bottomCategoryId(),
+                    bookCreateHtmlRequestDto.tagList()
+            );
+
+            ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
+            bookService.createBook(updatedDto, imageUploadRequestDto);
+
+            return "redirect:/admin/books/get";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            // 오류 발생 시에도 리다이렉트 (임의로 지정)
+            return "redirect:/admin/books/get";
+        }
+    }
+
+    @PutMapping(value = "/admin/books/modify/{bookId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String updateBook(@PathVariable Long bookId,
+                             @RequestParam("contributorList") String contributorListJson,
+                             @ModelAttribute BookUpdateHtmlRequestDto bookUpdateHtmlRequestDto,
+                             @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
+                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
+        try {
+            BookUpdateHtmlRequestDto updatedDto = new BookUpdateHtmlRequestDto(
+                    bookUpdateHtmlRequestDto.publisherName(),
+                    bookUpdateHtmlRequestDto.title(),
+                    bookUpdateHtmlRequestDto.description(),
+                    bookUpdateHtmlRequestDto.publishedDate(),
+                    bookUpdateHtmlRequestDto.isbn(),
+                    bookUpdateHtmlRequestDto.retailPrice(),
+                    bookUpdateHtmlRequestDto.sellingPrice(),
+                    bookUpdateHtmlRequestDto.giftWrappable(),
+                    bookUpdateHtmlRequestDto.isActive(),
+                    bookUpdateHtmlRequestDto.remainQuantity(),
+                    contributorListJson, // Combined contributors
+                    bookUpdateHtmlRequestDto.topCategoryId(),
+                    bookUpdateHtmlRequestDto.middleCategoryId(),
+                    bookUpdateHtmlRequestDto.bottomCategoryId(),
+                    bookUpdateHtmlRequestDto.tagList(),
+                    bookUpdateHtmlRequestDto.removeThumbnailImage(),
+                    bookUpdateHtmlRequestDto.removeDetailImage()
+            );
+
+            ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
+            bookService.updateBook(updatedDto, imageUploadRequestDto);
+
+            return "redirect:/admin/books/get";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "redirect:/admin/books/get";
+        }
     }
 }

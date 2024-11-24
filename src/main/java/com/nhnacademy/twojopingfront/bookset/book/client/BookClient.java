@@ -2,6 +2,7 @@ package com.nhnacademy.twojopingfront.bookset.book.client;
 
 
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookUpdateRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
@@ -101,8 +102,16 @@ public interface BookClient {
     @GetMapping("/books/get/book/{bookId}")
     BookResponseDto getBookById(@PathVariable("bookId") Long bookId);
 
-    @GetMapping("/books/{bookId}")
+    @GetMapping("/admin/books/{bookId}")
     BookUpdateResponseDto getUpdateBookById(@PathVariable("bookId") Long bookId);
+
+    /**
+     * 도서 수정
+     * @param bookUpdateRequestDto 도서 수정 요청 정보
+     * @return 수정된 도서에 대한 응답 정보
+     */
+    @PutMapping(value = "/admin/books/{bookId}")
+    BookUpdateResponseDto updateBook(@RequestBody BookUpdateRequestDto bookUpdateRequestDto);
 }
 
 
