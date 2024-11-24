@@ -12,28 +12,34 @@
             padding: 10px;
             border-bottom: 1px solid #ddd;
         }
+
         .cart-item-info {
             flex: 2;
         }
+
         .cart-item-controls {
             flex: 1;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
+
         .quantity-control {
             display: flex;
             align-items: center;
         }
+
         .quantity-control input {
             width: 40px;
             text-align: center;
         }
+
         .cart-buttons {
             display: flex;
             justify-content: flex-end;
             margin-top: 20px;
         }
+
         .cart-item {
             display: flex;
             justify-content: space-between;
@@ -44,6 +50,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #f9f9f9;
         }
+
         .quantity-control input {
             width: 40px;
             text-align: center;
@@ -52,6 +59,7 @@
             border-radius: 4px;
             background-color: #fff;
         }
+
         .quantity-btn, .remove-btn {
             padding: 5px 10px;
             border: none;
@@ -59,18 +67,38 @@
             color: #fff;
             cursor: pointer;
         }
+
         .quantity-btn {
             background-color: #b6b6b6;
             transition: background-color 0.2s;
         }
+
         .quantity-btn:hover {
             background-color: #4e4e4e;
         }
+
         .remove-btn {
             background-color: #ff4d4d;
         }
+
         .remove-btn:hover {
             background-color: #cc0000;
+        }
+
+        .checkout-btn {
+            background-color: #000000; /* 초록색 */
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            height: 5vh;
+        }
+
+        .checkout-btn:hover {
+            background-color: #505050; /* 어두운 초록색 */
         }
     </style>
 </head>
@@ -81,32 +109,59 @@
 <div class="container" layout:fragment="content">
     <div class="cart-item" th:each="item : ${cart}">
         <div class="cart-item-info">
-            <h4><strong th:text="${item.getBook().getTitle()}"></strong></h4>
+            <h4><strong th:text="${item.title}"></strong></h4>
             <div>
-                <p>단가: <span th:text="${item.getBook().getSellingPrice()}"></span>원</p>
+                <p>단가: <span th:text="${item.sellingPrice}" th:id="'unit-price-' + ${itemStat.index + 1}"></span>원
+                </p>
             </div>
-            <strong><p>가격: <span th:text="${item.getBook().getSellingPrice() * item.getQuantity()}"></span>원</p></strong>
+            <strong><p>가격: <span th:text="${item.sellingPrice * item.quantity}"
+                                 th:id="'total-price-' + ${itemStat.index + 1}"></span>원
+            </p></strong>
         </div>
 
         <div class="cart-item-controls">
             <div class="quantity-control">
-                <button type="button" onclick="updateQuantity('minus', [[${item.id}]])" class="quantity-btn">-</button>
-                <input type="text" th:value="${item.quantity}" id="quantity-[[${item.id}]]" readonly>
-                <button type="button" onclick="updateQuantity('plus', [[${item.id}]])" class="quantity-btn">+</button>
+                <!-- 버튼에 id를 추가 -->
+                <button type="button" class="quantity-btn minus-btn"
+                        th:attr="data-id=${itemStat.index + 1}, book-id=${item.bookId()}">-
+                </button>
+                <input type="text" th:value="${item.quantity}" th:id="'quantity-' + ${itemStat.index + 1}" readonly>
+                <button type="button" class="quantity-btn plus-btn" th:id="'btn-plus-' + ${itemStat.index + 1}"
+                        th:attr="data-id=${itemStat.index + 1}, book-id=${item.bookId()}">+
+                </button>
             </div>
-            <button type="button" onclick="removeItem([[${item.id}]])" class="remove-btn">삭제</button>
+            <button type="button" th:id="'btn-del-' + ${itemStat.index + 1}" class="remove-btn"
+                    th:attr="data-id=${itemStat.index + 1}, book-id=${item.bookId()}">삭제
+            </button>
         </div>
     </div>
-</div>
 
-
-<div class="cart-buttons">
-    <button type="button" onclick="checkout()">결제하기</button>
+    <div class="cart-buttons">
+        <button type="button" class="checkout-btn" onclick="checkout()">결제하기</button>
+    </div>
 </div>
 
 <div layout:fragment="script">
     <script>
-        function updateQuantity(action, itemId) {
+        // 증감 버튼의 event listener 추가
+        document.querySelectorAll('.quantity-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const operation = btn.classList.contains('minus-btn') ? 'minus' : 'plus';
+                const itemId = btn.getAttribute('data-id');
+                const bookId = btn.getAttribute('book-id');
+                updateQuantity(operation, itemId, bookId);
+                updatePrice(itemId);
+            });
+        });
+
+        document.querySelectorAll('.remove-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const bookId = btn.getAttribute('book-id');
+                removeItem(bookId);
+            });
+        });
+
+        function updateQuantity(action, itemId, bookId) {
             const quantityInput = document.getElementById(`quantity-${itemId}`);
             let currentQuantity = parseInt(quantityInput.value);
 
@@ -117,13 +172,65 @@
             }
 
             // 수량 업데이트 후 서버에 반영할 코드 추가 가능 (AJAX 사용)
+            const newQuantity = quantityInput.value;
+            updateCart(bookId, newQuantity);
         }
 
-        function removeItem(itemId) {
+        function updatePrice(itemId) {
+            const unitPrice = Number(document.getElementById(`unit-price-${itemId}`).textContent);
+            const quantity = document.getElementById(`quantity-${itemId}`).value;
+            const cartItemPriceElement = document.getElementById(`total-price-${itemId}`);
+            console.log(unitPrice, quantity, cartItemPriceElement.textContent);
+            cartItemPriceElement.textContent = String(unitPrice * quantity);
+        }
+
+        function removeItem(bookId) {
             if (confirm("이 상품을 장바구니에서 삭제하시겠습니까?")) {
-                // 삭제 요청 처리 (예: AJAX 요청 보내기)
-                console.log("상품 삭제:", itemId);
+                // AJAX 요청을 사용하여 서버에 삭제 요청
+                fetch("/cart", {
+                    method: "DELETE",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ bookId: bookId })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("상품이 장바구니에서 삭제되었습니다.");
+                            location.reload(); // 삭제 후 페이지 새로고침
+                        } else {
+                            response.json().then(data => alert(data.message || "삭제 오류"));
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("삭제 중 오류가 발생했습니다.");
+                    });
             }
+        }
+
+        function updateCart(bookId, quantity) {
+            // AJAX 요청을 사용하여 수량 업데이트
+            fetch("/cart", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    bookId: bookId,
+                    quantity: quantity
+                })
+            })
+                .then(response => {
+                    if (response.ok) {
+                    } else {
+                        response.json().then(data => alert(data.message || "수량 업데이트 오류"));
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("수량 업데이트 중 오류가 발생했습니다.");
+                });
         }
 
         function checkout() {

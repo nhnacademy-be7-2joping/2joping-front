@@ -65,7 +65,7 @@
 
 .book-card {
     width: 280px;
-    min-height: 380px;
+    min-height: 480px;
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
@@ -75,7 +75,6 @@
     padding: 10px;
     box-sizing: border-box;
     user-select: none; /* 텍스트 선택 방지 */
-    height: 450px;
 }
 
 .book-card-link {
@@ -115,10 +114,16 @@
     margin-top: 10px;
     text-align: left;
     padding-left: 10px;
-    white-space: nowrap; /* 한 줄로 표시 */
+    white-space: normal; /* 텍스트 줄바꿈 허용 */
     overflow: hidden; /* 넘치는 텍스트 숨기기 */
     text-overflow: ellipsis; /* 넘치는 텍스트에 '...' 추가 */
+    display: -webkit-box; /* flex-like layout */
+    -webkit-line-clamp: 2; /* 최대 2줄까지 표시 */
+    -webkit-box-orient: vertical; /* 세로 방향 설정 */
+    line-height: 1.4; /* 줄 간격 */
+    max-height: 2.8em; /* 최대 높이 설정 (line-height x 2줄) */
 }
+
 
 .book-info {
     display: flex;
@@ -128,15 +133,23 @@
     padding: 10px 5px 10px 5px;
 }
 
-.book-author {
-    display: block; /* 블록 요소로 설정하여 줄바꿈이 가능하게 함 */
-    white-space: normal; /* 줄 바꿈 허용 */
-    overflow-wrap: break-word; /* 단어 단위로 줄 바꿈 */
-    max-width: 100%; /* 바깥 박스를 넘지 않도록 제한 */
-    word-break: keep-all; /* 단어가 끊기지 않도록 설정 */
+.book-publisher {
+    color: #3a0067;
+}
+
+.book-author,
+.book-category {
+    display: block;
+    white-space: normal; /* 텍스트 줄바꿈 허용 */
+    overflow-wrap: break-word; /* 단어 단위로 줄바꿈 */
+    word-break: break-word; /* 필요하면 강제 줄바꿈 */
+    max-height: 4em; /* 최대 높이 설정 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis;
 }
 
 .book-category {
+    padding-left: 15px;
     color: #888;
 }
 
@@ -156,24 +169,38 @@
     height: 380px;
     visibility: hidden;
 }
+
+/* 페이징 스타일 */
 .pagination {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    padding: 15px 0;
+    list-style: none;
+    margin: 0;
 }
 
-.pagination-link {
+.pagination .page-link {
     margin: 0 5px;
-    padding: 8px 12px;
-    color: #333;
+    padding: 10px 15px;
+    border-radius: 5px;
     text-decoration: none;
+    color: #007bff;
     border: 1px solid #ddd;
-    border-radius: 4px;
 }
 
-.pagination-link.active {
-    font-weight: bold;
+.pagination .page-link:hover {
     background-color: #f0f0f0;
+}
+
+.pagination .active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination .disabled .page-link {
+    color: #ccc;
+    pointer-events: none;
 }
 /*
 

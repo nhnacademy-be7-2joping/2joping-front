@@ -1,6 +1,6 @@
 package com.nhnacademy.twojopingfront.bookset.elastic.controller;
 
-import com.nhnacademy.twojopingfront.bookset.category.dto.response.GetAllCategoriesResponse;
+import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.category.service.CategoryService;
 import com.nhnacademy.twojopingfront.bookset.elastic.dto.response.ElasticSearchResponseDto;
 import com.nhnacademy.twojopingfront.bookset.elastic.service.ElasticService;
@@ -32,7 +32,7 @@ public class ElasticController {
 
         // 검색 결과 가져오기
         Page<ElasticSearchResponseDto> books = elasticService.searchBooks(keyword, categoryId, PageRequest.of(page, size), sort);
-        List<GetAllCategoriesResponse> categories = categoryService.getAllCategories();
+        List<CategoryResponseDto> categories = categoryService.getAllCategories();
 
         // 카테고리 순서를 역순으로 변경
         books.getContent().forEach(ElasticSearchResponseDto::getReversedBookCategory);
