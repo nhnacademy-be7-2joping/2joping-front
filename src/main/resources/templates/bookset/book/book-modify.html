@@ -315,6 +315,78 @@
                 });
             </script>
 
+            <div id="contributors" class="mb-3">
+                <label for="existingContributors" class="form-label">기존 기여자 선택</label>
+                <select id="existingContributors" class="form-control" multiple>
+                    <option th:each="contributor : ${contributors}"
+                            th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"
+                            th:text="|[${contributor.contributorRole()}] ${contributor.contributorName()}|">
+                    </option>
+                </select>
+            </div>
+
+            <button id="addContributorButton" type="button" class="btn btn-primary mb-3">기여자 추가</button>
+
+            <input type="hidden" id="contributorList" name="contributorList" value="[]">
+
+            <div id="selectedContributors" class="mb-3">
+                <!-- 선택한 기여자 목록이 여기에 추가됩니다 -->
+                <span th:each="contributor : ${book.contributorList}"
+                      th:text="${contributor.contributorName} + ' (' + contributor.roleName + ')'"></span>
+            </div>
+
+            <script>
+                document.getElementById("addContributorButton").addEventListener("click", function () {
+                    const select = document.getElementById("existingContributors");
+                    const selectedContributors = document.getElementById("selectedContributors");
+                    const contributorListInput = document.getElementById("contributorList");
+
+                    // 기존 값 파싱
+                    let contributors = contributorListInput.value ? JSON.parse(contributorListInput.value) : [];
+
+                    // 선택된 기여자를 화면에 표시하고 배열에 추가
+                    Array.from(select.selectedOptions).forEach(option => {
+                        const [name, role] = option.value.split('|');
+                        const contributorKey = `${name}|${role}`;
+
+                        // 중복 추가 방지
+                        if (!contributors.some(contributor => contributor.name === name && contributor.role === role)) {
+                            contributors.push({ name, role });
+
+                            // 선택된 항목을 화면에 표시
+                            const div = document.createElement("div");
+                            div.classList.add("selected-contributor-item");
+                            div.setAttribute("data-contributor-key", contributorKey);
+
+                            const span = document.createElement("span");
+                            span.textContent = `[${role}] ${name}`;
+
+                            // 삭제 버튼 추가
+                            const deleteButton = document.createElement("button");
+                            deleteButton.textContent = "삭제";
+                            deleteButton.addEventListener("click", function () {
+                                // 배열에서 기여자 제거
+                                contributors = contributors.filter(contributor => `${contributor.name}|${contributor.role}` !== contributorKey);
+                                contributorListInput.value = JSON.stringify(contributors);
+
+                                // UI에서 항목 제거
+                                div.remove();
+                            });
+
+                            div.appendChild(span);
+                            div.appendChild(deleteButton);
+                            selectedContributors.appendChild(div);
+                        }
+                    });
+
+                    // 숨겨진 input 필드에 기여자 JSON 저장
+                    contributorListInput.value = JSON.stringify(contributors);
+
+                    // 선택 초기화
+                    select.selectedIndex = -1;
+                });
+            </script>
+
 <!--            <div id="contributors" class="mb-3">-->
 <!--                <label for="existingContributors" class="form-label">기존 기여자 선택</label>-->
 <!--                <select id="existingContributors" class="form-control" multiple>-->
@@ -335,175 +407,99 @@
 <!--                      th:text="${contributor.contributorName} + ' (' + contributor.roleName + ')'"></span>-->
 <!--            </div>-->
 
-<!--            <script>-->
-<!--                document.getElementById("addContributorButton").addEventListener("click", function () {-->
-<!--                    const select = document.getElementById("existingContributors");-->
-<!--                    const selectedContributors = document.getElementById("selectedContributors");-->
-<!--                    const contributorListInput = document.getElementById("contributorList");-->
+<!--            <div id="category-data"-->
+<!--                 data-top-category-id="[[${book.topCategoryId}]]"-->
+<!--                 data-middle-category-id="[[${book.middleCategoryId}]]"-->
+<!--                 data-bottom-category-id="[[${book.bottomCategoryId}]]"></div>-->
 
-<!--                    // 기존 값 파싱-->
-<!--                    let contributors = contributorListInput.value ? JSON.parse(contributorListInput.value) : [];-->
-
-<!--                    // 선택된 기여자를 화면에 표시하고 배열에 추가-->
-<!--                    Array.from(select.selectedOptions).forEach(option => {-->
-<!--                        const [name, role] = option.value.split('|');-->
-<!--                        const contributorKey = `${name}|${role}`;-->
-
-<!--                        // 중복 추가 방지-->
-<!--                        if (!contributors.some(contributor => contributor.name === name && contributor.role === role)) {-->
-<!--                            contributors.push({ name, role });-->
-
-<!--                            // 선택된 항목을 화면에 표시-->
-<!--                            const div = document.createElement("div");-->
-<!--                            div.classList.add("selected-contributor-item");-->
-<!--                            div.setAttribute("data-contributor-key", contributorKey);-->
-
-<!--                            const span = document.createElement("span");-->
-<!--                            span.textContent = `[${role}] ${name}`;-->
-
-<!--                            // 삭제 버튼 추가-->
-<!--                            const deleteButton = document.createElement("button");-->
-<!--                            deleteButton.textContent = "삭제";-->
-<!--                            deleteButton.addEventListener("click", function () {-->
-<!--                                // 배열에서 기여자 제거-->
-<!--                                contributors = contributors.filter(contributor => `${contributor.name}|${contributor.role}` !== contributorKey);-->
-<!--                                contributorListInput.value = JSON.stringify(contributors);-->
-
-<!--                                // UI에서 항목 제거-->
-<!--                                div.remove();-->
-<!--                            });-->
-
-<!--                            div.appendChild(span);-->
-<!--                            div.appendChild(deleteButton);-->
-<!--                            selectedContributors.appendChild(div);-->
-<!--                        }-->
-<!--                    });-->
-
-<!--                    // 숨겨진 input 필드에 기여자 JSON 저장-->
-<!--                    contributorListInput.value = JSON.stringify(contributors);-->
-
-<!--                    // 선택 초기화-->
-<!--                    select.selectedIndex = -1;-->
-<!--                });-->
-<!--            </script>-->
-
-<!--            <div id="contributors" class="mb-3">-->
-<!--                <label for="existingContributors" class="form-label">기존 기여자 선택</label>-->
-<!--                <select id="existingContributors" class="form-control" multiple>-->
-<!--                    <option th:each="contributor : ${contributors}"-->
-<!--                            th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"-->
-<!--                            th:text="|[${contributor.contributorRole()}] ${contributor.contributorName()}|">-->
-<!--                    </option>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="topCategory" class="form-label">상위 카테고리</label>-->
+<!--                <select class="form-control" id="topCategory" name="topCategoryId" required>-->
+<!--                    <option value="" disabled selected>상위 카테고리를 선택하세요</option>-->
+<!--                    <option th:each="category : ${topCategories}" th:value="${category.categoryId}"-->
+<!--                            th:selected="${category.categoryId == book.topCategoryId}"-->
+<!--                            th:text="${category.name}"></option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="middleCategory" class="form-label">중위 카테고리</label>-->
+<!--                <select class="form-control" id="middleCategory" name="middleCategoryId">-->
+<!--                    <option value="" disabled selected>중위 카테고리를 선택하세요</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="bottomCategory" class="form-label">하위 카테고리</label>-->
+<!--                <select class="form-control" id="bottomCategory" name="bottomCategoryId">-->
+<!--                    <option value="" disabled selected>하위 카테고리를 선택하세요</option>-->
 <!--                </select>-->
 <!--            </div>-->
 
-            <div id="contributors" class="mb-3">
-                <label for="existingContributors" class="form-label">기존 기여자 선택</label>
-                <select id="existingContributors" class="form-control" multiple>
-                    <option th:each="contributor : ${contributors}"
-                            th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"
-                            th:text="|[${contributor.contributorRole()}] ${contributor.contributorName()}|">
-                    </option>
-                </select>
-            </div>
+<!--            <script>-->
+<!--                document.addEventListener('DOMContentLoaded', function () {-->
+<!--                    const topCategoryElement = document.getElementById('topCategory');-->
+<!--                    const middleCategoryElement = document.getElementById('middleCategory');-->
+<!--                    const bottomCategoryElement = document.getElementById('bottomCategory');-->
 
-            <button id="addContributorButton" type="button" class="btn btn-primary mb-3">기여자 추가</button>
+<!--                    // HTML에 저장된 데이터 읽기-->
+<!--                    const categoryData = document.getElementById('category-data');-->
+<!--                    const selectedTopCategoryId = categoryData.getAttribute('data-top-category-id');-->
+<!--                    const selectedMiddleCategoryId = categoryData.getAttribute('data-middle-category-id');-->
+<!--                    const selectedBottomCategoryId = categoryData.getAttribute('data-bottom-category-id');-->
 
-            <input type="hidden" id="contributorList" name="contributorList" value="[]">
-<!--            <input type="hidden" id="contributorList" name="contributorList" th:value="${#objects.toJson(book.contributorList)}">-->
+<!--                    console.log("Selected Top Category ID:", selectedTopCategoryId);-->
+<!--                    console.log("Selected Middle Category ID:", selectedMiddleCategoryId);-->
+<!--                    console.log("Selected Bottom Category ID:", selectedBottomCategoryId);-->
 
-            <div id="selectedContributors" class="mb-3">
-                <!-- 선택한 기여자 목록이 여기에 추가됩니다 -->
-            </div>
+<!--                    // 상위 카테고리 기본 값 설정-->
+<!--                    if (selectedTopCategoryId) {-->
+<!--                        topCategoryElement.value = selectedTopCategoryId;-->
 
-            <script>
-                document.addEventListener("DOMContentLoaded", function () {
-                    const selectedContributors = document.getElementById("selectedContributors");
-                    const contributorListInput = document.getElementById("contributorList");
+<!--                        // 중위 카테고리 로드-->
+<!--                        loadCategories(/admin/api/categories/${selectedTopCategoryId}/children, middleCategoryElement, selectedMiddleCategoryId, function () {-->
+<!--                        // 하위 카테고리 로드-->
+<!--                        if (selectedMiddleCategoryId) {-->
+<!--                            loadCategories(/admin/api/categories/${selectedMiddleCategoryId}/children, bottomCategoryElement, selectedBottomCategoryId);-->
+<!--                        }-->
+<!--                    });-->
+<!--                }-->
 
-                    try {
-                        let contributors = JSON.parse(contributorListInput.value);
-                        console.log("Parsed contributors:", contributors);
-                    } catch (error) {
-                        console.error("JSON parsing error:", error);
-                        contributors = [];
-                    }
+<!--                // 상위 카테고리 변경 시 중위 카테고리 로드-->
+<!--                topCategoryElement.addEventListener('change', function () {-->
+<!--                    const topCategoryId = this.value;-->
 
-                    // 기존 기여자를 화면에 표시
-                    contributors.forEach(contributor => {
-                        const div = document.createElement("div");
-                        div.classList.add("selected-contributor-item");
-                        div.setAttribute("data-contributor-key", `${contributor.contributorName}|${contributor.roleName}`);
+<!--                    loadCategories(/admin/api/categories/${topCategoryId}/children, middleCategoryElement, null, function () {-->
+<!--                    bottomCategoryElement.innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';-->
+<!--                });-->
+<!--                });-->
 
-                        const span = document.createElement("span");
-                        span.textContent = `[${contributor.roleName}] ${contributor.contributorName}`;
+<!--                // 중위 카테고리 변경 시 하위 카테고리 로드-->
+<!--                middleCategoryElement.addEventListener('change', function () {-->
+<!--                    const middleCategoryId = this.value;-->
+<!--                    loadCategories(/admin/api/categories/${middleCategoryId}/children, bottomCategoryElement);-->
+<!--                });-->
 
-                        const deleteButton = document.createElement("button");
-                        deleteButton.textContent = "삭제";
-                        deleteButton.classList.add("btn", "btn-danger", "btn-sm");
-                        deleteButton.addEventListener("click", function () {
-                            // 배열에서 기여자 제거
-                            contributors = contributors.filter(item => item.contributorName !== contributor.contributorName || item.roleName !== contributor.roleName);
-                            contributorListInput.value = JSON.stringify(contributors);
+<!--                // 카테고리 로드 함수-->
+<!--                function loadCategories(url, element, selectedCategoryId = null, callback = null) {-->
+<!--                    fetch(url)-->
+<!--                        .then(response => {-->
+<!--                            if (!response.ok) {-->
+<!--                                throw new Error('Failed to fetch categories');-->
+<!--                            }-->
+<!--                            return response.json();-->
+<!--                        })-->
+<!--                        .then(data => {-->
+<!--                            element.innerHTML = '<option value="" disabled selected>카테고리를 선택하세요</option>';-->
+<!--                            data.forEach(category => {-->
+<!--                                const selected = category.categoryId == selectedCategoryId ? 'selected' : '';-->
+<!--                                element.innerHTML += <option value="${category.categoryId}" ${selected}>${category.name}</option>;-->
+<!--                            });-->
 
-                            // UI에서 항목 제거
-                            div.remove();
-                        });
-
-                        div.appendChild(span);
-                        div.appendChild(deleteButton);
-                        selectedContributors.appendChild(div);
-                    });
-                });
-
-                    // "기여자 추가" 버튼 클릭 시 동작
-                    document.getElementById("addContributorButton").addEventListener("click", function () {
-                        const select = document.getElementById("existingContributors");
-
-                        // 선택된 기여자를 화면에 표시하고 배열에 추가
-                        Array.from(select.selectedOptions).forEach(option => {
-                            const [name, role] = option.value.split('|');
-                            const contributorKey = `${name}|${role}`;
-
-                            // 중복 추가 방지
-                            if (!contributors.some(contributor => `${contributor.contributorName}|${contributor.roleName}` === contributorKey)) {
-                                contributors.push({ contributorName: name, roleName: role });
-
-                                const div = document.createElement("div");
-                                div.classList.add("selected-contributor-item");
-                                div.setAttribute("data-contributor-key", contributorKey);
-
-                                const span = document.createElement("span");
-                                span.textContent = `[${role}] ${name}`;
-
-                                // 삭제 버튼 추가
-                                const deleteButton = document.createElement("button");
-                                deleteButton.textContent = "삭제";
-                                deleteButton.classList.add("btn", "btn-danger", "btn-sm");
-                                deleteButton.addEventListener("click", function () {
-                                    // 배열에서 기여자 제거
-                                    contributors = contributors.filter(contributor => `${contributor.contributorName}|${contributor.roleName}` !== contributorKey);
-                                    contributorListInput.value = JSON.stringify(contributors);
-
-                                    // UI에서 항목 제거
-                                    div.remove();
-                                });
-
-                                div.appendChild(span);
-                                div.appendChild(deleteButton);
-                                selectedContributors.appendChild(div);
-                            }
-                        });
-
-                        // 숨겨진 input 필드에 기여자 JSON 저장
-                        contributorListInput.value = JSON.stringify(contributors);
-
-                        // 선택 초기화
-                        select.selectedIndex = -1;
-                    });
-                });
-            </script>
-
+<!--                            if (callback) callback();-->
+<!--                        })-->
+<!--                        .catch(error => console.error('Error fetching categories:', error));-->
+<!--                }-->
+<!--                });-->
+<!--            </script>-->
             <div class="mb-3">
                 <label for="availableTags" class="form-label">사용 가능한 태그</label>
                 <div id="availableTags" class="tag-container">
