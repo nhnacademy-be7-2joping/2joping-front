@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>리뷰 수정</title>
+    <link rel="stylesheet" th:href="@{/css/review-star-style.css}">
+    <script th:src="@{/js/review-rating-star.js}" defer></script>
+
+    <style>
+        .review-image-preview {
+            max-width: 300px;
+            height: auto;
+            display: block;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+    </style>
+    <script>
+        function initializeStars(rating) {
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                star.classList.toggle('selected', index < rating);
+            });
+        }
+
+        function initializeImagePreview(imageUrl) {
+            const preview = document.getElementById('imagePreview');
+            const deleteCheckboxContainer = document.getElementById('deleteCheckboxContainer');
+            if (imageUrl && imageUrl.trim() !== '') {
+                preview.src = imageUrl;
+                preview.style.display = 'block';
+                deleteCheckboxContainer.style.display = 'block'; // 체크박스 표시
+            } else {
+                preview.style.display = 'none';
+                deleteCheckboxContainer.style.display = 'none'; // 체크박스 숨김
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>리뷰 수정</h1>
+<form th:action="@{/reviews/{reviewId}(reviewId=${review.reviewId})}" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="PUT"/>
+    <input type="hidden" id="reviewId" name="reviewId" th:value="${review.reviewId}"/>
+
+    <label for="ratingValue">평점:</label>
+    <div class="stars">
+        <span class="star" onclick="setRating(1)">★</span>
+        <span class="star" onclick="setRating(2)">★</span>
+        <span class="star" onclick="setRating(3)">★</span>
+        <span class="star" onclick="setRating(4)">★</span>
+        <span class="star" onclick="setRating(5)">★</span>
+    </div>
+    <input type="hidden" id="ratingValue" name="ratingValue" th:value="${review.ratingValue}" required>
+    <br><br>
+
+    <label for="title">리뷰 제목:</label>
+    <input type="text" id="title" name="title" th:value="${review.title}" required><br><br>
+
+    <label for="text">리뷰 내용:</label>
+    <textarea id="text" name="text" required th:text="${review.text}"></textarea><br><br>
+
+    <label for="reviewImage">이미지 업로드:</label>
+    <input type="file" id="reviewImage" name="reviewImage" accept="image/*"><br><br>
+
+    <!-- 기존 이미지 미리보기 -->
+    <img id="imagePreview" th:src="${review.reviewImage != null ? review.reviewImage : ''}"
+         alt="리뷰 이미지 미리보기" class="review-image-preview" style="display:none;"/>
+
+    <!-- 이미지 삭제 체크박스 -->
+    <div id="deleteCheckboxContainer" style="display:none; margin-top: 10px;">
+        <label for="deleteImage">
+            <input type="checkbox" id="deleteImage" name="deleteImage" value="true">
+            이미지 삭제하기
+        </label>
+    </div>
+    <br><br>
+
+    <button type="submit">수정</button>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ratingValue = parseInt(document.getElementById('ratingValue').value, 10) || 0;
+        const imageUrl = document.getElementById('imagePreview').getAttribute('src');
+        initializeStars(ratingValue);
+        initializeImagePreview(imageUrl);
+    });
+</script>
+</body>
+</html>

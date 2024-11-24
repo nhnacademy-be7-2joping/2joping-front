@@ -107,10 +107,15 @@
 <!-- 두 번째 네비게이션 바 -->
 <div class="sub-navbar">
   <div class="sub-navbar-container">
-
-    <a href="/" class="sub-nav-link" th:classappend="${activePage == 'index'} ? 'active' : ''">인기도서</a>
-    <a href="/books/search?categoryId=1&keyword=&sort=relevance" class="sub-nav-link" th:classappend="${activePage == 'domestic'} ? 'active' : ''">국내도서</a>
-    <a href="/books/search?categoryId=2&keyword=&sort=relevance" class="sub-nav-link" th:classappend="${activePage == 'foreign'} ? 'active' : ''">외국도서</a>
+    <!-- 인기 도서 -->
+    <a href="/" class="sub-nav-link"
+       th:classappend="${categoryId == null} ? 'active' : ''">인기도서</a>
+    <!-- 국내 도서 -->
+    <a href="/?categoryId=1&sort=relevance" class="sub-nav-link"
+       th:classappend="${categoryId == 1} ? 'active' : ''">국내도서</a>
+    <!-- 외국 도서 -->
+    <a href="/?categoryId=2&sort=relevance" class="sub-nav-link"
+       th:classappend="${categoryId == 2} ? 'active' : ''">외국도서</a>
   </div>
 </div>
 

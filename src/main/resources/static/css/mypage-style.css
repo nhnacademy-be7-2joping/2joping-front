@@ -212,7 +212,7 @@ body {
 }
 
 .navbar.with-border {
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* 네비게이션 컨테이너 */
@@ -417,7 +417,7 @@ body {
     background-color: white;
     border: 1px solid #ccc;
     padding: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
 }
 .dropdown-menu a {
@@ -600,11 +600,33 @@ body {
 
 
 }
-.coupon-info-container2{
-    width: 85px;
-    height: 85px;
-    border: 1px solid #ddd;
-    border-radius: 12px;
+.coupon-info-container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85px; /* 너비 */
+    height: 85px; /* 높이 */
+    border: 1px solid var(--primary-color); /* 테두리 제거 */
+    border-radius: 12px; /* 둥근 모서리 */
+    background-color:#fff;/* 버튼 배경색 */
+    color: var(--primary-color); /* 글자 색상 */
+    font-size: 14px; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    text-decoration: none; /* 밑줄 제거 */
+    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+.coupon-info-container2:hover {
+    background-color: #5548c8; /* 호버 시 배경색 변경 */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 증가 */
+    color: white;
+}
+
+.coupon-info-container2:active {
+    transform: translateY(2px); /* 클릭 시 눌리는 효과 */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 클릭 시 그림자 감소 */
 }
 .mypage-title1{
     display: flex;
@@ -613,12 +635,12 @@ body {
     align-items: center; /* 수직 가운데 정렬 */
     width: 100%;
     font-size: 22px;
-    padding: 7px 10px;
+    padding: 7px 10px 15px 10px;
 
 }
 .mypage-order-table{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: left;
     align-items: flex-start; /* 수직 가운데 정렬 */
     width: 100%;
@@ -655,4 +677,26 @@ body {
     flex-direction: row;
     justify-content: left;
     align-items: flex-start;
+}
+.tier-image{
+    height: 60px;
+    width: 60px;
+}
+.tier-usage-container{
+    height: 100%;
+    width: 100px; /* 고정 너비 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    overflow: hidden; /* 내용이 넘칠 경우 자르기 */
+
+}
+.responsive-text {
+    font-size: clamp(6px, 4vw, 14px); /* 최소 10px, 최대 14px */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center; /* 텍스트 중앙 정렬 */
+    max-width: 100%; /* 부모 컨테이너 너비에 맞추기 */
 }
