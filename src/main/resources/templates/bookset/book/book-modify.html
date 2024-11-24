@@ -315,27 +315,57 @@
                 });
             </script>
 
+            <!-- 기존 기여자 목록 -->
+            <div id="existingContributorsList" class="mb-3">
+                <label class="form-label">기존 기여자 목록</label>
+                <div class="contributor-container">
+                    <div th:each="contributor : ${book.contributorList}" class="selected-contributor-item"
+                         th:attr="data-contributor-key=${contributor.contributorName + '|' + contributor.roleName}">
+                        <span th:text="'[' + ${contributor.roleName} + '] ' + ${contributor.contributorName}"></span>
+                        <button type="button" class="btn btn-danger btn-sm"
+                                onclick="removeExistingContributor(this, '[[${contributor.contributorName}]]', '[[${contributor.roleName}]]')">
+                            삭제
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 기여자 선택 및 추가 -->
             <div id="contributors" class="mb-3">
-                <label for="existingContributors" class="form-label">기존 기여자 선택</label>
+                <label for="existingContributors" class="form-label">기여자 선택</label>
                 <select id="existingContributors" class="form-control" multiple>
                     <option th:each="contributor : ${contributors}"
                             th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"
-                            th:text="|[${contributor.contributorRole()}] ${contributor.contributorName()}|">
+                            th:text="'[' + ${contributor.contributorRole()} + '] ' + ${contributor.contributorName()}">
                     </option>
                 </select>
             </div>
-
             <button id="addContributorButton" type="button" class="btn btn-primary mb-3">기여자 추가</button>
 
             <input type="hidden" id="contributorList" name="contributorList" value="[]">
 
-            <div id="selectedContributors" class="mb-3">
+            <!-- 선택된 기여자 목록 -->
+            <div id="selectedContributors" class="mb-3 contributor-container">
                 <!-- 선택한 기여자 목록이 여기에 추가됩니다 -->
-                <span th:each="contributor : ${book.contributorList}"
-                      th:text="${contributor.contributorName} + ' (' + contributor.roleName + ')'"></span>
             </div>
 
             <script>
+                // 기존 기여자 삭제 함수
+                function removeExistingContributor(button, name, role) {
+                    const contributorKey = `${name}|${role}`;
+                    const contributorListInput = document.getElementById("contributorList");
+                    let contributors = contributorListInput.value ? JSON.parse(contributorListInput.value) : [];
+
+                    // 배열에서 기여자 제거
+                    contributors = contributors.filter(contributor => `${contributor.name}|${contributor.role}` !== contributorKey);
+                    contributorListInput.value = JSON.stringify(contributors);
+
+                    // UI에서 항목 제거
+                    const contributorElement = button.parentElement;
+                    contributorElement.remove();
+                }
+
+                // 기여자 추가 기능
                 document.getElementById("addContributorButton").addEventListener("click", function () {
                     const select = document.getElementById("existingContributors");
                     const selectedContributors = document.getElementById("selectedContributors");
@@ -364,6 +394,7 @@
                             // 삭제 버튼 추가
                             const deleteButton = document.createElement("button");
                             deleteButton.textContent = "삭제";
+                            deleteButton.classList.add("btn", "btn-danger", "btn-sm");
                             deleteButton.addEventListener("click", function () {
                                 // 배열에서 기여자 제거
                                 contributors = contributors.filter(contributor => `${contributor.name}|${contributor.role}` !== contributorKey);
@@ -387,205 +418,67 @@
                 });
             </script>
 
-<!--            <div id="contributors" class="mb-3">-->
-<!--                <label for="existingContributors" class="form-label">기존 기여자 선택</label>-->
-<!--                <select id="existingContributors" class="form-control" multiple>-->
-<!--                    <option th:each="contributor : ${contributors}"-->
-<!--                            th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"-->
-<!--                            th:text="|[${contributor.contributorRole()}] ${contributor.contributorName()}|">-->
-<!--                    </option>-->
-<!--                </select>-->
-<!--            </div>-->
+            <style>
+                .contributor-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    padding: 10px;
+                    background-color: #f9f9f9;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                }
 
-<!--            <button id="addContributorButton" type="button" class="btn btn-primary mb-3">기여자 추가</button>-->
+                .selected-contributor-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 8px 12px;
+                    margin-bottom: 8px;
+                    background-color: #f1f1f1;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    width: calc(50% - 10px); /* 한 줄에 2개 */
+                }
 
-<!--            <input type="hidden" id="contributorList" name="contributorList" th:value="${#objects.toJson(book.contributorList)}">-->
+                .selected-contributor-item span {
+                    font-size: 1rem;
+                    font-weight: bold;
+                    color: #333;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
 
-<!--            <div id="selectedContributors" class="mb-3">-->
-<!--                &lt;!&ndash; 선택한 기여자 목록이 여기에 추가됩니다 &ndash;&gt;-->
-<!--            </div>-->
+                .selected-contributor-item button {
+                    background-color: #ff6b6b;
+                    color: white;
+                    border: none;
+                    padding: 6px 12px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 0.9rem;
+                    font-weight: bold;
+                }
 
-<!--            <script>-->
-<!--                document.addEventListener("DOMContentLoaded", function () {-->
-<!--                    const selectedContributors = document.getElementById("selectedContributors");-->
-<!--                    const contributorListInput = document.getElementById("contributorList");-->
-<!--                    let contributors = [];-->
+                .selected-contributor-item button:hover {
+                    background-color: #ff4b4b;
+                }
+            </style>
 
-<!--                    // 기존 값 파싱-->
-<!--                    try {-->
-<!--                        contributors = contributorListInput.value ? JSON.parse(contributorListInput.value) : [];-->
-<!--                        console.log("Parsed contributors:", contributors);-->
-<!--                    } catch (error) {-->
-<!--                        console.error("JSON parsing error:", error);-->
-<!--                    }-->
+            <div class="mb-3">
+                <label for="existingTags" class="form-label">기존 태그 목록</label>
+                <div id="existingTags" class="tag-container">
+                    <!-- 기존 태그 리스트 -->
+                    <span th:each="tag : ${book.tagList}"
+                          th:text="${tag.tagName}"
+                          th:attr="data-tag-name=${tag.tagName}"
+                          class="tag-item existing-tag"
+                          onclick="removeExistingTag(this)">
+        </span>
+                </div>
+            </div>
 
-<!--                    // 기존 기여자를 화면에 표시-->
-<!--                    contributors.forEach(contributor => addContributorToUI(contributor));-->
-
-<!--                    // "기여자 추가" 버튼 클릭 이벤트-->
-<!--                    document.getElementById("addContributorButton").addEventListener("click", function () {-->
-<!--                        const select = document.getElementById("existingContributors");-->
-
-<!--                        Array.from(select.selectedOptions).forEach(option => {-->
-<!--                            const [name, role] = option.value.split('|');-->
-<!--                            const newContributor = { contributorName: name, roleName: role };-->
-
-<!--                            // 중복 확인-->
-<!--                            if (!contributors.some(c => c.contributorName === name && c.roleName === role)) {-->
-<!--                                contributors.push(newContributor);-->
-<!--                                addContributorToUI(newContributor);-->
-<!--                            }-->
-<!--                        });-->
-
-<!--                        // 숨겨진 필드 업데이트-->
-<!--                        contributorListInput.value = JSON.stringify(contributors);-->
-
-<!--                        // 선택 초기화-->
-<!--                        select.selectedIndex = -1;-->
-<!--                    });-->
-
-<!--                    // UI에 기여자 추가 함수-->
-<!--                    function addContributorToUI(contributor) {-->
-<!--                        const div = document.createElement("div");-->
-<!--                        div.classList.add("selected-contributor-item");-->
-<!--                        div.setAttribute("data-contributor-key", `${contributor.contributorName}|${contributor.roleName}`);-->
-
-<!--                        const span = document.createElement("span");-->
-<!--                        span.textContent = `[${contributor.roleName}] ${contributor.contributorName}`;-->
-
-<!--                        const deleteButton = document.createElement("button");-->
-<!--                        deleteButton.textContent = "삭제";-->
-<!--                        deleteButton.classList.add("btn", "btn-danger", "btn-sm");-->
-<!--                        deleteButton.addEventListener("click", function () {-->
-<!--                            // 배열에서 제거-->
-<!--                            contributors = contributors.filter(c => c.contributorName !== contributor.contributorName || c.roleName !== contributor.roleName);-->
-<!--                            contributorListInput.value = JSON.stringify(contributors);-->
-
-<!--                            // UI에서 제거-->
-<!--                            div.remove();-->
-<!--                        });-->
-
-<!--                        div.appendChild(span);-->
-<!--                        div.appendChild(deleteButton);-->
-<!--                        selectedContributors.appendChild(div);-->
-<!--                    }-->
-<!--                });-->
-<!--            </script>-->
-
-
-            <!--            <div id="contributors" class="mb-3">-->
-<!--                <label for="existingContributors" class="form-label">기존 기여자 선택</label>-->
-<!--                <select id="existingContributors" class="form-control" multiple>-->
-<!--                    <option th:each="contributor : ${contributors}"-->
-<!--                            th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"-->
-<!--                            th:text="|[${contributor.contributorRole()}] ${contributor.contributorName()}|">-->
-<!--                    </option>-->
-<!--                </select>-->
-<!--            </div>-->
-
-<!--            <button id="addContributorButton" type="button" class="btn btn-primary mb-3">기여자 추가</button>-->
-
-<!--            <input type="hidden" id="contributorList" name="contributorList" value="[]">-->
-
-<!--            <div id="selectedContributors" class="mb-3">-->
-<!--                &lt;!&ndash; 선택한 기여자 목록이 여기에 추가됩니다 &ndash;&gt;-->
-<!--                <span th:each="contributor : ${book.contributorList}"-->
-<!--                      th:text="${contributor.contributorName} + ' (' + contributor.roleName + ')'"></span>-->
-<!--            </div>-->
-
-<!--            <div id="category-data"-->
-<!--                 data-top-category-id="[[${book.topCategoryId}]]"-->
-<!--                 data-middle-category-id="[[${book.middleCategoryId}]]"-->
-<!--                 data-bottom-category-id="[[${book.bottomCategoryId}]]"></div>-->
-
-<!--            <div class="mb-3">-->
-<!--                <label for="topCategory" class="form-label">상위 카테고리</label>-->
-<!--                <select class="form-control" id="topCategory" name="topCategoryId" required>-->
-<!--                    <option value="" disabled selected>상위 카테고리를 선택하세요</option>-->
-<!--                    <option th:each="category : ${topCategories}" th:value="${category.categoryId}"-->
-<!--                            th:selected="${category.categoryId == book.topCategoryId}"-->
-<!--                            th:text="${category.name}"></option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="middleCategory" class="form-label">중위 카테고리</label>-->
-<!--                <select class="form-control" id="middleCategory" name="middleCategoryId">-->
-<!--                    <option value="" disabled selected>중위 카테고리를 선택하세요</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="bottomCategory" class="form-label">하위 카테고리</label>-->
-<!--                <select class="form-control" id="bottomCategory" name="bottomCategoryId">-->
-<!--                    <option value="" disabled selected>하위 카테고리를 선택하세요</option>-->
-<!--                </select>-->
-<!--            </div>-->
-
-<!--            <script>-->
-<!--                document.addEventListener('DOMContentLoaded', function () {-->
-<!--                    const topCategoryElement = document.getElementById('topCategory');-->
-<!--                    const middleCategoryElement = document.getElementById('middleCategory');-->
-<!--                    const bottomCategoryElement = document.getElementById('bottomCategory');-->
-
-<!--                    // HTML에 저장된 데이터 읽기-->
-<!--                    const categoryData = document.getElementById('category-data');-->
-<!--                    const selectedTopCategoryId = categoryData.getAttribute('data-top-category-id');-->
-<!--                    const selectedMiddleCategoryId = categoryData.getAttribute('data-middle-category-id');-->
-<!--                    const selectedBottomCategoryId = categoryData.getAttribute('data-bottom-category-id');-->
-
-<!--                    console.log("Selected Top Category ID:", selectedTopCategoryId);-->
-<!--                    console.log("Selected Middle Category ID:", selectedMiddleCategoryId);-->
-<!--                    console.log("Selected Bottom Category ID:", selectedBottomCategoryId);-->
-
-<!--                    // 상위 카테고리 기본 값 설정-->
-<!--                    if (selectedTopCategoryId) {-->
-<!--                        topCategoryElement.value = selectedTopCategoryId;-->
-
-<!--                        // 중위 카테고리 로드-->
-<!--                        loadCategories(/admin/api/categories/${selectedTopCategoryId}/children, middleCategoryElement, selectedMiddleCategoryId, function () {-->
-<!--                        // 하위 카테고리 로드-->
-<!--                        if (selectedMiddleCategoryId) {-->
-<!--                            loadCategories(/admin/api/categories/${selectedMiddleCategoryId}/children, bottomCategoryElement, selectedBottomCategoryId);-->
-<!--                        }-->
-<!--                    });-->
-<!--                }-->
-
-<!--                // 상위 카테고리 변경 시 중위 카테고리 로드-->
-<!--                topCategoryElement.addEventListener('change', function () {-->
-<!--                    const topCategoryId = this.value;-->
-
-<!--                    loadCategories(/admin/api/categories/${topCategoryId}/children, middleCategoryElement, null, function () {-->
-<!--                    bottomCategoryElement.innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';-->
-<!--                });-->
-<!--                });-->
-
-<!--                // 중위 카테고리 변경 시 하위 카테고리 로드-->
-<!--                middleCategoryElement.addEventListener('change', function () {-->
-<!--                    const middleCategoryId = this.value;-->
-<!--                    loadCategories(/admin/api/categories/${middleCategoryId}/children, bottomCategoryElement);-->
-<!--                });-->
-
-<!--                // 카테고리 로드 함수-->
-<!--                function loadCategories(url, element, selectedCategoryId = null, callback = null) {-->
-<!--                    fetch(url)-->
-<!--                        .then(response => {-->
-<!--                            if (!response.ok) {-->
-<!--                                throw new Error('Failed to fetch categories');-->
-<!--                            }-->
-<!--                            return response.json();-->
-<!--                        })-->
-<!--                        .then(data => {-->
-<!--                            element.innerHTML = '<option value="" disabled selected>카테고리를 선택하세요</option>';-->
-<!--                            data.forEach(category => {-->
-<!--                                const selected = category.categoryId == selectedCategoryId ? 'selected' : '';-->
-<!--                                element.innerHTML += <option value="${category.categoryId}" ${selected}>${category.name}</option>;-->
-<!--                            });-->
-
-<!--                            if (callback) callback();-->
-<!--                        })-->
-<!--                        .catch(error => console.error('Error fetching categories:', error));-->
-<!--                }-->
-<!--                });-->
-<!--            </script>-->
             <div class="mb-3">
                 <label for="availableTags" class="form-label">사용 가능한 태그</label>
                 <div id="availableTags" class="tag-container">
@@ -600,7 +493,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="selectedTags" class="form-label">선택된 태그</label>
+                <label for="selectedTags" class="form-label">최종 선택 태그</label>
                 <div id="selectedTags" class="tag-container">
                     <!-- 선택된 태그가 여기에 추가됩니다 -->
                     <span th:each="tag : ${book.tagList}"
@@ -615,6 +508,18 @@
             <script>
                 // 선택된 태그를 배열로 관리
                 let selectedTags = [];
+
+                // 기존 태그 삭제 함수
+                function removeExistingTag(tagElement) {
+                    const tagName = tagElement.getAttribute('data-tag-name');
+                    const existingTagsContainer = document.getElementById('existingTags');
+
+                    // 기존 태그 UI에서 제거
+                    tagElement.remove();
+
+                    // 기존 태그를 선택된 태그로 이동
+                    addTag({ getAttribute: () => tagName });
+                }
 
                 // 태그 추가 함수
                 function addTag(tagElement) {
@@ -658,8 +563,46 @@
                     // JSON.stringify로 배열이 이중으로 직렬화되는 문제 방지
                     tagListInput.value = selectedTags.join(","); // 콤마로 구분된 문자열로 전달
                 }
-
             </script>
+
+            <style>
+                .tag-container {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 10px;
+                    padding: 10px;
+                    background-color: #f9f9f9;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                }
+
+                .tag-item {
+                    display: inline-block;
+                    padding: 8px 12px;
+                    border-radius: 16px;
+                    background-color: #007bff;
+                    color: white;
+                    font-size: 0.9rem;
+                    font-weight: bold;
+                    white-space: nowrap;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease, transform 0.2s ease;
+                }
+
+                .tag-item:hover {
+                    background-color: #0056b3;
+                    transform: scale(1.1);
+                }
+
+                .tag-item.existing-tag {
+                    background-color: #28a745; /* 기존 태그는 초록색 */
+                }
+
+                .tag-item.existing-tag:hover {
+                    background-color: #218838;
+                }
+            </style>
+
 
             <div class="form-check mb-3">
                 <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable">
