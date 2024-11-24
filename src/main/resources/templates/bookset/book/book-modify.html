@@ -221,99 +221,10 @@
                 </div>
             </div>
 
-<!--            <div class="mb-3">-->
-<!--                <label for="topCategory" class="form-label">상위 카테고리</label>-->
-<!--                <select class="form-control" id="topCategory" name="topCategoryId" required>-->
-<!--                    <option value="" disabled selected>상위 카테고리를 선택하세요</option>-->
-<!--&lt;!&ndash;                    <option th:each="category : ${topCategories}" th:value="${category.categoryId}" th:text="${category.name}"></option>&ndash;&gt;-->
-<!--                    <option th:each="category : ${topCategories}" th:value="${category.categoryId}"-->
-<!--                            th:selected="${category.categoryId == book.topCategoryId}"-->
-<!--                            th:text="${category.name}"></option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="middleCategory" class="form-label">중위 카테고리</label>-->
-<!--                <select class="form-control" id="middleCategory" name="middleCategoryId">-->
-<!--                    <option value="" disabled selected>중위 카테고리를 선택하세요</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <div class="mb-3">-->
-<!--                <label for="bottomCategory" class="form-label">하위 카테고리</label>-->
-<!--                <select class="form-control" id="bottomCategory" name="bottomCategoryId">-->
-<!--                    <option value="" disabled selected>하위 카테고리를 선택하세요</option>-->
-<!--                </select>-->
-<!--            </div>-->
-<!--            <script>-->
-<!--                document.addEventListener('DOMContentLoaded', function () {-->
-<!--                    const topCategoryElement = document.getElementById('topCategory');-->
-<!--                    const middleCategoryElement = document.getElementById('middleCategory');-->
-<!--                    const bottomCategoryElement = document.getElementById('bottomCategory');-->
-
-<!--                    const selectedTopCategoryId = /*[[${book.topCategoryId}]]*/ 0;-->
-<!--                    const selectedMiddleCategoryId = /*[[${book.middleCategoryId}]]*/ 0;-->
-<!--                    const selectedBottomCategoryId = /*[[${book.bottomCategoryId}]]*/ 0;-->
-
-<!--                    console.log("Selected Top Category ID:", selectedTopCategoryId);-->
-<!--                    console.log("Selected selectedMiddleCategoryId Category ID:", selectedMiddleCategoryId);-->
-<!--                    console.log("Selected selectedMiddleCategoryId Category ID:", selectedMiddleCategoryId);-->
-
-
-<!--                    // 상위 카테고리 기본 값 설정-->
-<!--                    if (selectedTopCategoryId) {-->
-<!--                        topCategoryElement.value = selectedTopCategoryId;-->
-
-<!--                        // 중위 카테고리 로드-->
-<!--                        loadCategories(`/admin/api/categories/${selectedTopCategoryId}/children`, middleCategoryElement, selectedMiddleCategoryId, function () {-->
-<!--                            // 하위 카테고리 로드-->
-<!--                            if (selectedMiddleCategoryId) {-->
-<!--                                loadCategories(`/admin/api/categories/${selectedMiddleCategoryId}/children`, bottomCategoryElement, selectedBottomCategoryId);-->
-<!--                            }-->
-<!--                        });-->
-<!--                    }-->
-
-<!--                    // 상위 카테고리 변경 시 중위 카테고리 로드-->
-<!--                    topCategoryElement.addEventListener('change', function () {-->
-<!--                        const topCategoryId = this.value;-->
-
-<!--                        loadCategories(`/admin/api/categories/${topCategoryId}/children`, middleCategoryElement, null, function () {-->
-<!--                            bottomCategoryElement.innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';-->
-<!--                        });-->
-<!--                    });-->
-
-<!--                    // 중위 카테고리 변경 시 하위 카테고리 로드-->
-<!--                    middleCategoryElement.addEventListener('change', function () {-->
-<!--                        const middleCategoryId = this.value;-->
-<!--                        loadCategories(`/admin/api/categories/${middleCategoryId}/children`, bottomCategoryElement);-->
-<!--                    });-->
-
-<!--                    // 카테고리 로드 함수-->
-<!--                    function loadCategories(url, element, selectedCategoryId = null, callback = null) {-->
-<!--                        fetch(url)-->
-<!--                            .then(response => {-->
-<!--                                if (!response.ok) {-->
-<!--                                    throw new Error('Failed to fetch categories');-->
-<!--                                }-->
-<!--                                return response.json();-->
-<!--                            })-->
-<!--                            .then(data => {-->
-<!--                                element.innerHTML = '<option value="" disabled selected>카테고리를 선택하세요</option>';-->
-<!--                                data.forEach(category => {-->
-<!--                                    const selected = category.categoryId == selectedCategoryId ? 'selected' : '';-->
-<!--                                    element.innerHTML += `<option value="${category.categoryId}" ${selected}>${category.name}</option>`;-->
-<!--                                });-->
-
-<!--                                if (callback) callback();-->
-<!--                            })-->
-<!--                            .catch(error => console.error('Error fetching categories:', error));-->
-<!--                    }-->
-<!--                });-->
-
-<!--            </script>-->
-
             <div id="category-data"
-                 data-top-category-id="[[${book.topCategoryId}]]"
-                 data-middle-category-id="[[${book.middleCategoryId}]]"
-                 data-bottom-category-id="[[${book.bottomCategoryId}]]"></div>
+                 th:data-top-category-id="${book.topCategoryId}"
+                 th:data-middle-category-id="${book.middleCategoryId}"
+                 th:data-bottom-category-id="${book.bottomCategoryId}"></div>
 
             <div class="mb-3">
                 <label for="topCategory" class="form-label">상위 카테고리</label>
@@ -403,55 +314,6 @@
                     }
                 });
             </script>
-            <!--            -->
-<!--            <script>-->
-<!--                // 상위 카테고리가 변경될 때 중위 카테고리 로드-->
-<!--                document.getElementById('topCategory').addEventListener('change', function () {-->
-<!--                    const topCategoryId = this.value;-->
-<!--                    fetch(`/admin/api/categories/${topCategoryId}/children`)-->
-<!--                        .then(response => {-->
-<!--                            console.log("Content-Type:", response.headers.get('Content-Type'));-->
-<!--                            if (!response.ok) {-->
-<!--                                throw new Error("Failed to fetch middle categories");-->
-<!--                            }-->
-<!--                            return response.json();-->
-<!--                        })-->
-<!--                        .then(data => {-->
-<!--                            console.log("Middle Categories:", data);-->
-<!--                            const middleCategory = document.getElementById('middleCategory');-->
-<!--                            middleCategory.innerHTML = '<option value="" disabled selected>중위 카테고리를 선택하세요</option>';-->
-<!--                            data.forEach(category => {-->
-<!--                                middleCategory.innerHTML += `<option value="${category.categoryId}">${category.name}</option>`;-->
-<!--                            });-->
-
-<!--                            // 중위 카테고리 변경 시 하위 카테고리 초기화-->
-<!--                            document.getElementById('bottomCategory').innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';-->
-<!--                        })-->
-<!--                        .catch(error => console.error("Error fetching middle categories:", error));-->
-<!--                });-->
-
-<!--                // 중위 카테고리가 변경될 때 하위 카테고리 로드-->
-<!--                document.getElementById('middleCategory').addEventListener('change', function () {-->
-<!--                    const middleCategoryId = this.value;-->
-<!--                    fetch(`/admin/api/categories/${middleCategoryId}/children`)-->
-<!--                        .then(response => {-->
-<!--                            console.log("Content-Type:", response.headers.get('Content-Type'));-->
-<!--                            if (!response.ok) {-->
-<!--                                throw new Error("Failed to fetch bottom categories");-->
-<!--                            }-->
-<!--                            return response.json();-->
-<!--                        })-->
-<!--                        .then(data => {-->
-<!--                            console.log("Bottom Categories:", data);-->
-<!--                            const bottomCategory = document.getElementById('bottomCategory');-->
-<!--                            bottomCategory.innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';-->
-<!--                            data.forEach(category => {-->
-<!--                                bottomCategory.innerHTML += `<option value="${category.categoryId}">${category.name}</option>`;-->
-<!--                            });-->
-<!--                        })-->
-<!--                        .catch(error => console.error("Error fetching bottom categories:", error));-->
-<!--                });-->
-<!--            </script>-->
 
 <!--            <div id="contributors" class="mb-3">-->
 <!--                <label for="existingContributors" class="form-label">기존 기여자 선택</label>-->
@@ -525,19 +387,25 @@
 <!--                });-->
 <!--            </script>-->
 
-            <div id="selectedContributors" class="contributor-container">
-                <!-- 서버에서 렌더링된 기존 기여자 목록 -->
-                <div th:each="contributor : ${book.contributorList}" class="selected-contributor-item"
-                     th:attr="data-contributor-key=${contributor.contributorName() + '|' + contributor.roleName()}">
-                    <span th:text="'[' + ${contributor.roleName()} + '] ' + ${contributor.contributorName()}"></span>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="removeContributor(this, '[[${contributor.contributorName()}]]', '[[${contributor.roleName()}]]')">삭제</button>
-                </div>
+            <div id="contributors" class="mb-3">
+                <label for="existingContributors" class="form-label">기존 기여자 선택</label>
+                <select id="existingContributors" class="form-control" multiple>
+                    <option th:each="contributor : ${contributors}"
+                            th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"
+                            th:text="|[${contributor.contributorRole()}] ${contributor.contributorName()}|">
+                    </option>
+                </select>
             </div>
 
-            <input type="hidden" id="contributorList" name="contributorList" th:value="${book.contributorList}">
-
-            <!-- 기여자 추가 버튼 -->
             <button id="addContributorButton" type="button" class="btn btn-primary mb-3">기여자 추가</button>
+
+            <input type="hidden" id="contributorList" name="contributorList" value="[]">
+
+            <div id="selectedContributors" class="mb-3">
+                <!-- 선택한 기여자 목록이 여기에 추가됩니다 -->
+<!--                <span th:each="contributor : ${book.contributorList}"-->
+<!--                      th:text="${contributor.contributorName} + ' (' + contributor.roleName + ')'"></span>-->
+            </div>
 
             <script>
                 document.getElementById("addContributorButton").addEventListener("click", function () {
@@ -551,10 +419,10 @@
                     // 선택된 기여자를 화면에 표시하고 배열에 추가
                     Array.from(select.selectedOptions).forEach(option => {
                         const [name, role] = option.value.split('|');
-                        const contributorKey = `${name}|${role}`;
+                        const contributorKey = ${name}|${role};
 
                         // 중복 추가 방지
-                        if (!contributors.some(contributor => `${contributor.name}|${contributor.role}` === contributorKey)) {
+                        if (!contributors.some(contributor => contributor.name === name && contributor.role === role)) {
                             contributors.push({ name, role });
 
                             // 선택된 항목을 화면에 표시
@@ -563,14 +431,18 @@
                             div.setAttribute("data-contributor-key", contributorKey);
 
                             const span = document.createElement("span");
-                            span.textContent = `[${role}] ${name}`;
+                            span.textContent = [${role}] ${name};
 
                             // 삭제 버튼 추가
                             const deleteButton = document.createElement("button");
                             deleteButton.textContent = "삭제";
-                            deleteButton.classList.add("btn", "btn-danger", "btn-sm");
                             deleteButton.addEventListener("click", function () {
-                                removeContributor(div, name, role);
+                                // 배열에서 기여자 제거
+                                contributors = contributors.filter(contributor => ${contributor.name}|${contributor.role} !== contributorKey);
+                                contributorListInput.value = JSON.stringify(contributors);
+
+                                // UI에서 항목 제거
+                                div.remove();
                             });
 
                             div.appendChild(span);
@@ -585,20 +457,6 @@
                     // 선택 초기화
                     select.selectedIndex = -1;
                 });
-
-                function removeContributor(div, name, role) {
-                    const contributorListInput = document.getElementById("contributorList");
-
-                    // 기존 값 파싱
-                    let contributors = contributorListInput.value ? JSON.parse(contributorListInput.value) : [];
-
-                    // 기여자 목록에서 제거
-                    contributors = contributors.filter(contributor => !(contributor.name === name && contributor.role === role));
-                    contributorListInput.value = JSON.stringify(contributors);
-
-                    // UI에서 항목 제거
-                    div.remove();
-                }
             </script>
 
             <div class="mb-3">
