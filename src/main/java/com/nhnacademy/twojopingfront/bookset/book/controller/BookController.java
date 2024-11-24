@@ -7,6 +7,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequest
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookUpdateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
@@ -64,7 +65,7 @@ public class BookController {
             return "redirect:/admin/books/get";
         } catch (Exception ex) {
             ex.printStackTrace();
-            // 오류 발생 시에도 리다이렉트
+            // 오류 발생 시에도 리다이렉트 (임의로 지정)
             return "redirect:/admin/books/get";
         }
     }
@@ -140,5 +141,25 @@ public class BookController {
         BookResponseDto books = bookService.getBookById(bookId);
         model.addAttribute("books", books);
         return "bookset/book/bookdetails";
+    }
+
+    @GetMapping("/admin/books/modify/{bookId}")
+    public String showBookModifyForm(@PathVariable Long bookId, Model model) {
+        BookUpdateResponseDto bookData = bookService.getUpdateBookById(bookId);
+        model.addAttribute("book", bookData);
+
+        List<PublisherResponseDto> publisherList = bookService.getAllPublishersForRegister();
+        model.addAttribute("publishers", publisherList);
+
+        List<ContributorNameRoleResponseDto> contributorList = bookService.getActiveContributors();
+        model.addAttribute("contributors", contributorList);
+
+        List<CategoryResponseDto> topCategories = bookService.getTopCategories();
+        model.addAttribute("topCategories", topCategories);
+
+        List<TagResponseDto> tagList = bookService.getAllTags();
+        model.addAttribute("tags", tagList);
+
+        return "bookset/book/book-modify";
     }
 }

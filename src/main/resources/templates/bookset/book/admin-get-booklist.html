@@ -42,7 +42,7 @@
             <td th:text="${book.sellingPrice}">판매 가격</td>
             <td th:text="${book.retailPrice}">정가</td>
             <td>
-                <button>수정</button>
+                <a th:href="@{/admin/books/modify/{bookId}(bookId=${book.bookId})}" class="btn btn-primary">수정</a>
             </td>
             <td>
                 <button>삭제</button>

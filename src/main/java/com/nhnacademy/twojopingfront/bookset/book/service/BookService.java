@@ -10,6 +10,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUrlRequestDto
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookUpdateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.exception.FeignClientServerFailConnectionException;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
@@ -189,5 +190,8 @@ public class BookService {
                     new ErrorResponseDto(404,"404","해당 도서를 찾을 수 없습니다.", RedirectType.REDIRECT,"/books/get", null));
         }
     }
-}
 
+    public BookUpdateResponseDto getUpdateBookById(Long bookId) {
+        return bookClient.getUpdateBookById(bookId);
+    }
+}

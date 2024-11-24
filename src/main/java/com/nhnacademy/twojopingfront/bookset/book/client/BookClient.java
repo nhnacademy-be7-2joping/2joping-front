@@ -5,6 +5,7 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestD
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookUpdateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
@@ -100,6 +101,8 @@ public interface BookClient {
     @GetMapping("/books/get/book/{bookId}")
     BookResponseDto getBookById(@PathVariable("bookId") Long bookId);
 
+    @GetMapping("/books/{bookId}")
+    BookUpdateResponseDto getUpdateBookById(@PathVariable("bookId") Long bookId);
 }
 
 
