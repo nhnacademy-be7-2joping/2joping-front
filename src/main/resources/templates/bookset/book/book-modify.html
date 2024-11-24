@@ -399,6 +399,92 @@
 
 <!--            <button id="addContributorButton" type="button" class="btn btn-primary mb-3">기여자 추가</button>-->
 
+<!--            <input type="hidden" id="contributorList" name="contributorList" th:value="${#objects.toJson(book.contributorList)}">-->
+
+<!--            <div id="selectedContributors" class="mb-3">-->
+<!--                &lt;!&ndash; 선택한 기여자 목록이 여기에 추가됩니다 &ndash;&gt;-->
+<!--            </div>-->
+
+<!--            <script>-->
+<!--                document.addEventListener("DOMContentLoaded", function () {-->
+<!--                    const selectedContributors = document.getElementById("selectedContributors");-->
+<!--                    const contributorListInput = document.getElementById("contributorList");-->
+<!--                    let contributors = [];-->
+
+<!--                    // 기존 값 파싱-->
+<!--                    try {-->
+<!--                        contributors = contributorListInput.value ? JSON.parse(contributorListInput.value) : [];-->
+<!--                        console.log("Parsed contributors:", contributors);-->
+<!--                    } catch (error) {-->
+<!--                        console.error("JSON parsing error:", error);-->
+<!--                    }-->
+
+<!--                    // 기존 기여자를 화면에 표시-->
+<!--                    contributors.forEach(contributor => addContributorToUI(contributor));-->
+
+<!--                    // "기여자 추가" 버튼 클릭 이벤트-->
+<!--                    document.getElementById("addContributorButton").addEventListener("click", function () {-->
+<!--                        const select = document.getElementById("existingContributors");-->
+
+<!--                        Array.from(select.selectedOptions).forEach(option => {-->
+<!--                            const [name, role] = option.value.split('|');-->
+<!--                            const newContributor = { contributorName: name, roleName: role };-->
+
+<!--                            // 중복 확인-->
+<!--                            if (!contributors.some(c => c.contributorName === name && c.roleName === role)) {-->
+<!--                                contributors.push(newContributor);-->
+<!--                                addContributorToUI(newContributor);-->
+<!--                            }-->
+<!--                        });-->
+
+<!--                        // 숨겨진 필드 업데이트-->
+<!--                        contributorListInput.value = JSON.stringify(contributors);-->
+
+<!--                        // 선택 초기화-->
+<!--                        select.selectedIndex = -1;-->
+<!--                    });-->
+
+<!--                    // UI에 기여자 추가 함수-->
+<!--                    function addContributorToUI(contributor) {-->
+<!--                        const div = document.createElement("div");-->
+<!--                        div.classList.add("selected-contributor-item");-->
+<!--                        div.setAttribute("data-contributor-key", `${contributor.contributorName}|${contributor.roleName}`);-->
+
+<!--                        const span = document.createElement("span");-->
+<!--                        span.textContent = `[${contributor.roleName}] ${contributor.contributorName}`;-->
+
+<!--                        const deleteButton = document.createElement("button");-->
+<!--                        deleteButton.textContent = "삭제";-->
+<!--                        deleteButton.classList.add("btn", "btn-danger", "btn-sm");-->
+<!--                        deleteButton.addEventListener("click", function () {-->
+<!--                            // 배열에서 제거-->
+<!--                            contributors = contributors.filter(c => c.contributorName !== contributor.contributorName || c.roleName !== contributor.roleName);-->
+<!--                            contributorListInput.value = JSON.stringify(contributors);-->
+
+<!--                            // UI에서 제거-->
+<!--                            div.remove();-->
+<!--                        });-->
+
+<!--                        div.appendChild(span);-->
+<!--                        div.appendChild(deleteButton);-->
+<!--                        selectedContributors.appendChild(div);-->
+<!--                    }-->
+<!--                });-->
+<!--            </script>-->
+
+
+            <!--            <div id="contributors" class="mb-3">-->
+<!--                <label for="existingContributors" class="form-label">기존 기여자 선택</label>-->
+<!--                <select id="existingContributors" class="form-control" multiple>-->
+<!--                    <option th:each="contributor : ${contributors}"-->
+<!--                            th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"-->
+<!--                            th:text="|[${contributor.contributorRole()}] ${contributor.contributorName()}|">-->
+<!--                    </option>-->
+<!--                </select>-->
+<!--            </div>-->
+
+<!--            <button id="addContributorButton" type="button" class="btn btn-primary mb-3">기여자 추가</button>-->
+
 <!--            <input type="hidden" id="contributorList" name="contributorList" value="[]">-->
 
 <!--            <div id="selectedContributors" class="mb-3">-->
