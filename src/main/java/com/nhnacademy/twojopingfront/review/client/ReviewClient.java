@@ -28,7 +28,7 @@ public interface ReviewClient {
     @GetMapping("reviews/book/{bookId}")
     Page<ReviewResponseDto> getReviewsByBookId(@RequestParam("page") int page, @RequestParam("size") int size,@PathVariable Long bookId);
 
-    @GetMapping("reviews/customer/{customerId}")
-    Page<ReviewResponseDto> getReviewsByCustomerId(@RequestParam("page") int page, @RequestParam("size") int size, @PathVariable Long customerId);
+    @GetMapping("reviews/customer")
+    Page<ReviewResponseDto> getReviewsByCustomerId(@RequestParam("page") int page, @RequestParam("size") int size,@RequestHeader("X-Customer-Id") Long customerId);
 
 }

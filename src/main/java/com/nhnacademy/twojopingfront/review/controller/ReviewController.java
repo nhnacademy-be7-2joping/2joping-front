@@ -57,7 +57,6 @@ public class ReviewController {
      * 특정 회원이 작성한 리뷰 목록 조회
      * @param page 페이지 번호
      * @param size 페이지 크기
-     * @param customerId 조회할 회원 ID
      * @param model 뷰에 데이터를 전달하기 위한 모델 객체
      * @return 회원별 리뷰 목록 페이지 뷰 이름
      */
@@ -66,7 +65,7 @@ public class ReviewController {
                                          @RequestParam(defaultValue = "10") int size,
                                          @PathVariable Long customerId,
                                          Model model) {
-        Page<ReviewResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size, customerId);
+        Page<ReviewResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size,customerId);
         model.addAttribute("reviews", reviews);
         return "review/get-reviews";
     }
