@@ -1,120 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">
 <head>
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-      <html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/admin-layout}">
-      <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>쿠폰 정책 생성</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" th:href="@{/css/admin-index-style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 정책 생성</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin-index-style.css}">
 </head>
 <body>
 <div layout:fragment="content">
-  <h1>쿠폰 정책 생성</h1>
-  <form id="createForm" class="needs-validation" novalidate>
-    <div class="form-group mb-3">
-      <label for="name">정책 이름</label>
-      <input type="text" id="name" name="name" class="form-control" required>
-      <div class="invalid-feedback">정책 이름을 입력해주세요.</div>
-    </div>
+    <h1>쿠폰 정책 생성</h1>
+    <form action="/admin/coupon/policies" method="post" class="needs-validation" novalidate>
+        <div class="form-group mb-3">
+            <label for="name">정책 이름</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+            <div class="invalid-feedback">정책 이름을 입력해주세요.</div>
+        </div>
 
-    <div class="form-group mb-3">
-      <label for="discountType">할인 유형</label>
-      <select id="discountType" name="discountType" class="form-control" required>
-        <option value="PERCENT">비율 할인</option>
-        <option value="ACTUAL">정액 할인</option>
-      </select>
-      <div class="invalid-feedback">할인 유형을 선택해주세요.</div>
-    </div>
+        <div class="form-group mb-3">
+            <label for="discountType">할인 유형</label>
+            <select id="discountType" name="discountType" class="form-control" required>
+                <option value="PERCENT">PERCENT</option>
+                <option value="ACTUAL">ACTUAL</option>
+            </select>
+            <div class="invalid-feedback">할인 유형을 선택해주세요.</div>
+        </div>
 
-    <div class="form-group mb-3">
-      <label for="discountValue">할인 값</label>
-      <input type="number" id="discountValue" name="discountValue" class="form-control" required>
-      <div class="invalid-feedback">할인 값을 입력해주세요.</div>
-    </div>
+        <div class="form-group mb-3">
+            <label for="discountValue">할인 값</label>
+            <input type="number" id="discountValue" name="discountValue" class="form-control" required>
+            <div class="invalid-feedback">할인 값을 입력해주세요.</div>
+        </div>
 
-    <div class="form-group mb-3">
-      <label for="usageLimit">사용 제한</label>
-      <input type="number" id="usageLimit" name="usageLimit" class="form-control" required>
-      <div class="invalid-feedback">사용 제한 횟수를 입력해주세요.</div>
-    </div>
+        <div class="form-group mb-3">
+            <label for="usageLimit">사용 제한</label>
+            <input type="number" id="usageLimit" name="usageLimit" class="form-control" required>
+            <div class="invalid-feedback">사용 제한 횟수를 입력해주세요.</div>
+        </div>
 
-    <div class="form-group mb-3">
-      <label for="duration">유효 기간(일)</label>
-      <input type="number" id="duration" name="duration" class="form-control" required>
-      <div class="invalid-feedback">유효 기간을 입력해주세요.</div>
-    </div>
+        <div class="form-group mb-3">
+            <label for="duration">유효 기간(일)</label>
+            <input type="number" id="duration" name="duration" class="form-control" required>
+            <div class="invalid-feedback">유효 기간을 입력해주세요.</div>
+        </div>
 
-    <div class="form-group mb-3">
-      <label for="detail">상세 설명</label>
-      <textarea id="detail" name="detail" class="form-control" rows="3" required></textarea>
-      <div class="invalid-feedback">상세 설명을 입력해주세요.</div>
-    </div>
+        <div class="form-group mb-3">
+            <label for="detail">상세 설명</label>
+            <textarea id="detail" name="detail" class="form-control" rows="3" required></textarea>
+            <div class="invalid-feedback">상세 설명을 입력해주세요.</div>
+        </div>
 
-    <div class="form-group mb-3">
-      <label for="maxDiscount">최대 할인 금액</label>
-      <input type="number" id="maxDiscount" name="maxDiscount" class="form-control" required>
-      <div class="invalid-feedback">최대 할인 금액을 입력해주세요.</div>
-    </div>
+        <div class="form-group mb-3">
+            <label for="maxDiscount">최대 할인 금액</label>
+            <input type="number" id="maxDiscount" name="maxDiscount" class="form-control" required>
+            <div class="invalid-feedback">최대 할인 금액을 입력해주세요.</div>
+        </div>
 
-    <div class="form-group mb-3">
-      <label for="isActive">상태</label>
-      <select id="isActive" name="isActive" class="form-control" required>
-        <option value="true">활성화</option>
-        <option value="false">비활성화</option>
-      </select>
-    </div>
+        <div class="form-group mb-3">
+            <label for="isActive">상태</label>
+            <select id="isActive" name="isActive" class="form-control" required>
+                <option value="true">활성화</option>
+                <option value="false">비활성화</option>
+            </select>
+        </div>
 
-    <button type="submit" class="btn btn-primary">생성</button>
-    <a href="/admin/coupon/policies" class="btn btn-secondary">취소</a>
-  </form>
+        <button type="submit" class="btn btn-primary">생성</button>
+        <a href="/admin/coupon/policies" class="btn btn-secondary">취소</a>
+    </form>
 </div>
-
-<div layout:fragment="script">
-  <script>
-    document.getElementById('createForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const formData = {
-        name: document.getElementById('name').value,
-        discountType: document.getElementById('discountType').value,
-        discountValue: parseInt(document.getElementById('discountValue').value),
-        usageLimit: parseInt(document.getElementById('usageLimit').value),
-        duration: parseInt(document.getElementById('duration').value),
-        detail: document.getElementById('detail').value,
-        maxDiscount: parseInt(document.getElementById('maxDiscount').value),
-        isActive: document.getElementById('isActive').value === 'true'
-      };
-
-      fetch('/api/v1/coupon/policies', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
-      })
-              .then(response => {
-                if (response.ok) {
-                  alert('쿠폰 정책이 생성되었습니다.');
-                  window.location.href = '/admin/coupon/policies';
-                } else {
-                  throw new Error('쿠폰 정책 생성에 실패했습니다.');
-                }
-              })
-              .catch(error => {
-                alert(error.message);
-              });
-    });
-  </script>
-</div>
-</body>
-</html></title>
-</head>
-<body>
-
 </body>
 </html>

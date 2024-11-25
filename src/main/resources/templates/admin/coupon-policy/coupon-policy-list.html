@@ -1,81 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">
 <head>
     <meta charset="UTF-8">
-    <title><!DOCTYPE html>
-      <html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/admin-layout}">
-      <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>쿠폰 정책 목록</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" th:href="@{/css/admin-index-style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 정책 리스트</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin-index-style.css}">
 </head>
 <body>
 <div layout:fragment="content">
-  <h1>쿠폰 정책 목록</h1>
-  <a href="/admin/coupon/policies/create" class="btn btn-primary mb-3">쿠폰 정책 생성</a>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>ID</th>
-      <th>이름</th>
-      <th>할인 유형</th>
-      <th>할인 값</th>
-      <th>사용 제한</th>
-      <th>유효 기간(일)</th>
-      <th>상세 설명</th>
-      <th>최대 할인</th>
-      <th>상태</th>
-      <th>관리</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="policy : ${policies}">
-      <td th:text="${policy.couponPolicyId}"></td>
-      <td th:text="${policy.name}"></td>
-      <td th:text="${policy.discountType}"></td>
-      <td th:text="${policy.discountValue}"></td>
-      <td th:text="${policy.usageLimit}"></td>
-      <td th:text="${policy.duration}"></td>
-      <td th:text="${policy.detail}"></td>
-      <td th:text="${policy.maxDiscount}"></td>
-      <td><span class="badge" th:classappend="${policy.isActive ? 'bg-success' : 'bg-danger'}"
-                th:text="${policy.isActive ? '활성' : '비활성'}"></span></td>
-      <td>
-        <a th:href="@{/admin/coupon/policies/edit/{id}(id=${policy.couponPolicyId})}"
-           class="btn btn-success btn-sm">수정</a>
-        <button th:onclick="'deleteCouponPolicy(' + ${policy.couponPolicyId} + ')'"
-                class="btn btn-danger btn-sm">삭제</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    <h1>쿠폰 정책 목록</h1>
+    <a href="/admin/coupon/policies/create" class="btn btn-primary mb-3">쿠폰 정책 생성</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>이름</th>
+            <th>할인 유형</th>
+            <th>할인 값</th>
+            <th>사용 제한</th>
+            <th>유효 기간(일)</th>
+            <th>상세 설명</th>
+            <th>최대 할인</th>
+            <th>수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="policy : ${policies}" id="row-${policy.couponPolicyId}">
+            <td th:text="${policy.couponPolicyId}"></td>
+            <td th:text="${policy.name}"></td>
+            <td th:text="${policy.discountType}"></td>
+            <td th:text="${policy.discountValue}"></td>
+            <td th:text="${policy.usageLimit}"></td>
+            <td th:text="${policy.duration}"></td>
+            <td th:text="${policy.detail}"></td>
+            <td th:text="${policy.maxDiscount}"></td>
+            <td>
+                <a th:href="@{/admin/coupon/policies/edit/{id}(id=${policy.couponPolicyId})}"
+                   class="btn btn-success btn-sm">수정</a>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
 </div>
 
-<div layout:fragment="script">
-  <script>
-    function deleteCouponPolicy(id) {
-      if (confirm('정말로 이 쿠폰 정책을 삭제하시겠습니까?')) {
-        fetch(`/api/v1/coupon/policies/${id}`, {
-          method: 'DELETE'
-        }).then(response => {
-          if (response.ok) {
-            alert('쿠폰 정책이 삭제되었습니다.');
-            location.reload();
-          } else {
-            alert('쿠폰 정책 삭제에 실패했습니다.');
-          }
-        });
-      }
-    }
-  </script>
-</div>
-</body>
-</html></title>
-</head>
-<body>
 
 </body>
 </html>
