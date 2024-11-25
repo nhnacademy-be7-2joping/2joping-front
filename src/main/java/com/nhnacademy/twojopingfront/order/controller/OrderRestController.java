@@ -2,13 +2,12 @@ package com.nhnacademy.twojopingfront.order.controller;
 
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
 import com.nhnacademy.twojopingfront.order.client.MemberCouponClient;
+import com.nhnacademy.twojopingfront.order.client.WrapClient;
+import com.nhnacademy.twojopingfront.order.dto.request.OrderRequest;
 import com.nhnacademy.twojopingfront.order.dto.response.OrderCouponResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +17,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class OrderRestController {
     private final MemberCouponClient memberCouponClient;
+    private final WrapClient wrapClient;
 
     @GetMapping("/coupons/{coupon-id}")
     public ResponseEntity<OrderCouponResponse> getMemberCoupons(@PathVariable("coupon-id") Long couponId) {
@@ -29,6 +29,11 @@ public class OrderRestController {
                 Objects.requireNonNull(coupons).stream()
                         .filter(c -> Objects.equals(c.couponUsageId(), couponId)).findFirst().orElse(null);
         return ResponseEntity.ok(couponResponse);
+    }
+
+    @PostMapping("/orders")
+    public ResponseEntity<?> createOrder(@RequestBody OrderRequest orderRequest) {
+        return ResponseEntity.ok().build();
     }
 }
 

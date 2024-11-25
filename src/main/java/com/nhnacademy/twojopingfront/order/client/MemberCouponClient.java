@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @FeignClient(name = "memberCouponClient", configuration = AccessTokenInterceptor.class, url =
-        "${gateway.base-url}" + "/v1/coupons")
+        "${gateway.base-url}/v1/coupons")
 public interface MemberCouponClient {
     @GetMapping("/order")
     ResponseEntity<List<OrderCouponResponse>> getMemberCoupon();
