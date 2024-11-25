@@ -69,7 +69,8 @@ public class ReviewService {
     }
 
 
-    public Page<ReviewResponseDto> getReviewsByCustomerId(int page,int size,Long customerId) {
+    public Page<ReviewResponseDto> getReviewsByCustomerId(int page,int size,String customerId) {
+
         return reviewClient.getReviewsByCustomerId(page,size,customerId);
     }
 

@@ -60,12 +60,14 @@ public class ReviewController {
      * @param model 뷰에 데이터를 전달하기 위한 모델 객체
      * @return 회원별 리뷰 목록 페이지 뷰 이름
      */
-    @GetMapping("/member/{customerId}")
+    @GetMapping("/member")
     public String getReviewsByCustomerId(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int size,
-                                         @PathVariable Long customerId,
                                          Model model) {
-        Page<ReviewResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size,customerId);
+        Long customerId = MemberUtils.getCustomerId();
+
+
+        Page<ReviewResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size,customerId.toString());
         model.addAttribute("reviews", reviews);
         return "review/get-reviews";
     }

@@ -94,7 +94,7 @@ class ReviewControllerStandaloneTest {
     @Test
     @DisplayName("특정 회원이 작성한 리뷰 목록 조회 테스트")
     void getReviewsByCustomerId() throws Exception {
-        when(reviewService.getReviewsByCustomerId(0, 10,1L)).thenReturn(reviewPage);
+        when(reviewService.getReviewsByCustomerId(0, 10,"1L")).thenReturn(reviewPage);
 
         mockMvc.perform(get("/reviews/member/1")
                         .param("page", "0")
