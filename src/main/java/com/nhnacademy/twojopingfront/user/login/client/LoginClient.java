@@ -13,4 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface LoginClient {
     @PostMapping("/login")
     ResponseEntity<LoginResponseDto> doLogin(@RequestBody LoginRequestDto loginRequestDto);
+
+    @GetMapping("/logout")
+    ResponseEntity<?> doLogout(@CookieValue("accessToken") String accessToken,
+                               @CookieValue("refreshToken") String refreshToken);
 }

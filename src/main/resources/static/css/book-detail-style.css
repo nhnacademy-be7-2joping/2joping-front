@@ -8,7 +8,6 @@ body{
     gap: 20px;
     max-width: 1250px;
     margin: 50px auto; /* 화면 중앙 정렬 */
-    border: 1px solid #ddd;
 }
 .bookDetail-container {
     flex: 1; /* 상세 정보가 너비를 유연하게 차지하도록 설정 */
@@ -35,13 +34,29 @@ body{
 }
 
 .purchase-button {
-    width: 100%;
+    height: 40px;
+    flex-grow: 1; /* 남은 공간을 채우도록 설정 */
     padding: 10px;
     font-size: 16px;
-    background-color: #ff6600;
-    color: white;
-    border: none;
+    color: var(--primary-color);;
+    border: 1px solid var(--primary-color);
+    background-color: white;
+    border-radius: 12px;
     cursor: pointer;
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    text-align: center; /* 텍스트 정렬 */
+    transition: transform 0.2s ease-in-out;
+
+
+}
+
+.purchase-button:hover {
+    color: white;
+    border: 1px solid var(--primary-color);
+
+    background-color: var(--primary-color);
 }
 .book-detail-container2{
     width: 100%;
@@ -53,11 +68,11 @@ body{
     display: flex;
     flex-direction: column; /* 수직 방향으로 정렬 */
     align-items: center; /* 중앙 정렬 (필요 시) */
+    gap: 20px;
 
 }
 .book-detail-info-container1{
     width: 550px;
-    border: 1px solid #ddd;
     display: flex;
     flex-direction: column; /* 수직 방향으로 정렬 */
     align-items: flex-start; /* 중앙 정렬 (필요 시) */
@@ -71,27 +86,41 @@ body{
 .book-detail-title{
     display: flex;
     width: 100%;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 10px; /* 요소 간 간격 추가 (선택 사항) */
+    gap: 5px; /* 요소 간 간격 추가 (선택 사항) */
     justify-content: space-between; /* 좌우 공간을 채우도록 설정 */
 
 
 }
-.book-detail-heart{
-    width: 70px;
-    height: 70px;
-    border: 1px solid #ddd;
+.book-detail-heart-count{
+    padding: 0 10px;
+    width: fit-content;
+    height: 20px;
     display: flex;
     align-items: center; /* 수직 가운데 정렬 */
     justify-content: center; /* 수평 가운데 정렬 */
+    gap: 5px;
+    color: #fa4b4b;
+    font-weight: 500;
 
+}
+.book-detail-heart-count svg{
+    width: 20px;
+    height: 20px;
+
+}
+.title-category{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: space-between; /* 수평 가운데 정렬 */
 }
 .font-category{
     font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
     font-weight: 500;
     font-size: 14px;
-    padding: 3px 10px;
 }
 .font-book-detail-category{
     font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
@@ -103,6 +132,13 @@ body{
     font-weight: 600; /* 약간 굵게 설정 */
     font-size: 16px;
 
+}
+.detail-description{
+    padding: 0 10px;
+    word-break: keep-all; /* 단어가 끊기지 않도록 설정 */
+    white-space: normal; /* 텍스트 줄바꿈을 정상적으로 처리 */
+    overflow: hidden; /* 넘치는 텍스트를 숨김 */
+    text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
 }
 .font-price-red{
     font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
@@ -122,20 +158,341 @@ body{
 
 }
 .book-detail-price-container{
+    padding: 25px 5px;
     min-height: 150px;
     display: flex;
     width: 100%;
     flex-direction: column;
     align-items: flex-start; /* 수직 가운데 정렬 */
     gap: 10px; /* 요소 간 간격 추가 (선택 사항) */
-    border: 1px solid #ddd;
+
+}
+.purchase-button-box{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    flex-direction: row;
+    align-items: flex-start; /* 수직 가운데 정렬 */
+    gap: 10px; /* 카트와 결제 버튼 사이의 간격 */
 
 }
 .purchase-box{
     min-height: 200px;
     border: 1px solid #ddd;
     border-radius: 14px;
+    display: flex;
+    justify-content: space-between;
     flex-direction: column;
     align-items: flex-start; /* 수직 가운데 정렬 */
+    padding: 15px 10px;
+    background-color: #f8f8f8;
+}
+.book-detail-image-container{
+    width: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* 좌우 공간을 채우도록 설정 */
+    align-items: flex-start; /* 수직 가운데 정렬 */
+    padding-top: 50px;
+
+}
+.book-detail-image-container2{
+    width: 800px;
+    min-height: 1000px;
+    background-color: #f9f9f9;
+}
+.book-detail-sidebar{
+    height: auto;
+    width: 200px;
+}
+.book-detail-cart-icon{
+    width: 30px;
+    height: 30px;
+    pointer-events: auto;
+}
+.book-detail-cart-icon svg {
+
+    width: 30px;
+    height: 30px;
+    transition: stroke 0.3s ease, fill 0.3s ease;
+    transform: scaleX(-1); /* 좌우 반전 */
+}
+
+.default-color{
+    color: var(--primary-color);
+}
+.book-detail-cart-icon svg path,
+.book-detail-cart-icon svg circle,
+.book-detail-cart-icon svg line {
+    stroke:  var(--primary-color); /* 기본 색상 설정 */
+    transition: stroke 0.3s ease; /* 색상 전환 애니메이션 */
+}
+.book-detail-cart-icon:hover svg path,
+.book-detail-cart-icon:hover svg circle,
+.book-detail-cart-icon:hover svg line {
+    stroke: #007bff; /* 호버 시 색상 */
+}
+.cart-container{
+    padding-top: 5px;
+    border: 1px solid var(--primary-color);
+    border-radius: 12px;
+    height: 40px;
+    width: 40px;
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    text-align: center; /* 텍스트 정렬 */
+}
+.cart-container:hover{
+    background-color: #ededed;
+
+}
+.book-detail-amount-container{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 좌우 공간을 채우도록 설정 */
+    align-items: end; /* 수직 가운데 정렬 */
+}
+.book-detail-amount-container2{
+    padding: 0 5px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* 좌우 공간을 채우도록 설정 */
+    align-items: center; /* 수직 가운데 정렬 */
+    gap: 10px;
+}
+
+
+
+
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 버튼과 입력 필드 간격 */
+    justify-content: center; /* 중앙 정렬 */
+}
+
+.quantity-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: white;
+    color:var(--primary-color);
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.quantity-btn:hover {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+
+    color: white;
+}
+
+.quantity-input {
+    width: 60px;
+    height: 40px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+.book-detail-heart{
+    width: 35px;
+    height: 35px;
+    border: none;
+    transition: fill 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}
+.book-detail-heart svg{
+    width: 35px;
+    height: 35px;
+
+
+}
+.price-table{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.book-detail-price-amount{
+    padding: 0 5px;
+    flex-grow: 1; /* 남은 공간을 채우도록 설정 */
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--primary-color);
+    font-size: 18px;
+
+
+}
+.book-detail-heart svg path {
+    transition: fill 0.3s ease; /* 색상 변경에 부드러운 애니메이션 추가 */
+}
+
+.book-detail-heart:hover svg path {
+    fill:  var(--primary-color);
+}
+
+.review-container {
+    width: 1250px;
+    height: 400px;
+    display: flex;
+    flex-wrap: nowrap; /* 줄바꿈을 방지하여 가로로 배치 */
+    gap: 20px; /* 카드 사이의 간격 */
+    border: 1px solid #ddd; /* 컨테이너 외곽선 (선택 사항) */
+    overflow-x: auto; /* 좌우 스크롤 허용 */
+    overflow-y: hidden; /* 세로 스크롤 비활성화 */
+    margin: 0 auto; /* 중앙 정렬 */
     padding: 10px;
+    background-color: #f9f9f9; /* 배경색 (선택 사항) */
+    white-space: nowrap; /* 가로 스크롤 효과를 위한 설정 */
+    /* 스크롤바 스타일 */
+    scrollbar-width: none; /* Firefox용 */
+    -ms-overflow-style: none; /* IE 및 Edge용 */
+}
+
+.review-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge용 */
+}
+
+.review-card {
+    width: 280px;
+    height: 350px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center; /* 콘텐츠 수직 중앙 정렬 */
+    justify-content: center; /* 콘텐츠 수평 중앙 정렬 */
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: "Pretendard Variable", "Noto Sans KR", sans-serif;
+    font-size: 16px;
+    color: #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 0 0 auto; /* 카드 크기를 고정하여 스크롤에 맞게 배치 */
+}
+
+.review-card:hover {
+    transform: translateY(-5px); /* 호버 시 살짝 올라가는 효과 */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 강화 */
+}
+
+.book-detail-delivery{
+    width: 100%;
+    height: 200px;
+    background-color: #ececec;
+
+}
+
+.book-detail-image {
+    width: 100%;
+    height: 100%;
+    background-color: #f0f0f0;
+    margin: 0 auto;
+    border-radius: 4px;
+    object-fit: contain;
+    padding: 20px;
+
+}
+.book-detail-description-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 콘텐츠 수직 중앙 정렬 */
+    justify-content: flex-start; /* 콘텐츠 수평 중앙 정렬 */
+    height: fit-content;
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+.review-list-flex {
+    display: flex; /* Flex 컨테이너로 설정하여 자식 요소가 좌우로 정렬되게 함 */
+    flex-wrap: wrap; /* 카드가 화면 너비를 초과하면 다음 줄로 이동하도록 설정 */
+    gap: 20px; /* 각 리뷰 카드 간의 간격 설정 */
+}
+
+.review-card:hover {
+    background-color: #e9e9e9; /* 호버 시 배경색 변경 */
+}
+.slider-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.review-list-flex {
+    display: flex;
+    flex-wrap: nowrap; /* 줄 바꿈 방지 */
+    overflow-x: hidden; /* 숨겨진 리뷰는 보이지 않도록 */
+    scroll-behavior: smooth;
+    width: 80%; /* 전체 너비의 80%로 설정하여 좌우 버튼 공간 확보 */
+}
+.review-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    width: 200px; /* 각 리뷰 카드의 너비 설정 */
+    margin-right: 10px; /* 카드 간 간격 설정 */
+    transition: background-color 0.3s ease;
+    flex: 0 0 auto; /* 카드들이 줄 바꿈되지 않도록 설정 */
+    display: flex;
+    flex-direction: column; /* 콘텐츠를 세로로 배치 */
+    justify-content: space-between; /* 제목과 평점 사이 공간 확보 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+}
+.review-title {
+    font-size: 1.2rem; /* 제목 크기 */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px; /* 제목과 평점 사이 간격 추가 */
+}
+
+.review-rating-container {
+    display: flex;
+    flex-direction: column; /* 평점 표시를 세로로 정렬 */
+    align-items: flex-start;
+    gap: 5px; /* 평점과 별점 사이 간격 추가 */
+}
+
+.review-card:hover {
+    background-color: #e9e9e9;
+}
+
+.no-review-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; /* 높이를 설정해 영역 확보 */
+    text-align: center;
+}
+.no-review-message {
+    font-size: 2rem; /* 글자 크기 키움 */
+    font-weight: bold; /* 글자 굵게 */
+    color: #555; /* 글자 색상 설정 */
 }

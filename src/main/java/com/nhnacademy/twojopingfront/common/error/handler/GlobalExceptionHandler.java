@@ -37,11 +37,15 @@ public class GlobalExceptionHandler {
      * @return 리다이렉트 URL
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public String handleValidationException(MethodArgumentNotValidException ex, RedirectAttributes redirectAttributes) {
+    public String handleValidationException(MethodArgumentNotValidException ex, RedirectAttributes redirectAttributes, Model model) {
         BindingResult result = ex.getBindingResult();
 
         Map<String, String> errors = result.getFieldErrors().stream()
-                .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+                .collect(Collectors.toMap(
+                        FieldError::getField,
+                        FieldError::getDefaultMessage,
+                        (existing, replacement) -> existing // 기존 값 유지
+                ));
 
         Object target = result.getTarget();
         if (target != null) {
@@ -52,6 +56,9 @@ public class GlobalExceptionHandler {
                 } catch (IllegalAccessException ignored) { }
             }
         }
+
+        redirectAttributes.addFlashAttribute("errorCode", "400");
+        redirectAttributes.addFlashAttribute("errorMessage", errors.toString());
         redirectAttributes.addFlashAttribute("errors", errors);
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -83,6 +90,7 @@ public class GlobalExceptionHandler {
         model.addAttribute("errorResponse", clientError);
 
         if ("REDIRECT".equals(ex.getErrorResponse().redirectType().toString())) {
+
 
             return "redirect:" + ex.getErrorResponse().url();
 

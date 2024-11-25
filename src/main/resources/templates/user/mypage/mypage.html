@@ -6,31 +6,7 @@
     <title>마이페이지</title>
     <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
 
-    <style>
-        .tier-image{
-            height: 60px;
-            width: 60px;
-        }
-        .tier-usage-container{
-            height: 100%;
-            width: 100px; /* 고정 너비 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            overflow: hidden; /* 내용이 넘칠 경우 자르기 */
-
-        }
-        .responsive-text {
-            font-size: clamp(6px, 4vw, 14px); /* 최소 10px, 최대 14px */
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            text-align: center; /* 텍스트 중앙 정렬 */
-            max-width: 100%; /* 부모 컨테이너 너비에 맞추기 */
-        }
-    </style>
-
+ 
 </head>
 <body>
 <!-- 메인 컨텐츠 영역 -->
@@ -104,8 +80,8 @@
 
                     <div class="coupon-info-container1">
 
-                        <a href="#" class="coupon-info-container2">
-
+                        <a href="/mypage/my-coupon" class="coupon-info-container2 font-default">
+                            <span>내 쿠폰함</span>
                         </a>
                         <a href="#" class="coupon-info-container2">
 

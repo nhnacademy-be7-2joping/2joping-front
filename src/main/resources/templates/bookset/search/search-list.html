@@ -10,115 +10,143 @@
 <body>
 
 <div class="container" layout:fragment="content">
-    <!-- 검색 입력 -->
-    <div class="search-container">
-        <form action="/books/search" method="get">
-            <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
-            <button type="submit" class="btn btn-primary">검색</button>
-        </form>
-    </div>
-
-    <!-- 정렬 버튼 -->
-    <div class="sort-buttons-section">
-        <div class="sort-buttons">
-            <form action="/books/search" method="get">
-                <input type="hidden" name="keyword" th:value="${keyword}">
-                <input type="hidden" name="sort" value="popularity">
-                <button type="submit" class="btn btn-outline-secondary">인기도순</button>
-            </form>
-            <form action="/books/search" method="get">
-                <input type="hidden" name="keyword" th:value="${keyword}">
-                <input type="hidden" name="sort" value="newest">
-                <button type="submit" class="btn btn-outline-secondary">신상품순</button>
-            </form>
-            <form action="/books/search" method="get">
-                <input type="hidden" name="keyword" th:value="${keyword}">
-                <input type="hidden" name="sort" value="lowest_price">
-                <button type="submit" class="btn btn-outline-secondary">최저가순</button>
-            </form>
-            <form action="/books/search" method="get">
-                <input type="hidden" name="keyword" th:value="${keyword}">
-                <input type="hidden" name="sort" value="highest_price">
-                <button type="submit" class="btn btn-outline-secondary">최고가순</button>
-            </form>
-            <form action="/books/search" method="get">
-                <input type="hidden" name="keyword" th:value="${keyword}">
-                <input type="hidden" name="sort" value="rating">
-                <button type="submit" class="btn btn-outline-secondary">평점순</button>
-            </form>
-            <form action="/books/search" method="get">
-                <input type="hidden" name="keyword" th:value="${keyword}">
-                <input type="hidden" name="sort" value="reviews">
-                <button type="submit" class="btn btn-outline-secondary">리뷰순</button>
-            </form>
+    <div class="content-wrapper">
+        <!-- 카테고리 사이드바 -->
+        <div class="category-sidebar">
+            <ul class="category-list">
+                <li th:each="category : ${categories}"
+                    th:classappend="${categoryId == category.categoryId} ? 'active-category'">
+                    <span class="category-item">
+                        <a th:href="@{/books/search(categoryId=${category.categoryId}, keyword=${keyword}, sort=${sort})}"
+                           th:text="${category.name}"></a>
+                    </span>
+                </li>
+            </ul>
         </div>
-    </div>
+        <div class="main-content">
+            <!-- 검색 입력 -->
+            <div class="search-container">
+                <form action="/books/search" method="get">
+                    <input type="hidden" name="categoryId" th:value="${categoryId}">
+                    <input type="text" name="keyword" placeholder="검색어를 입력하세요" th:value="${keyword}">
+                    <button type="submit" class="btn btn-primary">검색</button>
+                </form>
+            </div>
 
-    <!-- 도서 목록 -->
-    <div class="card-container">
-        <div class="no-results" th:if="${books.totalElements == 0}">
-            <p>검색 결과가 없습니다.</p>
-        </div>
-        <div th:each="book, iterStat : ${books.content}" class="book-card-wrapper">
-            <!-- 번호 표시 -->
-            <div class="book-index" th:text="${(books.number * books.size) + iterStat.index + 1}"></div>
-
-            <!-- 도서 카드 -->
-            <a class="book-card" th:href="@{/books/{bookId}(bookId=${book.bookId})}">
-
-                <!-- 썸네일 -->
-                <img th:src="${book.thumbnail != null and book.thumbnail != '' ? book.thumbnail : '/images/default-book-image.jpg'}"
-                     alt="썸네일"
-                     class="book-thumbnail">
-
-                <!-- 도서 정보 -->
-                <div class="book-info">
-                    <div class="book-title" th:title="${book.bookTitle}" th:text="${book.bookTitle}"></div>
-
-                    <!-- 기여자, 출판사, 출판일시 -->
-                    <div class="book-cpp">
-                    <span  class="book-contributors" th:each="contributor, iterStat : ${book.bookContributor}">
-                        <span th:text="'[' + ${contributor.role} + '] ' + ${contributor.name}"></span>
-                        <span th:if="!${iterStat.last}" th:text="'| '"></span>
-                    </span>
-                        <span class="book-separator">|</span>
-                        <span class="book-publisher" th:text="${book.bookPublisher}"></span>
-                        <span class="book-separator">|</span>
-                        <span class="book-published-at"
-                              th:text="${#strings.substring(book.bookPublishedAt, 0, 10)}"></span>
-                    </div>
-
-                    <!-- 카테고리 -->
-                    <div class="book-category" th:each="category : ${book.bookCategory}"
-                         th:text="${category.name}"></div>
-
-                    <!-- 정가 -->
-                    <div class="book-price">
-                        <span class="book-retail-price" th:text="'정가: ' + ${book.bookRetailPrice} + '원'"></span>
-                        <span class="discount-percentage"
-                              th:if="${book.bookRetailPrice > 0 and book.bookSellingPrice < book.bookRetailPrice}"
-                              th:text="'(' + ${T(java.lang.String).format('%.1f', ((book.bookRetailPrice - book.bookSellingPrice) * 100.0) / book.bookRetailPrice)} + '% 할인)'">
-                    </span>
-                    </div>
-
-                    <!-- 판매가 -->
-                    <div class="book-selling-price" th:text="'판매가: ' + ${book.bookSellingPrice} + '원'"></div>
-
-                    <!-- 평점, 리뷰수 -->
-                    <div class="book-rating">
-                        <span th:text="${book.bookRatingAvg != null ? #strings.repeat('★', T(java.lang.Math).round(book.bookRatingAvg)) +
-                                        #strings.repeat('☆', 5 - T(java.lang.Math).round(book.bookRatingAvg)) : '☆☆☆☆☆'}"></span>
-                        <span th:text="${book.bookRatingAvg != null ? book.bookRatingAvg : '0.0'}"></span>
-                        <span class="review-count"
-                              th:text="'(' + ${book.bookReviewCount != null ? book.bookReviewCount : '0'} + ')'"></span>
-                    </div>
-
-                    <!-- 태그 -->
-                    <span class="book-tags">
-                        <span th:each="tag : ${book.bookTag}" th:text="' #' + ${tag.name}"></span>
-                    </span>
+            <!-- 정렬 버튼 -->
+            <div class="sort-buttons-section">
+                <div class="sort-buttons">
+                    <form action="/books/search" method="get">
+                        <input type="hidden" name="categoryId" th:value="${categoryId}">
+                        <input type="hidden" name="keyword" th:value="${keyword}">
+                        <input type="hidden" name="sort" value="popularity">
+                        <button type="submit" class="btn btn-outline-secondary">인기도순</button>
+                    </form>
+                    <form action="/books/search" method="get">
+                        <input type="hidden" name="categoryId" th:value="${categoryId}">
+                        <input type="hidden" name="keyword" th:value="${keyword}">
+                        <input type="hidden" name="sort" value="newest">
+                        <button type="submit" class="btn btn-outline-secondary">신상품순</button>
+                    </form>
+                    <form action="/books/search" method="get">
+                        <input type="hidden" name="categoryId" th:value="${categoryId}">
+                        <input type="hidden" name="keyword" th:value="${keyword}">
+                        <input type="hidden" name="sort" value="lowest_price">
+                        <button type="submit" class="btn btn-outline-secondary">최저가순</button>
+                    </form>
+                    <form action="/books/search" method="get">
+                        <input type="hidden" name="categoryId" th:value="${categoryId}">
+                        <input type="hidden" name="keyword" th:value="${keyword}">
+                        <input type="hidden" name="sort" value="highest_price">
+                        <button type="submit" class="btn btn-outline-secondary">최고가순</button>
+                    </form>
+                    <form action="/books/search" method="get">
+                        <input type="hidden" name="categoryId" th:value="${categoryId}">
+                        <input type="hidden" name="keyword" th:value="${keyword}">
+                        <input type="hidden" name="sort" value="rating">
+                        <button type="submit" class="btn btn-outline-secondary">평점순</button>
+                    </form>
+                    <form action="/books/search" method="get">
+                        <input type="hidden" name="categoryId" th:value="${categoryId}">
+                        <input type="hidden" name="keyword" th:value="${keyword}">
+                        <input type="hidden" name="sort" value="reviews">
+                        <button type="submit" class="btn btn-outline-secondary">리뷰순</button>
+                    </form>
                 </div>
-            </a>
+            </div>
+
+            <!-- 도서 목록 -->
+            <div class="card-container">
+                <div class="no-results" th:if="${books.totalElements == 0}">
+                    <p>검색 결과가 없습니다.</p>
+                </div>
+                <div th:each="book, iterStat : ${books.content}" class="book-card-wrapper">
+                    <!-- 번호 표시 -->
+                    <div class="book-index" th:text="${(books.number * books.size) + iterStat.index + 1}"></div>
+
+                    <!-- 도서 카드 -->
+                    <a class="book-card" th:href="@{/books/{bookId}(bookId=${book.bookId})}">
+
+                        <!-- 썸네일 -->
+                        <img th:src="${book.thumbnail != null and book.thumbnail != '' ? book.thumbnail : '/images/default-book-image.jpg'}"
+                             alt="썸네일"
+                             class="book-thumbnail">
+
+                        <!-- 도서 정보 -->
+                        <div class="book-info">
+                            <div class="book-title" th:title="${book.bookTitle}" th:text="${book.bookTitle}"></div>
+
+                            <!-- 기여자, 출판사, 출판일시 -->
+                            <div class="book-cpp">
+                                <span class="book-contributors"
+                                      th:each="contributor, iterStat : ${book.bookContributor}">
+                                    <span th:text="'[' + ${contributor.role} + '] ' + ${contributor.name}"></span>
+                                    <span th:if="!${iterStat.last}" th:text="'| '"></span>
+                                </span>
+                                <span class="book-separator">|</span>
+                                <span class="book-publisher" th:text="${book.bookPublisher}"></span>
+                                <span class="book-separator">|</span>
+                                <span class="book-published-at"
+                                      th:text="${#strings.substring(book.bookPublishedAt, 0, 10)}"></span>
+                            </div>
+
+                            <!-- 카테고리 -->
+                            <div class="book-category">
+                                <span th:each="category, iterStat : ${book.bookCategory}">
+                                    <span th:text="${category.name}"></span>
+                                    <span th:if="!${iterStat.last}" th:text="' > '"></span>
+                                </span>
+                            </div>
+
+                            <!-- 정가 -->
+                            <div class="book-price">
+                                <span class="book-retail-price" th:text="'정가: ' + ${book.bookRetailPrice} + '원'"></span>
+                                <span class="discount-percentage"
+                                      th:if="${book.bookRetailPrice > 0 and book.bookSellingPrice < book.bookRetailPrice}"
+                                      th:text="'(' + ${T(java.lang.String).format('%.1f', ((book.bookRetailPrice - book.bookSellingPrice) * 100.0) / book.bookRetailPrice)} + '% 할인)'">
+                                </span>
+                            </div>
+
+                            <!-- 판매가 -->
+                            <div class="book-selling-price" th:text="'판매가: ' + ${book.bookSellingPrice} + '원'"></div>
+
+                            <!-- 평점, 리뷰수 -->
+                            <div class="book-rating">
+                               <span th:text="${book.bookRatingAvg != null ? #strings.repeat('★', T(java.lang.Math).round(book.bookRatingAvg)) +
+                                        #strings.repeat('☆', 5 - T(java.lang.Math).round(book.bookRatingAvg)) : '☆☆☆☆☆'}"></span>
+                                <span th:text="${book.bookRatingAvg != null ? book.bookRatingAvg : '0.0'}"></span>
+                                <span class="review-count"
+                                      th:text="'(' + ${book.bookReviewCount != null ? book.bookReviewCount : '0'} + ')'"></span>
+                            </div>
+
+                            <!-- 태그 -->
+                            <span class="book-tags">
+                                <span th:each="tag : ${book.bookTag}" th:text="' #' + ${tag.name}"></span>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -130,7 +158,7 @@
             <li class="page-item" th:classappend="${!books.hasPrevious()} ? 'disabled'">
                 <a class="page-link"
                    th:if="${books.hasPrevious()}"
-                   th:href="@{${currentPath}(keyword=${keyword}, sort=${sort}, page=${books.number - 1}, size=${books.size})}"
+                   th:href="@{${currentPath}(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${books.number - 1}, size=${books.size})}"
                    aria-label="Previous">&laquo; 이전</a>
                 <span class="page-link disabled" th:if="${!books.hasPrevious()}">&laquo; 이전</span>
             </li>
@@ -140,7 +168,7 @@
                 th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}"
                 th:classappend="${i == books.number} ? 'active'">
                 <a class="page-link"
-                   th:href="@{${currentPath}(keyword=${keyword}, sort=${sort}, page=${i}, size=${books.size})}"
+                   th:href="@{${currentPath}(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${i}, size=${books.size})}"
                    th:text="${i + 1}">1</a>
             </li>
 
@@ -148,7 +176,7 @@
             <li class="page-item" th:classappend="${!books.hasNext()} ? 'disabled'">
                 <a class="page-link"
                    th:if="${books.hasNext()}"
-                   th:href="@{${currentPath}(keyword=${keyword}, sort=${sort}, page=${books.number + 1}, size=${books.size})}"
+                   th:href="@{${currentPath}(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${books.number + 1}, size=${books.size})}"
                    aria-label="Next">다음 &raquo;</a>
                 <span class="page-link disabled" th:if="${!books.hasNext()}">다음 &raquo;</span>
             </li>

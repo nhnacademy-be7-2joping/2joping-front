@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"  >
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,12 +18,17 @@
   min-height: 800px;
 
 }
+
   </style>
 </head>
 <body>
 <!-- 공통 Navigation Bar -->
 <nav class="navbar" id="navbar">
   <div class="navbar-container">
+    <div id="error-container"
+         th:if="${errorCode != null and errorMessage != null}"
+         th:attr="data-error-code=${errorCode}, data-error-message=${errorMessage}">
+    </div>
     <!-- 로고 -->
     <a class="navbar-brand" href="/">
       <img th:src="@{/images/logo.png}" alt="logo" width="200"/>
@@ -102,9 +107,15 @@
 <!-- 두 번째 네비게이션 바 -->
 <div class="sub-navbar">
   <div class="sub-navbar-container">
-    <a href="/books/search?keyword=&sort=popularity" class="sub-nav-link">인기도서</a>
-    <a href="#" class="sub-nav-link">국내도서</a>
-    <a href="#" class="sub-nav-link">외국도서</a>
+    <!-- 인기 도서 -->
+    <a href="/" class="sub-nav-link"
+       th:classappend="${categoryId == null} ? 'active' : ''">인기도서</a>
+    <!-- 국내 도서 -->
+    <a href="/?categoryId=1&sort=relevance" class="sub-nav-link"
+       th:classappend="${categoryId == 1} ? 'active' : ''">국내도서</a>
+    <!-- 외국 도서 -->
+    <a href="/?categoryId=2&sort=relevance" class="sub-nav-link"
+       th:classappend="${categoryId == 2} ? 'active' : ''">외국도서</a>
   </div>
 </div>
 
@@ -132,7 +143,8 @@
 
 <script th:src="@{/js/index-script.js}"></script>
 <script th:src="@{/js/profile-drop-down.js}"></script>
-
+<script th:src="@{/js/book-detail-button.js}"></script>
+<script th:src="@{/js/error-alert.js}"></script>
 
 
 </body>
