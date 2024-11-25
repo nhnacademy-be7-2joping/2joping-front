@@ -5,6 +5,9 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestD
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
+import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
@@ -29,6 +32,35 @@ public interface BookClient {
      */
     @GetMapping("/tags")
     List<TagResponseDto> getAllTags();
+
+    /**
+     * 출판사 데이터를 가져오는 메서드
+     * @return 모든 출판사 리스트
+     */
+    @GetMapping("/publishers/list")
+    List<PublisherResponseDto> getAllPublishersForRegister();
+
+    /**
+     * 기여자 데이터를 가져오는 메서드
+     * @return 모든 기여자와 역할 리스트
+     */
+    @GetMapping("/contributors/active")
+    List<ContributorNameRoleResponseDto> getActiveContributors();
+
+    /**
+     * 최상위 카테고리 데이터를 가져오는 메서드
+     * @return 최상위 카테고리 리스트
+     */
+    @GetMapping("/categories/top")
+    List<CategoryResponseDto> getTopCategories();
+
+    /**
+     * 특정 카테고리의 자식 카테고리 데이터를 가져오는 메서드
+     * @param categoryId 부모 카테고리 ID
+     * @return 자식 카테고리 리스트
+     */
+    @GetMapping("/categories/{categoryId}/children")
+    List<CategoryResponseDto> getChildCategories(@PathVariable("categoryId") Long categoryId);
 
     /**
      * 전체 도서 목록 조회
