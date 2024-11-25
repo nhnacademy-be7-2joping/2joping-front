@@ -7,21 +7,15 @@
     <link rel="stylesheet" th:href="@{/css/review-detail-style.css}">
     <link rel="stylesheet" th:href="@{/css/review-star-style.css}">
     <script th:src="@{/js/review-detail.js}" defer></script>
+
 </head>
 <body>
 <div layout:fragment="content" class="review-detail-container">
     <h1>리뷰 상세 정보</h1>
 
-    <!-- 리뷰 ID, 회원 ID, 도서 ID -->
-    <div>
-        <p><strong>리뷰 ID:</strong> <span th:text="${review.reviewId}">리뷰 ID 없음</span></p>
-        <p><strong>회원 ID:</strong> <span th:text="${review.customerId}">회원 ID 없음</span></p>
-        <p><strong>도서 ID:</strong> <span th:text="${review.bookId}">도서 ID 없음</span></p>
-    </div>
-
     <!-- 평점 -->
-    <div>
-        <p><span class="rating-label"><strong>평점:</strong></span></p>
+    <div class="rating-container">
+        <span class="rating-label"><strong>평점:</strong></span>
         <div class="stars" id="rating-stars" th:attr="data-rating=${review.ratingValue}">
             <span class="star">★</span>
             <span class="star">★</span>
@@ -38,10 +32,10 @@
     </div>
 
     <!-- 리뷰 이미지 -->
-    <div>
+    <!-- 리뷰 이미지 (이미지가 있을 때만 렌더링) -->
+    <div th:if="${review.reviewImage != null}">
         <p><strong>이미지:</strong></p>
-        <img th:src="${review.reviewImage != null ? review.reviewImage : '/images/default-review-image.jpg'}"
-             alt="리뷰 이미지" class="review-image">
+        <img th:src="${review.reviewImage}" alt="리뷰 이미지" class="review-image">
     </div>
 
     <!-- 작성일, 수정일 -->
