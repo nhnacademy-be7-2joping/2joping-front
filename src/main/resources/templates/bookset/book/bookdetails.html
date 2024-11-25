@@ -87,13 +87,13 @@
           <!-- 회원 배송 정보 -->
           <div th:each="policy : ${shipmentPolicies}" th:if="${policy.isMemberOnly}">
             <ul>
-              <li><span th:text="${policy.minOrderAmount} + '원 이상 주문시, 회원 배송비 ' + ${@customFormatter.formatCurrency(policy.shippingFee)} + '원'"></span></li>
+              <li><span th:text="${@customFormatter.formatCurrency(policy.minOrderAmount)} + '원 이상 주문시, 회원 배송비 ' + ${@customFormatter.formatCurrency(policy.shippingFee)} + '원'"></span></li>
             </ul>
           </div>
           <!-- 비회원 배송 정보 -->
           <div th:each="policy : ${shipmentPolicies}" th:if="${!policy.isMemberOnly}">
             <ul>
-              <li><span th:text="${policy.minOrderAmount} + '원 이상 주문시, 비회원 배송비 ' + ${@customFormatter.formatCurrency(policy.shippingFee)} + '원'"></span></li>
+              <li><span th:text="${@customFormatter.formatCurrency(policy.minOrderAmount)} + '원 이상 주문시, 비회원 배송비 ' + ${@customFormatter.formatCurrency(policy.shippingFee)} + '원'"></span></li>
             </ul>
           </div>
         </div>
