@@ -10,7 +10,7 @@ import com.nhnacademy.twojopingfront.admin.pointType.enums.PointTypeEnum;
  */
 public record PointTypeResponseDto (
 
-        Long id,
+        Long pointTypeId,
         PointTypeEnum type,
         Integer accVal,
         String name,

@@ -10,43 +10,42 @@
 </head>
 <body>
 <div layout:fragment="content">
-<h1 th:text="${policy?.shipmentPolicyId == null ? '배송 정책 추가' : '배송 정책 수정'}"></h1>
+    <h1 th:text="${policy?.shipmentPolicyId == null ? '배송 정책 추가' : '배송 정책 수정'}"></h1>
 
-<!-- 폼 전송 경로 결정: ID가 있으면 수정, 없으면 추가 -->
-<form th:action="${policy?.shipmentPolicyId == null ? '/admin/shipment-policies' : '/admin/shipment-policies/' + policy.shipmentPolicyId + '/edit'}"
-      th:object="${policy}" method="post">
+    <!-- 폼 전송 경로 결정: ID가 있으면 수정, 없으면 추가 -->
+    <form th:action="${policy?.shipmentPolicyId == null ? '/admin/shipment-policies' : '/admin/shipment-policies/' + policy.shipmentPolicyId + '/edit'}"
+          th:object="${policy}" method="post">
 
-    <!-- 정책 이름 필드 -->
-    <div>
-        <label for="name">정책 이름:</label>
-        <input type="text" id="name" th:field="*{name}" required>
-    </div>
+        <!-- 정책 이름 필드 -->
+        <div class="mb-3">
+            <label class="form-label" for="name">정책 이름:</label>
+            <input class="form-control" type="text" id="name" th:field="*{name}" required>
+        </div>
 
-    <!-- 최소 주문 금액 필드 -->
-    <div>
-        <label for="minOrderAmount">최소 주문 금액:</label>
-        <input type="number" id="minOrderAmount" th:field="*{minOrderAmount}" required min="0" title="최소 주문 금액은 0 이상이어야 합니다.">
-    </div>
+        <!-- 최소 주문 금액 필드 -->
+        <div class="mb-3">
+            <label class="form-label" for="minOrderAmount">최소 주문 금액:</label>
+            <input class="form-control" type="number" id="minOrderAmount" th:field="*{minOrderAmount}" required min="0"
+                   title="최소 주문 금액은 0 이상이어야 합니다.">
+        </div>
 
-    <!-- 회원 전용 여부 필드 -->
-    <div>
-        <label for="isMemberOnly">회원 전용:</label>
-        <input type="checkbox" id="isMemberOnly" th:field="*{isMemberOnly}">
-    </div>
+        <!-- 회원 전용 여부 필드 -->
+        <div class="mb-3">
+            <label class="form-label" for="isMemberOnly">회원 전용:</label>
+            <input type="checkbox" id="isMemberOnly" th:field="*{isMemberOnly}">
+        </div>
 
-    <!-- 배송비 필드 -->
-    <div>
-        <label for="shippingFee">배송비:</label>
-        <input type="number" id="shippingFee" th:field="*{shippingFee}" required min="0" title="배송비는 0 이상이어야 합니다.">
-    </div>
+        <!-- 배송비 필드 -->
+        <div class="mb-3">
+            <label class="form-label" for="shippingFee">배송비:</label>
+            <input class="form-control" type="number" id="shippingFee" th:field="*{shippingFee}" required min="0" title="배송비는 0 이상이어야 합니다.">
+        </div>
 
-    <!-- 제출 버튼 -->
-    <button type="submit" th:text="${#strings.isEmpty(policy.shipmentPolicyId) ? '추가' : '수정'}"></button>
-
-</form>
-
-<!-- 취소 버튼 -->
-<a href="/admin/shipment-policies">목록으로 돌아가기</a>
+        <!-- 제출 버튼 -->
+        <button class="btn btn-primary" type="submit" th:text="${#strings.isEmpty(policy.shipmentPolicyId) ? '추가' : '수정'}"></button>
+        <!-- 목록 버튼 -->
+        <a class="btn btn-secondary" href="/admin/carriers">목록</a>
+    </form>
 </div>
 </body>
 </html>

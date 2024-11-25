@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>카테고리 관리</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container mt-4">
+    <h1 class="mb-4">카테고리 관리</h1>
+
+    <!-- 성공 메시지 표시 -->
+    <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
+
+    <!-- 카테고리 목록 테이블 -->
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>카테고리 ID</th>
+            <th>카테고리 이름</th>
+            <th>상위 카테고리</th>
+            <th>생성일</th>
+            <th>수정일</th>
+            <th>관리</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="category : ${categories}">
+            <td th:text="${category.categoryId}">1</td>
+            <td th:text="${category.name}">카테고리명</td>
+            <td th:text="${category.parentCategoryId != null ? category.parentCategoryName : '없음'}">상위 카테고리</td>
+            <td th:text="${#temporals.format(category.createdAt, 'yyyy-MM-dd HH:mm')}">2024-01-01</td>
+            <td th:text="${#temporals.format(category.updatedAt, 'yyyy-MM-dd HH:mm')}">2024-01-01</td>
+            <td>
+              <div class="btn-group">
+                <a th:href="@{|/admin/categories/${category.categoryId}/edit|}"
+                   class="btn btn-sm btn-warning">수정</a>
+                <form th:action="@{|/admin/categories/${category.categoryId}/delete|}"
+                      method="post" class="d-inline">
+                  <button type="submit" class="btn btn-sm btn-danger ms-1"
+                          onclick="return confirm('정말 삭제하시겠습니까? 하위 카테고리가 있다면 삭제할 수 없습니다.');">
+                    삭제
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

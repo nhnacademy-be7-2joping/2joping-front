@@ -1,6 +1,8 @@
 package com.nhnacademy.twojopingfront.bookset.book.dto.request;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 public record BookCreateHtmlRequestDto(
         String publisherName,
@@ -14,6 +16,10 @@ public record BookCreateHtmlRequestDto(
         boolean isActive,
         int remainQuantity,
         String contributorList,
-        String category,
-        String tagList
+        // List<Map<String, String>> contributorList,
+        // String category,
+        Long topCategoryId,
+        Long middleCategoryId,
+        Long bottomCategoryId,
+        List<String> tagList
 ) {}
