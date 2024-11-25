@@ -55,8 +55,10 @@ async function startTossPayment() {
             successUrl: window.location.origin + "/orders/success",
             failUrl: window.location.origin + "/orders/fail",
             customerName: name,
-            customerMobilePhone: `${document.getElementById('phone').textContent}`,
+            customerMobilePhone: `${document.getElementById('phone').value.replace(/-/g, '')}`,
         });
+        const paymentMethod = await paymentMethodWidget.getSelectedPaymentMethod();
+        paymentMethod.destroy();
     });
 }
 
