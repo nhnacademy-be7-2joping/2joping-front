@@ -111,7 +111,7 @@ public interface BookClient {
      * @return 수정된 도서에 대한 응답 정보
      */
     @PutMapping(value = "/admin/books/{bookId}")
-    BookUpdateResponseDto updateBook(@RequestBody BookUpdateRequestDto bookUpdateRequestDto);
+    BookUpdateResponseDto updateBook(@PathVariable("bookId") Long bookId, @RequestBody BookUpdateRequestDto bookUpdateRequestDto);
 }
 
 

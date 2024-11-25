@@ -151,9 +151,9 @@
 <div class="container" layout:fragment="content">
     <h2>책 수정</h2>
     <div class="card">
-        <form id="bookModifyForm" th:action="@{/admin/books/modify/{bookId}(bookId=${book.bookId ?: 0})}" method="post" enctype="multipart/form-data">
+        <form id="bookModifyForm" th:action="@{|/admin/books/modify/${book.bookId}|}"
+              method="post" enctype="multipart/form-data">
 
-<!--              action="/admin/books/register"-->
             <input type="hidden" name="_method" value="put">
             <div class="mb-3">
                 <label for="title" class="form-label">책 제목</label>
@@ -167,12 +167,6 @@
 
             <div class="mb-3">
                 <label for="publisherName" class="form-label">출판사</label>
-<!--                <select class="form-control" id="publisherName" name="publisherName" required>-->
-<!--                    <option value="" disabled selected>출판사를 선택하세요</option>-->
-<!--                    <option th:each="publisher : ${publishers}"-->
-<!--                            th:value="${publisher.name()}"-->
-<!--                            th:text="${publisher.name()}"></option>-->
-<!--                </select>-->
                     <select class="form-control" id="publisherName" name="publisherName" required>
                         <option value="" disabled>출판사를 선택하세요</option>
                         <option th:each="publisher : ${publishers}" th:value="${publisher.name()}"
@@ -208,21 +202,47 @@
 
             <div class="mb-3">
                 <label for="thumbnailImage" class="form-label">썸네일 이미지</label>
-                <input type="file" class="form-control" id="thumbnailImage" name="thumbnailImage" accept="image/*">
-                <div>
-                    <img th:src="${book.thumbnailImageUrl}" alt="기존 썸네일" width="150">
-                    <label><input type="checkbox" name="removeThumbnailImage"> 삭제</label>
+                <div class="d-flex align-items-center">
+                    <input type="file" class="form-control me-2" id="thumbnailImage" name="thumbnailImage" accept="image/*">
+                    <div class="text-center">
+                        <img th:src="${book.thumbnailImageUrl}" alt="기존 썸네일" class="img-thumbnail mb-2" width="150">
+                        <div>
+                            <input type="checkbox" class="form-check-input" id="removeThumbnailImageCheckbox" name="removeThumbnailImage" value="true">
+                            <label for="removeThumbnailImageCheckbox" class="form-check-label">삭제</label>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="mb-3">
                 <label for="detailImage" class="form-label">상세 이미지</label>
-                <input type="file" class="form-control" id="detailImage" name="detailImage" accept="image/*">
-                <div>
-                    <img th:src="${book.detailImageUrl}" alt="기존 상세 이미지" width="150">
-                    <label><input type="checkbox" name="removeDetailImage"> 삭제</label>
+                <div class="d-flex align-items-center">
+                    <input type="file" class="form-control me-2" id="detailImage" name="detailImage" accept="image/*">
+                    <div class="text-center">
+                        <img th:src="${book.detailImageUrl}" alt="기존 상세 이미지" class="img-thumbnail mb-2" width="150">
+                        <div>
+                            <input type="checkbox" class="form-check-input" id="removeDetailImageCheckbox" name="removeDetailImage" value="true">
+                            <label for="removeDetailImageCheckbox" class="form-check-label">삭제</label>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const form = document.getElementById("bookModifyForm");
+                    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+
+                    form.addEventListener("submit", function () {
+                        checkboxes.forEach(checkbox => {
+                            if (!checkbox.checked) {
+                                checkbox.setAttribute("value", "false");
+                                checkbox.setAttribute("checked", true); // 항상 값을 전송하도록 강제
+                            }
+                        });
+                    });
+                });
+            </script>
 
             <div id="category-data"
                  th:data-top-category-id="${book.topCategoryId}"
@@ -351,75 +371,6 @@
             <div id="selectedContributors" class="mb-3 contributor-container">
                 <!-- 선택한 기여자 목록이 여기에 추가됩니다 -->
             </div>
-
-            <script>
-                // 기존 기여자 삭제 함수
-                function removeExistingContributor(button, name, role) {
-                    const contributorKey = `${name}|${role}`;
-                    const contributorListInput = document.getElementById("contributorList");
-                    let contributors = contributorListInput.value ? JSON.parse(contributorListInput.value) : [];
-
-                    // 배열에서 기여자 제거
-                    contributors = contributors.filter(contributor => `${contributor.name}|${contributor.role}` !== contributorKey);
-                    contributorListInput.value = JSON.stringify(contributors);
-
-                    // UI에서 항목 제거
-                    const contributorElement = button.parentElement;
-                    contributorElement.remove();
-                }
-
-                // 기여자 추가 기능
-                document.getElementById("addContributorButton").addEventListener("click", function () {
-                    const select = document.getElementById("existingContributors");
-                    const selectedContributors = document.getElementById("selectedContributors");
-                    const contributorListInput = document.getElementById("contributorList");
-
-                    // 기존 값 파싱
-                    let contributors = contributorListInput.value ? JSON.parse(contributorListInput.value) : [];
-
-                    // 선택된 기여자를 화면에 표시하고 배열에 추가
-                    Array.from(select.selectedOptions).forEach(option => {
-                        const [name, role] = option.value.split('|');
-                        const contributorKey = `${name}|${role}`;
-
-                        // 중복 추가 방지
-                        if (!contributors.some(contributor => contributor.name === name && contributor.role === role)) {
-                            contributors.push({ name, role });
-
-                            // 선택된 항목을 화면에 표시
-                            const div = document.createElement("div");
-                            div.classList.add("selected-contributor-item");
-                            div.setAttribute("data-contributor-key", contributorKey);
-
-                            const span = document.createElement("span");
-                            span.textContent = `[${role}] ${name}`;
-
-                            // 삭제 버튼 추가
-                            const deleteButton = document.createElement("button");
-                            deleteButton.textContent = "삭제";
-                            deleteButton.classList.add("btn", "btn-danger", "btn-sm");
-                            deleteButton.addEventListener("click", function () {
-                                // 배열에서 기여자 제거
-                                contributors = contributors.filter(contributor => `${contributor.name}|${contributor.role}` !== contributorKey);
-                                contributorListInput.value = JSON.stringify(contributors);
-
-                                // UI에서 항목 제거
-                                div.remove();
-                            });
-
-                            div.appendChild(span);
-                            div.appendChild(deleteButton);
-                            selectedContributors.appendChild(div);
-                        }
-                    });
-
-                    // 숨겨진 input 필드에 기여자 JSON 저장
-                    contributorListInput.value = JSON.stringify(contributors);
-
-                    // 선택 초기화
-                    select.selectedIndex = -1;
-                });
-            </script>
 
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
@@ -554,7 +505,7 @@
                           th:text="${tag.tagName}"
                           th:attr="data-tag-name=${tag.tagName}"
                           class="tag-item existing-tag"
-                          onclick="removeExistingTag(this)">
+                          onclick="addTag(this)">
         </span>
                 </div>
             </div>
@@ -573,13 +524,9 @@
             </div>
 
             <div class="mb-3">
-                <label for="selectedTags" class="form-label">최종 선택 태그</label>
+                <label for="selectedTags" class="form-label">선택된 태그</label>
                 <div id="selectedTags" class="tag-container">
-                    <!-- 선택된 태그가 여기에 추가됩니다 -->
-                    <span th:each="tag : ${book.tagList}"
-                          th:text="${tag.tagName}"
-                          th:attr="data-tag-name=${tag.tagName}"
-                          class="tag-item"></span>
+                    <!-- 초기에는 비어 있음 -->
                 </div>
             </div>
 
@@ -588,18 +535,6 @@
             <script>
                 // 선택된 태그를 배열로 관리
                 let selectedTags = [];
-
-                // 기존 태그 삭제 함수
-                function removeExistingTag(tagElement) {
-                    const tagName = tagElement.getAttribute('data-tag-name');
-                    const existingTagsContainer = document.getElementById('existingTags');
-
-                    // 기존 태그 UI에서 제거
-                    tagElement.remove();
-
-                    // 기존 태그를 선택된 태그로 이동
-                    addTag({ getAttribute: () => tagName });
-                }
 
                 // 태그 추가 함수
                 function addTag(tagElement) {
@@ -637,12 +572,22 @@
                     updateTagList();
                 }
 
-                // hidden input 업데이트 함수 수정
+                // hidden input 업데이트 함수
                 function updateTagList() {
                     const tagListInput = document.getElementById('tagList');
-                    // JSON.stringify로 배열이 이중으로 직렬화되는 문제 방지
                     tagListInput.value = selectedTags.join(","); // 콤마로 구분된 문자열로 전달
                 }
+
+                // 초기화 함수
+                document.addEventListener('DOMContentLoaded', function () {
+                    const selectedTagsContainer = document.getElementById('selectedTags');
+
+                    // 초기에는 비어 있게 설정
+                    selectedTagsContainer.innerHTML = '';
+
+                    // 숨겨진 input 초기화
+                    updateTagList();
+                });
             </script>
 
             <style>
@@ -683,15 +628,16 @@
                 }
             </style>
 
-
             <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable">
+                <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable" value="true"
+                       th:checked="${book.giftWrappable}">
                 <label class="form-check-label" for="giftWrappable">선물 포장 가능 여부</label>
             </div>
 
             <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="isActive" name="isActive">
-                <label class="form-check-label" for="isActive">활성 상태</label>
+                <input type="checkbox" class="form-check-input" id="isActive" name="isActive" value="true"
+                       th:checked="${book.isActive}">
+                <label class="form-check-label" for="giftWrappable">활성 상태</label>
             </div>
 
             <button type="submit" class="btn btn-primary">수정</button>

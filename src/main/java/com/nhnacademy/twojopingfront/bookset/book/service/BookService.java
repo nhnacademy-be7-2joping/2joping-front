@@ -199,10 +199,10 @@ public class BookService {
      * @param imageUploadRequestDto
      * @return 수정된 도서에 대한 응답 정보
      */
-    public BookUpdateResponseDto updateBook(BookUpdateHtmlRequestDto bookUpdateHtmlRequestDto, ImageUploadRequestDto imageUploadRequestDto) {
+    public BookUpdateResponseDto updateBook(Long bookId, BookUpdateHtmlRequestDto bookUpdateHtmlRequestDto, ImageUploadRequestDto imageUploadRequestDto) {
         String thumbnailImageUrl = saveImage(imageUploadRequestDto.thumbnailImage(), "thumbnail");
         String detailImageUrl = saveImage(imageUploadRequestDto.detailImage(), "detail");
         ImageUrlRequestDto imageUrlRequestDto = new ImageUrlRequestDto(thumbnailImageUrl, detailImageUrl);
-        return bookClient.updateBook(new BookUpdateRequestDto(bookUpdateHtmlRequestDto, imageUrlRequestDto));
+        return bookClient.updateBook(bookId, new BookUpdateRequestDto(bookUpdateHtmlRequestDto, imageUrlRequestDto));
     }
 }

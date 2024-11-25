@@ -162,41 +162,6 @@ public class BookController {
         return "bookset/book/book-modify";
     }
 
-    @PutMapping(value = "/admin/books/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public String updateBook(@RequestParam("contributorList") String contributorListJson,
-                             @ModelAttribute BookCreateHtmlRequestDto bookCreateHtmlRequestDto,
-                             @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
-                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
-        try {
-            BookCreateHtmlRequestDto updatedDto = new BookCreateHtmlRequestDto(
-                    bookCreateHtmlRequestDto.publisherName(),
-                    bookCreateHtmlRequestDto.title(),
-                    bookCreateHtmlRequestDto.description(),
-                    bookCreateHtmlRequestDto.publishedDate(),
-                    bookCreateHtmlRequestDto.isbn(),
-                    bookCreateHtmlRequestDto.retailPrice(),
-                    bookCreateHtmlRequestDto.sellingPrice(),
-                    bookCreateHtmlRequestDto.giftWrappable(),
-                    bookCreateHtmlRequestDto.isActive(),
-                    bookCreateHtmlRequestDto.remainQuantity(),
-                    contributorListJson,
-                    bookCreateHtmlRequestDto.topCategoryId(),
-                    bookCreateHtmlRequestDto.middleCategoryId(),
-                    bookCreateHtmlRequestDto.bottomCategoryId(),
-                    bookCreateHtmlRequestDto.tagList()
-            );
-
-            ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
-            bookService.createBook(updatedDto, imageUploadRequestDto);
-
-            return "redirect:/admin/books/get";
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            // 오류 발생 시에도 리다이렉트 (임의로 지정)
-            return "redirect:/admin/books/get";
-        }
-    }
-
     @PutMapping(value = "/admin/books/modify/{bookId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String updateBook(@PathVariable Long bookId,
                              @RequestParam("contributorList") String contributorListJson,
@@ -204,10 +169,11 @@ public class BookController {
                              @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
                              @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
         try {
+            System.out.println("Received DTO: " + bookUpdateHtmlRequestDto);
             BookUpdateHtmlRequestDto updatedDto = new BookUpdateHtmlRequestDto(
-                    bookUpdateHtmlRequestDto.publisherName(),
                     bookUpdateHtmlRequestDto.title(),
                     bookUpdateHtmlRequestDto.description(),
+                    bookUpdateHtmlRequestDto.publisherName(),
                     bookUpdateHtmlRequestDto.publishedDate(),
                     bookUpdateHtmlRequestDto.isbn(),
                     bookUpdateHtmlRequestDto.retailPrice(),
@@ -225,7 +191,7 @@ public class BookController {
             );
 
             ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
-            bookService.updateBook(updatedDto, imageUploadRequestDto);
+            bookService.updateBook(bookId, updatedDto, imageUploadRequestDto);
 
             return "redirect:/admin/books/get";
         } catch (Exception ex) {
