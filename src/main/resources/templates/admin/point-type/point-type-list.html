@@ -25,12 +25,12 @@
         </thead>
         <tbody>
         <tr th:each="pointType : ${pointTypes}">
-            <td th:text="${pointType.id}"></td>
+            <td th:text="${pointType.pointTypeId}"></td>
             <td th:text="${pointType.name}"></td>
             <td th:text="${pointType.accVal}"></td>
             <td th:text="${pointType.type}"></td>
             <td th:text="${pointType.isActive ? '활성' : '비활성'}"></td>
-            <td><a th:href="@{/admin/points/edit/{id}(id=${pointType.id})}" class="btn btn-success btn-sm">수정</a></td>
+            <td><a th:href="@{/admin/points/edit/{id}(id=${pointType.pointTypeId})}" class="btn btn-success btn-sm">수정</a></td>
         </tr>
         </tbody>
     </table>
