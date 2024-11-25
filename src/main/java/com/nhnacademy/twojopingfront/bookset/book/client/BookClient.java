@@ -2,6 +2,7 @@ package com.nhnacademy.twojopingfront.bookset.book.client;
 
 
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookAdminSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
@@ -70,6 +71,9 @@ public interface BookClient {
      */
     @GetMapping("/books/get")
     Page<BookSimpleResponseDto> getAllBooks(@RequestParam("page") int page, @RequestParam("size") int size);
+
+    @GetMapping("/books/get")
+    Page<BookAdminSimpleResponseDto> adminGetAllBooks(@RequestParam("page") int page, @RequestParam("size") int size);
 
 
     /**
