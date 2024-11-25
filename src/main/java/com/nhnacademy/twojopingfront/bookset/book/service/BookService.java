@@ -7,10 +7,14 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateHtmlRequ
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUrlRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookAdminSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.exception.FeignClientServerFailConnectionException;
+import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
+import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
 import com.nhnacademy.twojopingfront.common.error.enums.RedirectType;
@@ -113,6 +117,39 @@ public class BookService {
     }
 
     /**
+     * 출판사 데이터를 가져오는 메서드
+     * @return 모든 출판사 리스트
+     */
+    public List<PublisherResponseDto> getAllPublishersForRegister() {
+        return bookClient.getAllPublishersForRegister();
+    }
+
+    /**
+     * 기여자명과 기여자 역할 데이터를 가져오는 메서드
+     * @return 모든 기여자명과 역할 리스트
+     */
+    public List<ContributorNameRoleResponseDto> getActiveContributors() {
+        return bookClient.getActiveContributors();
+    }
+
+    /**
+     * 최상위 카테고리 데이터를 가져오는 메서드
+     * @return 최상위 카테고리 리스트
+     */
+    public List<CategoryResponseDto> getTopCategories() {
+        return bookClient.getTopCategories();
+    }
+
+    /**
+     * 특정 카테고리의 자식 카테고리 데이터를 가져오는 메서드
+     * @param categoryId 부모 카테고리 ID
+     * @return 자식 카테고리 리스트
+     */
+    public List<CategoryResponseDto> getChildCategories(Long categoryId) {
+        return bookClient.getChildCategories(categoryId);
+    }
+
+    /**
      * 전체 도서 목록을 가져오는 메서드
      * @return 도서 목록 페이지
      */
@@ -121,9 +158,16 @@ public class BookService {
     }
 
     /**
+     * 관리자용 전체 도서 목록을 가져오는 메서드
+     * @return 도서 목록 페이지
+     */
+    public Page<BookAdminSimpleResponseDto> adminGetAllBooks(int page, int size) {
+        return bookClient.adminGetAllBooks(page, size);
+    }
+
+    /**
      * 카테고리별 도서 목록을 가져오는 메서드
      * @param categoryId 카테고리 ID
-//     * @param pageable 페이징 정보
      * @return 해당 카테고리의 도서 목록 페이지
      */
     public Page<BookSimpleResponseDto> getBooksByCategoryId(@PathVariable Long categoryId, int page, int size) {

@@ -40,7 +40,7 @@ public class CategoryService {
         try {
             return categoryClient.getAllCategories().getBody();
         } catch (Exception e) {
-            throw categoriesCustomApiException("CATEGORY_FETCH_ERROR", "카테고리 목록을 불러올 수 없습니다.");
+            throw categoriesCustomApiException("CATEGORY_FETCH_ERROR", "카테고리 목록을 불러올 수 없습니다.", "/");
         }
     }
 
@@ -107,15 +107,19 @@ public class CategoryService {
      * @param errorMessage 오류 메시지
      * @return 생성된 CustomApiException
      */
-    private CustomApiException categoriesCustomApiException(String errorCode, String errorMessage) {
+    private CustomApiException categoriesCustomApiException(String errorCode, String errorMessage, String url) {
         ErrorResponseDto<?> errorResponse = new ErrorResponseDto<>(
                 500,
                 errorCode,
                 errorMessage,
                 RedirectType.REDIRECT,
-                "/admin/categories",
+                url,
                 null
         );
         return new CustomApiException(errorResponse);
+    }
+
+    private CustomApiException categoriesCustomApiException(String errorCode, String errorMessage) {
+        return categoriesCustomApiException(errorCode, errorMessage, "/admin/categories");
     }
 }
