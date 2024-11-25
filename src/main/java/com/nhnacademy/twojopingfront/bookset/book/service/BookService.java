@@ -197,5 +197,13 @@ public class BookService {
                     new ErrorResponseDto(404,"404","해당 도서를 찾을 수 없습니다.", RedirectType.REDIRECT,"/books/search", null));
         }
     }
+
+    /**
+     * 특정 도서를 비활성화하는 메서드
+     * @param bookId 비활성화할 도서 ID
+     */
+    public void deactivateBook(Long bookId) {
+        bookClient.deactivateBook(bookId);
+    }
 }
 
