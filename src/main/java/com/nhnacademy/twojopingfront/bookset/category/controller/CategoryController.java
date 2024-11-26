@@ -28,7 +28,7 @@ public class CategoryController {
      * @return 카테고리 목록 페이지
      */
     @GetMapping
-    public String getAllCategoriesPage(@PageableDefault(size = 10, sort = "categoryId") Pageable pageable, Model model) {
+    public String getAllCategoriesPage(@PageableDefault(size = 20, sort = "categoryId") Pageable pageable, Model model) {
         try {
             Page<CategoryIsActiveResponseDto> categories = categoryService.getAllCategoriesPage(pageable.getPageNumber(), pageable.getPageSize());
             model.addAttribute("categories", categories.getContent());

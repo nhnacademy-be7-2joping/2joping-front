@@ -108,7 +108,7 @@ public class CategoryService {
      */
     public void activateCategory(Long categoryId) {
         try {
-            categoryClient.deactivateCategory(categoryId);
+            categoryClient.activateCategory(categoryId);
         } catch (Exception e) {
             throw categoriesCustomApiException("CATEGORY_ACTIVATE_ERROR", "해당 카테고리를 활성화할 수 없습니다.");
         }
