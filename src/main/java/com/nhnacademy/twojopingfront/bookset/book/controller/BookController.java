@@ -157,7 +157,7 @@ public class BookController {
         List<TagResponseDto> tagList = bookService.getAllTags().getBody();
         model.addAttribute("tags", tagList);
 
-        return "bookset/book/book-modify";
+        return "bookset/book/book-update";
     }
 
     @PutMapping(value = "/admin/books/modify/{bookId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -167,7 +167,6 @@ public class BookController {
                              @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
                              @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
         try {
-            System.out.println("Received DTO: " + bookUpdateHtmlRequestDto);
             BookUpdateHtmlRequestDto updatedDto = new BookUpdateHtmlRequestDto(
                     bookUpdateHtmlRequestDto.title(),
                     bookUpdateHtmlRequestDto.description(),
