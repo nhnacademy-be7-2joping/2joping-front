@@ -122,7 +122,7 @@ public class ReviewController {
         );
         ReviewImageUploadRequestDto imageUploadRequestDto = new ReviewImageUploadRequestDto(reviewImage);
         ReviewCreateResponseDto responseDto = reviewService.registerReview(updatedReviewDetailRequestDto,imageUploadRequestDto);
-        return "redirect:/reviews/" + responseDto.reviewId();
+        return "redirect:/reviews/mypage/" + responseDto.reviewId();
     }
 
     /**
@@ -159,7 +159,7 @@ public class ReviewController {
                 deleteImage
         );
 
-        return "redirect:/reviews/" + responseDto.reviewId();
+        return "redirect:/reviews/mypage/" + responseDto.reviewId();
     }
 
 }

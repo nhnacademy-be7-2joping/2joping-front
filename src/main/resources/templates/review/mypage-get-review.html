@@ -40,8 +40,14 @@
 
   <!-- 작성일, 수정일 -->
   <div>
-    <p><strong>작성일:</strong> <span th:text="${review.createdAt}">작성일 없음</span></p>
-    <p><strong>수정일:</strong> <span th:text="${review.updatedAt}">수정일 없음</span></p>
+    <p>
+      <strong>작성일:</strong>
+      <span th:text="${#dates.format(review.createdAt, 'yyyy-MM-dd HH:mm:ss')}">작성일 없음</span>
+    </p>
+    <p>
+      <strong>수정일:</strong>
+      <span th:text="${#dates.format(review.updatedAt, 'yyyy-MM-dd HH:mm:ss')}">수정일 없음</span>
+    </p>
   </div>
 
   <!-- 돌아가기 버튼 -->
