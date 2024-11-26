@@ -16,8 +16,6 @@ public record BookCreateHtmlRequestDto(
         boolean isActive,
         int remainQuantity,
         String contributorList,
-        // List<Map<String, String>> contributorList,
-        // String category,
         Long topCategoryId,
         Long middleCategoryId,
         Long bottomCategoryId,

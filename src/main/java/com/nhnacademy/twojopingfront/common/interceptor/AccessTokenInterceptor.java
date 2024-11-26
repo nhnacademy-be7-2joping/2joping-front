@@ -10,7 +10,9 @@ public class AccessTokenInterceptor implements RequestInterceptor {
     public void apply(RequestTemplate requestTemplate) {
         Object accessToken = SecurityContextHolder.getContext().getAuthentication().getCredentials();
         if (accessToken instanceof String) {
-            requestTemplate.header(HttpHeaders.COOKIE, (String) accessToken);
+            if (!((String) accessToken).isBlank()) {
+                requestTemplate.header(HttpHeaders.COOKIE, "accessToken=" + accessToken);
+            }
         }
     }
 }

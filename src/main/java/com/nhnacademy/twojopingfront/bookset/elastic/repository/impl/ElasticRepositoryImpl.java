@@ -26,7 +26,7 @@ public class ElasticRepositoryImpl implements ElasticRepositoryCustom {
     private final ElasticConfig elasticConfig;
 
     @Override
-    public Page<ElasticSearchResponseDto> searchByKeyword(String keyword, Pageable pageable, String sort) {
+    public Page<ElasticSearchResponseDto> searchByKeyword(String keyword, Long categoryId, Pageable pageable, String sort) {
         try {
             // 정렬 기준 설정
             List<Map.Entry<String, String>> sortCriteria = switch (sort) {
@@ -54,32 +54,50 @@ public class ElasticRepositoryImpl implements ElasticRepositoryCustom {
                         ));
             }
 
-            // 검색어가 있으면 키워드 기반 검색, 없으면 match_all
-            if (keyword == null || keyword.isBlank()) {
+            // 검색어와 카테고리 조건 추가
+            if ((keyword == null || keyword.isBlank()) && categoryId == null) {
+                // 검색어와 카테고리 모두 없는 경우 match_all
                 requestBuilder.query(q -> q.matchAll(m -> m));
             } else {
-                requestBuilder.query(q -> q.bool(b -> b
-                        .should(s1 -> s1.multiMatch(m -> m
-                                .fields("book_title^10", "book_title.ngram^3", "book_title.jaso",
-                                        "book_desc^3", "book_desc.ngram", "book_desc.raw",
-                                        "book_publisher^2", "book_publisher.ngram", "book_publisher.raw")
-                                .query(keyword)))
-                        .should(s1 -> s1.nested(n -> n
+                requestBuilder.query(q -> q.bool(b -> {
+                    // 카테고리 필터 추가
+                    if (categoryId != null) {
+                        b.filter(f -> f.nested(n -> n
                                 .path("book_category")
-                                .query(q1 -> q1.multiMatch(m -> m
-                                        .fields("book_category.name^3", "book_category.name.ngram", "book_category.name.raw")
-                                        .query(keyword)))))
-                        .should(s1 -> s1.nested(n -> n
-                                .path("book_tag")
-                                .query(q1 -> q1.multiMatch(m -> m
-                                        .fields("book_tag.name^3", "book_tag.name.ngram", "book_tag.name.raw")
-                                        .query(keyword)))))
-                        .should(s1 -> s1.nested(n -> n
-                                .path("book_contributor")
-                                .query(q1 -> q1.multiMatch(m -> m
-                                        .fields("book_contributor.name^2", "book_contributor.name.ngram", "book_contributor.name.raw")
-                                        .query(keyword)))))
-                ));
+                                .query(categoryQuery -> categoryQuery.term(categoryTerm -> categoryTerm
+                                        .field("book_category.id")
+                                        .value(categoryId.toString())))));
+                    }
+
+                    // 검색어 조건 추가
+                    if (keyword != null && !keyword.isBlank()) {
+                        b.must(mustQuery -> mustQuery.bool(boolQuery -> {
+                            boolQuery.should(titleQuery -> titleQuery.multiMatch(titleMatch -> titleMatch
+                                    .fields("book_title^10", "book_title.ngram^3", "book_title.jaso",
+                                            "book_desc^3", "book_desc.ngram", "book_desc.raw",
+                                            "book_publisher^2", "book_publisher.ngram", "book_publisher.raw")
+                                    .query(keyword)));
+                            boolQuery.should(categoryQuery -> categoryQuery.nested(categoryNested -> categoryNested
+                                    .path("book_category")
+                                    .query(categoryMatch -> categoryMatch.multiMatch(categoryMultiMatch -> categoryMultiMatch
+                                            .fields("book_category.name^3", "book_category.name.ngram", "book_category.name.raw")
+                                            .query(keyword)))));
+                            boolQuery.should(tagQuery -> tagQuery.nested(tagNested -> tagNested
+                                    .path("book_tag")
+                                    .query(tagMatch -> tagMatch.multiMatch(tagMultiMatch -> tagMultiMatch
+                                            .fields("book_tag.name^3", "book_tag.name.ngram", "book_tag.name.raw")
+                                            .query(keyword)))));
+                            boolQuery.should(contributorQuery -> contributorQuery.nested(contributorNested -> contributorNested
+                                    .path("book_contributor")
+                                    .query(contributorMatch -> contributorMatch.multiMatch(contributorMultiMatch -> contributorMultiMatch
+                                            .fields("book_contributor.name^2", "book_contributor.name.ngram", "book_contributor.name.raw")
+                                            .query(keyword)))));
+                            return boolQuery;
+                        }));
+                    }
+                    return b;
+                }));
+
             }
 
             // Elasticsearch 호출

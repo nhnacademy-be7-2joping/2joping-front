@@ -11,7 +11,7 @@
 <body>
 <div layout:fragment="content">
     <h1>포인트 타입 수정</h1>
-    <form th:action="@{|/admin/points/edit/${pointType.id}|}" method="post">
+    <form th:action="@{/admin/points/edit/{typeId}(typeId=${pointType.pointTypeId})}" method="post">
         <!-- Hidden Field to specify the HTTP method as PUT -->
         <input type="hidden" name="_method" value="put"     >
 

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+
+import java.util.Collections;
 import java.util.List;
 
 @Document(indexName = "ejoping-books")
@@ -64,6 +66,13 @@ public record ElasticSearchResponseDto (
             Long id,
             @JsonProperty("name")
             String name) {
+    }
+
+    // 카테고리 역순 정렬 메소드
+    public void getReversedBookCategory() {
+        if (bookCategory != null) {
+            Collections.reverse(bookCategory);
+        }
     }
 }
 

@@ -1,0 +1,190 @@
+/* Shared styles for cards and forms */
+.address-card, .address-form-container {
+    background-color: #ffffff;
+    border: 2px solid var(--primary-color, #a36afa);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #333;
+    font-family: "Pretendard Variable", "Noto Sans KR", sans-serif;
+    width: 100%;
+    max-width: 800px;
+    margin: 10px auto;
+}
+.address-content{
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* 수직 중앙 정렬 */
+
+}
+.address-content label{
+    width: 80px;
+    text-align: left;
+
+
+
+}
+.address-form-container {
+    display: none;
+}
+
+.form-header, .address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.address-title, .form-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary-color, #a36afa);
+}
+
+.address-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.address-action-button, .save-button, .cancel-button, .search-button {
+    background-color: var(--primary-color, #a36afa);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.address-action-button:hover, .save-button:hover, .cancel-button:hover, .search-button:hover {
+    background-color: #944cff;
+}
+
+.form-row label {
+    font-weight: bold;
+    color: #555;
+}
+
+.form-row input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* 인풋 박스 스타일 */
+.edit-input {
+    display: none;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--primary-color, #a36afa);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    font-family: "Pretendard Variable", "Noto Sans KR", sans-serif;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+    background-color: #f9f9f9;
+}
+
+.edit-input.active {
+    display: block;
+    transition: all 0.3s ease;
+}
+
+/* 기본 버튼 스타일 */
+.address-action-button, .save-button, .cancel-button {
+    background-color: var(--primary-color, #a36afa);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.address-action-button:hover, .save-button:hover, .cancel-button:hover {
+    background-color: #944cff;
+}
+
+/* 수정 중 뷰 모드 숨김 */
+.view-mode {
+    font-size: 16px;
+    font-weight: bold;
+    width: fit-content;
+}
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-wrapper label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-with-label {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--primary-color, #a36afa);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    font-family: "Pretendard Variable", "Noto Sans KR", sans-serif;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+/* Switch CSS */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #a36afa;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}

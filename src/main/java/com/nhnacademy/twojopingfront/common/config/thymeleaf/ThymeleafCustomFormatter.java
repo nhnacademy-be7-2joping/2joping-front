@@ -3,6 +3,8 @@ package com.nhnacademy.twojopingfront.common.config.thymeleaf;
 import org.springframework.stereotype.Component;
 
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 /**
@@ -17,8 +19,18 @@ import java.util.Locale;
 @Component
 public class ThymeleafCustomFormatter {
 
+    // 숫자를 천 단위 구분 포함하여 포맷팅
     public String formatCurrency(int value) {
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.KOREA);
         return numberFormat.format(value);
+    }
+
+    // 날짜를 "yyyy-MM-dd HH:mm" 형식으로 포맷팅
+    public String formatToMinute(LocalDateTime dateTime) {
+        if (dateTime == null) {
+            return "N/A";
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return dateTime.format(formatter);
     }
 }

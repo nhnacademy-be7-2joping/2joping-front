@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>회원 탈퇴 </title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+    <style>
+        .withdraw-main-container{
+
+           display: flex;
+            text-align:center;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+        .withdraw-container{
+            height: fit-content;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Pretendard', sans-serif;
+        }
+        .withdraw-message {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: #333;
+        }
+        .withdraw-name {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #a36afa;
+        }
+        .withdraw-logo img {
+            margin-bottom: 20px;
+        }
+        .withdraw-button{
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            background-color: var(--primary-color);
+            color: #fff;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+
+
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container withdraw-main-container">
+    <div class="login-logo-container">
+        <a class="navbar-brand" href="/">
+            <img th:src="@{/images/logo.png}" alt="logo" width="200"/>
+        </a>
+    </div>
+    <div class="withdraw-container">
+
+        <p class="withdraw-name" th:text="'안녕히 가세요, ' + ${withdrawInfo.name} + '님!'"></p>
+        <p class="withdraw-message" th:text="${withdrawInfo.message}"></p>
+    </div>
+    <a class = "withdraw-button" href="/">홈페이지로 돌아가기</a>
+
+</div>
+
+</body>
+</html>

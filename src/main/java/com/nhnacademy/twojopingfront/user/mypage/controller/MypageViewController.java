@@ -4,6 +4,7 @@ import com.nhnacademy.twojopingfront.tier.adaptor.TierAdaptor;
 import com.nhnacademy.twojopingfront.tier.dto.response.MemberTierResponse;
 import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
+import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCouponResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -115,5 +116,20 @@ public class MypageViewController {
     public String reviewHistoryView(Model model) {
 
         return "user/mypage/review-history";
+    }
+    @GetMapping("/withdraw")
+    public String withdrawView(Model model) {
+
+        return "user/mypage/withdraw";
+    }
+    @GetMapping("/my-coupon")
+    public String couponListView(Model model) {
+        List<MemberCouponResponseDto> coupons = memberAdaptor.getMemberCoupon();
+        List<MemberCouponResponseDto> usedCoupons = memberAdaptor.getMemberUsedCoupon();
+
+        model.addAttribute("coupons", coupons);
+        model.addAttribute("usedCoupons", usedCoupons);
+
+        return "user/mypage/my-coupon";
     }
 }
