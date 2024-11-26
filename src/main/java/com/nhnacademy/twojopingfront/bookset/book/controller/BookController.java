@@ -2,6 +2,8 @@ package com.nhnacademy.twojopingfront.bookset.book.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.twojopingfront.admin.shipment.dto.response.ShipmentPolicyResponseDto;
+import com.nhnacademy.twojopingfront.admin.shipment.service.ShipmentPolicyService;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateHtmlRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookAdminSimpleResponseDto;
@@ -29,6 +31,7 @@ import java.util.List;
 public class BookController {
 
     private final BookService bookService;
+    private final ShipmentPolicyService shipmentPolicyService;
     @PostMapping(value = "/admin/books/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String createBook(@RequestParam("contributorList") String contributorListJson,
                              @ModelAttribute BookCreateHtmlRequestDto bookCreateHtmlRequestDto,
@@ -133,7 +136,9 @@ public class BookController {
     @GetMapping("/books/{bookId}")
     public String getBookByBookId(@PathVariable Long bookId, Model model) {
         BookResponseDto books = bookService.getBookById(bookId);
+        List<ShipmentPolicyResponseDto> shipmentPolicies = shipmentPolicyService.getAllShipmentPolicies();
         model.addAttribute("books", books);
+        model.addAttribute("shipmentPolicies", shipmentPolicies);
         return "bookset/book/bookdetails";
     }
 }
