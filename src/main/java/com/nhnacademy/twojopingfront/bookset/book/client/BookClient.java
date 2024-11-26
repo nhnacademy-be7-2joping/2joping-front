@@ -29,13 +29,6 @@ public interface BookClient {
     BookCreateResponseDto createBook(@RequestBody BookCreateRequestDto bookCreateRequestDto);
 
     /**
-     * 태그 데이터를 가져오는 메서드
-     * @return 모든 태그 리스트
-     */
-    @GetMapping("/tags")
-    List<TagResponseDto> getAllTags();
-
-    /**
      * 출판사 데이터를 가져오는 메서드
      * @return 모든 출판사 리스트
      */

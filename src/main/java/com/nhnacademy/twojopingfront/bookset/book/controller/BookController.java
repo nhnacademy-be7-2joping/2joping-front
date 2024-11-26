@@ -71,7 +71,7 @@ public class BookController {
 
     @GetMapping("/admin/books/register")
     public String showBookRegisterForm(Model model) {
-        List<TagResponseDto> tagList = bookService.getAllTags();
+        List<TagResponseDto> tagList = bookService.getAllTags().getBody();
         model.addAttribute("tags", tagList);
         List<PublisherResponseDto> publisherList = bookService.getAllPublishersForRegister();
         model.addAttribute("publishers", publisherList);
@@ -156,7 +156,7 @@ public class BookController {
         List<CategoryResponseDto> topCategories = bookService.getTopCategories();
         model.addAttribute("topCategories", topCategories);
 
-        List<TagResponseDto> tagList = bookService.getAllTags();
+        List<TagResponseDto> tagList = bookService.getAllTags().getBody();
         model.addAttribute("tags", tagList);
 
         return "bookset/book/book-modify";

@@ -206,9 +206,9 @@
                     <input type="file" class="form-control me-2" id="thumbnailImage" name="thumbnailImage" accept="image/*">
                     <div class="text-center">
                         <img th:src="${book.thumbnailImageUrl}" alt="기존 썸네일" class="img-thumbnail mb-2" width="150">
-                        <div>
-                            <input type="checkbox" class="form-check-input" id="removeThumbnailImageCheckbox" name="removeThumbnailImage" value="true">
-                            <label for="removeThumbnailImageCheckbox" class="form-check-label">삭제</label>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="removeThumbnailImage" name="removeThumbnailImage" value="true">
+                            <label class="form-check-label" for="removeThumbnailImage">삭제</label>
                         </div>
                     </div>
                 </div>
@@ -220,9 +220,9 @@
                     <input type="file" class="form-control me-2" id="detailImage" name="detailImage" accept="image/*">
                     <div class="text-center">
                         <img th:src="${book.detailImageUrl}" alt="기존 상세 이미지" class="img-thumbnail mb-2" width="150">
-                        <div>
-                            <input type="checkbox" class="form-check-input" id="removeDetailImageCheckbox" name="removeDetailImage" value="true">
-                            <label for="removeDetailImageCheckbox" class="form-check-label">삭제</label>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="removeDetailImage" name="removeDetailImage" value="true">
+                            <label class="form-check-label" for="removeDetailImage">삭제</label>
                         </div>
                     </div>
                 </div>
@@ -629,23 +629,67 @@
             </style>
 
             <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable" value="true"
-                       th:checked="${book.giftWrappable}">
-                <label class="form-check-label" for="giftWrappable">선물 포장 가능 여부</label>
+                <label class="form-label">선물 포장 가능 여부</label>
+                <div>
+                    <input type="radio" class="form-check-input" id="giftWrappableTrue" name="giftWrappable" value="true"
+                           th:checked="${book.giftWrappable}">
+                    <label class="form-check-label" for="giftWrappableTrue">가능</label>
+                </div>
+                <div>
+                    <input type="radio" class="form-check-input" id="giftWrappableFalse" name="giftWrappable" value="false"
+                           th:checked="${!book.giftWrappable}">
+                    <label class="form-check-label" for="giftWrappableFalse">불가능</label>
+                </div>
             </div>
 
             <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="isActive" name="isActive" value="true"
-                       th:checked="${book.isActive}">
-                <label class="form-check-label" for="giftWrappable">활성 상태</label>
+                <label class="form-label">활성 상태</label>
+                <div>
+                    <input type="radio" class="form-check-input" id="isActiveTrue" name="isActive" value="true"
+                           th:checked="${book.isActive}">
+                    <label class="form-check-label" for="isActiveTrue">활성</label>
+                </div>
+                <div>
+                    <input type="radio" class="form-check-input" id="isActiveFalse" name="isActive" value="false"
+                           th:checked="${!book.isActive}">
+                    <label class="form-check-label" for="isActiveFalse">비활성</label>
+                </div>
             </div>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const form = document.getElementById("bookModifyForm");
+
+                    form.addEventListener("submit", function () {
+                        const giftWrappable = document.querySelector('input[name="giftWrappable"]:checked');
+                        const isActive = document.querySelector('input[name="isActive"]:checked');
+
+                        if (!giftWrappable || !isActive) {
+                            alert("모든 값을 선택해야 합니다.");
+                        }
+                    });
+                });
+            </script>
+
+
+            <!--            <div class="form-check mb-3">-->
+<!--                <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable" value="true"-->
+<!--                       th:checked="${book.giftWrappable}">-->
+<!--                <label class="form-check-label" for="giftWrappable">선물 포장 가능 여부</label>-->
+<!--            </div>-->
+
+<!--            <div class="form-check mb-3">-->
+<!--                <input type="checkbox" class="form-check-input" id="isActive" name="isActive" value="true"-->
+<!--                       th:checked="${book.isActive}">-->
+<!--                <label class="form-check-label" for="isActive">활성 상태</label>-->
+<!--            </div>-->
 
             <button type="submit" class="btn btn-primary">수정</button>
         </form>
     </div>
 </div>
 <script>
-    document.getElementById('bookUpdateForm').addEventListener('submit', function(event) {
+    document.getElementById('bookModifyForm').addEventListener('submit', function(event) {
         const retailPrice = document.getElementById('retailPrice').value;
         const sellingPrice = document.getElementById('sellingPrice').value;
         const remainQuantity = document.getElementById('remainQuantity').value;

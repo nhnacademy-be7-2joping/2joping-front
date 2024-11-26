@@ -12,6 +12,7 @@ import com.nhnacademy.twojopingfront.bookset.book.exception.FeignClientServerFai
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
+import com.nhnacademy.twojopingfront.bookset.tag.client.TagClient;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
 import com.nhnacademy.twojopingfront.common.error.enums.RedirectType;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RequestCallback;
@@ -40,6 +42,7 @@ import java.util.UUID;
 public class BookService {
 
     private final BookClient bookClient;
+    private final TagClient tagClient;
     private final RestTemplate restTemplate = new RestTemplate();
 
     /**
@@ -109,8 +112,8 @@ public class BookService {
      * 태그 데이터를 가져오는 메서드
      * @return 모든 태그 리스트
      */
-    public List<TagResponseDto> getAllTags() {
-        return bookClient.getAllTags();
+    public ResponseEntity<List<TagResponseDto>> getAllTags() {
+        return tagClient.getAllTags();
     }
 
     /**
