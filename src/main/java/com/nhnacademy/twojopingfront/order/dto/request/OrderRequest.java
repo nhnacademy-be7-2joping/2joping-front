@@ -7,12 +7,13 @@ public record OrderRequest(
         DeliveryInfoRequest deliveryInfo,
         Integer point,
         Long couponId,
-        List<WrapItemRequest> wrapList
+        List<WrapItemRequest> wrapList,
+        Integer totalCost,
+        String orderCode
 ) {
     record CartItemRequest(
             Long bookId,
             Integer quantity) {
-
     }
 
     record DeliveryInfoRequest(

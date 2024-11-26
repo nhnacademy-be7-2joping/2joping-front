@@ -24,6 +24,7 @@ const discountCostText = document.getElementById('discount-cost');
 const bookCostText = document.getElementById('book-cost');
 const deliveryCostText = document.getElementById('delivery-cost');
 const wrapCostText = document.getElementById('wrap-cost');
+const totalCostText = document.getElementById('total-cost');
 
 const couponSelect = document.getElementById('coupon');
 const couponInfoContainer = document.getElementById("coupon-info");
@@ -102,6 +103,7 @@ function collectOrderData() {
         });
     });
     orderObject.wrapList = wrapList;
+    orderObject.totalCost = parseInt(totalCostText.textContent.replace(/,/g, ''));
 
     console.log(orderObject);
 
@@ -117,8 +119,11 @@ btnPay.addEventListener('click', () => {
     modal.show();
 
     // 주문 작성을 위한 form 구성
-    const booksInCart = document.querySelectorAll('.product-container .card');
     const orderDto = collectOrderData();
+
+    // 주문 id 랜덤 생성
+    const orderCode = generateRandomString();
+    orderDto.orderCode = orderCode;
 
     fetch('/api/orders', {
         method: 'POST',
@@ -129,15 +134,13 @@ btnPay.addEventListener('click', () => {
     })
         .then(res => {
             if (res.ok) {
-                startTossPayment();
+                startTossPayment(orderCode);
             }
         })
         .catch(error => {
             alert('주문 처리에 문제가 생겼습니다.');
             console.error('Error:', error); // 에러 처리
         });
-
-    console.log(booksInCart);
 });
 
 // 쿠폰 선택 시 처리
@@ -290,4 +293,8 @@ function sumWrapCost() {
     });
     wrapCostText.textContent = totalWrapCost;
     updateTotalPrice();
+}
+
+function generateRandomString() {
+    return window.btoa(Math.random()).slice(0, 25);
 }

@@ -1,4 +1,4 @@
-async function startTossPayment() {
+async function startTossPayment(orderCode) {
     const button = document.getElementById("payment-button");
 
     // 도서 금액, 배송비, 할인 기준으로 최종 가격 적용
@@ -50,7 +50,7 @@ async function startTossPayment() {
         // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
         // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
         await widgets.requestPayment({
-            orderId: generateRandomString(),
+            orderId: orderCode,
             orderName: `도서 ${document.querySelectorAll('.product-container .card').length}건`,
             successUrl: window.location.origin + "/orders/success",
             failUrl: window.location.origin + "/orders/fail",
@@ -62,6 +62,3 @@ async function startTossPayment() {
     });
 }
 
-function generateRandomString() {
-    return window.btoa(Math.random()).slice(0, 20);
-}

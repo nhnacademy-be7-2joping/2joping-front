@@ -1,4 +1,4 @@
-package com.nhnacademy.twojopingfront.order.dto.request;
+package com.nhnacademy.twojopingfront.payment.controller.dto.request;
 
 public record PaymentRequest(
         String orderId,

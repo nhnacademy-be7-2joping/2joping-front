@@ -10,8 +10,10 @@ import com.nhnacademy.twojopingfront.order.client.MemberClient;
 import com.nhnacademy.twojopingfront.order.client.MemberCouponClient;
 import com.nhnacademy.twojopingfront.order.client.ShipmentPolicyRequestClient;
 import com.nhnacademy.twojopingfront.order.client.WrapClient;
-import com.nhnacademy.twojopingfront.order.dto.request.PaymentRequest;
+import com.nhnacademy.twojopingfront.payment.controller.dto.request.PaymentRequest;
 import com.nhnacademy.twojopingfront.order.dto.response.*;
+import com.nhnacademy.twojopingfront.order.service.OrderService;
+import com.nhnacademy.twojopingfront.payment.controller.dto.response.PaymentErrorResponse;
 import com.nhnacademy.twojopingfront.user.login.dto.request.LoginNonMemberRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +47,7 @@ import java.util.Objects;
 public class OrderController {
     private final ObjectMapper objectMapper;
     private final BookService bookService;
+    private final OrderService orderService;
     private final ShipmentPolicyRequestClient shipmentPolicyRequestClient;
     private final WrapClient wrapClient;
     private final MemberCouponClient memberCouponClient;
@@ -142,13 +145,14 @@ public class OrderController {
 
     /**
      * 결제 확인 시 toss와 연동하여 결제 승인 여부 결정
+     * 성공 시, {@link PaymentResponse} 객체를 반환하며, 실패 시 {@link PaymentErrorResponse} 객체를 반환
      *
      * @param paymentRequest 결제 정보가 담긴 dto
-     * @return 결제 상태에 대한 응답 정보와 결제 key
-     * @throws Exception
+     * @return 성공 시 결제 정보 {@link PaymentResponse}, 실패 시 에러 정보 {@link PaymentErrorResponse}
+     * @throws Exception Toss 호출 중 발생가능한 예외
      */
     @PostMapping("/confirm")
-    public ResponseEntity<PaymentResponse> orderConfirm(@RequestBody PaymentRequest paymentRequest) throws Exception {
+    public ResponseEntity<Object> orderConfirm(@RequestBody PaymentRequest paymentRequest) throws Exception {
         Base64.Encoder encoder = Base64.getEncoder();
         String authorizations =
                 "Basic " + encoder.encodeToString((widgetSecretKey + ":").getBytes(StandardCharsets.UTF_8));
@@ -171,10 +175,18 @@ public class OrderController {
 
         InputStream responseStream = isSuccess ? connection.getInputStream() : connection.getErrorStream();
 
-        // ObjectMapper로 응답을 PaymentResponse로 변환
-        PaymentResponse paymentResponse = objectMapper.readValue(responseStream, PaymentResponse.class);
-        responseStream.close();
-
-        return ResponseEntity.status(200).body(paymentResponse);
+        // 성공과 실패에 따라 다른 클래스로 매핑
+        if (isSuccess) {
+            // 응답을 PaymentResponse로 변환
+            PaymentResponse paymentResponse = objectMapper.readValue(responseStream, PaymentResponse.class);
+            orderService.registerOrder(paymentResponse); // 토스 결제 승인 결과 활용하여 그대로 주문 등록 처리
+            responseStream.close();
+            return ResponseEntity.status(code).body(paymentResponse);
+        } else {
+            // 응답을 PaymentErrorResponse로 변환
+            PaymentErrorResponse errorResponse = objectMapper.readValue(responseStream, PaymentErrorResponse.class);
+            responseStream.close();
+            return ResponseEntity.status(code).body(errorResponse);
+        }
     }
 }
