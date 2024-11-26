@@ -59,10 +59,12 @@ function collectOrderData() {
     orderObject.cartItemList = [];
     document.querySelectorAll('.product-container .card').forEach(book => {
         const bookId = book.getAttribute('book-id');
+        const unitPrice = localeNumberStringToNumber(book.querySelector('.unit-price').textContent);
         const quantity = book.querySelector('input[type=number]').value;
         const cartItem = {
             "bookId": parseInt(bookId),
-            "quantity": parseInt(quantity)
+            "quantity": parseInt(quantity),
+            "unitPrice": unitPrice
         };
         orderObject.cartItemList.push(cartItem);
     });
@@ -297,4 +299,8 @@ function sumWrapCost() {
 
 function generateRandomString() {
     return window.btoa(Math.random()).slice(0, 25);
+}
+
+function localeNumberStringToNumber(localeNumber) {
+    return parseInt(localeNumber.replace(/,/g, ''));
 }

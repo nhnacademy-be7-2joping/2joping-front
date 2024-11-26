@@ -27,7 +27,7 @@
                     <div class="col-md-11">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${item.title()}"></h5>
-                            <span class="card-text cost-value me-3">
+                            <span class="card-text unit-price cost-value me-3">
                                 <b th:text="${item.sellingPrice}"></b>
                             </span>
                             <label th:for="'book-quantity-' + ${itemStat.index + 1}">수량</label>

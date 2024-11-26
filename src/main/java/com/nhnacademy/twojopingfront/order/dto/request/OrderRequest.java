@@ -13,7 +13,9 @@ public record OrderRequest(
 ) {
     record CartItemRequest(
             Long bookId,
-            Integer quantity) {
+            Integer quantity,
+            Integer unitPrice
+    ) {
     }
 
     record DeliveryInfoRequest(
