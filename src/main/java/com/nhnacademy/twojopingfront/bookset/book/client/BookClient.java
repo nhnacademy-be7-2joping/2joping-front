@@ -2,6 +2,7 @@ package com.nhnacademy.twojopingfront.bookset.book.client;
 
 
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookAdminSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookUpdateRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
@@ -10,7 +11,6 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookUpdateRespons
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
-import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -65,6 +65,9 @@ public interface BookClient {
      */
     @GetMapping("/books/get")
     Page<BookSimpleResponseDto> getAllBooks(@RequestParam("page") int page, @RequestParam("size") int size);
+
+    @GetMapping("/books/get")
+    Page<BookAdminSimpleResponseDto> adminGetAllBooks(@RequestParam("page") int page, @RequestParam("size") int size);
 
 
     /**

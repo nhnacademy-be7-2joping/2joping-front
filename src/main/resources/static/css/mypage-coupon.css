@@ -1,0 +1,101 @@
+/* 쿠폰 리스트 컨테이너 */
+.coupon-list-container {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 쿠폰 카드 스타일 */
+.coupon-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.coupon-item {
+    width: 350px;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.coupon-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* 기본 쿠폰 정보 */
+.coupon-main {
+    font-size: 14px;
+    color: #343a40;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+
+/* 숨겨진 정보 - 기본 상태에서는 안 보이게 */
+.coupon-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+    text-align: left;
+    z-index: 10;
+}
+
+/* 호버 시 숨겨진 정보를 표시 */
+.coupon-item:hover .coupon-hover {
+    display: flex;
+}
+
+/* 쿠폰 텍스트 */
+.coupon-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--primary-color);
+    padding: 0 10px 10px 5px;
+}
+
+.coupon-expiry, .coupon-discount {
+    font-size: 14px;
+    color: #495057;
+}
+/* 사용 내역 컨테이너 스타일 */
+.used-coupons-container {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.used-coupon-item {
+    width: 350px;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #cdcdcd;
+    position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+}

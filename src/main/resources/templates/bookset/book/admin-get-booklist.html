@@ -10,7 +10,6 @@
 <body>
 <div class="container" layout:fragment="content">
     <h1 class="mt-5">도서 목록</h1>
-<!--    <td><button onclick="location.href='/books/register'" class="btn btn-primary">직접 등록</button></td>-->
     <a href="/admin/books/register" class="btn btn-primary mb-3">직접 등록</a>
     <table class="table table-striped mt-4">
         <thead>
@@ -22,9 +21,9 @@
             <th>기여자</th>
             <th>판매 가격</th>
             <th>정가</th>
+            <th>활성화 여부</th>
             <th>수정</th>
             <th>삭제</th>
-
         </tr>
         </thead>
         <tbody>
@@ -34,13 +33,16 @@
             <td><a th:href="@{/books/get/book/{bookId}(bookId=${book.bookId})}" th:text="${book.title}">제목</a></td>
             <td th:text="${book.publisherName}">출판사</td>
             <td>
-                <span th:each="contributor : ${book.contributorList}" th:text="${contributor.roleName} + ': ' + ${contributor.contributorName}">
+                <span th:each="contributor : ${book.contributorList}"
+                      th:text="${contributor.roleName} + ': ' + ${contributor.contributorName}">
                     기여자
                 </span>
                 <br th:if="${!#lists.isEmpty(book.contributorList)}"/>
             </td>
             <td th:text="${book.sellingPrice}">판매 가격</td>
             <td th:text="${book.retailPrice}">정가</td>
+            <!-- 활성화 여부 -->
+            <td th:text="${book.isActive ? '활성화' : '비활성화'}">활성화 여부</td>
             <td>
                 <a th:href="@{/admin/books/modify/{bookId}(bookId=${book.bookId})}" class="btn btn-primary">수정</a>
             </td>

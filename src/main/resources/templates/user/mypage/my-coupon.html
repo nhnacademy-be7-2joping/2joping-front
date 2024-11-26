@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mypage-layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>내 쿠폰함</title>
+    <link rel="stylesheet" th:href="@{/css/mypage-coupon.css}">
+
+</head>
+<body>
+<!-- 메인 컨텐츠 영역 -->
+<div class="mypage-container" layout:fragment="content">
+    <div class="mypage-form-container">
+        <!-- 사용 가능한 쿠폰 목록 -->
+        <div class="coupon-list-container">
+            <h2 class="mypage-title1">사용 가능한 쿠폰</h2>
+            <div class="coupon-list">
+                <!-- 반복해서 쿠폰 정보를 출력 -->
+                <div class="coupon-item font-default" th:each="coupon : ${coupons}">
+                    <div class="coupon-main">
+                        <p class="coupon-name" th:text="${coupon.couponResponseDto.name}">쿠폰 이름</p>
+                        <p class="coupon-expiry" th:text="'유효기간: ' + ${@thymeleafCustomFormatter.formatToMinute(coupon.invalidTime)}">유효기간</p>
+                        <p class="coupon-discount"
+                           th:if="${coupon.couponResponseDto.couponPolicyResponseDto.discountType == 'PERCENT'}"
+                           th:text="'할인율: ' + ${coupon.couponResponseDto.couponPolicyResponseDto.discountValue} + '%'">할인 금액</p>
+
+                        <p class="coupon-discount"
+                           th:if="${coupon.couponResponseDto.couponPolicyResponseDto.discountType == 'ACTUAL'}"
+                           th:text="'할인: ' + ${@thymeleafCustomFormatter.formatCurrency(coupon.couponResponseDto.couponPolicyResponseDto.discountValue)} + '원'">할인 금액</p>
+                    </div>
+                    <div class="coupon-hover">
+                        <p th:text="${coupon.couponResponseDto.couponPolicyResponseDto.name}">정책 이름</p>
+                        <p th:text="'최대 할인 금액: ' + ${coupon.couponResponseDto.couponPolicyResponseDto.maxDiscount} + '원'">최대 할인</p>
+                        <p th:text="'최대 사용 금액: ' + ${coupon.couponResponseDto.couponPolicyResponseDto.usageLimit} + '원'">최대 사용 금액</p>
+                        <p th:text="${coupon.couponResponseDto.couponPolicyResponseDto.detail}">세부 사항</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 쿠폰 사용 내역 -->
+        <div class="used-coupons-container">
+            <h2 class="mypage-title1">사용 내역</h2>
+            <div class="coupon-list">
+                <!-- 반복해서 사용 내역을 출력 -->
+                <div class="used-coupon-item font-default" th:each="usedCoupon : ${usedCoupons}">
+                    <div class="coupon-main">
+                        <p class="coupon-name" th:text="${usedCoupon.couponResponseDto.name}">쿠폰 이름</p>
+                        <p class="coupon-expiry" th:text="'사용 날짜: ' + ${@thymeleafCustomFormatter.formatToMinute(usedCoupon.usedDate)}">사용 날짜</p>
+                        <p class="coupon-expiry" th:text="'기간 만료일: ' + ${@thymeleafCustomFormatter.formatToMinute(usedCoupon.invalidTime())}">사용 날짜</p>
+
+                        <!-- 상태 표시 -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

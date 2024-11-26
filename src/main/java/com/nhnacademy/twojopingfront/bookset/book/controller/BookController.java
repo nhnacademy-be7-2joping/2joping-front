@@ -1,17 +1,16 @@
 package com.nhnacademy.twojopingfront.bookset.book.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.twojopingfront.admin.shipment.dto.response.ShipmentPolicyResponseDto;
+import com.nhnacademy.twojopingfront.admin.shipment.service.ShipmentPolicyService;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateHtmlRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookUpdateHtmlRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequestDto;
-import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookAdminSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookUpdateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
-import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorDtoForJson;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
@@ -22,11 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.*;
-import java.util.stream.Collectors;
-
+import java.util.List;
 
 @Controller
 @RequestMapping()
@@ -34,6 +29,7 @@ import java.util.stream.Collectors;
 public class BookController {
 
     private final BookService bookService;
+    private final ShipmentPolicyService shipmentPolicyService;
     @PostMapping(value = "/admin/books/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String createBook(@RequestParam("contributorList") String contributorListJson,
                              @ModelAttribute BookCreateHtmlRequestDto bookCreateHtmlRequestDto,
@@ -106,7 +102,7 @@ public class BookController {
     public String adminGetAllBooks(@RequestParam(defaultValue = "0") int page,
                                    @RequestParam(defaultValue = "10") int size,
                                    Model model) {
-        Page<BookSimpleResponseDto> books = bookService.getAllBooks(page, size);
+        Page<BookAdminSimpleResponseDto> books = bookService.adminGetAllBooks(page, size);
         model.addAttribute("books", books);
         model.addAttribute("currentPath", "/admin/books/get");
         return "bookset/book/admin-get-booklist";
@@ -138,7 +134,9 @@ public class BookController {
     @GetMapping("/books/{bookId}")
     public String getBookByBookId(@PathVariable Long bookId, Model model) {
         BookResponseDto books = bookService.getBookById(bookId);
+        List<ShipmentPolicyResponseDto> shipmentPolicies = shipmentPolicyService.getAllShipmentPolicies();
         model.addAttribute("books", books);
+        model.addAttribute("shipmentPolicies", shipmentPolicies);
         return "bookset/book/bookdetails";
     }
 

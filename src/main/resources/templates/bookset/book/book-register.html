@@ -277,7 +277,7 @@
             </script>
 
             <div id="contributors" class="mb-3">
-                <label for="existingContributors" class="form-label">기존 기여자 선택</label>
+                <label for="existingContributors" class="form-label">기여자 선택</label>
                 <select id="existingContributors" class="form-control" multiple>
                     <option th:each="contributor : ${contributors}"
                             th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"

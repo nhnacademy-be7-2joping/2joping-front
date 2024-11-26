@@ -3,6 +3,11 @@ package com.nhnacademy.twojopingfront.bookset.book.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.bookset.book.client.BookClient;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateHtmlRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUrlRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookAdminSimpleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.*;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
@@ -158,9 +163,16 @@ public class BookService {
     }
 
     /**
+     * 관리자용 전체 도서 목록을 가져오는 메서드
+     * @return 도서 목록 페이지
+     */
+    public Page<BookAdminSimpleResponseDto> adminGetAllBooks(int page, int size) {
+        return bookClient.adminGetAllBooks(page, size);
+    }
+
+    /**
      * 카테고리별 도서 목록을 가져오는 메서드
      * @param categoryId 카테고리 ID
-//     * @param pageable 페이징 정보
      * @return 해당 카테고리의 도서 목록 페이지
      */
     public Page<BookSimpleResponseDto> getBooksByCategoryId(@PathVariable Long categoryId, int page, int size) {
@@ -187,10 +199,16 @@ public class BookService {
         return bookClient.getBookById(bookId);
         } catch (FeignException e) {
             throw new FeignClientServerFailConnectionException(
-                    new ErrorResponseDto(404,"404","해당 도서를 찾을 수 없습니다.", RedirectType.REDIRECT,"/books/get", null));
+                    new ErrorResponseDto(404,"404","해당 도서를 찾을 수 없습니다.", RedirectType.REDIRECT,"/books/search", null));
         }
     }
-
+    /**
+     * 도서를 수정을 위해 도서 정보를 가져오는 메서드
+     *
+     * @param bookUpdateHtmlRequestDto
+     * @param imageUploadRequestDto
+     * @return 수정된 도서에 대한 응답 정보
+     */
     public BookUpdateResponseDto getUpdateBookById(Long bookId) {
         return bookClient.getUpdateBookById(bookId);
     }

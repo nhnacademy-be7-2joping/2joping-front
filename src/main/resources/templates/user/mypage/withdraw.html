@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mypage-layout}" th:with="activePage='withdraw'">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 탈퇴</title>
+    <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+    <script>
+        function confirmWithdraw(event) {
+            event.preventDefault(); // 기본 동작 방지
+            const password = document.getElementById("password").value;
+
+            if (!password) {
+                alert("비밀번호를 입력해주세요.");
+                return;
+            }
+
+            if (confirm("정말로 탈퇴하시겠습니까?")) {
+                document.getElementById("withdrawForm").submit();
+            }
+        }
+    </script>
+
+    <style>
+
+        .mypage-warning-text {
+            color: #d9534f;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .mypage-form-container button:hover {
+            background-color: var(--primary-hover-color);
+        }
+        .user-edit-form {
+            padding: 30px 60px;
+            margin: 20px auto;
+        }
+        .mypage-form-container input,
+        .mypage-form-container button {
+            margin-bottom: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+<div class="mypage-container" layout:fragment="content">
+    <div class="mypage-form-container">
+        <form id="withdrawForm" method="post" action="/members/withdraw" th:method="put" class="user-edit-form">
+            <h1>회원 탈퇴</h1>
+            <p class="mypage-warning-text">회원 탈퇴 시 모든 데이터가 삭제되며 복구할 수 없습니다.</p>
+
+            <label for="password"></label>
+            <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+
+            <button type="submit" onclick="confirmWithdraw(event)">탈퇴하기</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
