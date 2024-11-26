@@ -2,12 +2,11 @@ package com.nhnacademy.twojopingfront.bookset.book.dto.request;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
-public record BookCreateHtmlRequestDto(
-        String publisherName,
+public record BookUpdateHtmlRequestDto(
         String title,
         String description,
+        String publisherName,
         LocalDate publishedDate,
         String isbn,
         int retailPrice,
@@ -19,5 +18,8 @@ public record BookCreateHtmlRequestDto(
         Long topCategoryId,
         Long middleCategoryId,
         Long bottomCategoryId,
-        List<String> tagList
-) {}
+        List<String> tagList,
+        boolean removeThumbnailImage,
+        boolean removeDetailImage
+) {
+}

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/menu-footer-layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>책 수정</title>
+    <link rel="stylesheet" href="/css/book-update-style.css">
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <h2>책 수정</h2>
+    <div class="card">
+        <form id="bookModifyForm" th:action="@{|/admin/books/modify/${book.bookId}|}"
+              method="post" enctype="multipart/form-data">
+
+            <input type="hidden" name="_method" value="put">
+            <div class="mb-3">
+                <label for="title" class="form-label">책 제목</label>
+                <input type="text" class="form-control" id="title" name="title" th:value="${book.title}" placeholder="책 제목을 입력하세요" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">설명</label>
+                <textarea class="form-control" id="description" name="description" rows="3" placeholder="책 설명을 입력하세요" th:text="${book.description}" required></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label for="publisherName" class="form-label">출판사</label>
+                    <select class="form-control" id="publisherName" name="publisherName" required>
+                        <option value="" disabled>출판사를 선택하세요</option>
+                        <option th:each="publisher : ${publishers}" th:value="${publisher.name()}"
+                                th:selected="${publisher.name() == book.publisherName}"
+                                th:text="${publisher.name()}"></option>
+                    </select>
+                </div>
+
+            <div class="mb-3">
+                <label for="publishedDate" class="form-label">출판일</label>
+                <input type="date" class="form-control" id="publishedDate" name="publishedDate" th:value="${book.publishedDate}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="isbn" class="form-label">ISBN (13자리)</label>
+                <input type="text" class="form-control" id="isbn" name="isbn" th:value="${book.isbn}" placeholder="ISBN 번호를 입력하세요" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="retailPrice" class="form-label">정가</label>
+                <input type="number" class="form-control" id="retailPrice" name="retailPrice" th:value="${book.retailPrice}" placeholder="정가를 입력하세요" min="0" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="sellingPrice" class="form-label">판매가</label>
+                <input type="number" class="form-control" id="sellingPrice" name="sellingPrice" th:value="${book.sellingPrice}" placeholder="판매가를 입력하세요" min="0" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="remainQuantity" class="form-label">재고 수량</label>
+                <input type="number" class="form-control" id="remainQuantity" name="remainQuantity" th:value="${book.remainQuantity}" placeholder="재고 수량을 입력하세요" min="0" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="thumbnailImage" class="form-label">썸네일 이미지</label>
+                <div class="d-flex align-items-center">
+                    <input type="file" class="form-control me-2" id="thumbnailImage" name="thumbnailImage" accept="image/*">
+                    <div class="text-center">
+                        <img th:src="${book.thumbnailImageUrl}" alt="기존 썸네일" class="img-thumbnail mb-2" width="150">
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="removeThumbnailImage" name="removeThumbnailImage" value="true">
+                            <label class="form-check-label" for="removeThumbnailImage">삭제</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="detailImage" class="form-label">상세 이미지</label>
+                <div class="d-flex align-items-center">
+                    <input type="file" class="form-control me-2" id="detailImage" name="detailImage" accept="image/*">
+                    <div class="text-center">
+                        <img th:src="${book.detailImageUrl}" alt="기존 상세 이미지" class="img-thumbnail mb-2" width="150">
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="removeDetailImage" name="removeDetailImage" value="true">
+                            <label class="form-check-label" for="removeDetailImage">삭제</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="category-data"
+                 th:data-top-category-id="${book.topCategoryId}"
+                 th:data-middle-category-id="${book.middleCategoryId}"
+                 th:data-bottom-category-id="${book.bottomCategoryId}"></div>
+
+            <div class="mb-3">
+                <label for="topCategory" class="form-label">상위 카테고리</label>
+                <select class="form-control" id="topCategory" name="topCategoryId" required>
+                    <option value="" disabled selected>상위 카테고리를 선택하세요</option>
+                    <option th:each="category : ${topCategories}" th:value="${category.categoryId}"
+                            th:selected="${category.categoryId == book.topCategoryId}"
+                            th:text="${category.name}"></option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="middleCategory" class="form-label">중위 카테고리</label>
+                <select class="form-control" id="middleCategory" name="middleCategoryId">
+                    <option value="" disabled selected>중위 카테고리를 선택하세요</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="bottomCategory" class="form-label">하위 카테고리</label>
+                <select class="form-control" id="bottomCategory" name="bottomCategoryId">
+                    <option value="" disabled selected>하위 카테고리를 선택하세요</option>
+                </select>
+            </div>
+
+            <!-- 기존 기여자 목록 -->
+            <div id="existingContributorsList" class="mb-3">
+                <label class="form-label">기존 기여자 목록</label>
+                <div class="contributor-container">
+                    <div th:each="contributor : ${book.contributorList}" class="selected-contributor-item"
+                         th:attr="data-contributor-key=${contributor.contributorName + '|' + contributor.roleName}">
+                        <span th:text="'[' + ${contributor.roleName} + '] ' + ${contributor.contributorName}"></span>
+                        <button type="button" class="btn btn-danger btn-sm"
+                                onclick="removeExistingContributor(this, '[[${contributor.contributorName}]]', '[[${contributor.roleName}]]')">
+                            삭제
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 기여자 선택 및 추가 -->
+            <div id="contributors" class="mb-3">
+                <label for="existingContributors" class="form-label">기여자 선택</label>
+                <select id="existingContributors" class="form-control" multiple>
+                    <option th:each="contributor : ${contributors}"
+                            th:attr="value=${contributor.contributorName()} + '|' + ${contributor.contributorRole()}"
+                            th:text="'[' + ${contributor.contributorRole()} + '] ' + ${contributor.contributorName()}">
+                    </option>
+                </select>
+            </div>
+            <button id="addContributorButton" type="button" class="btn btn-primary mb-3">기여자 추가</button>
+
+            <input type="hidden" id="contributorList" name="contributorList" value="[]">
+
+            <!-- 선택된 기여자 목록 -->
+            <div id="selectedContributors" class="mb-3 contributor-container">
+                <!-- 선택한 기여자 목록이 여기에 추가됩니다 -->
+            </div>
+
+            <div class="mb-3">
+                <label for="existingTags" class="form-label">기존 태그 목록</label>
+                <div id="existingTags" class="tag-container">
+                    <!-- 기존 태그 리스트 -->
+                    <span th:each="tag : ${book.tagList}"
+                          th:text="${tag.tagName}"
+                          th:attr="data-tag-name=${tag.tagName}"
+                          class="tag-item existing-tag"
+                          onclick="addTag(this)">
+        </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="availableTags" class="form-label">사용 가능한 태그</label>
+                <div id="availableTags" class="tag-container">
+                    <!-- 사용 가능한 태그 리스트 -->
+                    <span th:each="tag : ${tags}"
+                          th:text="${tag.name}"
+                          th:attr="data-tag-name=${tag.name}"
+                          class="tag-item available-tag"
+                          onclick="addTag(this)">
+        </span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="selectedTags" class="form-label">선택된 태그</label>
+                <div id="selectedTags" class="tag-container">
+                    <!-- 초기에는 비어 있음 -->
+                </div>
+            </div>
+
+            <input type="hidden" id="tagList" name="tagList" th:value="${book.tagList}">
+
+            <div class="form-check mb-3">
+                <label class="form-label">선물 포장 가능 여부</label>
+                <div>
+                    <input type="radio" class="form-check-input" id="giftWrappableTrue" name="giftWrappable" value="true"
+                           th:checked="${book.giftWrappable}">
+                    <label class="form-check-label" for="giftWrappableTrue">가능</label>
+                </div>
+                <div>
+                    <input type="radio" class="form-check-input" id="giftWrappableFalse" name="giftWrappable" value="false"
+                           th:checked="${!book.giftWrappable}">
+                    <label class="form-check-label" for="giftWrappableFalse">불가능</label>
+                </div>
+            </div>
+
+            <div class="form-check mb-3">
+                <label class="form-label">활성 상태</label>
+                <div>
+                    <input type="radio" class="form-check-input" id="isActiveTrue" name="isActive" value="true"
+                           th:checked="${book.isActive}">
+                    <label class="form-check-label" for="isActiveTrue">활성</label>
+                </div>
+                <div>
+                    <input type="radio" class="form-check-input" id="isActiveFalse" name="isActive" value="false"
+                           th:checked="${!book.isActive}">
+                    <label class="form-check-label" for="isActiveFalse">비활성</label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">수정</button>
+        </form>
+    </div>
+    <script th:src="@{/js/book-update.js}"></script>
+</div>
+</body>
+</html>

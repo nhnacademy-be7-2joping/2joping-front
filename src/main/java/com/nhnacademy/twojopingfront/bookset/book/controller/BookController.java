@@ -1,15 +1,14 @@
 package com.nhnacademy.twojopingfront.bookset.book.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.admin.shipment.dto.response.ShipmentPolicyResponseDto;
 import com.nhnacademy.twojopingfront.admin.shipment.service.ShipmentPolicyService;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateHtmlRequestDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookUpdateHtmlRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookAdminSimpleResponseDto;
-import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookUpdateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
@@ -23,7 +22,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
-
 
 @Controller
 @RequestMapping()
@@ -62,14 +60,14 @@ public class BookController {
             return "redirect:/admin/books/get";
         } catch (Exception ex) {
             ex.printStackTrace();
-            // 오류 발생 시에도 리다이렉트
+            // 오류 발생 시에도 리다이렉트 (임의로 지정)
             return "redirect:/admin/books/get";
         }
     }
 
     @GetMapping("/admin/books/register")
     public String showBookRegisterForm(Model model) {
-        List<TagResponseDto> tagList = bookService.getAllTags();
+        List<TagResponseDto> tagList = bookService.getAllTags().getBody();
         model.addAttribute("tags", tagList);
         List<PublisherResponseDto> publisherList = bookService.getAllPublishersForRegister();
         model.addAttribute("publishers", publisherList);
@@ -140,5 +138,62 @@ public class BookController {
         model.addAttribute("books", books);
         model.addAttribute("shipmentPolicies", shipmentPolicies);
         return "bookset/book/bookdetails";
+    }
+
+    @GetMapping("/admin/books/modify/{bookId}")
+    public String showBookModifyForm(@PathVariable Long bookId, Model model) {
+        BookUpdateResponseDto bookData = bookService.getUpdateBookById(bookId);
+        model.addAttribute("book", bookData);
+
+        List<PublisherResponseDto> publisherList = bookService.getAllPublishersForRegister();
+        model.addAttribute("publishers", publisherList);
+
+        List<ContributorNameRoleResponseDto> contributorList = bookService.getActiveContributors();
+        model.addAttribute("contributors", contributorList);
+
+        List<CategoryResponseDto> topCategories = bookService.getTopCategories();
+        model.addAttribute("topCategories", topCategories);
+
+        List<TagResponseDto> tagList = bookService.getAllTags().getBody();
+        model.addAttribute("tags", tagList);
+
+        return "bookset/book/book-update";
+    }
+
+    @PutMapping(value = "/admin/books/modify/{bookId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String updateBook(@PathVariable Long bookId,
+                             @RequestParam("contributorList") String contributorListJson,
+                             @ModelAttribute BookUpdateHtmlRequestDto bookUpdateHtmlRequestDto,
+                             @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
+                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
+        try {
+            BookUpdateHtmlRequestDto updatedDto = new BookUpdateHtmlRequestDto(
+                    bookUpdateHtmlRequestDto.title(),
+                    bookUpdateHtmlRequestDto.description(),
+                    bookUpdateHtmlRequestDto.publisherName(),
+                    bookUpdateHtmlRequestDto.publishedDate(),
+                    bookUpdateHtmlRequestDto.isbn(),
+                    bookUpdateHtmlRequestDto.retailPrice(),
+                    bookUpdateHtmlRequestDto.sellingPrice(),
+                    bookUpdateHtmlRequestDto.giftWrappable(),
+                    bookUpdateHtmlRequestDto.isActive(),
+                    bookUpdateHtmlRequestDto.remainQuantity(),
+                    contributorListJson, // Combined contributors
+                    bookUpdateHtmlRequestDto.topCategoryId(),
+                    bookUpdateHtmlRequestDto.middleCategoryId(),
+                    bookUpdateHtmlRequestDto.bottomCategoryId(),
+                    bookUpdateHtmlRequestDto.tagList(),
+                    bookUpdateHtmlRequestDto.removeThumbnailImage(),
+                    bookUpdateHtmlRequestDto.removeDetailImage()
+            );
+
+            ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
+            bookService.updateBook(bookId, updatedDto, imageUploadRequestDto);
+
+            return "redirect:/admin/books/get";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "redirect:/admin/books/get";
+        }
     }
 }
