@@ -500,6 +500,7 @@ body{
 /* 배송 정보 컨테이너 */
 .book-detail-delivery {
     width: 100%;
+    height: auto;
     padding: 20px;
     background-color: #f9f9f9; /* 밝은 배경색으로 구분 */
     border: 1px solid #ddd; /* 테두리로 영역 구분 */

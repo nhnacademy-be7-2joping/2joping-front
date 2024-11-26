@@ -1,21 +1,36 @@
 package com.nhnacademy.twojopingfront.admin.shipment.service;
 
+import com.nhnacademy.twojopingfront.admin.shipment.client.CarrierClient;
 import com.nhnacademy.twojopingfront.admin.shipment.dto.request.CarrierRequestDto;
 import com.nhnacademy.twojopingfront.admin.shipment.dto.response.CarrierResponseDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public interface CarrierService {
+@RequiredArgsConstructor
+public class CarrierService {
 
-    List<CarrierResponseDto> getAllCarriers();
+    private final CarrierClient carrierClient;
 
-    CarrierResponseDto getCarrier(Long id);
+    public List<CarrierResponseDto> getAllCarriers() {
+        return carrierClient.getAllCarriers();
+    }
 
-    void createCarrier(CarrierRequestDto carrierRequestDto);
+    public CarrierResponseDto getCarrier(Long id) {
+        return carrierClient.getCarrier(id);
+    }
 
-    void updateCarrier(Long id, CarrierRequestDto carrierRequestDto);
+    public void createCarrier(CarrierRequestDto carrierRequestDto) {
+        carrierClient.createCarrier(carrierRequestDto);
+    }
 
-    void deleteCarrier(Long id);
+    public void updateCarrier(Long id, CarrierRequestDto carrierRequestDto) {
+        carrierClient.updateCarrier(id, carrierRequestDto);
+    }
+
+    public void deleteCarrier(Long id) {
+        carrierClient.deleteCarrier(id);
+    }
 }

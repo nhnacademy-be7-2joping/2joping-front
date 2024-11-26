@@ -4,6 +4,9 @@ import com.nhnacademy.twojopingfront.admin.shipment.dto.request.ShipmentPolicyRe
 import com.nhnacademy.twojopingfront.admin.shipment.dto.response.ShipmentPolicyResponseDto;
 import com.nhnacademy.twojopingfront.admin.shipment.service.ShipmentPolicyService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,9 +22,10 @@ public class ShipmentPolicyController {
     private final ShipmentPolicyService shipmentPolicyService;
 
     @GetMapping
-    public String getAllShipmentPolicies(Model model) {
-        List<ShipmentPolicyResponseDto> policies = shipmentPolicyService.getAllShipmentPolicies();
+    public String getAllShipmentPolicies(@PageableDefault(size = 10, sort = "categoryId") Pageable pageable, Model model) {
+        Page<ShipmentPolicyResponseDto> policies = shipmentPolicyService.getAllShipmentPolicies(pageable.getPageNumber(), pageable.getPageSize());
         model.addAttribute("policies", policies);
+        model.addAttribute("page", policies);
         return "admin/shipment/shipment-policy-list";
     }
 
