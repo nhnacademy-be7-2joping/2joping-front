@@ -208,9 +208,9 @@ public class BookController {
     public String deactivateBook(@PathVariable("book-id") Long bookId) {
         try {
             bookService.deactivateBook(bookId);
-//            redirectAttributes.addFlashAttribute("message", "Book with ID " + bookId + " has been deactivated.");
         } catch (Exception ex) {
-//             redirectAttributes.addFlashAttribute("error", "Failed to deactivate book with ID " + bookId);
+            ex.printStackTrace();
+            return "redirect:/admin/books/get";
         }
         return "redirect:/admin/books/get";
     }
