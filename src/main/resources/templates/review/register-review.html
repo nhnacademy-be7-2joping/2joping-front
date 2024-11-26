@@ -13,9 +13,9 @@
   <form th:action="@{/reviews}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
     <!-- 주문 상세 ID -->
     <div class="mb-3">
-      <label for="orderDetailId">주문 상세 ID:</label>
-      <input type="text" id="orderDetailId" name="orderDetailId" required>
+      <input type="hidden" id="orderDetailId" name="orderDetailId" th:value="${orderDetailId}">
     </div>
+
 
     <!-- 평점 -->
     <div class="mb-3">

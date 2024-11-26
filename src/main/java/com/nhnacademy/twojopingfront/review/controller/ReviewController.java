@@ -91,9 +91,12 @@ public class ReviewController {
      */
 
     @GetMapping("/new")
-    public String showRegisterReviewForm(Model model) {
+    public String showRegisterReviewForm(@RequestParam("orderDetailId") Long orderDetailId, Model model) {
         model.addAttribute("review", new ReviewCreateRequestDto(
-                new ReviewDetailRequestDto(null,null, null,  0,"",""),new ReviewImageUrlRequestDto("")));
+                new ReviewDetailRequestDto(orderDetailId,null, null,  0,"",""),
+                new ReviewImageUrlRequestDto("")));
+        model.addAttribute("orderDetailId", orderDetailId); // orderDetailId를 뷰에 전달
+
         return "review/register-review";
     }
 
