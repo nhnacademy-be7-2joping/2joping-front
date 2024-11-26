@@ -104,19 +104,32 @@
 
         <!-- 페이징 네비게이션 -->
         <nav aria-label="Page navigation" th:if="${books.totalElements > 0}">
-            <ul class="pagination">
+            <ul class="pagination justify-content-center">
+                <!-- 이전 10페이지 버튼 -->
+                <li class="page-item" th:classappend="${books.number >= 10 ? '' : 'disabled'}">
+                    <a class="page-link"
+                       th:if="${books.number >= 10}"
+                       th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${books.number - 10}, size=${books.size})}">
+                        &laquo; 이전 10페이지
+                    </a>
+                    <span class="page-link" th:if="${books.number < 10}">&laquo; 이전 10페이지</span>
+                </li>
+
                 <!-- 이전 페이지 -->
-                <li class="page-item" th:classappend="${!books.hasPrevious()} ? 'disabled'">
+                <li class="page-item" th:classappend="${books.hasPrevious() ? '' : 'disabled'}">
                     <a class="page-link"
                        th:if="${books.hasPrevious()}"
-                       th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${books.number - 1}, size=${books.size})}"
-                       aria-label="Previous">&laquo; 이전</a>
-                    <span class="page-link disabled" th:if="${!books.hasPrevious()}">&laquo; 이전</span>
+                       th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${books.number - 1}, size=${books.size})}">
+                        이전
+                    </a>
+                    <span class="page-link" th:if="${!books.hasPrevious()}">이전</span>
                 </li>
 
                 <!-- 페이지 번호 -->
                 <li class="page-item"
-                    th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}"
+                    th:each="i : ${#numbers.sequence(
+                (books.number - 5 >= 0 ? books.number - 5 : 0),
+                (books.number + 5 < books.totalPages ? books.number + 5 : books.totalPages - 1))}"
                     th:classappend="${i == books.number} ? 'active'">
                     <a class="page-link"
                        th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${i}, size=${books.size})}"
@@ -124,16 +137,26 @@
                 </li>
 
                 <!-- 다음 페이지 -->
-                <li class="page-item" th:classappend="${!books.hasNext()} ? 'disabled'">
+                <li class="page-item" th:classappend="${books.hasNext() ? '' : 'disabled'}">
                     <a class="page-link"
                        th:if="${books.hasNext()}"
-                       th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${books.number + 1}, size=${books.size})}"
-                       aria-label="Next">다음 &raquo;</a>
-                    <span class="page-link disabled" th:if="${!books.hasNext()}">다음 &raquo;</span>
+                       th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${books.number + 1}, size=${books.size})}">
+                        다음
+                    </a>
+                    <span class="page-link" th:if="${!books.hasNext()}">다음</span>
+                </li>
+
+                <!-- 다음 10페이지 버튼 -->
+                <li class="page-item" th:classappend="${books.number + 10 < books.totalPages ? '' : 'disabled'}">
+                    <a class="page-link"
+                       th:if="${books.number + 10 < books.totalPages}"
+                       th:href="@{/(categoryId=${categoryId}, sort=${sort}, page=${books.number + 10}, size=${books.size})}">
+                        다음 10페이지 &raquo;
+                    </a>
+                    <span class="page-link" th:if="${books.number + 10 >= books.totalPages}">다음 10페이지 &raquo;</span>
                 </li>
             </ul>
         </nav>
-
     </div>
 </div>
 </body>

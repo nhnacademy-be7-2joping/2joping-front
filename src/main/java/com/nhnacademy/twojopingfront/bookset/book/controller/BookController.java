@@ -16,6 +16,8 @@ import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherRes
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -134,7 +136,7 @@ public class BookController {
     @GetMapping("/books/{bookId}")
     public String getBookByBookId(@PathVariable Long bookId, Model model) {
         BookResponseDto books = bookService.getBookById(bookId);
-        List<ShipmentPolicyResponseDto> shipmentPolicies = shipmentPolicyService.getAllShipmentPolicies();
+        List<ShipmentPolicyResponseDto> shipmentPolicies = shipmentPolicyService.getAllIsActiveShipmentPolicies();
         model.addAttribute("books", books);
         model.addAttribute("shipmentPolicies", shipmentPolicies);
         return "bookset/book/bookdetails";

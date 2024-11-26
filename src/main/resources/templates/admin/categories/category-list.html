@@ -23,14 +23,15 @@
     <a href="/admin/categories/create" class="btn btn-primary mb-3">카테고리 추가</a>
 
     <!-- 카테고리 목록 테이블 -->
-    <table class="table table-bordered">
+    <table class="table table-bordered table-hover">
         <thead>
         <tr>
             <th>카테고리 ID</th>
             <th>이름</th>
             <th>부모 카테고리 ID</th>
+            <th>상태</th>
             <th>수정</th>
-            <th>비활성화</th>
+            <th>활성/비활성</th>
         </tr>
         </thead>
         <tbody>
@@ -38,16 +39,28 @@
             <td th:text="${category.categoryId}"></td>
             <td th:text="${category.name}"></td>
             <td th:text="${category.parentCategoryId != null ? category.parentCategoryId : '없음'}"></td>
-            <td><a class="btn btn-sm btn-warning bth-secondary" th:href="@{|/admin/categories/${category.categoryId}/edit|}">수정</a></td>
+            <td><span th:classappend="${category.isActive ? 'badge bg-success' : 'badge bg-danger'}"
+                      th:text="${category.isActive ? '활성화' : '비활성화'}">활성화</span></td>
+            <td><a class="btn btn-sm btn-warning bth-secondary"
+                   th:href="@{|/admin/categories/${category.categoryId}/edit|}">수정</a></td>
             <td>
-                <form th:action="@{|/admin/categories/${category.categoryId}/deactivate|}" method="post">
-                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('정말 비활성화하시겠습니까?');">비활성화
+                <form th:if="${!category.isActive}" th:action="@{|/admin/categories/${category.categoryId}/activate|}"
+                      method="post">
+                    <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('정말 활성화하시겠습니까?');">
+                        활성화
+                    </button>
+                </form>
+                <form th:if="${category.isActive}" th:action="@{|/admin/categories/${category.categoryId}/deactivate|}"
+                      method="post">
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('정말 비활성화하시겠습니까?');">
+                        비활성화
                     </button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
+
 
     <!-- 페이징 처리 -->
     <nav>
