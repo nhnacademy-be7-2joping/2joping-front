@@ -120,7 +120,7 @@
 
                             <!-- 정가 -->
                             <div class="book-price">
-                                <span class="book-retail-price" th:text="'정가: ' + ${book.bookRetailPrice} + '원'"></span>
+                                <span class="book-retail-price" th:text="'정가: ' + ${@customFormatter.formatCurrency(book.bookRetailPrice)} + '원'"></span>
                                 <span class="discount-percentage"
                                       th:if="${book.bookRetailPrice > 0 and book.bookSellingPrice < book.bookRetailPrice}"
                                       th:text="'(' + ${T(java.lang.String).format('%.1f', ((book.bookRetailPrice - book.bookSellingPrice) * 100.0) / book.bookRetailPrice)} + '% 할인)'">
@@ -128,7 +128,7 @@
                             </div>
 
                             <!-- 판매가 -->
-                            <div class="book-selling-price" th:text="'판매가: ' + ${book.bookSellingPrice} + '원'"></div>
+                            <div class="book-selling-price" th:text="'판매가: ' + ${@customFormatter.formatCurrency(book.bookSellingPrice)} + '원'"></div>
 
                             <!-- 평점, 리뷰수 -->
                             <div class="book-rating">

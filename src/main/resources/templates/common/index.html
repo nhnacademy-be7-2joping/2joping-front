@@ -71,7 +71,7 @@
 
                         <!-- 판매 가격 -->
                         <div class="book-price"
-                             th:text="${book.bookSellingPrice != null ? '₩ ' + book.bookSellingPrice : '가격 정보 없음'}">₩ 0
+                             th:text="${book.bookSellingPrice != null ? '₩ ' + @customFormatter.formatCurrency(book.bookSellingPrice): '가격 정보 없음'}">₩ 0
                         </div>
                     </div>
                 </a>
