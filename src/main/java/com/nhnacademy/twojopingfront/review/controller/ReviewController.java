@@ -6,6 +6,7 @@ import com.nhnacademy.twojopingfront.review.dto.request.*;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewCreateResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewModifyResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewResponseDto;
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewTotalResponseDto;
 import com.nhnacademy.twojopingfront.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,6 +36,18 @@ public class ReviewController {
              return "review/get-review";
         }
 
+    /**
+     * mypage용 특정 리뷰를 조회
+     * @param reviewId 조회할 리뷰 ID
+     * @param model 뷰에 데이터를 전달하기 위한 모델 객체
+     * @return 리뷰 상세 페이지 뷰 이름
+     */
+    @GetMapping("/mypage/{reviewId}")
+    public String getReviewMyPage(@PathVariable Long reviewId, Model model) {
+        ReviewResponseDto reviewResponseDto = reviewService.getReview(reviewId);
+        model.addAttribute("review", reviewResponseDto);
+        return "review/mypage-get-review";
+    }
     /**
      * 특정 도서에 대한 리뷰 목록 조회
      * @param page 페이지 번호
@@ -67,7 +80,7 @@ public class ReviewController {
         Long customerId = MemberUtils.getCustomerId();
 
 
-        Page<ReviewResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size,customerId.toString());
+        Page<ReviewTotalResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size,customerId.toString());
         model.addAttribute("reviews", reviews);
         return "review/get-reviews";
     }

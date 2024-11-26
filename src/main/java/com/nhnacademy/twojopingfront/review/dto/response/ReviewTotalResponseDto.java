@@ -1,4 +1,18 @@
 package com.nhnacademy.twojopingfront.review.dto.response;
 
-public class ReviewTotalResponseDto {
-}
+import java.sql.Timestamp;
+
+public record ReviewTotalResponseDto(
+        Long reviewId,
+        Long orderDetailId,
+        Long customerId,
+        Long bookId,
+        int ratingValue,
+        String bookName,
+        String title,
+        String text,
+        String reviewImage,
+        Timestamp createdAt,
+        Timestamp updatedAt
+)
+{}

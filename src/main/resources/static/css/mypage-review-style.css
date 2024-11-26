@@ -1,0 +1,103 @@
+/* 전체 컨테이너 스타일 */
+.mypage-container {
+    padding: 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead th {
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+}
+
+tbody td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+}
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 별점 스타일 */
+.stars {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+}
+
+.star {
+    font-size: 1.2rem;
+    color: lightgray;
+}
+
+.star.selected {
+    color: gold;
+}
+
+/* 버튼 스타일 */
+.pagination-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* 페이지네이션 정보 */
+.pagination-info {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+/* "상세보기" 링크 스타일 */
+a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #0056b3;
+}

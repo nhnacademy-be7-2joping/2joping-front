@@ -9,6 +9,7 @@ import com.nhnacademy.twojopingfront.review.dto.request.*;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewCreateResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewModifyResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewResponseDto;
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewTotalResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
@@ -69,7 +70,7 @@ public class ReviewService {
     }
 
 
-    public Page<ReviewResponseDto> getReviewsByCustomerId(int page,int size,String customerId) {
+    public Page<ReviewTotalResponseDto> getReviewsByCustomerId(int page, int size, String customerId) {
 
         return reviewClient.getReviewsByCustomerId(page,size,customerId);
     }

@@ -6,6 +6,7 @@ import com.nhnacademy.twojopingfront.review.dto.request.ReviewModifyRequestDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewCreateResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewModifyResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewResponseDto;
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewTotalResponseDto;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
@@ -29,6 +30,6 @@ public interface ReviewClient {
     Page<ReviewResponseDto> getReviewsByBookId(@RequestParam("page") int page, @RequestParam("size") int size,@PathVariable Long bookId);
 
     @GetMapping("reviews/customer")
-    Page<ReviewResponseDto> getReviewsByCustomerId(@RequestParam("page") int page, @RequestParam("size") int size,@RequestHeader("X-Customer-Id") String customerId);
+    Page<ReviewTotalResponseDto> getReviewsByCustomerId(@RequestParam("page") int page, @RequestParam("size") int size, @RequestHeader("X-Customer-Id") String customerId);
 
 }

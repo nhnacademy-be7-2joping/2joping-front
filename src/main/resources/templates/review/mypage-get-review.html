@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/mainpage-layout}">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>리뷰 상세 정보</title>
+  <link rel="stylesheet" th:href="@{/css/review-detail-style.css}">
+  <link rel="stylesheet" th:href="@{/css/review-star-style.css}">
+  <script th:src="@{/js/review-detail.js}" defer></script>
+
 </head>
 <body>
-$END$
+<div layout:fragment="content" class="review-detail-container">
+  <h1>리뷰 상세 정보</h1>
+
+  <!-- 평점 -->
+  <div class="rating-container">
+    <span class="rating-label"><strong>평점:</strong></span>
+    <div class="stars" id="rating-stars" th:attr="data-rating=${review.ratingValue}">
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+      <span class="star">★</span>
+    </div>
+  </div>
+
+  <!-- 리뷰 제목, 내용 -->
+  <div>
+    <p><strong>제목:</strong> <span th:text="${review.title}">제목 없음</span></p>
+    <p><strong>내용:</strong> <span th:text="${review.text}">내용 없음</span></p>
+  </div>
+
+  <!-- 리뷰 이미지 -->
+  <!-- 리뷰 이미지 (이미지가 있을 때만 렌더링) -->
+  <div th:if="${review.reviewImage != null}">
+    <p><strong>이미지:</strong></p>
+    <img th:src="${review.reviewImage}" alt="리뷰 이미지" class="review-image">
+  </div>
+
+  <!-- 작성일, 수정일 -->
+  <div>
+    <p><strong>작성일:</strong> <span th:text="${review.createdAt}">작성일 없음</span></p>
+    <p><strong>수정일:</strong> <span th:text="${review.updatedAt}">수정일 없음</span></p>
+  </div>
+
+  <!-- 돌아가기 버튼 -->
+  <a th:href="@{/mypage/review-history}" class="back-button">이전으로 돌아가기</a>
+</div>
 </body>
 </html>
