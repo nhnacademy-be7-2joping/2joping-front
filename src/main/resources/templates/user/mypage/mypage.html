@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <title>마이페이지</title>
     <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+    <link rel="stylesheet" th:href="@{/css/mypage-register-review-style.css}">
 
- 
+
 </head>
 <body>
 <!-- 메인 컨텐츠 영역 -->
@@ -22,10 +23,10 @@
                 </div>
                 <div class="tier-image-container">
 
-                        <img class = "tier-image" th:src="@{/images/tier/normal-tier.png}" alt="default image" th:if="${tier.tier().toString() == '일반'}"/>
-                        <img class = "tier-image" th:src="@{/images/tier/royal-tier.png}" alt="royal image" th:if="${tier.tier().toString() == '로얄'}"/>
-                        <img class = "tier-image" th:src="@{/images/tier/gold-tier.png}" alt="gold image" th:if="${tier.tier().toString() == '골드'}"/>
-                        <img class = "tier-image" th:src="@{/images/tier/platinum-tier.png}" alt="platinum image" th:if="${tier.tier().toString() == '플래티넘'}"/>
+                    <img class = "tier-image" th:src="@{/images/tier/normal-tier.png}" alt="default image" th:if="${tier.tier().toString() == '일반'}"/>
+                    <img class = "tier-image" th:src="@{/images/tier/royal-tier.png}" alt="royal image" th:if="${tier.tier().toString() == '로얄'}"/>
+                    <img class = "tier-image" th:src="@{/images/tier/gold-tier.png}" alt="gold image" th:if="${tier.tier().toString() == '골드'}"/>
+                    <img class = "tier-image" th:src="@{/images/tier/platinum-tier.png}" alt="platinum image" th:if="${tier.tier().toString() == '플래티넘'}"/>
 
 
                     <span class="separator">|</span>
@@ -44,7 +45,7 @@
                 </div>
                 <div class="font-user-info-title flex-left" style="font-size: 12px;">
 
-                <p class="bold">다음 등급까지&nbsp;:&nbsp;</p>
+                    <p class="bold">다음 등급까지&nbsp;:&nbsp;</p>
                     <p th:text="${@customFormatter.formatCurrency(tier.nextTierPrice)} + '원'"></p>
 
                 </div>
@@ -60,7 +61,7 @@
 
                 <div class="font-user-info-title bold flex-left">
 
-                <p >보유 포인트&nbsp; : &nbsp; </p> <p>10000</p><p>P</p>
+                    <p >보유 포인트&nbsp; : &nbsp; </p> <p>10000</p><p>P</p>
 
                 </div>
                 <div class="point-history-container">
@@ -78,15 +79,15 @@
             <div class="coupon-container">
                 <p class="font-user-info-title bold">보유 쿠폰 </p>
 
-                    <div class="coupon-info-container1">
+                <div class="coupon-info-container1">
 
-                        <a href="/mypage/my-coupon" class="coupon-info-container2 font-default">
-                            <span>내 쿠폰함</span>
-                        </a>
-                        <a href="#" class="coupon-info-container2">
+                    <a href="/mypage/my-coupon" class="coupon-info-container2 font-default">
+                        <span>내 쿠폰함</span>
+                    </a>
+                    <a href="#" class="coupon-info-container2">
 
-                        </a>
-                    </div>
+                    </a>
+                </div>
 
             </div>
 
@@ -105,33 +106,36 @@
                     <tr>
                         <th>주문일자</th>
                         <th>주문번호</th>
-                        <th>주문내역</th>
-                        <th>주문상태</th>
-                        <th>배송상태</th>
+                        <th>도서 제목</th>
+                        <th>수량</th>
+                        <th>최종 가격</th>
+                        <th>리뷰</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>2024-11-15</td>
-                        <td>12345678</td>
-                        <td>상품 A, 상품 B</td>
-                        <td>결제완료</td>
-                        <td>배송중</td>
+                    <!-- 주문 내역이 있는 경우 -->
+                    <tr th:each="orderDetail : ${orderDetails}">
+                        <td th:text="${#temporals.format(orderDetail.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td> <!-- 날짜 포맷 -->
+                        <td th:text="${orderDetail.orderDetailId}"></td>
+                        <td th:text="${orderDetail.bookTitle}"></td>
+                        <td th:text="${orderDetail.quantity}"></td>
+                        <td th:text="${orderDetail.finalPrice} + '원'"></td>
+                        <td>
+                            <div>
+                                <a th:href="@{/reviews/new(orderDetailId=${orderDetail.orderDetailId})}" class="review-button write-button">리뷰 작성</a>
+                            </div>
+                            <div style="margin-top: 5px;">
+                                <a th:href="@{/reviews/edit(orderDetailId=${orderDetail.orderDetailId})}" class="review-button edit-button">리뷰 수정</a>
+                            </div>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>2024-11-14</td>
-                        <td>87654321</td>
-                        <td>상품 C</td>
-                        <td>취소완료</td>
-                        <td>-</td>
+                    <!-- 주문 내역이 없는 경우 -->
+                    <tr th:if="${#lists.isEmpty(orderDetails)}">
+                        <td colspan="6">주문 내역이 없습니다.</td>
                     </tr>
                     </tbody>
                 </table>
-
             </div>
-
-
-
         </div>
 
 

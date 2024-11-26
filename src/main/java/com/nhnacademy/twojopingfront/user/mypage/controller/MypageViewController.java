@@ -1,6 +1,8 @@
 package com.nhnacademy.twojopingfront.user.mypage.controller;
 
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
+import com.nhnacademy.twojopingfront.order_detail.dto.response.OrderDetailResponseDto;
+import com.nhnacademy.twojopingfront.order_detail.service.OrderDetailService;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewTotalResponseDto;
 import com.nhnacademy.twojopingfront.review.service.ReviewService;
@@ -39,6 +41,7 @@ public class MypageViewController {
     private final MemberAdaptor memberAdaptor;
     private final TierAdaptor tierAdaptor;
     private final ReviewService reviewService;
+    private final OrderDetailService orderDetailService;
     /**
      * 마이페이지 메인 화면으로 이동합니다.
      *
@@ -51,6 +54,9 @@ public class MypageViewController {
         MemberTierResponse tierResponse = tierAdaptor.getMemberTier();
         model.addAttribute("tier", tierResponse);
 
+        Long customerId = MemberUtils.getCustomerId();
+        List<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(customerId.toString());
+        model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/mypage";
     }
 
