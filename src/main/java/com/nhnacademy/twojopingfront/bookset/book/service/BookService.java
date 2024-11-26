@@ -205,9 +205,8 @@ public class BookService {
     /**
      * 도서를 수정을 위해 도서 정보를 가져오는 메서드
      *
-     * @param bookUpdateHtmlRequestDto
-     * @param imageUploadRequestDto
-     * @return 수정된 도서에 대한 응답 정보
+     * @param bookId
+     * @return 수정 예정 도서에 대한 응답 정보
      */
     public BookUpdateResponseDto getUpdateBookById(Long bookId) {
         return bookClient.getUpdateBookById(bookId);
@@ -220,7 +219,6 @@ public class BookService {
     public void deactivateBook(Long bookId) {
         bookClient.deactivateBook(bookId);
     }
-}
 
     /**
      * 도서를 수정하는 메서드
