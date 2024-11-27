@@ -36,7 +36,27 @@
             border: 1px solid #ddd; /* 테두리 추가 */
             padding: 10px; /* 셀 내부 여백 */
             text-align: left; /* 텍스트 정렬 */
-            vertical-align: top; /* 텍스트 상단 정렬 */
+            vertical-align: middle; /* 텍스트 상단 정렬 */
+        }
+
+        /* 제목 열 세로 가운데 정렬 */
+        td:nth-child(3) {
+            vertical-align: middle; /* 제목을 세로 가운데 정렬 */
+        }
+
+        /* 판매 가격 열 가로 크기 늘리기 */
+        td:nth-child(6), th:nth-child(6) {
+            width: 6%; /* 판매 가격 열의 너비를 설정 */
+        }
+
+        /* 기여자 줄바꿈 설정 */
+        td:nth-child(5) span {
+            display: block; /* 기여자 정보를 줄마다 표시 */
+        }
+
+        /* 활성화 여부 열 가로 크기 늘리기 */
+        td:nth-child(8), th:nth-child(8) {
+            width: 8%; /* 판매 가격 열의 너비를 설정 */
         }
 
         .btn-primary, .btn-danger {
@@ -53,16 +73,12 @@
             cursor: pointer; /* 포인터 표시 */
         }
 
-        td a, td form {
-            margin-right: 5px; /* 수정과 삭제 버튼 간의 간격 */
-        }
-
         /* 직접 등록 버튼 스타일 */
         .btn-register {
             background-color: #0d6efd; /* 파란색 배경 */
             color: white; /* 텍스트 색상 */
             font-size: 16px; /* 텍스트 크기 */
-            padding: 10px 20px; /* 버튼 여백 */
+            padding: 6px 14px; /* 버튼 여백 */
             border: none; /* 테두리 제거 */
             border-radius: 4px; /* 둥근 모서리 */
             cursor: pointer; /* 마우스 포인터 */
@@ -100,7 +116,7 @@
             <td th:text="${book.publisherName}">출판사</td>
             <td>
                 <span th:each="contributor : ${book.contributorList}"
-                      th:text="${contributor.roleName} + ': ' + ${contributor.contributorName}">
+                      th:text="'[' +${contributor.roleName} + '] ' + ${contributor.contributorName}">
                     기여자
                 </span>
                 <br th:if="${!#lists.isEmpty(book.contributorList)}"/>

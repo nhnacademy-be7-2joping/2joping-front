@@ -85,7 +85,9 @@ public class GlobalExceptionHandler {
                 ex.getErrorResponse().errorMessage()
         );
         Map<String, Object> inputData = (Map<String, Object>) ex.getErrorResponse().data();
-        inputData.forEach(redirectAttributes::addFlashAttribute);
+        if(inputData != null){
+            inputData.forEach(redirectAttributes::addFlashAttribute);
+        }
         model.addAttribute("errorResponse", clientError);
 
         if ("REDIRECT".equals(ex.getErrorResponse().redirectType().toString())) {
