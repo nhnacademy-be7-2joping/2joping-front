@@ -57,8 +57,6 @@ public class GlobalExceptionHandler {
             }
         }
 
-        redirectAttributes.addFlashAttribute("errorCode", "400");
-        redirectAttributes.addFlashAttribute("errorMessage", errors.toString());
         redirectAttributes.addFlashAttribute("errors", errors);
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
