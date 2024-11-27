@@ -1,5 +1,11 @@
 package com.nhnacademy.twojopingfront.user.mypage.controller;
 
+import com.nhnacademy.twojopingfront.common.util.MemberUtils;
+import com.nhnacademy.twojopingfront.order_detail.dto.response.OrderDetailResponseDto;
+import com.nhnacademy.twojopingfront.order_detail.service.OrderDetailService;
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewResponseDto;
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewTotalResponseDto;
+import com.nhnacademy.twojopingfront.review.service.ReviewService;
 import com.nhnacademy.twojopingfront.tier.adaptor.TierAdaptor;
 import com.nhnacademy.twojopingfront.tier.dto.response.MemberTierResponse;
 import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
@@ -8,13 +14,16 @@ import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCouponRespon
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+
 
 /**
  * 마이페이지 관련 뷰를 처리하는 컨트롤러입니다.
@@ -31,7 +40,8 @@ public class MypageViewController {
 
     private final MemberAdaptor memberAdaptor;
     private final TierAdaptor tierAdaptor;
-
+    private final ReviewService reviewService;
+    private final OrderDetailService orderDetailService;
     /**
      * 마이페이지 메인 화면으로 이동합니다.
      *
@@ -44,6 +54,9 @@ public class MypageViewController {
         MemberTierResponse tierResponse = tierAdaptor.getMemberTier();
         model.addAttribute("tier", tierResponse);
 
+        Long customerId = MemberUtils.getCustomerId();
+        List<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(customerId.toString());
+        model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/mypage";
     }
 
@@ -113,8 +126,13 @@ public class MypageViewController {
      */
     @Operation(summary = "리뷰 내역 페이지", description = "사용자가 작성한 리뷰 내역을 조회할 수 있는 페이지로 이동합니다.")
     @GetMapping("/review-history")
-    public String reviewHistoryView(Model model) {
+    public String reviewHistoryView(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    Model model) {
+        Long customerId = MemberUtils.getCustomerId();
 
+        Page<ReviewTotalResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size, customerId.toString());
+        model.addAttribute("reviews", reviews);
         return "user/mypage/review-history";
     }
     @GetMapping("/withdraw")
