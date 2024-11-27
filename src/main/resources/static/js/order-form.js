@@ -61,6 +61,15 @@ function collectOrderData() {
         return isNum ? Number(cleanedValue) : val;
     }
 
+    const getTextFromId = (id) => {
+        const element = document.getElementById(id);
+        if (!element) {
+            return null;
+        }
+
+        return element.textContent;
+    };
+
     // 장바구니 아이템 추가
     orderObject.cartItemList = [];
     document.querySelectorAll('.product-container .card').forEach(book => {
@@ -111,7 +120,15 @@ function collectOrderData() {
         });
     });
     orderObject.wrapList = wrapList;
+
+    // 비용 정보
+    orderObject.bookCost = localeNumberStringToNumber(getTextFromId('book-cost'));
+    orderObject.deliveryCost = localeNumberStringToNumber(getTextFromId('delivery-cost'));
+    orderObject.wrapCost = localeNumberStringToNumber(getTextFromId('wrap-cost'));
     orderObject.totalCost = parseInt(totalCostText.textContent.replace(/,/g, ''));
+
+    // 할인 금액 정보
+    orderObject.couponDiscount = discountMap.get('coupon');
 
     console.log(orderObject);
 
@@ -274,10 +291,10 @@ const showCouponInfo = (data) => {
 }
 
 const setCouponDiscountCost = (discountType, discountValue, maxDiscount, usageLimit) => {
-    const totalCost = parseInt(document.getElementById("total-cost").textContent.replace(',', ''));
-    let discountedCost = discountType === PERCENT_TYPE ? discountValue * totalCost / 100 : discountValue;
+    const bookCost = localeNumberStringToNumber(document.getElementById('book-cost').textContent);
+    let discountedCost = discountType === PERCENT_TYPE ? discountValue * bookCost / 100 : discountValue;
 
-    if (usageLimit && totalCost < usageLimit) {
+    if (usageLimit && bookCost < usageLimit) {
         return;
     }
 
