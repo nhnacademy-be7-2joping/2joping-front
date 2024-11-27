@@ -6,6 +6,7 @@ import com.nhnacademy.twojopingfront.review.dto.request.*;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewCreateResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewModifyResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewResponseDto;
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewTotalResponseDto;
 import com.nhnacademy.twojopingfront.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,18 @@ public class ReviewController {
         }
 
     /**
+     * mypage용 특정 리뷰를 조회
+     * @param reviewId 조회할 리뷰 ID
+     * @param model 뷰에 데이터를 전달하기 위한 모델 객체
+     * @return 리뷰 상세 페이지 뷰 이름
+     */
+    @GetMapping("/mypage/{reviewId}")
+    public String getReviewMyPage(@PathVariable Long reviewId, Model model) {
+        ReviewResponseDto reviewResponseDto = reviewService.getReview(reviewId);
+        model.addAttribute("review", reviewResponseDto);
+        return "review/mypage-get-review";
+    }
+    /**
      * 특정 도서에 대한 리뷰 목록 조회
      * @param page 페이지 번호
      * @param size 페이지 크기
@@ -57,16 +70,16 @@ public class ReviewController {
      * 특정 회원이 작성한 리뷰 목록 조회
      * @param page 페이지 번호
      * @param size 페이지 크기
-     * @param customerId 조회할 회원 ID
      * @param model 뷰에 데이터를 전달하기 위한 모델 객체
      * @return 회원별 리뷰 목록 페이지 뷰 이름
      */
-    @GetMapping("/member/{customerId}")
+    @GetMapping("/member")
     public String getReviewsByCustomerId(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int size,
-                                         @PathVariable Long customerId,
                                          Model model) {
-        Page<ReviewResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size, customerId);
+        Long customerId = MemberUtils.getCustomerId();
+
+        Page<ReviewTotalResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size,customerId.toString());
         model.addAttribute("reviews", reviews);
         return "review/get-reviews";
     }
@@ -78,9 +91,12 @@ public class ReviewController {
      */
 
     @GetMapping("/new")
-    public String showRegisterReviewForm(Model model) {
+    public String showRegisterReviewForm(@RequestParam("orderDetailId") Long orderDetailId, Model model) {
         model.addAttribute("review", new ReviewCreateRequestDto(
-                new ReviewDetailRequestDto(null,null, null,  0,"",""),new ReviewImageUrlRequestDto("")));
+                new ReviewDetailRequestDto(orderDetailId,null, null,  0,"",""),
+                new ReviewImageUrlRequestDto("")));
+        model.addAttribute("orderDetailId", orderDetailId); // orderDetailId를 뷰에 전달
+
         return "review/register-review";
     }
 
@@ -106,7 +122,7 @@ public class ReviewController {
         );
         ReviewImageUploadRequestDto imageUploadRequestDto = new ReviewImageUploadRequestDto(reviewImage);
         ReviewCreateResponseDto responseDto = reviewService.registerReview(updatedReviewDetailRequestDto,imageUploadRequestDto);
-        return "redirect:/reviews/" + responseDto.reviewId();
+        return "redirect:/reviews/mypage/" + responseDto.reviewId();
     }
 
     /**
@@ -143,7 +159,7 @@ public class ReviewController {
                 deleteImage
         );
 
-        return "redirect:/reviews/" + responseDto.reviewId();
+        return "redirect:/reviews/mypage/" + responseDto.reviewId();
     }
 
 }
