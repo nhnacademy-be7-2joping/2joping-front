@@ -62,10 +62,10 @@
 
         <!-- 평점, 지은이, 출판사 -->
         <div class="book-detail-rate-container">
-          <p>평점 : </p>
-          <p th:text="${#books != null and #books.containsProperty('rating') and books.rating != null ? books.rating : '정보 없음'}">
-            0
-          </p>
+<!--          <p>평점 : </p>-->
+<!--          <p th:text="${#books != null and #books.containsProperty('rating') and books.rating != null ? books.rating : '정보 없음'}">-->
+<!--            0-->
+<!--          </p>-->
 
           <span th:if="${!#lists.isEmpty(books.contributorList)}">
                             <span th:text="${books.contributorList[0].contributorName} + ' 저'"></span>
