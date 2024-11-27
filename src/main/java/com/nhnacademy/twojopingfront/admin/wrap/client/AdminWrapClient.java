@@ -1,5 +1,7 @@
 package com.nhnacademy.twojopingfront.admin.wrap.client;
 
+import com.nhnacademy.twojopingfront.admin.wrap.dto.WrapCreateResponseDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.WrapDetailRequestDto;
 import com.nhnacademy.twojopingfront.admin.wrap.dto.WrapRequestDto;
 import com.nhnacademy.twojopingfront.admin.wrap.dto.WrapResponseDto;
 import jakarta.validation.Valid;
@@ -15,7 +17,7 @@ import java.util.List;
 @FeignClient(name = "AdminWrapClient", url = "${gateway.base-url}")
 public interface AdminWrapClient {
     @PostMapping("/v1/wraps")
-    ResponseEntity<WrapResponseDto> createWrap(@Valid @RequestBody WrapRequestDto requestDto);
+    WrapCreateResponseDto createWrap(@Valid @RequestBody WrapRequestDto requestDto);
 
     @GetMapping("/v1/wraps/{wrap-id}")
     ResponseEntity<WrapResponseDto> getWrap(@PathVariable("wrap-id") Long wrapId);
@@ -24,6 +26,6 @@ public interface AdminWrapClient {
     ResponseEntity<List<WrapResponseDto>> findAllByIsActiveTrue();
 
     @PutMapping("/v1/wraps/{wrap-id}")
-    ResponseEntity<WrapResponseDto> updateWrap(@PathVariable("wrap-id") Long wrapId, @RequestBody WrapRequestDto requestDto);
+    ResponseEntity<WrapResponseDto> updateWrap(@PathVariable("wrap-id") Long wrapId, @RequestBody WrapDetailRequestDto wrapDetailRequestDto);
 
 }

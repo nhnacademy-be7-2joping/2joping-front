@@ -1,14 +1,19 @@
 package com.nhnacademy.twojopingfront.admin.wrap.controller;
 
 
-import com.nhnacademy.twojopingfront.admin.wrap.dto.WrapRequestDto;
-import com.nhnacademy.twojopingfront.admin.wrap.dto.WrapResponseDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.*;
 import com.nhnacademy.twojopingfront.admin.wrap.service.WrapService;
+import com.nhnacademy.twojopingfront.common.util.MemberUtils;
+import com.nhnacademy.twojopingfront.review.dto.request.ReviewDetailRequestDto;
+import com.nhnacademy.twojopingfront.review.dto.request.ReviewImageUploadRequestDto;
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewCreateResponseDto;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -25,11 +30,12 @@ public class WrapController {
         return "admin/wrap/wrap";
     }
 
-    @PostMapping
-    public String createWrap(@Valid WrapRequestDto requestDto) {
-        wrapService.createWrap(requestDto);
-
-        return "redirect:/admin/wraps";
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String createWrap(@ModelAttribute WrapDetailRequestDto wrapDetailRequestDto,
+                             @RequestPart(value = "wrapImage", required = false) MultipartFile wrapImage) {
+        WrapImageRequestDto wrapImageRequestDto = new WrapImageRequestDto(wrapImage);
+        WrapCreateResponseDto wrapCreateResponseDto = wrapService.createWrap(wrapDetailRequestDto, wrapImageRequestDto);
+        return "redirect:/admin/wraps/" + wrapCreateResponseDto.wrapId();
     }
 
     @GetMapping("/{wrap-id}")
@@ -37,7 +43,6 @@ public class WrapController {
         WrapResponseDto responseDto = wrapService.getWrap(wrapId);
         model.addAttribute("wrap", responseDto); // 모델에 데이터 추가
         return "admin/wrap/wrap-details";
-
     }
 
     @GetMapping("/list")
@@ -61,7 +66,7 @@ public class WrapController {
             @RequestParam("wrapPrice") Integer wrapPrice,
             @RequestParam("isActive") Boolean isActive,
             RedirectAttributes redirectAttributes) {
-        WrapRequestDto dto = new WrapRequestDto(name, wrapPrice, !Objects.isNull(isActive) && isActive);
+        WrapDetailRequestDto dto = new WrapDetailRequestDto(name, wrapPrice, !Objects.isNull(isActive) && isActive);
         WrapResponseDto updatedResponseDto = wrapService.updateWrap(wrapId, dto);
         redirectAttributes.addFlashAttribute("message", "업데이트가 성공적으로 완료되었습니다.");
         return "redirect:/admin/wraps/list";
