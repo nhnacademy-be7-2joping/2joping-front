@@ -16,6 +16,8 @@ import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCouponResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
+import com.nhnacademy.twojopingfront.user.member.point.dto.GetMyPageSimplePointHistoriesResponse;
+import com.nhnacademy.twojopingfront.user.member.point.service.PointService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -48,6 +50,8 @@ public class MypageViewController {
     private final LikeAdaptor likeAdaptor;
     private final ReviewService reviewService;
     private final OrderDetailService orderDetailService;
+    private final PointService pointService;
+
     /**
      * 마이페이지 메인 화면으로 이동합니다.
      *
@@ -59,10 +63,15 @@ public class MypageViewController {
     public String mypageView(@RequestParam(defaultValue = "0") int page,
                              @RequestParam(defaultValue = "10") int size,
             Model model) {
+        Long customerId = MemberUtils.getCustomerId();
+
         MemberTierResponse tierResponse = tierAdaptor.getMemberTier();
         model.addAttribute("tier", tierResponse);
 
-        Long customerId = MemberUtils.getCustomerId();
+        GetMyPageSimplePointHistoriesResponse response = pointService.getMyPageSimplePointHistories(customerId);
+        model.addAttribute("memberPoint", response.memberPoint());
+        model.addAttribute("getSimplePointHistoriesResponses", response.getSimplePointHistoriesResponses());
+
         Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size,customerId.toString());
         model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/mypage";

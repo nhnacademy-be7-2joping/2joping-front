@@ -66,14 +66,14 @@
   <nav>
     <ul class="pagination">
       <li class="page-item" th:classappend="${page.hasPrevious() ? '' : 'disabled'}">
-        <a class="page-link" th:href="@{|/admin/categories?page=${page.number - 1}|}">이전</a>
+        <a class="page-link" th:href="@{|/admin/contributors?page=${page.number - 1}|}">이전</a>
       </li>
       <li class="page-item" th:each="i : ${#numbers.sequence(1, page.totalPages)}"
           th:classappend="${i == page.number + 1 ? 'active' : ''}">
-        <a class="page-link" th:href="@{|/admin/categories?page=${i - 1}|}" th:text="${i}"></a>
+        <a class="page-link" th:href="@{|/admin/contributors?page=${i - 1}|}" th:text="${i}"></a>
       </li>
       <li class="page-item" th:classappend="${page.hasNext() ? '' : 'disabled'}">
-        <a class="page-link" th:href="@{|/admin/categories?page=${page.number + 1}|}">다음</a>
+        <a class="page-link" th:href="@{|/admin/contributors?page=${page.number + 1}|}">다음</a>
       </li>
     </ul>
   </nav>
