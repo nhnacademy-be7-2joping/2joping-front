@@ -65,19 +65,28 @@
                 </div>
 
                 <div class="point-history-container">
-                    <ul>
+                    <ul class="point-history-list">
                         <!-- 포인트 내역 리스트를 반복하여 표시 -->
-                        <li th:each="history : ${getSimplePointHistoriesResponses}">
-                            <p th:text="'포인트 종류: ' + ${history.name}"></p> <!-- 포인트 종류 -->
-                            <p th:text="'포인트 값: ' + ${history.accVal}"></p> <!-- 포인트 값 -->
-                            <p th:text="'등록 날짜: ' + (${history.registerDate != null ? history.registerDate.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd HH:mm:ss')) : 'N/A'})"></p>
+                        <li th:each="history : ${getSimplePointHistoriesResponses}" class="point-history-item">
+                            <div class="point-entry">
+                                <!-- 포인트 종류와 값 -->
+                                <span class="point-name" th:text="${history.name}"></span>
+                                <span class="point-value" th:text="${history.accVal + 'P'}"></span>
+                            </div>
+                            <div class="point-date">
+                                <!-- 포인트 등록 날짜 -->
+                                <span th:text="${history.registerDate != null ? history.registerDate.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd HH:mm:ss')) : 'N/A'}"></span>
+                            </div>
                         </li>
                     </ul>
                 </div>
-                <a href="/points/histories/details"  class="point-info-button">
+                <a href="/points/histories/details" class="point-info-button">
                     포인트 내역 보기
                 </a>
             </div>
+
+
+
 
 
 
