@@ -19,10 +19,10 @@ function execDaumPostcode() {
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('postal_code').value = data.zonecode;
+            document.getElementById('postal-code').value = data.zonecode;
             document.getElementById("address").value = addr;
             // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("detail_address").focus();
+            document.getElementById("detail-address").focus();
         }
     }).open();
 }
