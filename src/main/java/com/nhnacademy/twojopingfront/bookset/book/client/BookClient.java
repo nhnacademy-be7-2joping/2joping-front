@@ -108,6 +108,13 @@ public interface BookClient {
      */
     @PutMapping(value = "/admin/books/{bookId}")
     BookUpdateResponseDto updateBook(@PathVariable("bookId") Long bookId, @RequestBody BookUpdateRequestDto bookUpdateRequestDto);
+
+    /**
+     * 특정 도서를 비활성화하는 메서드
+     * @param bookId 비활성화할 도서 ID
+     */
+    @PutMapping("/admin/books/{book-id}/deactivate")
+    void deactivateBook(@PathVariable("book-id") Long bookId);
 }
 
 

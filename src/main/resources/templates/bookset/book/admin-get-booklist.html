@@ -47,7 +47,10 @@
                 <a th:href="@{/admin/books/modify/{bookId}(bookId=${book.bookId})}" class="btn btn-primary">수정</a>
             </td>
             <td>
-                <button>삭제</button>
+                <form th:action="@{/admin/books/{book-id}/deactivate(book-id=${book.bookId})}" method="post">
+                    <input type="hidden" name="_method" value="put">
+                    <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                </form>
             </td>
         </tr>
         </tbody>

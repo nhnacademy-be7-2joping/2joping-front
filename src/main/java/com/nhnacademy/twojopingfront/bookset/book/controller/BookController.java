@@ -198,4 +198,20 @@ public class BookController {
             return "redirect:/admin/books/get";
         }
     }
+
+    /**
+     * 특정 도서를 비활성화하는 컨트롤러
+     * @param bookId 비활성화할 도서 ID
+     * @return 도서 목록 페이지로 리다이렉트
+     */
+    @PutMapping("/admin/books/{book-id}/deactivate")
+    public String deactivateBook(@PathVariable("book-id") Long bookId) {
+        try {
+            bookService.deactivateBook(bookId);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "redirect:/admin/books/get";
+        }
+        return "redirect:/admin/books/get";
+    }
 }
