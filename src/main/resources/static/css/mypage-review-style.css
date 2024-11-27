@@ -1,67 +1,88 @@
-/* 전체 컨테이너 스타일 */
-.mypage-container {
-    padding: 20px;
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
 /* 테이블 스타일 */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    table-layout: fixed; /* 열 너비를 고정 */
 }
 
+/* 헤더 스타일 */
 thead th {
     background-color: #f4f4f4;
     color: #333;
     padding: 12px;
-    text-align: left;
+    text-align: center; /* 중앙 정렬 */
     font-size: 16px;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘칠 경우 숨기기 */
+    text-overflow: ellipsis; /* 넘칠 경우 ... 표시 */
 }
 
+/* 셀 스타일 */
 tbody td {
     padding: 12px;
     text-align: center;
     border-bottom: 1px solid #ddd;
     font-size: 14px;
+    vertical-align: middle; /* 수직 가운데 정렬 */
+    white-space: nowrap; /* 기본적으로 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘칠 경우 ... 표시 */
 }
 
-tbody tr:hover {
-    background-color: #f9f9f9;
+/* 도서 이름 열: 줄바꿈 허용 */
+tbody td:nth-child(1) { /* 첫 번째 열 */
+    white-space: normal; /* 줄바꿈 허용 */
+    word-break: break-word; /* 긴 단어 줄바꿈 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
 }
 
-tbody tr:last-child td {
-    border-bottom: none;
+/* 페이지네이션 리스트 스타일 */
+.pagination {
+    display: flex; /* 가로 배치 */
+    justify-content: center; /* 중앙 정렬 */
+    list-style: none; /* 불릿 제거 */
+    padding: 0; /* 기본 패딩 제거 */
+    margin: 10px 0; /* 상하 여백 추가 */
 }
 
-/* 별점 스타일 */
-.stars {
-    display: flex;
-    justify-content: center;
-    gap: 2px;
+/* 페이지 아이템 스타일 */
+.pagination .page-item {
+    margin: 0 5px; /* 각 버튼 간격 */
 }
 
-.star {
-    font-size: 1.2rem;
-    color: lightgray;
+.pagination .page-link {
+    display: block; /* 블록 요소로 설정 */
+    padding: 8px 16px; /* 버튼 크기 */
+    color: #007bff; /* 기본 텍스트 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+    border: 1px solid #ddd; /* 테두리 추가 */
+    border-radius: 4px; /* 둥근 모서리 */
+    transition: background-color 0.3s, color 0.3s; /* 색상 전환 효과 */
 }
 
-.star.selected {
-    color: gold;
+/* 호버 상태 스타일 */
+.pagination .page-link:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* 활성화된 페이지 버튼 스타일 */
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+/* 비활성화된 버튼 스타일 */
+.pagination .page-item.disabled .page-link {
+    color: #ccc; /* 흐린 색상 */
+    pointer-events: none; /* 클릭 불가 */
+    background-color: #f9f9f9; /* 비활성화 배경색 */
+    border-color: #ddd;
 }
 
 /* 버튼 스타일 */
-.pagination-buttons {
-    text-align: center;
-    margin-top: 20px;
-}
-
 button {
     background-color: #007bff;
     color: white;
@@ -70,7 +91,6 @@ button {
     font-size: 14px;
     cursor: pointer;
     border-radius: 5px;
-    margin: 5px;
     transition: background-color 0.3s ease;
 }
 
@@ -83,15 +103,23 @@ button:disabled {
     cursor: not-allowed;
 }
 
-/* 페이지네이션 정보 */
-.pagination-info {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 14px;
-    color: #666;
+/* 별점 스타일 */
+.stars {
+    display: flex;
+    justify-content: center; /* 별점 중앙 정렬 */
+    gap: 2px;
 }
 
-/* "상세보기" 링크 스타일 */
+.star {
+    font-size: 1.2rem;
+    color: lightgray;
+}
+
+.star.selected {
+    color: gold;
+}
+
+/* 링크 스타일 */
 a {
     color: #007bff;
     text-decoration: none;
@@ -102,10 +130,21 @@ a:hover {
     color: #0056b3;
 }
 
- table th {
-     text-align: center;
- }
+/* 수정 버튼 스타일 */
+.btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
 
-table td {
-    text-align: center;
+.btn-primary {
+    background-color: #28a745;
+}
+
+.btn-primary:hover {
+    background-color: #218838;
 }
