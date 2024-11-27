@@ -58,14 +58,29 @@
             </div>
 
             <div class="mb-3">
-                <label for="thumbnailImage" class="form-label">썸네일 이미지</label>
-                <input type="file" class="form-control" id="thumbnailImage" name="thumbnailImage" accept="image/*">
-            </div>
+                <label class="form-label">이미지 업로드</label>
+                <div class="image-grid-container">
+                    <!-- 썸네일 이미지 -->
+                    <div class="image-upload-item">
+                        <label for="thumbnailImage" class="form-label">썸네일 이미지</label>
+                        <div class="image-wrapper">
+                            <div class="file-wrapper">
+                                <input type="file" class="form-control file-input" id="thumbnailImage" name="thumbnailImage" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="mb-3">
-                <label for="detailImage" class="form-label">상세 이미지</label>
-                <input type="file" class="form-control" id="detailImage" name="detailImage" accept="image/*">
-            </div>
+                    <!-- 상세 이미지 -->
+                    <div class="image-upload-item">
+                        <label for="detailImage" class="form-label">상세 이미지</label>
+                        <div class="image-wrapper">
+                            </div>
+                            <div class="file-wrapper">
+                                <input type="file" class="form-control file-input" id="detailImage" name="detailImage" accept="image/*">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             <div class="mb-3">
                 <label for="topCategory" class="form-label">상위 카테고리</label>
@@ -127,40 +142,29 @@
 
             <input type="hidden" id="tagList" name="tagList" value="">
 
-<!--            <div class="form-check mb-3">-->
-<!--                <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable">-->
-<!--                <label class="form-check-label" for="giftWrappable">선물 포장 가능 여부</label>-->
-<!--            </div>-->
-
-<!--            <div class="form-check mb-3">-->
-<!--                <input type="checkbox" class="form-check-input" id="isActive" name="isActive">-->
-<!--                <label class="form-check-label" for="isActive">활성 상태</label>-->
-<!--            </div>-->
-
-            <div class="form-check mb-3">
+            <div class="form-check-group">
                 <label class="form-label">선물 포장 가능 여부</label>
-                <div>
-                    <input type="radio" class="form-check-input" id="giftWrappableTrue" name="giftWrappable" value="true">
+                <div class="form-check-inline">
+                    <input type="radio" class="form-check-input" id="giftWrappableTrue" name="giftWrappable" value="true" checked>
                     <label class="form-check-label" for="giftWrappableTrue">가능</label>
                 </div>
-                <div>
+                <div class="form-check-inline">
                     <input type="radio" class="form-check-input" id="giftWrappableFalse" name="giftWrappable" value="false">
                     <label class="form-check-label" for="giftWrappableFalse">불가능</label>
                 </div>
             </div>
 
-            <div class="form-check mb-3">
+            <div class="form-check-group">
                 <label class="form-label">활성 상태</label>
-                <div>
-                    <input type="radio" class="form-check-input" id="isActiveTrue" name="isActive" value="true">
+                <div class="form-check-inline">
+                    <input type="radio" class="form-check-input" id="isActiveTrue" name="isActive" value="true" checked>
                     <label class="form-check-label" for="isActiveTrue">활성</label>
                 </div>
-                <div>
+                <div class="form-check-inline">
                     <input type="radio" class="form-check-input" id="isActiveFalse" name="isActive" value="false">
                     <label class="form-check-label" for="isActiveFalse">비활성</label>
                 </div>
             </div>
-
             <button type="submit" class="btn btn-primary">등록</button>
         </form>
     </div>
