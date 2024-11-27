@@ -33,4 +33,13 @@ public class ThymeleafCustomFormatter {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return dateTime.format(formatter);
     }
+
+    // 날짜를 "yyyy-MM-dd" 형식으로 포맷팅
+    public String formatToDate(LocalDateTime dateTime) {
+        if (dateTime == null) {
+            return "N/A";
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return dateTime.format(formatter);
+    }
 }

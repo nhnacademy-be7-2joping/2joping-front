@@ -5,13 +5,153 @@
     <meta charset="UTF-8">
     <title>반품 교환 내역</title>
     <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+    <style>
+
+
+        .return-history-container {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa;
+            min-height: 500px;
+            width: 750px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            gap: 10px;
+            padding: 20px;
+        }
+
+        .mypage-order-table {
+            display: flex;
+            flex-direction: column;
+            justify-content: left;
+            align-items: flex-start;
+            width: 100%;
+            font-size: 14px;
+            height: fit-content;
+            min-height: 200px;
+        }
+
+        .mypage-order-table table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .mypage-order-table th,
+        .mypage-order-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .mypage-order-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .mypage-order-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .mypage-order-table tr:hover {
+            background-color: #ececec;
+        }
+
+        .no-data {
+            text-align: center;
+            font-size: 16px;
+            color: #888;
+            font-weight: bold;
+        }
+        .table-column1{
+            width: 50px;
+        }
+        .table-column2{
+            width: 80px;
+        }
+        .table-column3{
+            width: auto;
+        }
+        .table-column4{
+            width: 100px;
+        }
+        .table-column5{
+            width: 100px;
+        }
+        .table-column6{
+            width: 80px;
+        }
+        .truncate-text {
+            max-width: 200px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            position: relative;
+        }
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            white-space: nowrap;
+        }
+        .text-center{
+            text-align: center;
+        }
+        .text-light{
+            font-weight: 500;
+        }
+
+    </style>
 </head>
 <body>
 <!-- 메인 컨텐츠 영역 -->
 <div class="mypage-container" layout:fragment="content">
-    <div class="mypage-form-container">
-    </div>
+    <div class="return-history-container">
+        <div class="mypage-title1">
+            <p class="font-default">반품 내역</p>
+        </div>
 
+        <div class="mypage-order-table font-default">
+            <table>
+                <thead>
+                <tr>
+                    <th class="table-column1 bold">순서</th>
+                    <th class="table-column2 bold">사유</th>
+                    <th class="table-column3 bold">주문 상세</th>
+                    <th class="table-column4 bold">신청일</th>
+                    <th class="table-column5 bold">승인일</th>
+                    <th class="table-column6  bold">상태</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 반품 내역이 있는 경우 -->
+                <tr th:each="refund, iterStat : ${refundHistories}">
+                    <td class="text-center text-light"  th:text="${iterStat.index + 1}"></td> <!-- 순서 -->
+                    <td class="text-center text-light"  th:text="${refund.policy}"></td> <!-- 사유 -->
+                    <td class="truncate-text text-light" th:attr="data-tooltip=${refund.bookNames}" th:text="${refund.bookNames}"></td>
+                    <td class="text-center text-light" th:text="${@thymeleafCustomFormatter.formatToDate(refund.createdAt)}"></td> <!-- 신청일 -->
+                    <td class="text-center text-light"  th:text="${refund.approvedAt != null ? @thymeleafCustomFormatter.formatToDate(refund.approvedAt) : '미승인'}"></td> <!-- 승인일 -->
+                    <td class="text-center text-light"  th:text="${refund.isApproved ? '반품완료' : '대기중'}"></td> <!-- 상태 -->
+                </tr>
+                <!-- 반품 내역이 없는 경우 -->
+                <tr th:if="${#lists.isEmpty(refundHistories)}">
+                    <td colspan="6" class="no-data">반품 내역이 없습니다.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
 
