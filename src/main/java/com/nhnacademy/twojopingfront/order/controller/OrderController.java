@@ -1,17 +1,19 @@
 package com.nhnacademy.twojopingfront.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.nhnacademy.twojopingfront.cart.entity.Book;
-import com.nhnacademy.twojopingfront.cart.entity.Cart;
-import com.nhnacademy.twojopingfront.cart.service.CartService;
-import com.nhnacademy.twojopingfront.common.error.exception.user.UnauthorizedException;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.service.BookService;
+import com.nhnacademy.twojopingfront.cart.client.CartClient;
+import com.nhnacademy.twojopingfront.cart.dto.CartResponseDto;
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
+import com.nhnacademy.twojopingfront.order.client.MemberClient;
+import com.nhnacademy.twojopingfront.order.client.MemberCouponClient;
 import com.nhnacademy.twojopingfront.order.client.ShipmentPolicyRequestClient;
 import com.nhnacademy.twojopingfront.order.client.WrapClient;
-import com.nhnacademy.twojopingfront.order.dto.request.PaymentRequest;
-import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
-import com.nhnacademy.twojopingfront.order.dto.response.ShipmentPolicyResponseDto;
-import com.nhnacademy.twojopingfront.order.dto.response.WrapResponseDto;
+import com.nhnacademy.twojopingfront.payment.controller.dto.request.PaymentRequest;
+import com.nhnacademy.twojopingfront.order.dto.response.*;
+import com.nhnacademy.twojopingfront.order.service.OrderService;
+import com.nhnacademy.twojopingfront.payment.controller.dto.response.PaymentErrorResponse;
 import com.nhnacademy.twojopingfront.user.login.dto.request.LoginNonMemberRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,10 +21,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -47,9 +46,13 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class OrderController {
     private final ObjectMapper objectMapper;
-    private final CartService cartService;
+    private final BookService bookService;
+    private final OrderService orderService;
     private final ShipmentPolicyRequestClient shipmentPolicyRequestClient;
     private final WrapClient wrapClient;
+    private final MemberCouponClient memberCouponClient;
+    private final MemberClient memberClient;
+    private final CartClient cartClient;
 
     @Value("${toss.widget-secret-key}")
     private String widgetSecretKey;
@@ -77,46 +80,79 @@ public class OrderController {
      * @author 이승준
      */
     @GetMapping("/form")
-    public String form(Model model) {
-        String name = MemberUtils.getNickname();
-        List<Cart> cartItems = cartService.getCartByCustomerId(1);
-        int bookCost = cartItems.stream().map(i -> i.getBook().getSellingPrice() * i.getQuantity()).reduce(
+    public String form(@RequestParam(value = "bookId", required = false) Long bookId,
+                       @RequestParam(value = "quantity", required = false, defaultValue = "1") Integer quantity,
+                       @CookieValue(value = "cartSession", required = false) String cartSession,
+                       Model model) {
+        List<CartResponseDto> cartItems = getCartItems(bookId, cartSession, quantity);
+        List<BookResponseDto> wrappableBooks =
+                cartItems.stream().map(CartResponseDto::bookId)
+                        .map(bookService::getBookById).filter(BookResponseDto::giftWrappable).toList();
+        List<WrapResponseDto> wrapResponseDtos = wrapClient.getAllWraps().getBody();
+        List<ShipmentPolicyResponseDto> shipmentPolicyResponseDtos =
+                shipmentPolicyRequestClient.getAllShipmentPolicies(!MemberUtils.isAnonymous()).getBody();
+        List<OrderCouponResponse> coupons = getMemberCoupons();
+        MemberPointResponse pointResponse = MemberUtils.isAnonymous() ? new MemberPointResponse(-1) :
+                memberClient.getPoints().getBody();
+
+        int appliedDeliveryCost = 0;
+        long appliedDeliveryPolicyId = 0;
+
+        int bookCost = cartItems.stream().map(i -> i.sellingPrice() * i.quantity()).reduce(
                 0,
                 Integer::sum
         ); // 주문한 상품들의 총 가격
-        List<WrapResponseDto> wrapResponseDtos = wrapClient.getAllWraps().getBody();
-        List<Book> wrappableBooks = cartItems.stream().map(Cart::getBook).filter(Book::isGiftWrappable).toList();
-        List<ShipmentPolicyResponseDto> shipmentPolicyResponseDtos =
-                shipmentPolicyRequestClient.getAllShipmentPolicies(true).getBody();
-        int appliedDeliveryCost = 0;
-        // 배송 정책 최소 적용 가격 기준으로 정렬
+
+        // 배송 정책 최소 적용 가격 기준으로 정렬 및 책정
         Objects.requireNonNull(shipmentPolicyResponseDtos).sort((p1, p2) -> p1.minOrderAmount() - p2.minOrderAmount());
         for (ShipmentPolicyResponseDto dto : shipmentPolicyResponseDtos) {
             if (bookCost >= dto.minOrderAmount()) {
                 appliedDeliveryCost = dto.shippingFee();
+                appliedDeliveryPolicyId = dto.shipmentPolicyId();
             }
         }
 
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("bookCost", bookCost);
         model.addAttribute("deliveryCost", appliedDeliveryCost);
+        model.addAttribute("deliveryPolicyId", appliedDeliveryPolicyId);
         model.addAttribute("wraps", wrapResponseDtos);
         model.addAttribute("wrappableBooks", wrappableBooks);
+        model.addAttribute("memberCoupons", coupons);
         model.addAttribute("shipmentPolicies", shipmentPolicyResponseDtos);
-        // 회원이 가진 쿠폰 정보 모델에 적용 필요
+        model.addAttribute("points", pointResponse);
 
         return "order/order-form";
     }
 
+    private List<CartResponseDto> getCartItems(Long bookId, String cartSession, int quantity) {
+        if (bookId == null) {
+            return cartClient.listCarts(cartSession).getBody();
+        } else {
+            BookResponseDto bookResponseDto = bookService.getBookById(bookId);
+            return List.of(new CartResponseDto(
+                    bookId,
+                    bookResponseDto.title(),
+                    bookResponseDto.sellingPrice(),
+                    quantity
+            ));
+        }
+    }
+
+    private List<OrderCouponResponse> getMemberCoupons() {
+        return MemberUtils.getCustomerId() < 0 ? List.of() : memberCouponClient.getMemberCoupon().getBody();
+    }
+
     /**
      * 결제 확인 시 toss와 연동하여 결제 승인 여부 결정
+     * 성공 시, {@link PaymentResponse} 객체를 반환하며, 실패 시 {@link PaymentErrorResponse} 객체를 반환
      *
      * @param paymentRequest 결제 정보가 담긴 dto
-     * @return 결제 상태에 대한 응답 정보와 결제 key
-     * @throws Exception
+     * @return 성공 시 결제 정보 {@link PaymentResponse}, 실패 시 에러 정보 {@link PaymentErrorResponse}
+     * @throws Exception Toss 호출 중 발생가능한 예외
      */
     @PostMapping("/confirm")
-    public ResponseEntity<PaymentResponse> orderConfirm(@RequestBody PaymentRequest paymentRequest) throws Exception {
+    public ResponseEntity<Object> orderConfirm(@RequestBody PaymentRequest paymentRequest) throws Exception {
         Base64.Encoder encoder = Base64.getEncoder();
         String authorizations =
                 "Basic " + encoder.encodeToString((widgetSecretKey + ":").getBytes(StandardCharsets.UTF_8));
@@ -139,10 +175,18 @@ public class OrderController {
 
         InputStream responseStream = isSuccess ? connection.getInputStream() : connection.getErrorStream();
 
-        // ObjectMapper로 응답을 PaymentResponse로 변환
-        PaymentResponse paymentResponse = objectMapper.readValue(responseStream, PaymentResponse.class);
-        responseStream.close();
-
-        return ResponseEntity.status(200).body(paymentResponse);
+        // 성공과 실패에 따라 다른 클래스로 매핑
+        if (isSuccess) {
+            // 응답을 PaymentResponse로 변환
+            PaymentResponse paymentResponse = objectMapper.readValue(responseStream, PaymentResponse.class);
+            orderService.registerOrder(paymentResponse); // 토스 결제 승인 결과 활용하여 그대로 주문 등록 처리
+            responseStream.close();
+            return ResponseEntity.status(code).body(paymentResponse);
+        } else {
+            // 응답을 PaymentErrorResponse로 변환
+            PaymentErrorResponse errorResponse = objectMapper.readValue(responseStream, PaymentErrorResponse.class);
+            responseStream.close();
+            return ResponseEntity.status(code).body(errorResponse);
+        }
     }
 }

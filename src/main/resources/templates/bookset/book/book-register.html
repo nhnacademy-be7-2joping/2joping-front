@@ -5,147 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>책 등록</title>
-    <style>
-        /* 화면 중앙 정렬과 폭 조절 */
-        .container {
-            max-width: 1500px;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .card {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .form-label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .form-control, .form-check-input {
-            font-size: 1rem;
-            padding: 10px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        .mb-3 {
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-            color: #fff;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 6px;
-            width: 100%;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-
-        /* 태그 컨테이너 및 태그 스타일 */
-        .tag-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .tag-item {
-            display: inline-block;
-            padding: 8px 12px;
-            border-radius: 16px;
-            background-color: #007bff;
-            color: white;
-            font-size: 0.9rem;
-            font-weight: bold;
-            white-space: nowrap;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .tag-item:hover {
-            background-color: #0056b3;
-            transform: scale(1.1);
-        }
-
-        /* 체크박스 정렬 */
-        .form-check {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .form-check-input {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* 선택된 기여자 목록 스타일 */
-        .contributor-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .selected-contributor-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 8px 12px;
-            margin-bottom: 8px;
-            background-color: #f1f1f1;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .selected-contributor-item span {
-            font-size: 1rem;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .selected-contributor-item button {
-            background-color: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: bold;
-        }
-
-        .selected-contributor-item button:hover {
-            background-color: #ff4b4b;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/book-register-style.css">
 </head>
 <body>
 <div class="container" layout:fragment="content">
@@ -207,10 +67,6 @@
                 <input type="file" class="form-control" id="detailImage" name="detailImage" accept="image/*">
             </div>
 
-<!--            <div class="mb-3">-->
-<!--                <label for="category" class="form-label">카테고리</label>-->
-<!--                <input type="text" class="form-control" id="category" name="category" placeholder="입력 형식: 국내도서>어린이>어린이 영어" required>-->
-<!--            </div>-->
             <div class="mb-3">
                 <label for="topCategory" class="form-label">상위 카테고리</label>
                 <select class="form-control" id="topCategory" name="topCategoryId" required>
@@ -231,55 +87,6 @@
                 </select>
             </div>
 
-            <script>
-                // 상위 카테고리가 변경될 때 중위 카테고리 로드
-                document.getElementById('topCategory').addEventListener('change', function () {
-                    const topCategoryId = this.value;
-                    fetch(`/admin/api/categories/${topCategoryId}/children`)
-                        .then(response => {
-                            console.log("Content-Type:", response.headers.get('Content-Type'));
-                            if (!response.ok) {
-                                throw new Error("Failed to fetch middle categories");
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log("Middle Categories:", data);
-                            const middleCategory = document.getElementById('middleCategory');
-                            middleCategory.innerHTML = '<option value="" disabled selected>중위 카테고리를 선택하세요</option>';
-                            data.forEach(category => {
-                                middleCategory.innerHTML += `<option value="${category.categoryId}">${category.name}</option>`;
-                            });
-
-                            // 중위 카테고리 변경 시 하위 카테고리 초기화
-                            document.getElementById('bottomCategory').innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';
-                        })
-                        .catch(error => console.error("Error fetching middle categories:", error));
-                });
-
-                // 중위 카테고리가 변경될 때 하위 카테고리 로드
-                document.getElementById('middleCategory').addEventListener('change', function () {
-                    const middleCategoryId = this.value;
-                    fetch(`/admin/api/categories/${middleCategoryId}/children`)
-                        .then(response => {
-                            console.log("Content-Type:", response.headers.get('Content-Type'));
-                            if (!response.ok) {
-                                throw new Error("Failed to fetch bottom categories");
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            console.log("Bottom Categories:", data);
-                            const bottomCategory = document.getElementById('bottomCategory');
-                            bottomCategory.innerHTML = '<option value="" disabled selected>하위 카테고리를 선택하세요</option>';
-                            data.forEach(category => {
-                                bottomCategory.innerHTML += `<option value="${category.categoryId}">${category.name}</option>`;
-                            });
-                        })
-                        .catch(error => console.error("Error fetching bottom categories:", error));
-                });
-            </script>
-
             <div id="contributors" class="mb-3">
                 <label for="existingContributors" class="form-label">기여자 선택</label>
                 <select id="existingContributors" class="form-control" multiple>
@@ -297,58 +104,6 @@
             <div id="selectedContributors" class="mb-3">
                 <!-- 선택한 기여자 목록이 여기에 추가됩니다 -->
             </div>
-
-            <script>
-                document.getElementById("addContributorButton").addEventListener("click", function () {
-                    const select = document.getElementById("existingContributors");
-                    const selectedContributors = document.getElementById("selectedContributors");
-                    const contributorListInput = document.getElementById("contributorList");
-
-                    // 기존 값 파싱
-                    let contributors = contributorListInput.value ? JSON.parse(contributorListInput.value) : [];
-
-                    // 선택된 기여자를 화면에 표시하고 배열에 추가
-                    Array.from(select.selectedOptions).forEach(option => {
-                        const [name, role] = option.value.split('|');
-                        const contributorKey = `${name}|${role}`;
-
-                        // 중복 추가 방지
-                        if (!contributors.some(contributor => contributor.name === name && contributor.role === role)) {
-                            contributors.push({ name, role });
-
-                            // 선택된 항목을 화면에 표시
-                            const div = document.createElement("div");
-                            div.classList.add("selected-contributor-item");
-                            div.setAttribute("data-contributor-key", contributorKey);
-
-                            const span = document.createElement("span");
-                            span.textContent = `[${role}] ${name}`;
-
-                            // 삭제 버튼 추가
-                            const deleteButton = document.createElement("button");
-                            deleteButton.textContent = "삭제";
-                            deleteButton.addEventListener("click", function () {
-                                // 배열에서 기여자 제거
-                                contributors = contributors.filter(contributor => `${contributor.name}|${contributor.role}` !== contributorKey);
-                                contributorListInput.value = JSON.stringify(contributors);
-
-                                // UI에서 항목 제거
-                                div.remove();
-                            });
-
-                            div.appendChild(span);
-                            div.appendChild(deleteButton);
-                            selectedContributors.appendChild(div);
-                        }
-                    });
-
-                    // 숨겨진 input 필드에 기여자 JSON 저장
-                    contributorListInput.value = JSON.stringify(contributors);
-
-                    // 선택 초기화
-                    select.selectedIndex = -1;
-                });
-            </script>
 
             <div class="mb-3">
                 <label for="availableTags" class="form-label">사용 가능한 태그</label>
@@ -372,80 +127,44 @@
 
             <input type="hidden" id="tagList" name="tagList" value="">
 
-            <script>
-                // 선택된 태그를 배열로 관리
-                let selectedTags = [];
+<!--            <div class="form-check mb-3">-->
+<!--                <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable">-->
+<!--                <label class="form-check-label" for="giftWrappable">선물 포장 가능 여부</label>-->
+<!--            </div>-->
 
-                // 태그 추가 함수
-                function addTag(tagElement) {
-                    const tagName = tagElement.getAttribute('data-tag-name');
-
-                    // 이미 선택된 태그인지 확인
-                    if (!selectedTags.includes(tagName)) {
-                        selectedTags.push(tagName);
-
-                        // 선택된 태그 UI 추가
-                        const selectedTagsContainer = document.getElementById('selectedTags');
-                        const newTagElement = document.createElement('span');
-                        newTagElement.classList.add('tag-item');
-                        newTagElement.textContent = tagName;
-                        newTagElement.setAttribute('data-tag-name', tagName);
-                        newTagElement.onclick = function () {
-                            removeTag(newTagElement);
-                        };
-                        selectedTagsContainer.appendChild(newTagElement);
-
-                        // hidden input에 태그 값 업데이트
-                        updateTagList();
-                    }
-                }
-
-                // 태그 제거 함수
-                function removeTag(tagElement) {
-                    const tagName = tagElement.getAttribute('data-tag-name');
-                    selectedTags = selectedTags.filter(tag => tag !== tagName);
-
-                    // 선택된 태그 UI에서 제거
-                    tagElement.remove();
-
-                    // hidden input에 태그 값 업데이트
-                    updateTagList();
-                }
-
-                // hidden input 업데이트 함수 수정
-                function updateTagList() {
-                    const tagListInput = document.getElementById('tagList');
-                    // JSON.stringify로 배열이 이중으로 직렬화되는 문제 방지
-                    tagListInput.value = selectedTags.join(","); // 콤마로 구분된 문자열로 전달
-                }
-
-            </script>
+<!--            <div class="form-check mb-3">-->
+<!--                <input type="checkbox" class="form-check-input" id="isActive" name="isActive">-->
+<!--                <label class="form-check-label" for="isActive">활성 상태</label>-->
+<!--            </div>-->
 
             <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="giftWrappable" name="giftWrappable">
-                <label class="form-check-label" for="giftWrappable">선물 포장 가능 여부</label>
+                <label class="form-label">선물 포장 가능 여부</label>
+                <div>
+                    <input type="radio" class="form-check-input" id="giftWrappableTrue" name="giftWrappable" value="true">
+                    <label class="form-check-label" for="giftWrappableTrue">가능</label>
+                </div>
+                <div>
+                    <input type="radio" class="form-check-input" id="giftWrappableFalse" name="giftWrappable" value="false">
+                    <label class="form-check-label" for="giftWrappableFalse">불가능</label>
+                </div>
             </div>
 
             <div class="form-check mb-3">
-                <input type="checkbox" class="form-check-input" id="isActive" name="isActive">
-                <label class="form-check-label" for="isActive">활성 상태</label>
+                <label class="form-label">활성 상태</label>
+                <div>
+                    <input type="radio" class="form-check-input" id="isActiveTrue" name="isActive" value="true">
+                    <label class="form-check-label" for="isActiveTrue">활성</label>
+                </div>
+                <div>
+                    <input type="radio" class="form-check-input" id="isActiveFalse" name="isActive" value="false">
+                    <label class="form-check-label" for="isActiveFalse">비활성</label>
+                </div>
             </div>
 
             <button type="submit" class="btn btn-primary">등록</button>
         </form>
     </div>
+    <script th:src="@{/js/book-register.js}"></script>
 </div>
-<script>
-    document.getElementById('bookRegisterForm').addEventListener('submit', function(event) {
-        const retailPrice = document.getElementById('retailPrice').value;
-        const sellingPrice = document.getElementById('sellingPrice').value;
-        const remainQuantity = document.getElementById('remainQuantity').value;
-
-        if (retailPrice < 0 || sellingPrice < 0 || remainQuantity < 0) {
-            alert("모든 숫자 입력은 음수일 수 없습니다.");
-            event.preventDefault();
-        }
-    });
-</script>
 </body>
 </html>

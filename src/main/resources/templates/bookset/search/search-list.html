@@ -75,6 +75,21 @@
                 </div>
             </div>
 
+            <!-- 페이지당 표시 개수 선택 -->
+            <div class="page-size-selection">
+                <form action="/books/search" method="get" class="d-inline">
+                    <input type="hidden" name="categoryId" th:value="${categoryId}">
+                    <input type="hidden" name="keyword" th:value="${keyword}">
+                    <input type="hidden" name="sort" th:value="${sort}">
+                    <input type="hidden" name="page" th:value="${books.number}">
+                    <select name="size" onchange="this.form.submit()" class="form-select page-size-dropdown custom-dropdown">
+                        <option th:value="10" th:selected="${books.size == 10}">10개씩 보기</option>
+                        <option th:value="20" th:selected="${books.size == 20}">20개씩 보기</option>
+                        <option th:value="50" th:selected="${books.size == 50}">50개씩 보기</option>
+                    </select>
+                </form>
+            </div>
+
             <!-- 도서 목록 -->
             <div class="card-container">
                 <div class="no-results" th:if="${books.totalElements == 0}">
@@ -120,7 +135,8 @@
 
                             <!-- 정가 -->
                             <div class="book-price">
-                                <span class="book-retail-price" th:text="'정가: ' + ${book.bookRetailPrice} + '원'"></span>
+                                <span class="book-retail-price"
+                                      th:text="'정가: ' + ${@customFormatter.formatCurrency(book.bookRetailPrice)} + '원'"></span>
                                 <span class="discount-percentage"
                                       th:if="${book.bookRetailPrice > 0 and book.bookSellingPrice < book.bookRetailPrice}"
                                       th:text="'(' + ${T(java.lang.String).format('%.1f', ((book.bookRetailPrice - book.bookSellingPrice) * 100.0) / book.bookRetailPrice)} + '% 할인)'">
@@ -128,7 +144,8 @@
                             </div>
 
                             <!-- 판매가 -->
-                            <div class="book-selling-price" th:text="'판매가: ' + ${book.bookSellingPrice} + '원'"></div>
+                            <div class="book-selling-price"
+                                 th:text="'판매가: ' + ${@customFormatter.formatCurrency(book.bookSellingPrice)} + '원'"></div>
 
                             <!-- 평점, 리뷰수 -->
                             <div class="book-rating">
@@ -153,35 +170,60 @@
 
     <!-- 페이징 네비게이션 -->
     <nav aria-label="Page navigation" th:if="${books.totalElements > 0}">
-        <ul class="pagination">
+        <ul class="pagination justify-content-center">
+            <!-- 이전 10페이지 버튼 -->
+            <li class="page-item" th:classappend="${books.number >= 10 ? '' : 'disabled'}">
+                <a class="page-link"
+                   th:if="${books.number >= 10}"
+                   th:href="@{/books/search(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${books.number - 10}, size=${books.size})}">
+                    &laquo; 이전 10페이지
+                </a>
+                <span class="page-link" th:if="${books.number < 10}">&laquo; 이전 10페이지</span>
+            </li>
+
             <!-- 이전 페이지 -->
-            <li class="page-item" th:classappend="${!books.hasPrevious()} ? 'disabled'">
+            <li class="page-item" th:classappend="${books.hasPrevious() ? '' : 'disabled'}">
                 <a class="page-link"
                    th:if="${books.hasPrevious()}"
-                   th:href="@{${currentPath}(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${books.number - 1}, size=${books.size})}"
-                   aria-label="Previous">&laquo; 이전</a>
-                <span class="page-link disabled" th:if="${!books.hasPrevious()}">&laquo; 이전</span>
+                   th:href="@{/books/search(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${books.number - 1}, size=${books.size})}">
+                    이전
+                </a>
+                <span class="page-link" th:if="${!books.hasPrevious()}">이전</span>
             </li>
 
             <!-- 페이지 번호 -->
             <li class="page-item"
-                th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}"
+                th:each="i : ${#numbers.sequence(
+                (books.number - 5 >= 0 ? books.number - 5 : 0),
+                (books.number + 5 < books.totalPages ? books.number + 5 : books.totalPages - 1))}"
                 th:classappend="${i == books.number} ? 'active'">
                 <a class="page-link"
-                   th:href="@{${currentPath}(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${i}, size=${books.size})}"
+                   th:href="@{/books/search(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${i}, size=${books.size})}"
                    th:text="${i + 1}">1</a>
             </li>
 
             <!-- 다음 페이지 -->
-            <li class="page-item" th:classappend="${!books.hasNext()} ? 'disabled'">
+            <li class="page-item" th:classappend="${books.hasNext() ? '' : 'disabled'}">
                 <a class="page-link"
                    th:if="${books.hasNext()}"
-                   th:href="@{${currentPath}(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${books.number + 1}, size=${books.size})}"
-                   aria-label="Next">다음 &raquo;</a>
-                <span class="page-link disabled" th:if="${!books.hasNext()}">다음 &raquo;</span>
+                   th:href="@{/books/search(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${books.number + 1}, size=${books.size})}">
+                    다음
+                </a>
+                <span class="page-link" th:if="${!books.hasNext()}">다음</span>
+            </li>
+
+            <!-- 다음 10페이지 버튼 -->
+            <li class="page-item" th:classappend="${books.number + 10 < books.totalPages ? '' : 'disabled'}">
+                <a class="page-link"
+                   th:if="${books.number + 10 < books.totalPages}"
+                   th:href="@{/books/search(categoryId=${categoryId}, keyword=${keyword}, sort=${sort}, page=${books.number + 10}, size=${books.size})}">
+                    다음 10페이지 &raquo;
+                </a>
+                <span class="page-link" th:if="${books.number + 10 >= books.totalPages}">다음 10페이지 &raquo;</span>
             </li>
         </ul>
     </nav>
+
 </div>
 
 </body>

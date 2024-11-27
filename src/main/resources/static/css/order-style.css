@@ -72,3 +72,29 @@
     font-weight: bold;
     font-size: 24px;
 }
+
+.required::after {
+    color: red;
+    content: " *";
+}
+
+.ribbon {
+    position: absolute;
+    top: 0;
+    right: 30px;
+    width: 10px; /* 띠의 폭 */
+    height: 100%; /* 카드의 높이에 맞추기 */
+    background-color: lightcoral;
+}
+
+.text-grey {
+    color: grey;
+}
+
+#address {
+    width: 96%;
+}
+
+#coupon-info {
+    display: none;
+}
