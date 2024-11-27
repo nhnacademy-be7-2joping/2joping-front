@@ -49,6 +49,15 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #f9f9f9;
+            width: 100%; /* 부모 요소의 너비에 맞춤 */
+            min-height: 100px; /* 최소 높이 설정 */
+        }
+
+
+        .cart-item-info {
+            flex: 2; /* 비율 유지 */
+            min-width: 600px; /* 최소 너비 설정 */
+            max-width: 700px; /* 최대 너비 제한 */
         }
 
         .quantity-control input {
