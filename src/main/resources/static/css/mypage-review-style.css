@@ -1,49 +1,46 @@
-/* 전체 컨테이너 스타일 */
-.mypage-container {
-    padding: 20px;
-    font-family: 'Noto Sans KR', sans-serif;
-}
-
-h1 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
 /* 테이블 스타일 */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    table-layout: fixed; /* 열 너비를 고정 */
 }
 
+/* 헤더 스타일 */
 thead th {
     background-color: #f4f4f4;
     color: #333;
     padding: 12px;
-    text-align: left;
+    text-align: center; /* 중앙 정렬 */
     font-size: 16px;
+    white-space: nowrap; /* 줄바꿈 방지 */
+    overflow: hidden; /* 넘칠 경우 숨기기 */
+    text-overflow: ellipsis; /* 넘칠 경우 ... 표시 */
 }
 
+/* 셀 스타일 */
 tbody td {
     padding: 12px;
     text-align: center;
     border-bottom: 1px solid #ddd;
     font-size: 14px;
+    vertical-align: middle; /* 수직 가운데 정렬 */
+    white-space: nowrap; /* 기본적으로 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘칠 경우 ... 표시 */
 }
 
-tbody tr:hover {
-    background-color: #f9f9f9;
-}
-
-tbody tr:last-child td {
-    border-bottom: none;
+/* 도서 이름 열: 줄바꿈 허용 */
+tbody td:nth-child(1) { /* 첫 번째 열 */
+    white-space: normal; /* 줄바꿈 허용 */
+    word-break: break-word; /* 긴 단어 줄바꿈 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
 }
 
 /* 별점 스타일 */
 .stars {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* 별점 중앙 정렬 */
     gap: 2px;
 }
 
@@ -91,7 +88,7 @@ button:disabled {
     color: #666;
 }
 
-/* "상세보기" 링크 스타일 */
+/* 링크 스타일 */
 a {
     color: #007bff;
     text-decoration: none;
@@ -102,10 +99,21 @@ a:hover {
     color: #0056b3;
 }
 
- table th {
-     text-align: center;
- }
+/* 버튼 스타일 */
+.btn {
+    padding: 5px 10px;
+    font-size: 12px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
 
-table td {
-    text-align: center;
+.btn-primary {
+    background-color: #28a745;
+}
+
+.btn-primary:hover {
+    background-color: #218838;
 }

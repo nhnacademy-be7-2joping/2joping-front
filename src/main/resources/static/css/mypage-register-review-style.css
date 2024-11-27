@@ -1,21 +1,38 @@
 .mypage-order-table table {
-    width: 100%;
+    width: 100%; /* 테이블 전체 너비 */
     border-collapse: collapse;
+    table-layout: fixed; /* 테이블 레이아웃 고정 */
 }
 
-.mypage-order-table th, .mypage-order-table td {
+.mypage-order-table th,
+.mypage-order-table td {
     padding: 10px;
     border: 1px solid #ddd;
-    text-align: center;
+    text-align: center; /* 텍스트 가운데 정렬 */
+    vertical-align: middle; /* 수직 가운데 정렬 */
+    white-space: nowrap; /* 기본적으로 줄바꿈 방지 */
+    overflow: hidden; /* 넘치는 텍스트 숨김 */
+    text-overflow: ellipsis; /* 넘치는 텍스트를 "..."로 표시 */
+}
+
+.mypage-order-table td:nth-child(3) { /* 도서 제목 열만 수정 */
+    white-space: normal; /* 줄바꿈 허용 */
+    word-wrap: break-word; /* 긴 단어도 줄바꿈 */
+    text-align: left; /* 도서 제목은 왼쪽 정렬 */
 }
 
 .mypage-order-table th {
-    background-color: #f4f4f4;
+    background-color: #f8f9fa;
+    font-weight: bold;
     font-size: 14px;
 }
 
-.mypage-order-table td {
-    font-size: 13px;
+.mypage-order-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* 짝수 행 배경색 */
+}
+
+.mypage-order-table tr:hover {
+    background-color: #e0e0e0; /* 호버 시 배경색 */
 }
 
 /* 버튼 스타일 */
@@ -38,12 +55,4 @@
 
 .write-button:hover {
     background-color: #0056b3;
-}
-
-.edit-button {
-    background-color: #28a745;
-}
-
-.edit-button:hover {
-    background-color: #1e7e34;
 }
