@@ -3,7 +3,6 @@ package com.nhnacademy.twojopingfront.user.mypage.controller;
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
 import com.nhnacademy.twojopingfront.order_detail.dto.response.OrderDetailResponseDto;
 import com.nhnacademy.twojopingfront.order_detail.service.OrderDetailService;
-import com.nhnacademy.twojopingfront.review.dto.response.ReviewResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewTotalResponseDto;
 import com.nhnacademy.twojopingfront.review.service.ReviewService;
 import com.nhnacademy.twojopingfront.tier.adaptor.TierAdaptor;
@@ -12,6 +11,8 @@ import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCouponResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
+import com.nhnacademy.twojopingfront.user.member.point.dto.GetMyPageSimplePointHistoriesResponse;
+import com.nhnacademy.twojopingfront.user.member.point.service.PointService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
