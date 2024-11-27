@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mypage-layout}" th:with="activePage='edit-profile'">
+<head>
+  <meta charset="UTF-8">
+  <title>회원 정보 수정</title>
+  <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+</head>
+<body>
+<!-- 메인 컨텐츠 영역 -->
+<div class="mypage-container" layout:fragment="content">
+
+
+  <div class="mypage-form-container">
+    <div class="edit-form-container">
+      <div th:if="${memberInfo == null}">
+        <p>수정할 회원 정보가 없습니다. 다시 시도해 주세요.</p>
+      </div>
+
+      <div th:if="${memberInfo != null}">
+
+      <form action="/members/update" method="post" class="user-edit-form">
+        <input type="hidden" name="_method" value="PUT">
+
+        <h1>회원 정보 수정</h1>
+        <!-- 수정 불가한 필드 -->
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" th:value="${memberInfo.name}" readonly>
+        <div class="mypage-error-message" th:if="${errors != null and errors['name'] != null}" th:text="${errors['name']}"></div>
+
+        <label for="gender">성별:</label>
+        <select id="gender" name="gender" aria-readonly="true">
+          <option value="" th:selected="${memberInfo.gender == null}">선택하세요</option>
+          <option value="M" th:selected="${memberInfo.gender?.toString() == 'M'}">남성</option>
+          <option value="F" th:selected="${memberInfo.gender?.toString() == 'F'}">여성</option>
+        </select>
+        <input type="hidden" name="gender" th:value="${memberInfo.gender}" />
+
+        <label for="birthday">생년월일:</label>
+        <input type="date" id="birthday" name="birthday"
+               max="[[${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}]]"
+               th:value="${memberInfo.birthday}" readonly>
+
+        <!-- 수정 가능한 필드 -->
+        <label for="phone">전화번호:</label>
+        <input type="text" id="phone" name="phone" pattern="010-[0-9]{3,4}-[0-9]{4}"
+               th:value="${memberInfo.phone}" required>
+        <div class="mypage-error-message" th:if="${errors != null and errors['phone'] != null}" th:text="${errors['phone']}"></div>
+
+        <label for="email">이메일:</label>
+        <input type="email" id="email" name="email" th:value="${memberInfo.email}" required>
+        <div class="mypage-error-message" th:if="${errors != null and errors['email'] != null}" th:text="${errors['email']}"></div>
+
+        <label for="nickName">닉네임:</label>
+        <input type="text" id="nickName" name="nickName" th:value="${memberInfo.nickName}"
+               minlength="2" maxlength="20" required>
+        <div class="mypage-error-message" th:if="${errors != null and errors['nickName'] != null}" th:text="${errors['nickName']}"></div>
+
+        <!-- 제출 버튼 -->
+        <button type="submit">정보 수정</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

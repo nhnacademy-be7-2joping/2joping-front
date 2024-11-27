@@ -2,6 +2,7 @@ package com.nhnacademy.twojopingfront.common.gateway;
 
 import com.nhnacademy.twojopingfront.common.config.GatewayConfig;
 import com.nhnacademy.twojopingfront.common.error.exception.gateway.GatewayConnectFailException;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -54,6 +55,24 @@ public class GatewayClient {
 
             HttpHeaders headers = new HttpHeaders();
             headers.set("Content-Type", "application/json");
+            HttpEntity<T> requestEntity = new HttpEntity<>(data, headers);
+
+            return restTemplate.exchange(url, method, requestEntity, responseType);
+
+        }catch(GatewayConnectFailException e){
+
+            throw new GatewayConnectFailException("게이트 웨이 통신 실패\n" + endPoint +"\n"+ e.getMessage());
+
+        }
+    }
+    public<T, R>ResponseEntity<R> sendToGateway(HttpMethod method, String endPoint, T data, ParameterizedTypeReference<R> responseType) {
+        String url = gatewayBaseUrl + endPoint;
+
+        try{
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Content-Type", "application/json");
+
             HttpEntity<T> requestEntity = new HttpEntity<>(data, headers);
 
             return restTemplate.exchange(url, method, requestEntity, responseType);

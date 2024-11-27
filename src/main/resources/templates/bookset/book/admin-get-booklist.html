@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/admin-layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>도서 조회</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/admin-index-style.css}">
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <h1 class="mt-5">도서 목록</h1>
+    <a href="/admin/books/register" class="btn btn-primary mb-3">직접 등록</a>
+
+    <!-- 에러 메시지 표시 -->
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}"></p>
+    </div>
+    <!-- 성공 메시지 표시 -->
+    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+
+    <table class="table table-striped mt-4">
+        <thead>
+        <tr>
+            <th>썸네일</th>
+            <th>카테고리</th>
+            <th>제목</th>
+            <th>출판사</th>
+            <th>기여자</th>
+            <th>판매 가격</th>
+            <th>정가</th>
+            <th>활성화 여부</th>
+            <th>수정</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books.content}">
+            <td><img th:src="${book.thumbnail}" alt="썸네일" width="50"></td>
+            <td th:text="${#strings.arrayJoin(book.categoryList, ', ')}">카테고리</td>
+            <td><a th:href="@{/books/get/book/{bookId}(bookId=${book.bookId})}" th:text="${book.title}">제목</a></td>
+            <td th:text="${book.publisherName}">출판사</td>
+            <td>
+                <span th:each="contributor : ${book.contributorList}"
+                      th:text="${contributor.roleName} + ': ' + ${contributor.contributorName}">
+                    기여자
+                </span>
+                <br th:if="${!#lists.isEmpty(book.contributorList)}"/>
+            </td>
+            <td th:text="${book.sellingPrice}">판매 가격</td>
+            <td th:text="${book.retailPrice}">정가</td>
+            <!-- 활성화 여부 -->
+            <td th:text="${book.isActive ? '활성화' : '비활성화'}">활성화 여부</td>
+            <td>
+                <a th:href="@{/admin/books/modify/{bookId}(bookId=${book.bookId})}" class="btn btn-primary">수정</a>
+            </td>
+            <td>
+                <form th:action="@{/admin/books/{book-id}/deactivate(book-id=${book.bookId})}" method="post">
+                    <input type="hidden" name="_method" value="put">
+                    <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- 페이징 네비게이션 -->
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination">
+            <!-- 이전 페이지 -->
+            <li class="page-item" th:classappend="${!books.hasPrevious()} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{${currentPath}(page=${books.number - 1}, size=${books.size})}"
+                   aria-label="Previous">
+                    <span aria-hidden="true">&laquo; 이전</span>
+                </a>
+            </li>
+
+            <!-- 페이지 번호 -->
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, books.totalPages - 1)}"
+                th:classappend="${i == books.number} ? 'active'">
+                <a class="page-link"
+                   th:href="@{${currentPath}(page=${i}, size=${books.size})}"
+                   th:text="${i + 1}">1</a>
+            </li>
+
+            <!-- 다음 페이지 -->
+            <li class="page-item" th:classappend="${!books.hasNext()} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{${currentPath}(page=${books.number + 1}, size=${books.size})}"
+                   aria-label="Next">
+                    <span aria-hidden="true">다음 &raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div layout:fragment="script">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</div>
+
+</body>
+</html>

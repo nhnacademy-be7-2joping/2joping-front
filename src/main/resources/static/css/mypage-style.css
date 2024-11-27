@@ -1,0 +1,702 @@
+:root {
+    --primary-color: #a36afa;
+    --primary-hover-color: #944cff;
+    --primary-color-rgb: 148, 76, 255;
+
+}
+.font-default{
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: 600;
+
+}
+.mypage-container{
+    width: 800px;
+}
+/* 메인 폼 스타일 */
+.mypage-form-container {
+    min-width: 800px;
+    min-height: 800px;
+    margin: 30px auto;
+    flex-direction: column;
+    display: flex;
+    gap: 15px;
+
+}
+.edit-form-container{
+    width: 100%;
+    margin: 30px auto; /* 좌우 가운데 정렬 */
+    align-items: center; /* 내부 요소도 가운데 정렬 */
+    flex-direction: column;
+    display: flex;
+
+}
+.user-edit-form{
+    width: 600px;
+    background-color :#f8f9fa;
+    box-shadow : 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px 50px;
+    border-radius: 12px;
+}
+.mypage-form-container h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #343a40;
+}
+.mypage-form-container label {
+    font-weight: bold;
+    color: #495057;
+}
+.mypage-form-container input,
+.mypage-form-container select,
+.mypage-form-container button {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+.mypage-form-container button {
+    background-color:  var(--primary-color);
+    color: white;
+    font-size: 1rem;
+}
+.mypage-form-container small {
+    display: block;
+    color: #868e96;
+    margin-bottom: 0.5rem;
+}
+.mypage-error-message {
+    color: #d9534f;
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* 전체 레이아웃 스타일 */
+.page-layout {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    padding: 2rem 1rem; /* 상하 여백 추가 */
+    max-width: 1250px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 화면 중앙 정렬 */
+    min-height: 800px;
+}
+
+/* 양쪽 여백 */
+.side-space {
+    width: 200px; /* 사이드바와 동일한 너비로 설정 */
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+    position: sticky;
+    top: 120px;
+    width: 200px;
+    height: fit-content;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 2rem; /* 중앙 컨테이너와의 간격 */
+    min-height: 500px;
+}
+.sidebar h2 {
+    font-size: 1.2rem;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar ul li {
+    margin-bottom: 0.5rem;
+}
+.sidebar ul li a {
+    display: block;
+    padding: 0.5rem;
+    color: #495057;
+    text-decoration: none;
+    border-radius: 4px;
+}
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background-color: rgba(var(--primary-color-rgb), 0.8); /* 호버 시 불투명 */
+    color: white;
+}
+
+/* 중앙 컨테이너 */
+.main-container {
+    width: 800px;
+    padding: 2rem;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+
+
+
+/* Reset 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.cart-icon img {
+    vertical-align: middle;
+}
+
+.btn {
+    background-color: #f8f9fa;
+    color: #333;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #ddd;
+}
+
+/* 상단 고정된 네비게이션 바의 여백 확보 */
+body {
+    padding-top: 84px;
+    font-family: Arial, sans-serif;
+}
+
+/* 푸터 스타일 */
+.footer {
+    height: 250px; /* 푸터 높이 설정 */
+    background-color: #f1f1f1; /* 푸터 배경색 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1); /* 위쪽 그림자 효과 */
+}
+
+.footer-container {
+    text-align: center;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.navbar-actions .nav-action-link,
+.navbar-actions .separator {
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+}
+.navbar-links .nav-link {
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: 500; /* 약간 굵게 설정 */
+
+}
+
+/* 네비게이션 바 스타일 */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 84px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    transition: box-shadow 0.3s ease; /* box-shadow에 전환 애니메이션 적용 */
+    z-index: 1000;
+}
+
+.navbar.with-border {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 네비게이션 컨테이너 */
+.navbar-container {
+    width: 1250px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 로고 */
+.navbar-brand {
+    width: 200px;
+}
+
+/* 네비게이션 링크 */
+.navbar-links {
+    display: flex;
+    gap: 20px;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.nav-link {
+    color: #333;
+    font-size: 18px;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+
+
+/* 검색 바 */
+.navbar-search {
+    width: 360px;
+    display: flex;
+    padding: 0 40px;
+}
+
+/* 버튼 숨기기 */
+.navbar-search button {
+    display: none;
+}
+
+
+.navbar-search input[type="text"] {
+    border: 1px solid #ddd; /* 기본 테두리 색상 */
+    width: 160%;
+    padding: 8px;
+    border-radius: 4px;
+
+    outline: none; /* 기본 외곽선 제거 */
+    transition: border-color 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+
+/* 사용자 정보 UI */
+.navbar-actions {
+    width: 200px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+/* 사용자 정보 UI - 경계선 및 스타일 */
+.nav-action-link {
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    padding: 0 5px;
+}
+
+
+
+.separator {
+    color: #ddd;
+    font-size: 14px;
+}
+
+.navbar-cart{
+    width: 35px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.cart-icon svg {
+    width: 30px;
+    height: 30px;
+    transition: stroke 0.3s ease, fill 0.3s ease;
+    transform: scaleX(-1); /* 좌우 반전 */
+}
+.cart-icon svg path,
+.cart-icon svg circle,
+.cart-icon svg line {
+    stroke:  var(--primary-color); /* 기본 색상 설정 */
+    transition: stroke 0.3s ease; /* 색상 전환 애니메이션 */
+}
+.nav-link:hover {
+    color:  var(--primary-hover-color);
+}
+.nav-action-link:hover {
+    color: var(--primary-hover-color);
+}
+.navbar-search input[type="text"]:focus {
+    border-color:  var(--primary-color); /* 포커스 시 테두리 색상 */
+}
+.cart-icon:hover svg path,
+.cart-icon:hover svg circle,
+.cart-icon:hover svg line {
+    stroke: #007bff; /* 호버 시 색상 */
+}
+
+
+/* 서브 네비게이션 스타일 */
+.sub-navbar {
+    background-color: #ffffff;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #EAEDEF;
+    border-top: 1px solid #EAEDEF;
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: bold;
+}
+
+.sub-navbar-container {
+    width: 1250px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.sub-nav-link {
+    color: #333;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 0 10px;
+    transition: color 0.3s;
+    font-family: inherit;
+}
+.sub-nav-link:hover {
+    color: var(--primary-color);
+}
+.sub-nav-link.active{
+    color:var(--primary-color);
+}
+
+.user-profile-container {
+    width: 100%;
+    min-width: 120px;
+    height: 40px;
+    border: 1px solid  #EAEDEF;
+    border-radius: 16px;
+    position: relative; /* dropdown-menu 위치 기준을 이 요소로 설정 */
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    transition: background-color 0.3s ease; /* 호버 시 부드러운 배경색 전환 */
+}
+.user-profile-container:hover {
+    border: 1px solid var(--primary-color);
+
+    border-radius: 16px; /* 호버 시 모서리를 둥글게 */
+}
+
+.user-profile-image-container {
+    flex-shrink: 0; /* 이미지 크기를 고정하여 이름이 공간을 더 차지하도록 */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* 동그란 모양 */
+    overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 */
+    margin-right: 10px; /* 이름과 간격 설정 */
+    margin-left: 5px;
+    border: 1px solid #ccc;
+}
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지 비율 유지하여 꽉 채우기 */
+}
+.user-name {
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: 500; /* 약간 굵게 설정 */
+    font-size: 14px;
+    flex-grow: 1; /* 이름이 나머지 공간을 차지하도록 설정 */
+    text-align: center; /* 가운데 정렬 */
+}
+.hidden {
+    display: none;
+}
+.dropdown-menu {
+    width: 120px;
+    min-width: 120px;
+    position: absolute;
+    top: calc(100% + 5px); /* user-profile-container 아래 5px 간격 추가 */
+    left: 50%; /* 왼쪽 기준으로 중앙으로 이동 */
+    border-radius: 16px;
+
+    transform: translateX(-50%); /* 정확히 중앙 정렬 */
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+.dropdown-menu a {
+    display: block;
+    padding: 5px 0;
+    text-decoration: none;
+    color: #333;
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: 500;
+}
+.dropdown-menu a:hover {
+    background-color: #f0f0f0;
+}
+.mypage-button {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 부모 요소의 색상 상속 */
+    display: inline-block; /* 블록처럼 동작하면서 다른 요소와 호환 가능 */
+    padding: 15px 20px 25px 10px; /* 버튼 느낌을 위한 패딩 */
+    border-radius: 5px; /* 모서리를 둥글게 */
+    transition: background-color 0.3s, color 0.3s; /* 호버 시 색상 전환 효과 */
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+
+}
+
+.mypage-button:hover {
+    color: var(--primary-color);
+}
+
+
+
+/* 마이페이지 메인 css
+
+ */
+
+.tier-container{
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 200px;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+}
+.point-container{
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 200px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+
+}
+.coupon-container{
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    height: 200px;
+    width: 210px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+
+}
+.user-info-container{
+
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+}
+.order-delivery-container1{
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
+    min-height: 100px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 10px;
+    align-items: center;
+}
+.tier-image-container{
+    width: 100%;
+    height: 80px;
+    border: 1px solid #ddd;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: row;
+}
+.tier-info-button{
+    height: 20px;
+    width: 75px;
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+    border-radius: 3px;
+    background-color: #f0f0f0;
+    color:  var(--primary-color);
+    border: none;
+    display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 좌우 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    transition: background-color 0.3s, color 0.3s; /* 호버 시 부드러운 전환 */
+    text-decoration: none; /* 밑줄 제거 */
+    cursor: pointer; /* 커서 변경 */
+}
+.tier-info-button:hover {
+    background-color: var(--primary-color);
+    color: white; /* 글씨 색상 설정 */
+    cursor: pointer; /* 호버 시 커서 변경 */
+    border: 1px solid var(--primary-color);
+}
+.font-user-info-title{
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-size: 14px;
+}
+.bold{
+    font-weight: bold;
+}
+.font-16px{
+    width: fit-content;
+    font-size: 14px;
+    white-space: nowrap; /* 줄바꿈 방지 */
+
+}
+.point-info-button{
+    height: 20px;
+    width: 100%;
+    font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+    font-size: 14px;
+    border-radius: 3px;
+    color: var(--primary-color); /* 글씨 색상 설정 */
+    background-color: transparent; /* 기본 배경색 */
+    display: flex; /* Flexbox 사용 */
+    justify-content: right; /* 텍스트 오른쪽 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    text-decoration: none; /* 밑줄 제거 */
+    padding: 10px 15px; /* 버튼 내부 여백 */
+    transition: background-color 0.3s, color 0.3s; /* 호버 시 부드러운 전환 */
+}
+
+.point-history-container{
+    width: 100%;
+    height: 100px;
+    border: 1px solid #ddd;
+
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.align-right{
+    display: flex; /* Flexbox 사용 */
+    justify-content: right; /* 좌우 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+}
+.coupon-info-container1{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; /* 수직 가운데 정렬 */
+
+
+}
+.coupon-info-container2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85px; /* 너비 */
+    height: 85px; /* 높이 */
+    border: 1px solid var(--primary-color); /* 테두리 제거 */
+    border-radius: 12px; /* 둥근 모서리 */
+    background-color:#fff;/* 버튼 배경색 */
+    color: var(--primary-color); /* 글자 색상 */
+    font-size: 14px; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    text-decoration: none; /* 밑줄 제거 */
+    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+.coupon-info-container2:hover {
+    background-color: #5548c8; /* 호버 시 배경색 변경 */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 증가 */
+    color: white;
+}
+
+.coupon-info-container2:active {
+    transform: translateY(2px); /* 클릭 시 눌리는 효과 */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 클릭 시 그림자 감소 */
+}
+.mypage-title1{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center; /* 수직 가운데 정렬 */
+    width: 100%;
+    font-size: 22px;
+    padding: 7px 10px 15px 10px;
+
+}
+.mypage-order-table{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: flex-start; /* 수직 가운데 정렬 */
+    width: 100%;
+    font-size: 14px;
+    height: fit-content;
+    min-height: 200px;
+}
+.mypage-order-table table {
+    width: 100%; /* 테이블이 부모 크기 채우기 */
+    border-collapse: collapse; /* 테두리 겹침 제거 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+}
+
+.mypage-order-table th,
+.mypage-order-table td {
+    border: 1px solid #ddd; /* 셀 테두리 */
+    padding: 10px; /* 셀 안쪽 여백 */
+}
+
+.mypage-order-table th {
+    background-color: #f8f9fa; /* 헤더 배경색 */
+    font-weight: bold;
+}
+
+.mypage-order-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* 짝수 행 배경색 */
+}
+
+.mypage-order-table tr:hover {
+    background-color: #e0e0e0; /* 호버 시 배경색 */
+}
+.flex-left{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: flex-start;
+}
+.tier-image{
+    height: 60px;
+    width: 60px;
+}
+.tier-usage-container{
+    height: 100%;
+    width: 100px; /* 고정 너비 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    overflow: hidden; /* 내용이 넘칠 경우 자르기 */
+
+}
+.responsive-text {
+    font-size: clamp(6px, 4vw, 14px); /* 최소 10px, 최대 14px */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center; /* 텍스트 중앙 정렬 */
+    max-width: 100%; /* 부모 컨테이너 너비에 맞추기 */
+}

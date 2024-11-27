@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mypage-layout}" th:with="activePage='address-list'">
+<head>
+    <meta charset="UTF-8">
+    <title>배송지 목록</title>
+    <link rel="stylesheet" th:href="@{/css/mypage-address.css}">
+
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/mypage-address.js}"></script>
+
+</head>
+<body>
+
+
+<div class="mypage-container" layout:fragment="content">
+    <!-- 폼 열기 버튼 -->
+    <div id="error-container"
+         th:if="${errorCode != null and errorMessage != null}"
+         th:attr="data-error-code=${errorCode}, data-error-message=${errorMessage}">
+    </div>
+    <button type="button" class="address-action-button" onclick="toggleAddressForm()">배송지 추가</button>
+
+    <!-- Address Addition Form -->
+    <div id="addressFormContainer" class="address-form-container">
+        <form action="/members/address" method="post">
+            <div class="form-header">
+                <div class="form-title">배송지 추가</div>
+                <button type="button" class="address-action-button" onclick="toggleAddressForm()">닫기</button>
+            </div>
+            <div class="form-row">
+                <label for="postalCode">우편번호</label>
+                <input type="text" id="postalCode" name="postalCode" placeholder="우편번호" readonly>
+                <button type="button" class="search-button" onclick="openPostcodeSearch()">주소 검색</button>
+            </div>
+            <div class="form-row">
+                <label for="roadAddress">도로명 주소</label>
+                <input type="text" id="roadAddress" name="roadAddress" placeholder="도로명 주소" readonly>
+            </div>
+            <div class="form-row">
+                <label for="detailAddress">상세 주소</label>
+                <input type="text" id="detailAddress" name="detailAddress" placeholder="상세 주소">
+            </div>
+            <div class="form-row">
+                <label for="addressAlias">주소 별칭</label>
+                <input type="text" id="addressAlias" name="addressAlias" placeholder="예: 집, 회사">
+            </div>
+            <div class="form-row">
+                <label for="receiver">받는이</label>
+                <input type="text" id="receiver" name="receiver" placeholder="받는이 이름">
+            </div>
+            <div class="form-row">
+                <label for="defaultAddress">기본 배송지 설정:</label>
+                <!-- hidden 필드 제거 -->
+
+                <label class="switch">
+                    <input type="checkbox" id="defaultAddress" name="defaultAddress" th:checked="${defaultAddress}" value="true">
+                    <span class="slider round"></span>
+                </label>
+                <input type="hidden" name="defaultAddress" value="false">
+
+            </div>
+            <button type="submit" class="save-button">저장</button>
+        </form>
+    </div>
+
+
+
+    <div class="address-list">
+        <!-- Address Card -->
+
+
+
+        <div class="address-card" th:each="address, stat : ${addresses}">
+            <form th:action="@{/addresses/update}" method="post">
+                <div class="address-header">
+                    <div class="address-title">
+                        <span class="view-mode" th:text="${address.addressAlias}"></span>
+                        <input type="text" name="addressAlias" th:value="${address.addressAlias}"
+                               th:id="'addressAlias-' + ${stat.index}" class="edit-input">
+                    </div>
+                    <div class="address-actions">
+                        <button type="button" class="address-action-button edit-btn" onclick="enableEditMode(this)">수정</button>
+                        <button type="submit" class="address-action-button save-button" style="display: none;">저장</button>
+                        <button type="button" class="address-action-button cancel-button" style="display: none;" onclick="cancelEditMode(this)">취소</button>
+                        <a th:href="@{'/addresses/delete/' + ${address.memberAddressId}}"
+                           class="address-action-button"
+                           onclick="return confirm('이 주소를 삭제하시겠습니까?')">삭제</a>
+                    </div>
+                </div>
+                <div class="address-content">
+                    <label th:for="'receiver-' + ${stat.index}">받는이:</label>
+                    <span class="view-mode" th:text="${address.receiver}"></span>
+
+                    <input type="text" name="receiver" th:value="${address.receiver}"
+                           th:id="'receiver-' + ${stat.index}" class="edit-input">
+                </div>
+                <div class="address-content">
+                    <label th:for="'postalCode-' + ${stat.index}">우편번호:</label>
+                    <span class="view-mode" th:text="${address.postalCode}"></span>
+                    <input type="text" name="postalCode" th:value="${address.postalCode}"
+                           th:id="'postalCode-' + ${stat.index}" class="edit-input" readonly>
+                    <button type="button" class="search-button edit-input" onclick="openPostcodeSearch()" style="display: none;">주소 검색</button>
+                </div>
+                <div class="address-content">
+                    <label th:for="'roadAddress-' + ${stat.index}">도로명:</label>
+                    <span class="view-mode" th:text="${address.roadAddress}"></span>
+                    <input type="text" name="roadAddress" th:value="${address.roadAddress}"
+                           th:id="'roadAddress-' + ${stat.index}" class="edit-input" readonly>
+                </div>
+                <div class="address-content">
+                    <label th:for="'detailAddress-' + ${stat.index}">상세주소:</label>
+                    <span class="view-mode" th:text="${address.detailAddress}"></span>
+                    <input type="text" name="detailAddress" th:value="${address.detailAddress}"
+                           th:id="'detailAddress-' + ${stat.index}" class="edit-input">
+                </div>
+            </form>
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+</body>
+</html>

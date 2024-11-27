@@ -37,11 +37,15 @@ public class GlobalExceptionHandler {
      * @return 리다이렉트 URL
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public String handleValidationException(MethodArgumentNotValidException ex, RedirectAttributes redirectAttributes) {
+    public String handleValidationException(MethodArgumentNotValidException ex, RedirectAttributes redirectAttributes, Model model) {
         BindingResult result = ex.getBindingResult();
 
         Map<String, String> errors = result.getFieldErrors().stream()
-                .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
+                .collect(Collectors.toMap(
+                        FieldError::getField,
+                        FieldError::getDefaultMessage,
+                        (existing, replacement) -> existing // 기존 값 유지
+                ));
 
         Object target = result.getTarget();
         if (target != null) {
@@ -52,6 +56,9 @@ public class GlobalExceptionHandler {
                 } catch (IllegalAccessException ignored) { }
             }
         }
+
+        redirectAttributes.addFlashAttribute("errorCode", "400");
+        redirectAttributes.addFlashAttribute("errorMessage", errors.toString());
         redirectAttributes.addFlashAttribute("errors", errors);
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -67,30 +74,32 @@ public class GlobalExceptionHandler {
      * 백엔드 서버로부터 온 errorResponse를 CustomResponseErrorHandler에서 잡아서 다시 CustomApiException로 던진다.
      * CustomApiException을 처리하는 메서드로, 클라이언트에게 전달할 에러 메시지를 설정하고 리다이렉트 또는 포워드를 결정합니다.
      * @param ex 발생한 API 예외
-     * @param model 모델에 에러 정보를 추가
      * @return 리다이렉트 또는 포워드 경로
      */
     @ExceptionHandler(CustomApiException.class)
-    public String handleCustomApiException(CustomApiException ex, Model model) {
+    public String handleCustomApiException(CustomApiException ex, RedirectAttributes redirectAttributes, Model model) {
+
+        redirectAttributes.addFlashAttribute("errorCode", ex.getErrorResponse().errorCode());
+        redirectAttributes.addFlashAttribute("errorMessage", ex.getErrorResponse().errorMessage());
 
         ClientErrorMessage clientError = new ClientErrorMessage(
-                ex.getErrorResponse().getErrorCode(),
-                ex.getErrorResponse().getErrorMessage()
+                ex.getErrorResponse().errorCode(),
+                ex.getErrorResponse().errorMessage()
         );
 
         model.addAttribute("errorResponse", clientError);
 
-        if ("REDIRECT".equals(ex.getErrorResponse().getRedirectType())) {
+        if ("REDIRECT".equals(ex.getErrorResponse().redirectType().toString())) {
 
-            return "redirect:" + ex.getErrorResponse().getUrl();
 
-        } else if ("FORWARD".equals(ex.getErrorResponse().getRedirectType())) {
+            return "redirect:" + ex.getErrorResponse().url();
 
-            return "forward:" + ex.getErrorResponse().getUrl();
+        } else if ("FORWARD".equals(ex.getErrorResponse().redirectType().toString())) {
+
+            return "forward:" + ex.getErrorResponse().url();
 
         } else {
             return "common/error";
         }
     }
-
 }

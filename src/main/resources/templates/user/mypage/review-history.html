@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/mypage-layout}" th:with="activePage='review-history'">
+
+<head>
+  <meta charset="UTF-8">
+  <title>리뷰 내역</title>
+  <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+  <link rel="stylesheet" th:href="@{/css/mypage-review-style.css}">
+  <script th:src="@{/js/review-detail.js}" defer></script>
+
+
+</head>
+<body onload="renderAllStars()">
+
+<!-- 메인 컨텐츠 영역 -->
+<div class="mypage-container" layout:fragment="content">
+  <h1>리뷰 내역</h1>
+
+  <!-- 리뷰 목록 -->
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <th>도서 이름</th>
+        <th>평점</th>
+        <th>제목</th>
+        <th>작성일</th>
+        <th>상세보기</th>
+        <th>수정</th> <!-- 수정 버튼 열 추가 -->
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="review, rowStat : ${reviews.content}">
+        <td th:text="${review.bookName}"></td>
+        <td>
+          <div class="stars" th:data-rating="${review.ratingValue}" th:data-row="${rowStat.index}">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+        </td>
+        <td th:text="${review.title}"></td>
+        <td th:text="${#dates.format(review.createdAt, 'yyyy-MM-dd')}"></td> <!-- 날짜만 표시 -->
+        <td>
+          <a th:href="@{/reviews/mypage/{reviewId}(reviewId=${review.reviewId})}">상세보기</a>
+        </td>
+        <td>
+          <!-- 리뷰 수정 버튼 -->
+          <a th:href="@{/reviews/{reviewId}/edit(reviewId=${review.reviewId})}" class="btn btn-primary">수정</a>
+        </td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(reviews.content)}">
+        <td colspan="6">리뷰가 없습니다.</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 페이지네이션 -->
+  <div class="pagination-buttons">
+    <button th:if="${reviews.hasPrevious()}"
+            th:onclick="|window.location.href='?page=${reviews.number - 1}&size=${reviews.size}'|">
+      이전
+    </button>
+    <button th:if="${reviews.hasNext()}"
+            th:onclick="|window.location.href='?page=${reviews.number + 1}&size=${reviews.size}'|">
+      다음
+    </button>
+  </div>
+  <div class="pagination-info">
+    <p>현재 페이지: <span th:text="${reviews.number + 1}"></span> / <span th:text="${reviews.totalPages}"></span></p>
+  </div>
+</div>
+
+<script>
+  renderAllStars();
+</script>
+</body>
+</html>

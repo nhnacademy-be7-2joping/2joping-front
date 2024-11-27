@@ -4,48 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
-    <style>
-        .form-container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 2rem;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .form-container h1 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #343a40;
-        }
-        .form-container label {
-            font-weight: bold;
-            color: #495057;
-        }
-        .form-container input, .form-container select, .form-container button {
-            width: 100%;
-            margin-bottom: 1rem;
-            padding: 0.75rem;
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-        }
-        .form-container button {
-            background-color: #007bff;
-            color: white;
-            font-size: 1rem;
-        }
-        .form-container small {
-            display: block;
-            color: #868e96;
-            margin-bottom: 0.5rem;
-        }
-        .error-message {
-            color: #d9534f;
-            font-size: 0.875rem;
-            margin-top: -0.5rem;
-            margin-bottom: 1rem;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/signup-style.css}">
+
 </head>
 <body>
 <div class="container" layout:fragment="content">
