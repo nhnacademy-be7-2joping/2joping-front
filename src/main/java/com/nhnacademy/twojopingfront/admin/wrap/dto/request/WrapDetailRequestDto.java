@@ -1,4 +1,4 @@
-package com.nhnacademy.twojopingfront.admin.wrap.dto;
+package com.nhnacademy.twojopingfront.admin.wrap.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Positive;
  *  @author : 박채연
  *  @date : 2024-11-07
  */
-public record WrapRequestDto(
+public record WrapDetailRequestDto(
         @NotBlank
         String name,
 
