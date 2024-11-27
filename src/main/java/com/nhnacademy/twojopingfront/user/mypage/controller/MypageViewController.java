@@ -1,6 +1,8 @@
 package com.nhnacademy.twojopingfront.user.mypage.controller;
 
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
+import com.nhnacademy.twojopingfront.like.adaptor.LikeAdaptor;
+import com.nhnacademy.twojopingfront.like.dto.response.MemberLikeResponseDto;
 import com.nhnacademy.twojopingfront.order_detail.dto.response.OrderDetailResponseDto;
 import com.nhnacademy.twojopingfront.order_detail.service.OrderDetailService;
 import com.nhnacademy.twojopingfront.refund.adaptor.RefundAdaptor;
@@ -45,6 +47,7 @@ public class MypageViewController {
     private final MemberAdaptor memberAdaptor;
     private final TierAdaptor tierAdaptor;
     private final RefundAdaptor refundAdaptor;
+    private final LikeAdaptor likeAdaptor;
     private final ReviewService reviewService;
     private final OrderDetailService orderDetailService;
     private final PointService pointService;
@@ -57,7 +60,9 @@ public class MypageViewController {
      */
     @Operation(summary = "마이페이지 메인 화면", description = "사용자의 마이페이지 메인 화면으로 이동합니다.")
     @GetMapping
-    public String mypageView(Model model) {
+    public String mypageView(@RequestParam(defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "10") int size,
+            Model model) {
         Long customerId = MemberUtils.getCustomerId();
 
         MemberTierResponse tierResponse = tierAdaptor.getMemberTier();
@@ -67,7 +72,7 @@ public class MypageViewController {
         model.addAttribute("memberPoint", response.memberPoint());
         model.addAttribute("getSimplePointHistoriesResponses", response.getSimplePointHistoriesResponses());
 
-        List<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(customerId.toString());
+        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size,customerId.toString());
         model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/mypage";
     }
@@ -95,8 +100,13 @@ public class MypageViewController {
      */
     @Operation(summary = "주문 목록 페이지", description = "사용자가 자신의 주문 내역을 조회할 수 있는 페이지로 이동합니다.")
     @GetMapping("/order-list")
-    public String orderListView(Model model) {
+    public String orderListView(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "10") int size,
+            Model model) {
 
+        Long customerId = MemberUtils.getCustomerId();
+        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size,customerId.toString());
+        model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/order-list";
     }
 
@@ -164,5 +174,14 @@ public class MypageViewController {
         model.addAttribute("usedCoupons", usedCoupons);
 
         return "user/mypage/my-coupon";
+    }
+    @GetMapping("/my-like")
+    public String likedListView(Model model) {
+        List<MemberLikeResponseDto> responseDtos = likeAdaptor.getMemberLikes();
+
+        model.addAttribute("memberLikes", responseDtos);
+
+
+        return "user/mypage/liked-items";
     }
 }

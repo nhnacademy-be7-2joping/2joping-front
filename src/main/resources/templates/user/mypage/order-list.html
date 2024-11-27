@@ -5,11 +5,52 @@
     <meta charset="UTF-8">
     <title>주문 조회</title>
     <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+    <link rel="stylesheet" th:href="@{/css/mypage-orderdetail-style.css}">
 </head>
 <body>
 <!-- 메인 컨텐츠 영역 -->
 <div class="mypage-container" layout:fragment="content">
-    <div class="mypage-form-container">
+    <div class="order-delivery-container1">
+        <div class="mypage-title1">
+            <p class="font-default">주문 상세내역</p>
+        </div>
+
+        <div class="mypage-order-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>주문일자</th>
+                    <th>주문번호</th>
+                    <th>도서 제목</th>
+                    <th>주문 상태</th>
+                    <th>수량</th>
+                    <th>구매 가격</th>
+                    <th>반품/교환</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <!-- 주문 내역이 있는 경우 -->
+                <tr th:each="orderDetail : ${orderDetails}">
+                    <td th:text="${#temporals.format(orderDetail.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td> <!-- 날짜 포맷 -->
+                    <td th:text="${orderDetail.orderDetailId}"></td>
+                    <td th:text="${orderDetail.bookTitle}"></td>
+                    <td th:text="${orderDetail.orderStateDescription()}"></td>
+                    <td th:text="${orderDetail.quantity()}"></td>
+                    <td th:text="${orderDetail.finalPrice} + '원'"></td>
+                    <td>
+                        <div>
+                            <a th:href="@{/reviews/new(orderDetailId=${orderDetail.orderDetailId})}" class="review-button write-button">신청하기</a>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 주문 내역이 없는 경우 -->
+                <tr th:if="${#lists.isEmpty(orderDetails)}">
+                    <td colspan="6">주문 내역이 없습니다.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 

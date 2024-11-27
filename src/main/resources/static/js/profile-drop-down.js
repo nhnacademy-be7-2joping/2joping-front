@@ -1,7 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function() {
     const profileContainer = document.querySelector(".user-profile-container");
-    const dropdownMenu = document.querySelector(".dropdown-menu");
+    const dropdownMenu = document.querySelector(".profile-dropdown-menu");
 
     profileContainer.addEventListener("click", function(event) {
         event.stopPropagation(); // 클릭 이벤트 전파 중지

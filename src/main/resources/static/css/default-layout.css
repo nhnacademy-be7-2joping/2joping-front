@@ -419,12 +419,12 @@ body {
     display: none;
 }
 
-.dropdown-menu {
+.profile-dropdown-menu {
     width: 120px;
     min-width: 120px;
     position: absolute;
     top: calc(100% + 5px); /* user-profile-container 아래 5px 간격 추가 */
-    left: 50%; /* 왼쪽 기준으로 중앙으로 이동 */
+    left: 50% !important; /* 왼쪽 기준으로 중앙으로 이동 */
     border-radius: 16px;
 
     transform: translateX(-50%); /* 정확히 중앙 정렬 */
@@ -435,7 +435,7 @@ body {
     z-index: 1000;
 }
 
-.dropdown-menu a {
+.profile-dropdown-menu a {
     display: block;
     padding: 5px 0;
     text-decoration: none;
@@ -444,7 +444,7 @@ body {
     font-weight: 500;
 }
 
-.dropdown-menu a:hover {
+.profile-dropdown-menu a:hover {
     background-color: #f0f0f0;
 }
 
