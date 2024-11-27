@@ -171,7 +171,8 @@ public class BookController {
                              @RequestParam("contributorList") String contributorListJson,
                              @ModelAttribute BookUpdateHtmlRequestDto bookUpdateHtmlRequestDto,
                              @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
-                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
+                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage,
+                             RedirectAttributes redirectAttributes) {
         try {
             BookUpdateHtmlRequestDto updatedDto = new BookUpdateHtmlRequestDto(
                     bookUpdateHtmlRequestDto.title(),
@@ -195,10 +196,10 @@ public class BookController {
 
             ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
             bookService.updateBook(bookId, updatedDto, imageUploadRequestDto);
-
+            redirectAttributes.addFlashAttribute("message", "도서가 성공적으로 수정되었습니다.");
             return "redirect:/admin/books/get";
         } catch (Exception ex) {
-            ex.printStackTrace();
+            redirectAttributes.addFlashAttribute("errorMessage", "도서 생성을 실패했습니다.");
             return "redirect:/admin/books/get";
         }
     }
