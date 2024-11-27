@@ -103,4 +103,12 @@ public class GlobalExceptionHandler {
             return "common/error";
         }
     }
+    @ExceptionHandler(Exception.class)
+    public String handleException(Exception ex, RedirectAttributes redirectAttributes, Model model) {
+        ClientErrorMessage clientError = new ClientErrorMessage(
+                "400", "알 수 없는 에러가 발생했습니다."
+        );
+        model.addAttribute("errorResponse", clientError);
+        return "common/error";
+    }
 }
