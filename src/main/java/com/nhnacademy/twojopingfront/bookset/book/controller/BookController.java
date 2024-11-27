@@ -23,6 +23,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
 
 @Controller
@@ -36,7 +38,8 @@ public class BookController {
     public String createBook(@RequestParam("contributorList") String contributorListJson,
                              @ModelAttribute BookCreateHtmlRequestDto bookCreateHtmlRequestDto,
                              @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
-                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage) {
+                             @RequestPart(value = "detailImage", required = false) MultipartFile detailImage,
+                             RedirectAttributes redirectAttributes) {
         try {
             BookCreateHtmlRequestDto updatedDto = new BookCreateHtmlRequestDto(
                     bookCreateHtmlRequestDto.publisherName(),
@@ -59,10 +62,11 @@ public class BookController {
             ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
             bookService.createBook(updatedDto, imageUploadRequestDto);
 
+            redirectAttributes.addFlashAttribute("message", "도서가 성공적으로 생성되었습니다.");
+            System.out.println("BookCreateHtmlRequestDto: " + bookCreateHtmlRequestDto);
             return "redirect:/admin/books/get";
         } catch (Exception ex) {
-            ex.printStackTrace();
-            // 오류 발생 시에도 리다이렉트 (임의로 지정)
+            redirectAttributes.addFlashAttribute("errorMessage", "도서 생성을 실패했습니다.");
             return "redirect:/admin/books/get";
         }
     }
