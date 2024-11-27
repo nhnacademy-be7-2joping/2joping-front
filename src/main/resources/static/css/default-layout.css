@@ -419,12 +419,12 @@ body {
     display: none;
 }
 
-.profile-dropdown-menu  {
+.profile-dropdown-menu {
     width: 120px;
     min-width: 120px;
     position: absolute;
     top: calc(100% + 5px); /* user-profile-container 아래 5px 간격 추가 */
-    left: 50%; /* 왼쪽 기준으로 중앙으로 이동 */
+    left: 50% !important; /* 왼쪽 기준으로 중앙으로 이동 */
     border-radius: 16px;
 
     transform: translateX(-50%); /* 정확히 중앙 정렬 */
