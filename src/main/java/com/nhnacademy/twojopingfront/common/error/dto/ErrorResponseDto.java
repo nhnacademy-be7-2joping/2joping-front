@@ -28,5 +28,8 @@ public record ErrorResponseDto<T>(
         String url,
         T data
 ) {
+    public T data() {
+        return data;
+    }
 
 }

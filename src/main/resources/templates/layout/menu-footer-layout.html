@@ -18,6 +18,10 @@
 <!-- 공통 Navigation Bar -->
 <nav class="navbar" id="navbar">
   <div class="navbar-container">
+    <div id="error-container"
+         th:if="${errorCode != null and errorMessage != null}"
+         th:attr="data-error-code=${errorCode}, data-error-message=${errorMessage}">
+    </div>
     <!-- 로고 -->
     <a class="navbar-brand" href="/">
       <img th:src="@{/images/logo.png}" alt="logo" width="200"/>
@@ -112,6 +116,7 @@
 <div layout:fragment="script"></div>
 <script th:src="@{/js/mypage-script.js}"></script>
 <script th:src="@{/js/profile-drop-down.js}"></script>
+<script th:src="@{/js/error-alert.js}"></script>
 
 </body>
 </html>
