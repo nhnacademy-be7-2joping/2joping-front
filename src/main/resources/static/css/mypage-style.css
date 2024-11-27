@@ -749,3 +749,169 @@ body {
     text-align: center; /* 텍스트 중앙 정렬 */
     max-width: 100%; /* 부모 컨테이너 너비에 맞추기 */
 }
+
+
+
+
+
+
+
+
+
+
+/*!* 전체 컨테이너 스타일 *!*/
+/*.point-container {*/
+/*    width: 100%;*/
+/*    padding: 15px;*/
+/*    border: 1px solid #ddd;*/
+/*    border-radius: 10px;*/
+/*    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); !* 부드러운 그림자 *!*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 15px;*/
+/*    background-color: #fff; !* 흰색 배경 *!*/
+/*}*/
+
+/*!* 포인트 내역 리스트 스타일 *!*/
+/*.point-history-container {*/
+/*    width: 100%;*/
+/*    max-height: 150px; !* 높이를 제한 *!*/
+/*    overflow-y: auto; !* 스크롤 활성화 *!*/
+/*    padding: 5px;*/
+/*}*/
+
+/*.point-history-list {*/
+/*    list-style: none; !* 불릿 포인트 제거 *!*/
+/*    padding: 0; !* 기본 여백 제거 *!*/
+/*    margin: 0;*/
+/*}*/
+
+/*!* 각 포인트 항목 스타일 *!*/
+/*.point-history-item {*/
+/*    margin-bottom: 10px;*/
+/*    padding: 10px;*/
+/*    border: 1px solid #eaeaea; !* 연한 테두리 *!*/
+/*    border-radius: 8px; !* 둥근 모서리 *!*/
+/*    background-color: #f9f9f9; !* 밝은 회색 배경 *!*/
+/*    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); !* 은은한 그림자 *!*/
+/*    transition: background-color 0.3s ease, box-shadow 0.3s ease;*/
+/*}*/
+
+/*.point-history-item:hover {*/
+/*    background-color: #f0f0ff; !* 호버 시 밝은 파란색 *!*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); !* 약간 진해진 그림자 *!*/
+/*}*/
+
+/*!* 포인트 항목 텍스트 정렬 *!*/
+/*.point-entry {*/
+/*    display: flex;*/
+/*    justify-content: space-between; !* 이름과 값 양쪽 정렬 *!*/
+/*    font-size: 14px;*/
+/*    font-weight: bold;*/
+/*    color: #343a40;*/
+/*}*/
+
+/*.point-date {*/
+/*    font-size: 12px;*/
+/*    color: #868e96; !* 날짜는 연한 색상 *!*/
+/*    margin-top: 5px;*/
+/*    text-align: right; !* 날짜를 오른쪽 정렬 *!*/
+/*}*/
+
+/*!* "포인트 내역 보기" 버튼 스타일 *!*/
+/*.point-info-button {*/
+/*    font-size: 14px;*/
+/*    color: #6a5acd; !* 보라색 계열 *!*/
+/*    text-decoration: none;*/
+/*    text-align: right;*/
+/*    display: block;*/
+/*    margin-top: 10px;*/
+/*}*/
+
+/*.point-info-button:hover {*/
+/*    color: #483d8b; !* 호버 시 더 진한 보라색 *!*/
+/*    text-decoration: underline;*/
+/*}*/
+
+
+
+
+
+
+
+/* 전체 컨테이너 스타일 */
+.point-container {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background-color: #fff; /* 흰색 배경 */
+}
+
+/* 포인트 내역 리스트 스타일 */
+.point-history-container {
+    width: 100%;
+    max-height: 150px; /* 높이를 제한 */
+    overflow-y: auto; /* 스크롤 활성화 */
+    padding: 5px;
+}
+
+.point-history-list {
+    width: 100%;
+    list-style: none; /* 불릿 포인트 제거 */
+    padding: 0; /* 기본 여백 제거 */
+    margin: 0;
+}
+
+/* 각 포인트 항목 스타일 */
+.point-history-item {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #eaeaea; /* 연한 테두리 */
+    border-radius: 8px; /* 둥근 모서리 */
+    background-color: #f9f9f9; /* 밝은 회색 배경 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.point-history-item:hover {
+    background-color: #f0f0ff; /* 호버 시 밝은 파란색 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 약간 진해진 그림자 */
+}
+
+/* 포인트 항목 텍스트 정렬 */
+.point-entry {
+    display: flex;
+    justify-content: space-between; /* 이름과 값 양쪽 정렬 */
+    font-size: 14px;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.point-date {
+    font-size: 12px;
+    color: #868e96; /* 날짜는 연한 색상 */
+    margin-top: 5px;
+    text-align: right; /* 날짜를 오른쪽 정렬 */
+}
+
+/* "포인트 내역 보기" 버튼 스타일 */
+.point-info-button {
+    font-size: 14px;
+    color: #6a5acd; /* 보라색 계열 */
+    text-decoration: none;
+    text-align: right;
+    display: block;
+    margin-top: 10px;
+}
+
+.point-info-button:hover {
+    color: #483d8b; /* 호버 시 더 진한 보라색 */
+    text-decoration: underline;
+}
+
