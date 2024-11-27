@@ -419,7 +419,7 @@ body {
     display: none;
 }
 
-.dropdown-menu {
+.profile-dropdown-menu  {
     width: 120px;
     min-width: 120px;
     position: absolute;
@@ -435,7 +435,7 @@ body {
     z-index: 1000;
 }
 
-.dropdown-menu a {
+.profile-dropdown-menu a {
     display: block;
     padding: 5px 0;
     text-decoration: none;
@@ -444,7 +444,7 @@ body {
     font-weight: 500;
 }
 
-.dropdown-menu a:hover {
+.profile-dropdown-menu a:hover {
     background-color: #f0f0f0;
 }
 
