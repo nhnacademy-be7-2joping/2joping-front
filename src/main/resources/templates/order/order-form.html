@@ -76,43 +76,47 @@
             </div>
         </div>
 
-        <!-- 포인트 정보 -->
-        <div th:if="${isLogin}" class="mb-3">
-            <h3>포인트</h3>
-            <hr>
-            <div class="me-3">
-                현재 내 포인트: <span th:text="${points.point()}" class="cost-value fw-bold" id="current-point">0</span>
-            </div>
-            <div class="input-group point-container mb-3">
-                <label for="point" class="input-group-text">포인트</label>
-                <input type="number" class="form-control" min="0" step="1" id="point" name="point"
-                       placeholder="사용할 포인트 입력">
-                <button class="btn btn-dark">적용</button>
-            </div>
-        </div>
-
-        <!-- 쿠폰 정보 -->
-        <div th:if="${isLogin}" class="coupon-container mb-3">
-            <h3>쿠폰</h3>
-            <hr/>
-            <label for="coupon">쿠폰</label>
-            <select id="coupon" name="coupon" class="mb-3">
-                <option selected value="none">쿠폰 옵션</option>
-                <option th:each="coupon : ${memberCoupons}" th:text="${coupon.name()}"
-                        th:value="${coupon.couponUsageId()}"></option>
-            </select>
-            <div class="card mb-3" id="coupon-info">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold" id="coupon-name">할인 쿠폰</h5>
-                    <h6 class="card-subtitle text-body-secondary mb-3"><span id="discount-value"></span><span
-                            id="discount-type"></span> 할인
-                    </h6>
-                    <p class="text-grey">
-                        최소 주문 금액: <span class="cost-value" id="usage-limit">0</span>
-                        <br>
-                        최대 할인 금액: <span class="cost-value" id="max-discount">0</span></p>
+        <div th:if="${isLogin}" class="container mb-3">
+            <div class="row">
+                <!-- 포인트 정보 -->
+                <div class="col-lg-6">
+                    <h3>포인트</h3>
+                    <hr>
+                    <div class="me-3 mb-3">
+                        현재 내 포인트: <span th:text="${points.point()}" class="cost-value fw-bold" id="current-point">0</span>
+                    </div>
+                    <div class="input-group point-container mb-3">
+                        <label for="point" class="input-group-text">포인트</label>
+                        <input type="number" class="form-control" min="0" step="1" id="point" name="point"
+                               placeholder="사용할 포인트 입력">
+                        <button class="btn btn-dark">적용</button>
+                    </div>
                 </div>
-                <div class="ribbon"></div>
+
+                <!-- 쿠폰 정보 -->
+                <div class="coupon-container mb-3 col-lg-6">
+                    <h3>쿠폰</h3>
+                    <hr/>
+                    <label for="coupon" class="mb-3">쿠폰 선택</label>
+                    <select id="coupon" name="coupon" class="mb-3 form-select">
+                        <option selected value="none">-- 쿠폰 옵션 --</option>
+                        <option th:each="coupon : ${memberCoupons}" th:text="${coupon.name()}"
+                                th:value="${coupon.couponUsageId()}"></option>
+                    </select>
+                    <div class="card mb-3" id="coupon-info">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold" id="coupon-name">할인 쿠폰</h5>
+                            <h6 class="card-subtitle text-body-secondary mb-3"><span id="discount-value"></span><span
+                                    id="discount-type"></span> 할인
+                            </h6>
+                            <p class="text-grey">
+                                최소 주문 금액: <span class="cost-value" id="usage-limit">0</span>
+                                <br>
+                                최대 할인 금액: <span class="cost-value" id="max-discount">0</span></p>
+                        </div>
+                        <div class="ribbon"></div>
+                    </div>
+                </div>
             </div>
         </div>
 
