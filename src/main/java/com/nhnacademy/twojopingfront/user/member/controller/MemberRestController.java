@@ -93,7 +93,8 @@ public class MemberRestController {
 
         MemberUpdateResponseDto responseDto = memberAdaptor.updateMember(requestDto);
 
-        redirectAttributes.addFlashAttribute("memberInfo", responseDto);
+        redirectAttributes.addFlashAttribute("errorCode", "200");
+        redirectAttributes.addFlashAttribute("errorMessage", "수정완료");
 
         return "redirect:/mypage/edit-profile";
 

@@ -1,6 +1,7 @@
 package com.nhnacademy.twojopingfront.bookset.category.client;
 
 import com.nhnacademy.twojopingfront.bookset.category.dto.request.CategoryRequestDto;
+import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryIsActiveResponseDto;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.common.annotation.ValidPathVariable;
 import jakarta.validation.Valid;
@@ -17,7 +18,7 @@ public interface CategoryClient {
     ResponseEntity<List<CategoryResponseDto>> getAllCategories();
 
     @GetMapping("/v1/bookstore/categories/pages")
-    ResponseEntity<Page<CategoryResponseDto>> getAllCategoriesPage(@RequestParam("page") int page, @RequestParam("size") int size);
+    ResponseEntity<Page<CategoryIsActiveResponseDto>> getAllCategoriesPage(@RequestParam("page") int page, @RequestParam("size") int size);
 
     @PostMapping("/v1/bookstore/categories")
     ResponseEntity<CategoryResponseDto> createCategory(@Valid @RequestBody CategoryRequestDto request);
@@ -30,6 +31,9 @@ public interface CategoryClient {
 
     @PutMapping("/v1/bookstore/categories/{categoryId}/deactivate")
     ResponseEntity<Long> deactivateCategory(@ValidPathVariable @PathVariable Long categoryId);
+
+    @PutMapping("/v1/bookstore/categories/{categoryId}/activate")
+    ResponseEntity<Long> activateCategory(@ValidPathVariable @PathVariable Long categoryId);
 
     @GetMapping("/v1/bookstore/categories/{categoryId}")
     ResponseEntity<CategoryResponseDto> getCategory(@ValidPathVariable @PathVariable Long categoryId);

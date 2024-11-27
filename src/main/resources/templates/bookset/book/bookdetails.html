@@ -45,7 +45,7 @@
 
               <!-- 조회수 기능 추가 필요  -->
 
-              <p>200,000</p>
+              <p class="" th:text="${books.likes() != null ? books.likes() : '0'}">
             </div>
           </div>
 
@@ -168,7 +168,8 @@
               </a>
 
             </div>
-            <button class="purchase-button font-default" th:disabled="${books.isActive != true}">바로구매</button>
+            <button id="direct-button" class="purchase-button font-default" th:disabled="${books.isActive != true}">바로구매
+            </button>
           </div>
 
 
@@ -244,7 +245,14 @@
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const cartButton = document.querySelector(".book-detail-cart-icon");
+      const directButton = document.getElementById("direct-button");
       const quantityInput = document.getElementById("quantity-input");
+
+      directButton.addEventListener("click", function () {
+        const paths = window.location.pathname.split("/");
+        const bookId = paths[paths.length - 1];
+        location.href = `/orders/form?bookId=${bookId}&quantity=${quantityInput.value}`;
+      });
 
       cartButton.addEventListener("click", function (event) {
         event.preventDefault();

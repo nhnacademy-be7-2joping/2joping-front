@@ -34,6 +34,7 @@ public class ThymeleafCustomFormatter {
         return dateTime.format(formatter);
     }
 
+    // 날짜 포맷팅 로직 구현
     public String formatDate(LocalDateTime dateTime) {
         return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }

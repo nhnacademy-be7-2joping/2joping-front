@@ -18,6 +18,10 @@
 <!-- 공통 Navigation Bar -->
 <nav class="navbar" id="navbar">
   <div class="navbar-container">
+    <div id="error-container"
+         th:if="${errorCode != null and errorMessage != null}"
+         th:attr="data-error-code=${errorCode}, data-error-message=${errorMessage}">
+    </div>
     <!-- 로고 -->
     <a class="navbar-brand" href="/">
       <img th:src="@{/images/logo.png}" alt="logo" width="200"/>
@@ -27,8 +31,8 @@
     <div class="navbar-links">
       <a class="nav-link" href="/books/search?keyword=&sort=popularity">베스트</a>
       <a class="nav-link" href="/books/search?keyword=&sort=newest">신상품</a>
-      <a class="nav-link" href="#">이벤트</a>
-      <a class="nav-link" href="#">고객센터</a>
+      <a class="nav-link" href="/books/search?keyword=&sort=rating">평점순</a>
+      <a class="nav-link" href="/books/search?keyword=&sort=reviews">리뷰순</a>
     </div>
 
     <!-- 검색 바 -->
@@ -112,6 +116,7 @@
 <div layout:fragment="script"></div>
 <script th:src="@{/js/mypage-script.js}"></script>
 <script th:src="@{/js/profile-drop-down.js}"></script>
+<script th:src="@{/js/error-alert.js}"></script>
 
 </body>
 </html>

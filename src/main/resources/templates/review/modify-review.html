@@ -3,18 +3,10 @@
 <head>
     <title>리뷰 수정</title>
     <link rel="stylesheet" th:href="@{/css/review-star-style.css}">
+    <link rel="stylesheet" th:href="@{/css/review-modify-style.css}">
+
     <script th:src="@{/js/review-rating-star.js}" defer></script>
 
-    <style>
-        .review-image-preview {
-            max-width: 300px;
-            height: auto;
-            display: block;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            padding: 5px;
-        }
-    </style>
     <script>
         function initializeStars(rating) {
             const stars = document.querySelectorAll('.star');
@@ -38,46 +30,59 @@
     </script>
 </head>
 <body>
-<h1>리뷰 수정</h1>
-<form th:action="@{/reviews/{reviewId}(reviewId=${review.reviewId})}" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="_method" value="PUT"/>
-    <input type="hidden" id="reviewId" name="reviewId" th:value="${review.reviewId}"/>
+<div class="container">
+    <h1>리뷰 수정</h1>
+    <form th:action="@{/reviews/{reviewId}(reviewId=${review.reviewId})}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="PUT"/>
+        <input type="hidden" id="reviewId" name="reviewId" th:value="${review.reviewId}"/>
 
-    <label for="ratingValue">평점:</label>
-    <div class="stars">
-        <span class="star" onclick="setRating(1)">★</span>
-        <span class="star" onclick="setRating(2)">★</span>
-        <span class="star" onclick="setRating(3)">★</span>
-        <span class="star" onclick="setRating(4)">★</span>
-        <span class="star" onclick="setRating(5)">★</span>
-    </div>
-    <input type="hidden" id="ratingValue" name="ratingValue" th:value="${review.ratingValue}" required>
-    <br><br>
+        <!-- 평점 -->
+        <div class="mb-3">
+            <label for="ratingValue">평점:</label>
+            <div class="stars">
+                <span class="star" onclick="setRating(1)">★</span>
+                <span class="star" onclick="setRating(2)">★</span>
+                <span class="star" onclick="setRating(3)">★</span>
+                <span class="star" onclick="setRating(4)">★</span>
+                <span class="star" onclick="setRating(5)">★</span>
+            </div>
+            <input type="hidden" id="ratingValue" name="ratingValue" th:value="${review.ratingValue}" required>
+        </div>
 
-    <label for="title">리뷰 제목:</label>
-    <input type="text" id="title" name="title" th:value="${review.title}" required><br><br>
+        <!-- 리뷰 제목 -->
+        <div class="mb-3">
+            <label for="title">리뷰 제목:</label>
+            <input type="text" id="title" name="title" th:value="${review.title}" required>
+        </div>
 
-    <label for="text">리뷰 내용:</label>
-    <textarea id="text" name="text" required th:text="${review.text}"></textarea><br><br>
+        <!-- 리뷰 내용 -->
+        <div class="mb-3">
+            <label for="text">리뷰 내용:</label>
+            <textarea id="text" name="text" rows="4" required th:text="${review.text}"></textarea>
+        </div>
 
-    <label for="reviewImage">이미지 업로드:</label>
-    <input type="file" id="reviewImage" name="reviewImage" accept="image/*"><br><br>
+        <!-- 이미지 업로드 -->
+        <div class="mb-3">
+            <label for="reviewImage">이미지 업로드:</label>
+            <input type="file" id="reviewImage" name="reviewImage" accept="image/*">
+        </div>
 
-    <!-- 기존 이미지 미리보기 -->
-    <img id="imagePreview" th:src="${review.reviewImage != null ? review.reviewImage : ''}"
-         alt="리뷰 이미지 미리보기" class="review-image-preview" style="display:none;"/>
+        <!-- 기존 이미지 미리보기 -->
+        <div class="mb-3">
+            <img id="imagePreview" th:src="${review.reviewImage != null ? review.reviewImage : ''}"
+                 alt="리뷰 이미지 미리보기" class="review-image-preview" style="display:none;"/>
+        </div>
 
-    <!-- 이미지 삭제 체크박스 -->
-    <div id="deleteCheckboxContainer" style="display:none; margin-top: 10px;">
-        <label for="deleteImage">
+        <div id="deleteCheckboxContainer" class="deleteCheckboxContainer">
+            <label for="deleteImage">이미지 삭제하기</label>
             <input type="checkbox" id="deleteImage" name="deleteImage" value="true">
-            이미지 삭제하기
-        </label>
-    </div>
-    <br><br>
+        </div>
 
-    <button type="submit">수정</button>
-</form>
+
+
+        <button type="submit">수정</button>
+    </form>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -86,6 +91,25 @@
         initializeStars(ratingValue);
         initializeImagePreview(imageUrl);
     });
+
+    function initializeStars(rating) {
+        const stars = document.querySelectorAll('.star');
+        stars.forEach((star, index) => {
+            star.classList.toggle('selected', index < rating);
+        });
+    }
+
+    function initializeImagePreview(imageUrl) {
+        const preview = document.getElementById('imagePreview');
+        const deleteCheckboxContainer = document.getElementById('deleteCheckboxContainer');
+        if (imageUrl && imageUrl.trim() !== '') {
+            preview.style.display = 'block';
+            deleteCheckboxContainer.style.display = 'flex';
+        } else {
+            preview.style.display = 'none';
+            deleteCheckboxContainer.style.display = 'none';
+        }
+    }
 </script>
 </body>
 </html>

@@ -3,13 +3,14 @@ package com.nhnacademy.twojopingfront.bookset.book.client;
 
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookAdminSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookUpdateRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookUpdateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
-import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -26,13 +27,6 @@ public interface BookClient {
      */
     @PostMapping(value = "/admin/books/register")
     BookCreateResponseDto createBook(@RequestBody BookCreateRequestDto bookCreateRequestDto);
-
-    /**
-     * 태그 데이터를 가져오는 메서드
-     * @return 모든 태그 리스트
-     */
-    @GetMapping("/tags")
-    List<TagResponseDto> getAllTags();
 
     /**
      * 출판사 데이터를 가져오는 메서드
@@ -104,6 +98,23 @@ public interface BookClient {
     @GetMapping("/books/get/book/{bookId}")
     BookResponseDto getBookById(@PathVariable("bookId") Long bookId);
 
+    @GetMapping("/admin/books/{bookId}")
+    BookUpdateResponseDto getUpdateBookById(@PathVariable("bookId") Long bookId);
+
+    /**
+     * 도서 수정
+     * @param bookUpdateRequestDto 도서 수정 요청 정보
+     * @return 수정된 도서에 대한 응답 정보
+     */
+    @PutMapping(value = "/admin/books/{bookId}")
+    BookUpdateResponseDto updateBook(@PathVariable("bookId") Long bookId, @RequestBody BookUpdateRequestDto bookUpdateRequestDto);
+
+    /**
+     * 특정 도서를 비활성화하는 메서드
+     * @param bookId 비활성화할 도서 ID
+     */
+    @PutMapping("/admin/books/{book-id}/deactivate")
+    void deactivateBook(@PathVariable("book-id") Long bookId);
 }
 
 

@@ -52,7 +52,7 @@ public class MemberUtils {
      *
      * @return 익명 사용자일 경우 {@code true}, 그렇지 않을 경우 {@code false}
      */
-    private static boolean isAnonymous() {
+    public static boolean isAnonymous() {
         return SecurityContextHolder.getContext().getAuthentication().getAuthorities()
                 .contains(new SimpleGrantedAuthority(ROLE_ANONYMOUS));
     }
