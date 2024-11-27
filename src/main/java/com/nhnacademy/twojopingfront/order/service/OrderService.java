@@ -3,6 +3,7 @@ package com.nhnacademy.twojopingfront.order.service;
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
 import com.nhnacademy.twojopingfront.order.client.MemberCouponClient;
 import com.nhnacademy.twojopingfront.order.client.OrderClient;
+import com.nhnacademy.twojopingfront.order.client.OrderPostClient;
 import com.nhnacademy.twojopingfront.order.dto.request.OrderRequest;
 import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
 import com.nhnacademy.twojopingfront.payment.controller.dto.request.PaymentRequest;
@@ -18,6 +19,7 @@ import java.util.List;
 public class OrderService {
     private final MemberCouponClient memberCouponClient;
     private final OrderClient orderClient;
+    private final OrderPostClient orderPostClient;
 
     public List<OrderCouponResponse> getCoupons() {
         // 익명 사용자인 경우 빈 리스트 반환
@@ -30,6 +32,6 @@ public class OrderService {
     }
 
     public void registerOrder(PaymentResponse paymentResponse) {
-        orderClient.postOrder(paymentResponse);
+        orderPostClient.postOrder(paymentResponse);
     }
 }
