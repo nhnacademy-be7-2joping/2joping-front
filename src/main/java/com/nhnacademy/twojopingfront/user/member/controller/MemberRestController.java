@@ -105,6 +105,10 @@ public class MemberRestController {
                                  HttpServletRequest request, HttpServletResponse response,
                                  Model model) {
 
+
+        MemberWithdrawResponseDto responseDto = memberAdaptor.withdrawMember(requestDto);
+        model.addAttribute("withdrawInfo", responseDto);
+
         Cookie[] cookies = request.getCookies();
         Map<String, String> jwtCookieMap = new HashMap<>();
 
@@ -119,8 +123,7 @@ public class MemberRestController {
                 }
             }
         }
-        MemberWithdrawResponseDto responseDto = memberAdaptor.withdrawMember(requestDto);
-        model.addAttribute("withdrawInfo", responseDto);
+
         loginService.logout(jwtCookieMap);
         return "user/mypage/withdraw-success";
 
