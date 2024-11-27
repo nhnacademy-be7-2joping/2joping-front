@@ -85,6 +85,9 @@ public class MypageViewController {
     @GetMapping("/order-list")
     public String orderListView(Model model) {
 
+        Long customerId = MemberUtils.getCustomerId();
+        List<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(customerId.toString());
+        model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/order-list";
     }
 
