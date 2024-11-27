@@ -3,12 +3,19 @@ package com.nhnacademy.twojopingfront.admin.wrap.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.admin.wrap.client.AdminWrapClient;
-import com.nhnacademy.twojopingfront.admin.wrap.dto.*;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.request.*;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.response.WrapCreateResponseDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.response.WrapResponseDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.response.WrapUpdateResponseDto;
 import com.nhnacademy.twojopingfront.common.error.exception.image.ImageUploadException;
+import com.nhnacademy.twojopingfront.review.dto.request.ReviewImageUploadRequestDto;
+import com.nhnacademy.twojopingfront.review.dto.request.ReviewImageUrlRequestDto;
+import com.nhnacademy.twojopingfront.review.dto.request.ReviewModifyDetailRequestDto;
+import com.nhnacademy.twojopingfront.review.dto.request.ReviewModifyRequestDto;
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewModifyResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
@@ -32,16 +39,16 @@ public class WrapService {
         return wrapClient.createWrap(new WrapRequestDto(wrapDetailRequestDto,wrapImageUrlRequestDto));
     }
 
-    public WrapResponseDto getWrap(Long wrapId) {
-        return wrapClient.getWrap(wrapId).getBody();
+    public WrapUpdateResponseDto getWrap(Long wrapId) {
+        return wrapClient.getWrap(wrapId);
     }
 
-    public List<WrapResponseDto> findAllByIsActiveTrue() {
-        return wrapClient.findAllByIsActiveTrue().getBody();
+    public List<WrapUpdateResponseDto> findAllByIsActiveTrue() {
+        return wrapClient.findAllByIsActiveTrue();
     }
 
-    public WrapResponseDto updateWrap(Long wrapId, WrapDetailRequestDto wrapDetailRequestDto) {
-        return wrapClient.updateWrap(wrapId, wrapDetailRequestDto).getBody();
+    public WrapResponseDto updateWrap(Long wrapId, WrapModifyRequestDto wrapRequestDto) {
+        return wrapClient.updateWrap(wrapId, wrapRequestDto).getBody();
     }
 
     public String saveImage(MultipartFile image) {

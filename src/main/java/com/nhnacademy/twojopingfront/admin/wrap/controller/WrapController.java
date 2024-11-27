@@ -1,15 +1,19 @@
 package com.nhnacademy.twojopingfront.admin.wrap.controller;
 
 
-import com.nhnacademy.twojopingfront.admin.wrap.dto.*;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.request.WrapDetailRequestDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.request.WrapImageRequestDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.request.WrapModifyRequestDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.request.WrapUpdateDetailRequestDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.response.WrapCreateResponseDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.response.WrapResponseDto;
+import com.nhnacademy.twojopingfront.admin.wrap.dto.response.WrapUpdateResponseDto;
 import com.nhnacademy.twojopingfront.admin.wrap.service.WrapService;
-import com.nhnacademy.twojopingfront.common.util.MemberUtils;
-import com.nhnacademy.twojopingfront.review.dto.request.ReviewDetailRequestDto;
 import com.nhnacademy.twojopingfront.review.dto.request.ReviewImageUploadRequestDto;
-import com.nhnacademy.twojopingfront.review.dto.response.ReviewCreateResponseDto;
+import com.nhnacademy.twojopingfront.review.dto.request.ReviewModifyDetailRequestDto;
+import com.nhnacademy.twojopingfront.review.dto.response.ReviewModifyResponseDto;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,21 +44,21 @@ public class WrapController {
 
     @GetMapping("/{wrap-id}")
     public String getWrap(@PathVariable("wrap-id") Long wrapId, Model model) {
-        WrapResponseDto responseDto = wrapService.getWrap(wrapId);
-        model.addAttribute("wrap", responseDto); // 모델에 데이터 추가
+        WrapUpdateResponseDto wrapUpdateResponseDto = wrapService.getWrap(wrapId);
+        model.addAttribute("wrap", wrapUpdateResponseDto); // 모델에 데이터 추가
         return "admin/wrap/wrap-details";
     }
 
     @GetMapping("/list")
     public String findAllByIsActiveTrue(Model model) {
-        List<WrapResponseDto> wraps = wrapService.findAllByIsActiveTrue();
+        List<WrapUpdateResponseDto> wraps = wrapService.findAllByIsActiveTrue();
         model.addAttribute("wraps", wraps); // 모델에 전체 wrap 리스트 추가
         return "admin/wrap/wrap-list"; // 전체 목록을 표시할 HTML 템플릿
     }
 
     @GetMapping("/edit/{wrap-id}") // 기존에 있던 데이터를 불러와서 채워넣기 위한 controller
     public String showEditForm(@PathVariable("wrap-id") Long wrapId, Model model) {
-        WrapResponseDto wrap = wrapService.getWrap(wrapId);
+        WrapUpdateResponseDto wrap = wrapService.getWrap(wrapId);
         model.addAttribute("wrap", wrap);
         return "admin/wrap/wrap-edit";
     }
@@ -66,12 +70,11 @@ public class WrapController {
             @RequestParam("wrapPrice") Integer wrapPrice,
             @RequestParam("isActive") Boolean isActive,
             RedirectAttributes redirectAttributes) {
-        WrapDetailRequestDto dto = new WrapDetailRequestDto(name, wrapPrice, !Objects.isNull(isActive) && isActive);
+        WrapModifyRequestDto dto = new WrapModifyRequestDto(name, wrapPrice, !Objects.isNull(isActive) && isActive);
         WrapResponseDto updatedResponseDto = wrapService.updateWrap(wrapId, dto);
         redirectAttributes.addFlashAttribute("message", "업데이트가 성공적으로 완료되었습니다.");
         return "redirect:/admin/wraps/list";
     }
-
 }
 
 

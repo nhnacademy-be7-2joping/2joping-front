@@ -1,4 +1,4 @@
-package com.nhnacademy.twojopingfront.admin.wrap.dto;
+package com.nhnacademy.twojopingfront.admin.wrap.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
