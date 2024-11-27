@@ -1,6 +1,8 @@
 package com.nhnacademy.twojopingfront.user.mypage.controller;
 
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
+import com.nhnacademy.twojopingfront.like.adaptor.LikeAdaptor;
+import com.nhnacademy.twojopingfront.like.dto.response.MemberLikeResponseDto;
 import com.nhnacademy.twojopingfront.order_detail.dto.response.OrderDetailResponseDto;
 import com.nhnacademy.twojopingfront.order_detail.service.OrderDetailService;
 import com.nhnacademy.twojopingfront.refund.adaptor.RefundAdaptor;
@@ -43,6 +45,7 @@ public class MypageViewController {
     private final MemberAdaptor memberAdaptor;
     private final TierAdaptor tierAdaptor;
     private final RefundAdaptor refundAdaptor;
+    private final LikeAdaptor likeAdaptor;
     private final ReviewService reviewService;
     private final OrderDetailService orderDetailService;
     /**
@@ -162,5 +165,14 @@ public class MypageViewController {
         model.addAttribute("usedCoupons", usedCoupons);
 
         return "user/mypage/my-coupon";
+    }
+    @GetMapping("/my-like")
+    public String likedListView(Model model) {
+        List<MemberLikeResponseDto> responseDtos = likeAdaptor.getMemberLikes();
+
+        model.addAttribute("memberLikes", responseDtos);
+
+
+        return "user/mypage/liked-items";
     }
 }
