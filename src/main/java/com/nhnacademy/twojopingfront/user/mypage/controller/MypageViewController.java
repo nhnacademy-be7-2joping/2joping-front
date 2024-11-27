@@ -3,6 +3,8 @@ package com.nhnacademy.twojopingfront.user.mypage.controller;
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
 import com.nhnacademy.twojopingfront.order_detail.dto.response.OrderDetailResponseDto;
 import com.nhnacademy.twojopingfront.order_detail.service.OrderDetailService;
+import com.nhnacademy.twojopingfront.refund.adaptor.RefundAdaptor;
+import com.nhnacademy.twojopingfront.refund.dto.response.RefundResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewResponseDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewTotalResponseDto;
 import com.nhnacademy.twojopingfront.review.service.ReviewService;
@@ -40,6 +42,7 @@ public class MypageViewController {
 
     private final MemberAdaptor memberAdaptor;
     private final TierAdaptor tierAdaptor;
+    private final RefundAdaptor refundAdaptor;
     private final ReviewService reviewService;
     private final OrderDetailService orderDetailService;
     /**
@@ -97,6 +100,9 @@ public class MypageViewController {
     @Operation(summary = "반품 및 교환 내역 페이지", description = "사용자가 반품 및 교환 내역을 조회할 수 있는 페이지로 이동합니다.")
     @GetMapping("/return-exchange-history")
     public String returnExchangeHistoryView(Model model) {
+
+        List<RefundResponseDto> responseDtos = refundAdaptor.gerRefundHistory();
+        model.addAttribute("refundHistories", responseDtos);
 
         return "user/mypage/return-exchange-history";
     }
