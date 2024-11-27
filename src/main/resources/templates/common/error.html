@@ -2,46 +2,107 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>오류 발생</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>오류 페이지</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
     <style>
+        :root {
+            --error-primary-color: #ff4c4c;
+            --error-hover-color: #e84141;
+        }
+        * {
+            box-sizing: border-box;
+        }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f8d7da;
-            color: #721c24;
-            text-align: center;
-            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Pretendard Variable", "Noto Sans KR", "Apple SD Gothic Neo", "맑은 고딕", "Malgun Gothic", sans-serif;
+            background-color: #f9f9f9;
         }
+
         .error-container {
-            max-width: 500px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-            background-color: #f8d7da;
+            width: 500px;
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            display: flex;
+            justify-content: center; /* 왼쪽 정렬 */
+            flex-direction: column;
+            gap: 10px; /* 링크 사이 간격 */
         }
-        h1 {
-            font-size: 24px;
+
+        .error-container h1 {
+            font-size: 1.5rem;
+            color: var(--error-primary-color);
+            margin-bottom: 1rem;
         }
-        p {
-            font-size: 18px;
+
+        .error-container p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #333;
         }
+
         .error-details {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #721c24;
+            text-align: left;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+        }
+
+        .error-details p {
+            font-size: 0.9rem;
+            color: #555;
+            margin: 0.5rem 0;
+        }
+
+        .error-details strong {
+            font-weight: bold;
+            color: #333;
+        }
+        .error-logo-container{
+            height: 50px;
+            margin: 5px 0;
+        }
+        .withdraw-button{
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            background-color: var(--primary-color);
+            color: #fff;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            cursor: pointer;
+
+
         }
     </style>
 </head>
 <body>
-
 <div class="error-container">
-    <h1>오류가 발생했습니다</h1>
+    <div class = "error-logo-container">
+        <a class="navbar-brand" href="/">
+            <img th:src="@{/images/logo.png}" alt="logo" width="200"/>
+        </a>
+    </div>
     <p>요청을 처리하는 중 오류가 발생했습니다.</p>
     <div class="error-details">
-        <p><strong>오류 코드:</strong> <span th:text="${errorResponse.errorCode}"></span></p>
-        <p><strong>오류 메시지:</strong> <span th:text="${errorResponse.errorMessage}"></span></p>
+        <p><strong>오류 코드:</strong> <span th:text="${errorResponse.errorCode != null ? errorResponse.errorCode : 'N/A'}">N/A</span></p>
+        <p><strong>오류 메시지:</strong> <span th:text="${errorResponse.errorMessage != null ? errorResponse.errorMessage : '오류 메시지가 없습니다.'}">오류 메시지가 없습니다.</span></p>
     </div>
-</div>
+    <a class = "withdraw-button" href="/">홈페이지로 돌아가기</a>
 
+</div>
 </body>
 </html>
