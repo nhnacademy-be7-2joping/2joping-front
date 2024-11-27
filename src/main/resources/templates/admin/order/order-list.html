@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container my-5">
+<div class="container my-5" layout:fragment="content">
     <h1 class="text-center mb-4">결제 내역 관리</h1>
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
@@ -42,12 +42,13 @@
                 <!-- 드롭다운 박스 -->
                 <select class="form-select"
                         name="newStatus"
-                        onchange="updateOrderStatus(this, [[${order.orderId}]])">
+                        th:onchange="updateOrderStatus(this, [[${order.orderId}]])">
                     <option value="1" th:selected="${order.orderStateId == 1}">배송중</option>
                     <option value="2" th:selected="${order.orderStateId == 2}">완료</option>
-                    <option value="3" th:selected="${order.orderStateId == 3}">반품</option>
-                    <option value="4" th:selected="${order.orderStateId == 4}">주문 취소</option>
-                    <option value="6" th:selected="${order.orderStateId == 0}">대기</option>
+                    <option value="3" th:selected="${order.orderStateId == 3}">반품 대기</option>
+                    <option value="4" th:selected="${order.orderStateId == 4}">반품</option>
+                    <option value="5" th:selected="${order.orderStateId == 5}">주문 취소</option>
+                    <option value="0" th:selected="${order.orderStateId == 0}">대기</option>
                 </select>
             </td>
         </tr>
@@ -58,25 +59,29 @@
 
 <div layout:fragment="script">
     <script>
-        function updateOrderStatus(selectElement, paymentId) {
-            const newStatus = selectElement.value;
+        function updateOrderStatus(selectElement, orderId) {
+            const statusId = selectElement.value;
+
+            console.log('선택한 상태 값:', statusId); // 디버깅용
+            console.log('주문 ID:', orderId); // 디버깅용
 
             fetch('/admin/update-state', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ paymentId, newStatus })
+                body: JSON.stringify({ orderId, statusId })
             })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('결제 상태 업데이트 실패');
+                .then(response => response.json().catch(() => null)) // JSON 파싱 실패 시 null 반환
+                .then(data => {
+                    if (data) {
+                        console.log('서버 응답 데이터:', data);
+                    } else {
+                        console.warn('JSON 데이터가 아닌 응답을 받았습니다.');
                     }
-                    return response.json();
                 })
                 .catch(error => {
-                    console.error('에러 발생:', error);
-                    alert('결제 상태 업데이트 중 문제가 발생했습니다.');
+                    console.error('에러 발생:', error.message);
                 });
         }
     </script>
