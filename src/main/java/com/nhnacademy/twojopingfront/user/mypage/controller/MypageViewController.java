@@ -1,11 +1,14 @@
 package com.nhnacademy.twojopingfront.user.mypage.controller;
 
+import com.nhnacademy.twojopingfront.common.util.MemberUtils;
 import com.nhnacademy.twojopingfront.tier.adaptor.TierAdaptor;
 import com.nhnacademy.twojopingfront.tier.dto.response.MemberTierResponse;
 import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCouponResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
+import com.nhnacademy.twojopingfront.user.member.point.dto.GetMyPageSimplePointHistoriesResponse;
+import com.nhnacademy.twojopingfront.user.member.point.service.PointService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -31,6 +34,7 @@ public class MypageViewController {
 
     private final MemberAdaptor memberAdaptor;
     private final TierAdaptor tierAdaptor;
+    private final PointService pointService;
 
     /**
      * 마이페이지 메인 화면으로 이동합니다.
@@ -41,8 +45,14 @@ public class MypageViewController {
     @Operation(summary = "마이페이지 메인 화면", description = "사용자의 마이페이지 메인 화면으로 이동합니다.")
     @GetMapping
     public String mypageView(Model model) {
+        Long customerId = MemberUtils.getCustomerId();
+
         MemberTierResponse tierResponse = tierAdaptor.getMemberTier();
         model.addAttribute("tier", tierResponse);
+
+        GetMyPageSimplePointHistoriesResponse response = pointService.getMyPageSimplePointHistories(customerId);
+        model.addAttribute("memberPoint", response.memberPoint());
+        model.addAttribute("getSimplePointHistoriesResponses", response.getSimplePointHistoriesResponses());
 
         return "user/mypage/mypage";
     }
