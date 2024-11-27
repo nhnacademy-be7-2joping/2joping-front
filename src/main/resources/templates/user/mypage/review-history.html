@@ -59,20 +59,41 @@
     </table>
   </div>
 
-  <!-- 페이지네이션 -->
-  <div class="pagination-buttons">
-    <button th:if="${reviews.hasPrevious()}"
-            th:onclick="|window.location.href='?page=${reviews.number - 1}&size=${reviews.size}'|">
-      이전
-    </button>
-    <button th:if="${reviews.hasNext()}"
-            th:onclick="|window.location.href='?page=${reviews.number + 1}&size=${reviews.size}'|">
-      다음
-    </button>
-  </div>
-  <div class="pagination-info">
-    <p>현재 페이지: <span th:text="${reviews.number + 1}"></span> / <span th:text="${reviews.totalPages}"></span></p>
-  </div>
+  <!-- 페이징 네비게이션 -->
+  <nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination">
+      <!-- 이전 페이지 -->
+      <li class="page-item" th:classappend="${!reviews.hasPrevious()} ? 'disabled'">
+        <a class="page-link"
+           th:href="@{${currentPath}(page=${reviews.number - 1}, size=${reviews.size})}"
+           aria-label="Previous">
+          <span aria-hidden="true">&laquo; 이전</span>
+        </a>
+      </li>
+
+      <!-- 페이지 번호 -->
+      <li class="page-item" th:each="i : ${#numbers.sequence(0, reviews.totalPages - 1)}"
+          th:classappend="${i == reviews.number} ? 'active'">
+        <a class="page-link"
+           th:href="@{${currentPath}(page=${i}, size=${reviews.size})}"
+           th:text="${i + 1}">1</a>
+      </li>
+
+      <!-- 다음 페이지 -->
+      <li class="page-item" th:classappend="${!reviews.hasNext()} ? 'disabled'">
+        <a class="page-link"
+           th:href="@{${currentPath}(page=${reviews.number + 1}, size=${reviews.size})}"
+           aria-label="Next">
+          <span aria-hidden="true">다음 &raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+
+
+
 </div>
 
 <script>
