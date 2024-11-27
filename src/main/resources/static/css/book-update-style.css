@@ -87,7 +87,22 @@ h2 {
 .form-check {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
+}
+
+.file-input {
+    width: auto;
+    text-align: center;
+    margin-left: 140px;
+}
+
+.file-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-right: 20px;
 }
 
 .form-check-input {
@@ -95,8 +110,34 @@ h2 {
     height: 20px;
 }
 
-/* 선택된 기여자 목록 스타일 */
+.image-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 두 열로 나눔 */
+    gap: 20px; /* 열 간격 */
+}
 
+.image-upload-item {
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+.image-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+}
+
+.img-thumbnail {
+    width: 150px;
+    height: 200px; /* 고정된 높이 */
+    object-fit: cover; /* 이미지 비율 유지 */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 선택된 기여자 목록 스타일 */
 .contributor-container {
     display: flex;
     flex-wrap: wrap;
@@ -142,4 +183,26 @@ h2 {
 
 .selected-contributor-item button:hover {
     background-color: #ff4b4b;
+}
+
+.form-check-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1rem; /* 그룹 간의 간격 */
+}
+
+.form-check-group label {
+    margin-right: 15px; /* 그룹 라벨 오른쪽 여백 */
+    min-width: 120px; /* 라벨 최소 너비 */
+}
+
+.form-check-inline {
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* 버튼 그룹 간 간격 */
+}
+
+.form-check-label {
+    margin-left: 5px; /* 라디오 버튼과 텍스트 간 간격 */
 }

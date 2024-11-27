@@ -4,7 +4,6 @@ import com.nhnacademy.twojopingfront.cart.dto.CartDeleteDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartRequestDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartResponseDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartUpdateDto;
-import com.nhnacademy.twojopingfront.cart.entity.Cart;
 import com.nhnacademy.twojopingfront.common.interceptor.AccessTokenInterceptor;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;

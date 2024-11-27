@@ -13,7 +13,4 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface OrderClient {
     @PostMapping("/temp")
     ResponseEntity<OrderTempResponse> postOrderOnRedis(@RequestBody OrderRequest orderRequest);
-
-    @PostMapping
-    ResponseEntity<?> postOrder(@RequestBody PaymentResponse paymentResponse);
 }

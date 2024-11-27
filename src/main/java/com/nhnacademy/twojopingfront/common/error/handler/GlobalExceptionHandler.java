@@ -57,8 +57,6 @@ public class GlobalExceptionHandler {
             }
         }
 
-        redirectAttributes.addFlashAttribute("errorCode", "400");
-        redirectAttributes.addFlashAttribute("errorMessage", errors.toString());
         redirectAttributes.addFlashAttribute("errors", errors);
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -81,12 +79,15 @@ public class GlobalExceptionHandler {
 
         redirectAttributes.addFlashAttribute("errorCode", ex.getErrorResponse().errorCode());
         redirectAttributes.addFlashAttribute("errorMessage", ex.getErrorResponse().errorMessage());
-
+        ex.getErrorResponse().data();
         ClientErrorMessage clientError = new ClientErrorMessage(
                 ex.getErrorResponse().errorCode(),
                 ex.getErrorResponse().errorMessage()
         );
-
+        Map<String, Object> inputData = (Map<String, Object>) ex.getErrorResponse().data();
+        if(inputData != null){
+            inputData.forEach(redirectAttributes::addFlashAttribute);
+        }
         model.addAttribute("errorResponse", clientError);
 
         if ("REDIRECT".equals(ex.getErrorResponse().redirectType().toString())) {
@@ -101,5 +102,13 @@ public class GlobalExceptionHandler {
         } else {
             return "common/error";
         }
+    }
+    @ExceptionHandler(Exception.class)
+    public String handleException(Exception ex, RedirectAttributes redirectAttributes, Model model) {
+        ClientErrorMessage clientError = new ClientErrorMessage(
+                "400", "알 수 없는 에러가 발생했습니다."
+        );
+        model.addAttribute("errorResponse", clientError);
+        return "common/error";
     }
 }
