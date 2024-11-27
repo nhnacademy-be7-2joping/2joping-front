@@ -1,0 +1,98 @@
+/* Reset 기본 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 전체 컨테이너 스타일 */
+.mypage-container {
+    padding: 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* 제목 스타일 */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 테이블 컨테이너 */
+.mypage-order-table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* 테이블 헤더 스타일 */
+.mypage-order-table thead th {
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 12px;
+    text-align: center;
+    font-size: 16px;
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+/* 테이블 셀 스타일 */
+.mypage-order-table tbody td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 넘칠 경우 ... 표시 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+/* 도서 제목만 줄바꿈 허용 */
+.mypage-order-table tbody td:nth-child(3) {
+    white-space: normal;
+    word-break: break-word;
+    text-align: left;
+}
+
+/* 행 호버 스타일 */
+.mypage-order-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* 버튼 스타일 */
+.review-button {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    background-color: #007bff;
+    transition: background-color 0.3s ease;
+}
+
+.review-button:hover {
+    background-color: #0056b3;
+}
+
+/* 빈 상태 메시지 */
+.mypage-order-table tbody tr td[colspan] {
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+}
+
+/* 주문 상태 및 반품 버튼 스타일 */
+.mypage-order-table tbody td:last-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 페이지 전체 레이아웃 */
+body {
+    padding: 20px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: #f9f9f9;
+}

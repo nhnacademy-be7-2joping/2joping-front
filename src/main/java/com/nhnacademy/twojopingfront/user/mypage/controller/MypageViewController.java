@@ -56,12 +56,14 @@ public class MypageViewController {
      */
     @Operation(summary = "마이페이지 메인 화면", description = "사용자의 마이페이지 메인 화면으로 이동합니다.")
     @GetMapping
-    public String mypageView(Model model) {
+    public String mypageView(@RequestParam(defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "10") int size,
+            Model model) {
         MemberTierResponse tierResponse = tierAdaptor.getMemberTier();
         model.addAttribute("tier", tierResponse);
 
         Long customerId = MemberUtils.getCustomerId();
-        List<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(customerId.toString());
+        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size,customerId.toString());
         model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/mypage";
     }
@@ -89,8 +91,13 @@ public class MypageViewController {
      */
     @Operation(summary = "주문 목록 페이지", description = "사용자가 자신의 주문 내역을 조회할 수 있는 페이지로 이동합니다.")
     @GetMapping("/order-list")
-    public String orderListView(Model model) {
+    public String orderListView(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "10") int size,
+            Model model) {
 
+        Long customerId = MemberUtils.getCustomerId();
+        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size,customerId.toString());
+        model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/order-list";
     }
 
