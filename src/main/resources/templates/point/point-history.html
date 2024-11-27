@@ -1,0 +1,80 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="ko">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>포인트 상세 내역</title>-->
+<!--    <link rel="stylesheet" th:href="@{/css/point-detail-style.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+<!--    <h1>포인트 상세 내역</h1>-->
+<!--    <div class="summary">-->
+<!--        <p>총 포인트: <span th:text="${points.memberPoint}"></span></p>-->
+<!--    </div>-->
+<!--    <table>-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th>이름</th>-->
+<!--            <th>누적 값</th>-->
+<!--            <th>타입</th>-->
+<!--            <th>등록 날짜</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:if="${points.getDetailPointHistories == null || #lists.isEmpty(points.getDetailPointHistories)}">-->
+<!--            <td colspan="4">내역이 없습니다.</td>-->
+<!--        </tr>-->
+<!--        &lt;!&ndash; 포인트 내역 리스트를 반복하여 표시 &ndash;&gt;-->
+<!--        <li th:each="history : ${getSimplePointHistoriesResponses}">-->
+<!--            <p>-->
+<!--                <span>포인트 종류: </span>-->
+<!--                <span th:text="${history.name}"></span> &lt;!&ndash; 포인트 종류 &ndash;&gt;-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                <span>포인트 값: </span>-->
+<!--                <span th:text="${history.accVal}"></span> &lt;!&ndash; 포인트 값 &ndash;&gt;-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                <span>등록 날짜: </span>-->
+<!--                <span th:text="${history.registerDate != null ? #dates.format(history.registerDate, 'yyyy-MM-dd HH:mm:ss') : 'N/A'}"></span> &lt;!&ndash; 등록 날짜 &ndash;&gt;-->
+<!--            </p>-->
+<!--        </li>-->
+
+<!--        </tbody>-->
+<!--    </table>-->
+<!--    <a href="/mypage" class="back-button">돌아가기</a>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포인트 상세 내역</title>
+    <link rel="stylesheet" th:href="@{/css/point-detail-style.css}">
+</head>
+<body>
+<div class="container">
+    <h1>포인트 상세 내역</h1>
+    <div class="summary">
+        <p>총 포인트: <span th:text="${memberPoint}"></span></p>
+    </div>
+
+    <div class="point-history-container">
+        <ul>
+            <!-- 포인트 내역 리스트를 반복하여 표시 -->
+            <li th:each="history : ${getDetailPointHistoriesResponses}">
+                <p th:text="'포인트 종류: ' + ${history.name}"></p> <!-- 포인트 종류 -->
+                <p th:text="'포인트 값: ' + ${history.accVal}"></p> <!-- 포인트 값 -->
+                <p th:text="'포인트 유형: ' + ${history.type}"></p> <!-- 포인트 유형 -->
+                <p th:text="'등록 날짜: ' + (${history.registerDate != null ? history.registerDate.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd HH:mm:ss')) : 'N/A'})"></p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+</body>
+</html>
