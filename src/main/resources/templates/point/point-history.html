@@ -14,18 +14,16 @@
     </div>
 
     <div class="point-history-container">
-        <ul>
+        <ul class="point-history-list">
             <!-- 포인트 내역 리스트를 반복하여 표시 -->
-            <li th:each="history : ${getDetailPointHistoriesResponses}">
-                <p th:text="'포인트 종류: ' + ${history.name}"></p> <!-- 포인트 종류 -->
-                <p th:text="'포인트 값: ' + ${history.accVal}"></p> <!-- 포인트 값 -->
-                <p th:text="'포인트 유형: ' + ${history.type}"></p> <!-- 포인트 유형 -->
-                <p th:text="'등록 날짜: ' + (${history.registerDate != null ? history.registerDate.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd HH:mm:ss')) : 'N/A'})"></p>
+            <li th:each="history : ${getDetailPointHistoriesResponses}" class="point-history-item">
+                <p th:text="'포인트 종류: ' + ${history.name}" class="point-type"></p> <!-- 포인트 종류 -->
+                <p th:text="'포인트 값: ' + ${history.accVal}" class="point-value"></p> <!-- 포인트 값 -->
+                <p th:text="'포인트 유형: ' + ${history.type}" class="point-category"></p> <!-- 포인트 유형 -->
+                <p th:text="'등록 날짜: ' + (${history.registerDate != null ? history.registerDate.format(T(java.time.format.DateTimeFormatter).ofPattern('yyyy-MM-dd HH:mm:ss')) : 'N/A'})" class="point-date"></p>
             </li>
         </ul>
     </div>
 </div>
-
-
 </body>
 </html>
