@@ -1,6 +1,7 @@
 package com.nhnacademy.twojopingfront.bookset.category.controller;
 
 import com.nhnacademy.twojopingfront.bookset.category.dto.request.CategoryRequestDto;
+import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryIsActiveResponseDto;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.category.service.CategoryService;
 import com.nhnacademy.twojopingfront.common.error.exception.backServer.CustomApiException;
@@ -27,9 +28,9 @@ public class CategoryController {
      * @return 카테고리 목록 페이지
      */
     @GetMapping
-    public String getAllCategoriesPage(@PageableDefault(size = 10, sort = "categoryId") Pageable pageable, Model model) {
+    public String getAllCategoriesPage(@PageableDefault(size = 20, sort = "categoryId") Pageable pageable, Model model) {
         try {
-            Page<CategoryResponseDto> categories = categoryService.getAllCategoriesPage(pageable.getPageNumber(), pageable.getPageSize());
+            Page<CategoryIsActiveResponseDto> categories = categoryService.getAllCategoriesPage(pageable.getPageNumber(), pageable.getPageSize());
             model.addAttribute("categories", categories.getContent());
             model.addAttribute("page", categories);
         } catch (CustomApiException ex) {
@@ -118,6 +119,23 @@ public class CategoryController {
         try {
             categoryService.deactivateCategory(categoryId);
             redirectAttributes.addFlashAttribute("message", "카테고리가 성공적으로 비활성화 되었습니다.");
+        } catch (CustomApiException ex) {
+            redirectAttributes.addFlashAttribute("errorMessage", ex.getErrorResponse().errorMessage());
+        }
+        return "redirect:/admin/categories";
+    }
+
+    /**
+     * 카테고리 활성화 처리
+     *
+     * @param categoryId 활성화할 카테고리 ID
+     * @return 카테고리 목록 페이지로 리다이렉트
+     */
+    @PostMapping("/{categoryId}/activate")
+    public String activateCategory(@PathVariable Long categoryId, RedirectAttributes redirectAttributes) {
+        try {
+            categoryService.activateCategory(categoryId);
+            redirectAttributes.addFlashAttribute("message", "카테고리가 성공적으로 활성화 되었습니다.");
         } catch (CustomApiException ex) {
             redirectAttributes.addFlashAttribute("errorMessage", ex.getErrorResponse().errorMessage());
         }

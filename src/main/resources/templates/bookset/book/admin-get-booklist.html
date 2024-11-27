@@ -11,6 +11,15 @@
 <div class="container" layout:fragment="content">
     <h1 class="mt-5">도서 목록</h1>
     <a href="/admin/books/register" class="btn btn-primary mb-3">직접 등록</a>
+
+    <!-- 에러 메시지 표시 -->
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <!-- 성공 메시지 표시 -->
+    <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+
     <table class="table table-striped mt-4">
         <thead>
         <tr>
@@ -44,10 +53,13 @@
             <!-- 활성화 여부 -->
             <td th:text="${book.isActive ? '활성화' : '비활성화'}">활성화 여부</td>
             <td>
-                <button>수정</button>
+                <a th:href="@{/admin/books/modify/{bookId}(bookId=${book.bookId})}" class="btn btn-primary">수정</a>
             </td>
             <td>
-                <button>삭제</button>
+                <form th:action="@{/admin/books/{book-id}/deactivate(book-id=${book.bookId})}" method="post">
+                    <input type="hidden" name="_method" value="put">
+                    <button type="submit" class="btn btn-danger btn-sm">삭제</button>
+                </form>
             </td>
         </tr>
         </tbody>

@@ -2,6 +2,7 @@ package com.nhnacademy.twojopingfront.bookset.category.service;
 
 import com.nhnacademy.twojopingfront.bookset.category.client.CategoryClient;
 import com.nhnacademy.twojopingfront.bookset.category.dto.request.CategoryRequestDto;
+import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryIsActiveResponseDto;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
 import com.nhnacademy.twojopingfront.common.error.enums.RedirectType;
@@ -51,7 +52,7 @@ public class CategoryService {
      * @param size 페이지 크기
      * @return 페이징된 카테고리 데이터
      */
-    public Page<CategoryResponseDto> getAllCategoriesPage(int page, int size) {
+    public Page<CategoryIsActiveResponseDto> getAllCategoriesPage(int page, int size) {
         try {
             return categoryClient.getAllCategoriesPage(page, size).getBody();
         } catch (Exception e) {
@@ -97,6 +98,19 @@ public class CategoryService {
             categoryClient.deactivateCategory(categoryId);
         } catch (Exception e) {
             throw categoriesCustomApiException("CATEGORY_DEACTIVATE_ERROR", "하위 카테고리가 존재하여, 해당 카테고리를 비활성화할 수 없습니다.");
+        }
+    }
+
+    /**
+     * 카테고리 활성화
+     *
+     * @param categoryId 활성화할 카테고리 ID
+     */
+    public void activateCategory(Long categoryId) {
+        try {
+            categoryClient.activateCategory(categoryId);
+        } catch (Exception e) {
+            throw categoriesCustomApiException("CATEGORY_ACTIVATE_ERROR", "해당 카테고리를 활성화할 수 없습니다.");
         }
     }
 

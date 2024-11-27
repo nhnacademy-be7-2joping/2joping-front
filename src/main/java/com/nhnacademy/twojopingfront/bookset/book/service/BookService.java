@@ -8,13 +8,16 @@ import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookCreateRequestD
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUploadRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.request.ImageUrlRequestDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookAdminSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.*;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookCreateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookSimpleResponseDto;
+import com.nhnacademy.twojopingfront.bookset.book.dto.response.BookUpdateResponseDto;
 import com.nhnacademy.twojopingfront.bookset.book.exception.FeignClientServerFailConnectionException;
 import com.nhnacademy.twojopingfront.bookset.category.dto.response.CategoryResponseDto;
 import com.nhnacademy.twojopingfront.bookset.contributor.dto.response.ContributorNameRoleResponseDto;
 import com.nhnacademy.twojopingfront.bookset.publisher.dto.response.PublisherResponseDto;
+import com.nhnacademy.twojopingfront.bookset.tag.client.TagClient;
 import com.nhnacademy.twojopingfront.bookset.tag.dto.TagResponseDto;
 import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
 import com.nhnacademy.twojopingfront.common.error.enums.RedirectType;
@@ -25,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RequestCallback;
@@ -43,6 +47,7 @@ import java.util.UUID;
 public class BookService {
 
     private final BookClient bookClient;
+    private final TagClient tagClient;
     private final RestTemplate restTemplate = new RestTemplate();
 
     /**
@@ -112,8 +117,8 @@ public class BookService {
      * 태그 데이터를 가져오는 메서드
      * @return 모든 태그 리스트
      */
-    public List<TagResponseDto> getAllTags() {
-        return bookClient.getAllTags();
+    public ResponseEntity<List<TagResponseDto>> getAllTags() {
+        return tagClient.getAllTags();
     }
 
     /**
@@ -197,5 +202,35 @@ public class BookService {
                     new ErrorResponseDto(404,"404","해당 도서를 찾을 수 없습니다.", RedirectType.REDIRECT,"/books/search", null));
         }
     }
-}
+    /**
+     * 도서를 수정을 위해 도서 정보를 가져오는 메서드
+     *
+     * @param bookId
+     * @return 수정 예정 도서에 대한 응답 정보
+     */
+    public BookUpdateResponseDto getUpdateBookById(Long bookId) {
+        return bookClient.getUpdateBookById(bookId);
+    }
 
+    /**
+     * 특정 도서를 비활성화하는 메서드
+     * @param bookId 비활성화할 도서 ID
+     */
+    public void deactivateBook(Long bookId) {
+        bookClient.deactivateBook(bookId);
+    }
+
+    /**
+     * 도서를 수정하는 메서드
+     *
+     * @param bookUpdateHtmlRequestDto
+     * @param imageUploadRequestDto
+     * @return 수정된 도서에 대한 응답 정보
+     */
+    public BookUpdateResponseDto updateBook(Long bookId, BookUpdateHtmlRequestDto bookUpdateHtmlRequestDto, ImageUploadRequestDto imageUploadRequestDto) {
+        String thumbnailImageUrl = saveImage(imageUploadRequestDto.thumbnailImage(), "thumbnail");
+        String detailImageUrl = saveImage(imageUploadRequestDto.detailImage(), "detail");
+        ImageUrlRequestDto imageUrlRequestDto = new ImageUrlRequestDto(thumbnailImageUrl, detailImageUrl);
+        return bookClient.updateBook(bookId, new BookUpdateRequestDto(bookUpdateHtmlRequestDto, imageUrlRequestDto));
+    }
+}

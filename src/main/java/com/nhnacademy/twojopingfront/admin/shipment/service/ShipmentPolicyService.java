@@ -1,22 +1,45 @@
 package com.nhnacademy.twojopingfront.admin.shipment.service;
 
-
+import com.nhnacademy.twojopingfront.admin.shipment.client.ShipmentPolicyClient;
 import com.nhnacademy.twojopingfront.admin.shipment.dto.request.ShipmentPolicyRequestDto;
 import com.nhnacademy.twojopingfront.admin.shipment.dto.response.ShipmentPolicyResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface ShipmentPolicyService {
+@Service
+@RequiredArgsConstructor
+public class ShipmentPolicyService {
 
-    List<ShipmentPolicyResponseDto> getAllShipmentPolicies();
+    private final ShipmentPolicyClient shipmentPolicyClient;
 
-    ShipmentPolicyResponseDto getShipmentPolicy(Long policyId);
+    public Page<ShipmentPolicyResponseDto> getAllShipmentPolicies(int page, int size) {
+            return shipmentPolicyClient.getAllShipmentPolicies(page, size);
+    }
 
-    void createShipmentPolicy(ShipmentPolicyRequestDto requestDto);
+    public List<ShipmentPolicyResponseDto> getAllIsActiveShipmentPolicies() {
+        return shipmentPolicyClient.getAllIsActiveShipmentPolicies();
+    }
 
-    void updateShipmentPolicy(Long policyId, ShipmentPolicyRequestDto requestDto);
+    public ShipmentPolicyResponseDto getShipmentPolicy(Long policyId) {
+        return shipmentPolicyClient.getShipmentPolicy(policyId);
+    }
 
-    void deactivateShipmentPolicy(Long policyId);
+    public void createShipmentPolicy(ShipmentPolicyRequestDto requestDto) {
+        shipmentPolicyClient.createShipmentPolicy(requestDto);
+    }
 
-    void activateShipmentPolicy(Long policyId);
+    public void updateShipmentPolicy(Long policyId, ShipmentPolicyRequestDto requestDto) {
+        shipmentPolicyClient.updateShipmentPolicy(policyId, requestDto);
+    }
+
+    public void deactivateShipmentPolicy(Long policyId) {
+        shipmentPolicyClient.deactivateShipmentPolicy(policyId);
+    }
+
+    public void activateShipmentPolicy(Long policyId) {
+        shipmentPolicyClient.activateShipmentPolicy(policyId);
+    }
 }
