@@ -11,10 +11,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,13 +34,14 @@ public class LoginController {
     /**
      * 로그인 페이지
      *
-     * @param accessToken 사용자의 access token 쿠키값
+     * @param message alert 위한 메시지 유형
      * @param model       로그인 상태에 따른 페이지 변경용
      * @return 로그인 페이지 view 이름
      */
     @GetMapping("/login")
-    public String login(@CookieValue(value = "accessToken",
-            defaultValue = "") String accessToken, Model model) {
+    public String login(@RequestParam(value = "msg", required = false) String message, Model model) {
+        model.addAttribute("message", message);
+
         return "login/login";
     }
 

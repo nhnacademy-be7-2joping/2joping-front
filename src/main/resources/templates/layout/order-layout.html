@@ -80,13 +80,13 @@
 
                     <span class="user-name"
                           th:text="${isLogin ? memberNickname + ' 님' : '홍길동 님'}">
-          </span>
-
+                    </span>
 
                     <!-- 선택 창 박스 -->
-                    <div class="dropdown-menu hidden">
+                    <div class="profile-dropdown-menu hidden">
                         <a href="/mypage">마이페이지</a>
                         <a href="/settings">설정</a>
+                        <a href="/mypage/my-like">내 좋아요</a>
                         <a href="/logout">로그아웃</a>
                     </div>
                 </div>
