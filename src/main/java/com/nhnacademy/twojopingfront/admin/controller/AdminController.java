@@ -35,10 +35,9 @@ public class AdminController {
         return "admin/order/order-list";
     }
 
-    @PostMapping("/order-list")
+    @PostMapping("/update-state")
     public String updateOrderStatus(@RequestBody OrderStateRequestDto orderStateRequestDto) {
 
-        //TODO api 삽입
         orderClient.updateOrderState(orderStateRequestDto);
 
         return "admin/order/order-list";

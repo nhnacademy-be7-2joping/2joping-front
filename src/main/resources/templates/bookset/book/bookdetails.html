@@ -62,10 +62,10 @@
 
         <!-- 평점, 지은이, 출판사 -->
         <div class="book-detail-rate-container">
-          <p>평점 : </p>
-          <p th:text="${#books != null and #books.containsProperty('rating') and books.rating != null ? books.rating : '정보 없음'}">
-            0
-          </p>
+<!--          <p>평점 : </p>-->
+<!--          <p th:text="${#books != null and #books.containsProperty('rating') and books.rating != null ? books.rating : '정보 없음'}">-->
+<!--            0-->
+<!--          </p>-->
 
           <span th:if="${!#lists.isEmpty(books.contributorList)}">
                             <span th:text="${books.contributorList[0].contributorName} + ' 저'"></span>
@@ -193,9 +193,19 @@
       <!-- 리뷰 목록 컨테이너 -->
       <div th:each="review, rowStat : ${books.reviewList}" class="review-card"
            th:onclick="|window.location.href='@{/reviews/{reviewId}(reviewId=${review.reviewId})}'|">
+        <!-- 리뷰 제목 -->
         <p class="review-title" th:text="${review.title}">리뷰 제목</p>
-        <div>
-          <p class="rating-label"><strong>평점:</strong></p>
+        <!-- 리뷰 이미지 -->
+        <div class="review-image-container">
+          <!-- 이미지가 있을 때만 <img> 태그를 렌더링 -->
+          <img th:if="${review.reviewImage != null}"
+               th:src="${review.reviewImage}"
+               alt="리뷰 이미지"
+               class="review-image" />
+        </div>
+        <!-- 리뷰 평점 -->
+        <div class="review-rating-container">
+<!--          <p class="rating-label"><strong>평점:</strong></p>-->
           <div class="stars" th:attr="data-rating=${review.ratingValue}">
             <span class="star">★</span>
             <span class="star">★</span>
@@ -212,6 +222,8 @@
       <p class="no-review-message">리뷰가 없습니다.</p>
     </div>
   </div>
+
+
 
 
 

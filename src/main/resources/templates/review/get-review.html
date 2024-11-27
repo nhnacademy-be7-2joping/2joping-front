@@ -51,7 +51,7 @@
     </div>
 
     <!-- 돌아가기 버튼 -->
-    <a th:href="@{/mypage}" class="back-button">이전으로 돌아가기</a>
+    <a th:href="@{/books/{bookId}(bookId=${review.bookId})}" class="back-button">이전으로 돌아가기</a>
 </div>
 </body>
 </html>

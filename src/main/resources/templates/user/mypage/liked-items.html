@@ -3,10 +3,128 @@
       layout:decorate="~{layout/menu-footer-layout}">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>좋아요 목록</title>
+  <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
+  <style>
+    .liked-items-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: flex-start;
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .liked-item-card {
+      width: 270px;
+      height: 300px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      padding: 10px;
+    }
+
+    .liked-item-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+
+
+    .liked-item-card-title {
+      width: 270px;
+      padding: 0 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      white-space: nowrap; /* 줄바꿈 방지 */
+      overflow: hidden; /* 넘치는 텍스트 숨기기 */
+      text-overflow: ellipsis; /* 넘치는 텍스트를 '...'로 표시 */
+      margin: 10px 0;
+      padding: 0 10px;
+      cursor: pointer; /* 마우스를 올릴 때 커서를 변경 */
+    }
+
+    /* 기본 브라우저의 툴팁을 활용 */
+    .liked-item-card-title:hover {
+      color: var(--primary-hover-color); /* 마우스 오버 시 색상 변경 */
+    }
+
+    .liked-item-card button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background-color: var(--primary-color);
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .liked-item-card button:hover {
+      background-color: var(--primary-hover-color);
+    }
+    .book-image-like {
+      width: 270px;
+      height: 220px;
+      background-color: #f8f8f8; /* 비어 있는 부분의 배경색 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* 이미지가 삐져나오지 않도록 설정 */
+    }
+
+    .book-image-like img {
+      max-width: 100%; /* 이미지가 컨테이너를 넘지 않도록 설정 */
+      max-height: 100%; /* 높이도 컨테이너 안에 맞춤 */
+      object-fit: contain; /* 비율 유지하며 컨테이너 내부에 맞춤 */
+    }
+    </style>
 </head>
 <body>
-<div class="container" layout:fragment="content">
+<div class="container" style = "width:100%" layout:fragment="content">
+
+
+
+
+
+  <div th:if="${#lists.isEmpty(memberLikes)}" class="no-likes-message">
+    좋아요를 누른 항목이 없습니다. 😢
+  </div>
+    <div class="liked-items-container">
+        <div th:each="like : ${memberLikes}" class="liked-item-card">
+          <a th:href="@{/books/{bookId}(bookId=${like.bookId})}">
+            <input type="hidden" th:value="${like.likeId}">
+            <input type="hidden" th:value="${like.bookId}">
+            <div class="book-image-like">
+
+                  <img th:src="${like.url}" alt="Book Image" >
+            </div>
+        <p class="liked-item-card-title"
+           th:text="${like.title}"
+           th:attr="title=${like.title}"></p>
+          </a>
+      </div>
+      </a>
+
+    </div>
+
+
+
+
+
+
 
 </div>
 

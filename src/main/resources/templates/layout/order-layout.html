@@ -80,13 +80,12 @@
 
                     <span class="user-name"
                           th:text="${isLogin ? memberNickname + ' 님' : '홍길동 님'}">
-          </span>
-
+                    </span>
 
                     <!-- 선택 창 박스 -->
-                    <div class="dropdown-menu hidden">
+                    <div class="profile-dropdown-menu hidden">
                         <a href="/mypage">마이페이지</a>
-                        <a href="/settings">설정</a>
+                        <a href="/mypage/my-like">내 좋아요</a>
                         <a href="/logout">로그아웃</a>
                     </div>
                 </div>
@@ -129,7 +128,18 @@
 <script th:src="@{/js/mypage-script.js}"></script>
 <script th:src="@{/js/profile-drop-down.js}"></script>
 <script th:src="@{/js/error-alert.js}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropdownMenus = document.querySelectorAll('.profile-dropdown-menu');
 
+        dropdownMenus.forEach(menu => {
+            menu.addEventListener('click', function (e) {
+                e.preventDefault(); // 기본 동작 막기
+                e.stopPropagation(); // 이벤트 전파 방지
+            });
+        });
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossOrigin="anonymous"></script>

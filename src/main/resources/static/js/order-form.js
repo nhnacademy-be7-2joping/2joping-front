@@ -1,3 +1,9 @@
+/* 주문 상품이 없는 경우 메인 페이지로 리다이렉트 처리 */
+if (document.querySelectorAll('.product-container .card').length === 0) {
+    alert('주문 상품이 없습니다.');
+    window.location.href = '/';
+}
+
 /* 현재 날짜에서 7일 이후까지만 선택 가능 */
 function formatDate(date) {
     const year = date.getFullYear();

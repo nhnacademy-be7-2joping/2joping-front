@@ -29,6 +29,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author 이승준
+ * @version 1.0
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -56,12 +60,53 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 throw new InvalidTokenException("Invalid token");
             }
             authenticateUser(dto, accessToken);
+        } catch (InvalidTokenException ie) {
+            dropTokenCookies(request, response);
+            response.sendRedirect("/login?msg=invalid");
         } catch (FeignException fe) {
             log.info(fe.getMessage());
             handleFeignException(response, fe, refreshToken, accessToken);
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    /**
+     * 쿠키에서 중 access token과 refresh token 쿠키를 제거합니다.
+     *
+     * @param request
+     * @param response
+     */
+    private void dropTokenCookies(HttpServletRequest request, HttpServletResponse response) {
+        final String ACCESS_TOKEN_NAME = "accessToken";
+        final String REFRESH_TOKEN_NAME = "refreshToken";
+        String[] tokenCookieNames = {ACCESS_TOKEN_NAME, REFRESH_TOKEN_NAME};
+
+        // 요청의 쿠키를 모두 가져옴
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            Arrays.stream(tokenCookieNames).forEach(c -> removeCookieIfExists(cookies, c, response));
+        }
+    }
+
+    /**
+     * 특정 이름의 쿠키가 존재하면 제거합니다.
+     *
+     * @param cookies    HttpServletRequest에서 가져온 쿠키 배열
+     * @param cookieName 제거할 쿠키의 이름
+     * @param response   HttpServletResponse 객체
+     */
+    private void removeCookieIfExists(Cookie[] cookies, String cookieName, HttpServletResponse response) {
+        for (Cookie cookie : cookies) {
+            if (cookieName.equals(cookie.getName())) {
+                Cookie expiredCookie = new Cookie(cookieName, null);
+                expiredCookie.setPath("/"); // 동일한 경로 설정
+                expiredCookie.setHttpOnly(true);
+                expiredCookie.setMaxAge(0); // 쿠키 만료
+                response.addCookie(expiredCookie);
+                break;
+            }
+        }
     }
 
     private Map<String, String> getTokensFromCookies(HttpServletRequest request) {
@@ -93,7 +138,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             List<String> responseCookies = jwtResponse.getHeaders().get(HttpHeaders.SET_COOKIE);
 
             if (responseCookies == null) {
-                throw new InvalidTokenException("Failed to refresh access token. No cookies returned.");
+                throw new InvalidTokenException("토큰이 만료되었습니다. 다시 로그인해주세요.");
             }
 
             for (String cookieValue : responseCookies) {

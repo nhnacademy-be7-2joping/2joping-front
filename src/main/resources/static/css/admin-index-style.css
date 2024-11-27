@@ -51,6 +51,7 @@
     color: var(--admin-primary-hover-color);
 }
 
+
 /* 두 번째 네비게이션 바 스타일 (왼쪽에 고정) */
 .sub-navbar {
     position: fixed; /* 화면에 고정 */
