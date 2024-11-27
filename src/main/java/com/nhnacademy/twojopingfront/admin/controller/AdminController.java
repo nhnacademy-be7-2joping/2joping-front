@@ -1,6 +1,6 @@
 package com.nhnacademy.twojopingfront.admin.controller;
 
-import com.nhnacademy.twojopingfront.admin.client.OrderClient;
+import com.nhnacademy.twojopingfront.admin.client.AdminOrderClient;
 import com.nhnacademy.twojopingfront.order.dto.request.OrderStateRequestDto;
 import com.nhnacademy.twojopingfront.order.dto.response.OrderListResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final OrderClient orderClient;
+    private final AdminOrderClient orderClient;
 
     @GetMapping
     public String adminHome() {

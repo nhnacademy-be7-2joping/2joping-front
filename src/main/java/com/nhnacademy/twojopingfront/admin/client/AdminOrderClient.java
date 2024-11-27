@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
-@FeignClient(name = "orderClient", url = "http://localhost:8082/api/v1/order", configuration = AccessTokenInterceptor.class)
-public interface OrderClient {
+@FeignClient(name = "adminOrderClient", url = "http://localhost:8082/api/v1/order", configuration = AccessTokenInterceptor.class)
+public interface AdminOrderClient {
 
     @GetMapping("/order-list")
     ResponseEntity<List<OrderListResponseDto>> getOrders();
