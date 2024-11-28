@@ -7,8 +7,8 @@
     <link rel="stylesheet" th:href="@{/css/mypage-style.css}">
     <link rel="stylesheet" th:href="@{/css/mypage-orderdetail-style.css}">
 </head>
+
 <body>
-<!-- 메인 컨텐츠 영역 -->
 <div class="mypage-container" layout:fragment="content">
     <div class="order-delivery-container1">
         <div class="mypage-title1">
@@ -26,13 +26,11 @@
                     <th>수량</th>
                     <th>구매 가격</th>
                     <th>반품/교환</th>
-
                 </tr>
                 </thead>
                 <tbody>
-                <!-- 주문 내역이 있는 경우 -->
                 <tr th:each="orderDetail : ${orderDetails}">
-                    <td th:text="${#temporals.format(orderDetail.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td> <!-- 날짜 포맷 -->
+                    <td th:text="${#temporals.format(orderDetail.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                     <td th:text="${orderDetail.orderDetailId}"></td>
                     <td th:text="${orderDetail.bookTitle}"></td>
                     <td th:text="${orderDetail.orderStateDescription()}"></td>
@@ -44,17 +42,27 @@
                         </div>
                     </td>
                 </tr>
-                <!-- 주문 내역이 없는 경우 -->
                 <tr th:if="${#lists.isEmpty(orderDetails)}">
-                    <td colspan="6">주문 내역이 없습니다.</td>
+                    <td colspan="7">주문 내역이 없습니다.</td>
                 </tr>
                 </tbody>
             </table>
         </div>
+
+        <nav class="pagination-container">
+            <ul class="pagination">
+                <li th:classappend="${!orderDetails.hasPrevious()} ? 'disabled'">
+                    <a th:href="@{'?page=' + (${orderDetails.number - 1}) + '&size=' + ${orderDetails.size}}" aria-label="Previous">&laquo; 이전</a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(0, orderDetails.totalPages - 1)}" th:classappend="${i == orderDetails.number} ? 'active'">
+                    <a th:href="@{'?page=' + ${i} + '&size=' + ${orderDetails.size}}" th:text="${i + 1}"></a>
+                </li>
+                <li th:classappend="${!orderDetails.hasNext()} ? 'disabled'">
+                    <a th:href="@{'?page=' + (${orderDetails.number + 1}) + '&size=' + ${orderDetails.size}}" aria-label="Next">다음 &raquo;</a>
+                </li>
+            </ul>
+        </nav>
     </div>
-
-
 </div>
-
 </body>
 </html>
