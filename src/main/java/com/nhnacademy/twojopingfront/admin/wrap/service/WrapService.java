@@ -47,9 +47,47 @@ public class WrapService {
         return wrapClient.findAllByIsActiveTrue();
     }
 
-    public WrapResponseDto updateWrap(Long wrapId, WrapModifyRequestDto wrapRequestDto) {
-        return wrapClient.updateWrap(wrapId, wrapRequestDto).getBody();
+    public WrapUpdateResponseDto updateWrap(Long wrapId,
+                                      WrapUpdateDetailRequestDto wrapUpdateDetailRequestDto,
+                                      WrapImageRequestDto wrapImageRequestDto,
+                                      boolean deleteImage) {
+        String wrapImageUrl = null;
+
+        // 이미지 삭제 여부에 따라 처리
+        if (!deleteImage && wrapImageRequestDto.wrapImage() != null) {
+            wrapImageUrl = saveImage(wrapImageRequestDto.wrapImage());
+        }
+
+        WrapImageUrlRequestDto wrapImageUrlRequestDto = new WrapImageUrlRequestDto(wrapImageUrl);
+
+        WrapUpdateRequestDto wrapUpdateRequestDto = new WrapUpdateRequestDto(
+                wrapUpdateDetailRequestDto,
+                wrapImageUrlRequestDto,
+                deleteImage
+        );
+        return wrapClient.updateWrap(wrapId, wrapUpdateRequestDto);
     }
+
+//    public ReviewModifyResponseDto modifyReview(Long reviewId,
+//                                                ReviewModifyDetailRequestDto reviewModifyDetailRequestDto,
+//                                                ReviewImageUploadRequestDto reviewImageUploadRequestDto,
+//                                                boolean deleteImage){
+//        String reviewImageUrl = null;
+//
+//        // 이미지 삭제 여부에 따라 처리
+//        if (!deleteImage && reviewImageUploadRequestDto.reviewImage() != null) {
+//            reviewImageUrl = saveImage(reviewImageUploadRequestDto.reviewImage());
+//        }
+//
+//        ReviewImageUrlRequestDto urlRequestDto = new ReviewImageUrlRequestDto(reviewImageUrl);
+//
+//        ReviewModifyRequestDto requestDto = new ReviewModifyRequestDto(
+//                reviewModifyDetailRequestDto,
+//                urlRequestDto,
+//                deleteImage
+//        );
+//        return reviewClient.modifyReview(reviewId, requestDto);
+//    }
 
     public String saveImage(MultipartFile image) {
         if (image == null || image.isEmpty()) {
