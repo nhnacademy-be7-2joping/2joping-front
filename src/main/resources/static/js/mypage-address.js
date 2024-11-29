@@ -11,6 +11,22 @@ function openPostcodeSearch() {
         }
     }).open();
 }
+function openEditPostcodeSearch(inputElement) {
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 우편번호와 주소 정보를 가져와서 입력 필드에 채움
+            const postalCodeInput = inputElement.closest('.address-content').querySelector('input[name="postalCode"]');
+            const roadAddressInput = inputElement.closest('.address-content').parentElement.querySelector('input[name="roadAddress"]');
+
+            if (postalCodeInput) {
+                postalCodeInput.value = data.zonecode; // 우편번호 설정
+            }
+            if (roadAddressInput) {
+                roadAddressInput.value = data.roadAddress; // 도로명 주소 설정
+            }
+        }
+    }).open();
+}
 
 function enableEditMode(button) {
     const card = button.closest('.address-card');
@@ -52,4 +68,26 @@ function cancelEditMode(button) {
     saveBtn.style.display = 'none';
     cancelBtn.style.display = 'none';
     editBtn.style.display = 'block';
+}
+
+
+function deleteAddress(memberAddressId) {
+    // 사용자에게 확인 대화상자 표시
+    if (confirm('이 주소를 삭제하시겠습니까?')) {
+        fetch(`/members/address/` + memberAddressId, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (response.ok) {
+                    // 페이지 새로고침
+                    window.location.reload();
+                } else {
+                    alert('삭제 실패');
+                }
+            })
+            .catch(error => {
+                console.error('삭제 중 에러 발생:', error);
+                alert('삭제 중 문제가 발생했습니다.');
+            });
+    }
 }
