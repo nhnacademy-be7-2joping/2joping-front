@@ -51,6 +51,10 @@ public class CartController {
         } catch (FeignException e) {
             if (e.status() == HttpStatus.UNPROCESSABLE_ENTITY.value()) {
                 return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+            } else if (e.status() == HttpStatus.CONFLICT.value()) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("add OK");
