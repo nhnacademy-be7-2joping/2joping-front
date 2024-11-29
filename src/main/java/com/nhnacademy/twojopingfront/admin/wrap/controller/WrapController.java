@@ -42,7 +42,6 @@ public class WrapController {
                              @RequestPart(value = "wrapImage", required = false) MultipartFile wrapImage) {
         WrapImageRequestDto wrapImageRequestDto = new WrapImageRequestDto(wrapImage);
         WrapCreateResponseDto wrapCreateResponseDto = wrapService.createWrap(wrapDetailRequestDto, wrapImageRequestDto);
-//        return "redirect:/admin/wraps/" + wrapCreateResponseDto.wrapId();
         return "redirect:/admin/wraps/list";
     }
 
@@ -86,30 +85,6 @@ public class WrapController {
         redirectAttributes.addFlashAttribute("message", "업데이트가 성공적으로 완료되었습니다.");
         return "redirect:/admin/wraps/list";
     }
-
-//    /**
-//     * 리뷰 수정 요청을 처리
-//     * @param reviewId 수정할 리뷰 ID
-//     * @param reviewModifyDetailRequestDto 수정할 리뷰 정보
-//     * @return 수정 후 리뷰 상세 페이지로 리다이렉트
-//     */
-//    @PutMapping(value = "/{reviewId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public String modifyReview(@PathVariable Long reviewId,
-//                               @ModelAttribute ReviewModifyDetailRequestDto reviewModifyDetailRequestDto,
-//                               @RequestPart(value = "reviewImage", required = false) MultipartFile reviewImage,
-//                               @RequestParam(value = "deleteImage", required = false, defaultValue = "false") boolean deleteImage) {
-//
-//        ReviewImageUploadRequestDto imageUploadRequestDto = new ReviewImageUploadRequestDto(reviewImage);
-//
-//        ReviewModifyResponseDto responseDto = reviewService.modifyReview(
-//                reviewId,
-//                reviewModifyDetailRequestDto,
-//                imageUploadRequestDto,
-//                deleteImage
-//        );
-//
-//        return "redirect:/reviews/mypage/" + responseDto.reviewId();
-//    }
 }
 
 

@@ -68,27 +68,6 @@ public class WrapService {
         return wrapClient.updateWrap(wrapId, wrapUpdateRequestDto);
     }
 
-//    public ReviewModifyResponseDto modifyReview(Long reviewId,
-//                                                ReviewModifyDetailRequestDto reviewModifyDetailRequestDto,
-//                                                ReviewImageUploadRequestDto reviewImageUploadRequestDto,
-//                                                boolean deleteImage){
-//        String reviewImageUrl = null;
-//
-//        // 이미지 삭제 여부에 따라 처리
-//        if (!deleteImage && reviewImageUploadRequestDto.reviewImage() != null) {
-//            reviewImageUrl = saveImage(reviewImageUploadRequestDto.reviewImage());
-//        }
-//
-//        ReviewImageUrlRequestDto urlRequestDto = new ReviewImageUrlRequestDto(reviewImageUrl);
-//
-//        ReviewModifyRequestDto requestDto = new ReviewModifyRequestDto(
-//                reviewModifyDetailRequestDto,
-//                urlRequestDto,
-//                deleteImage
-//        );
-//        return reviewClient.modifyReview(reviewId, requestDto);
-//    }
-
     public String saveImage(MultipartFile image) {
         if (image == null || image.isEmpty()) {
             return null;
