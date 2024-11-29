@@ -1,8 +1,12 @@
 package com.nhnacademy.twojopingfront.user.service;
 
+import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
+import com.nhnacademy.twojopingfront.common.error.enums.RedirectType;
+import com.nhnacademy.twojopingfront.common.error.exception.backServer.CustomApiException;
 import com.nhnacademy.twojopingfront.user.login.client.LoginClient;
 import com.nhnacademy.twojopingfront.user.login.dto.request.LoginRequestDto;
 import com.nhnacademy.twojopingfront.user.login.dto.response.LoginResponseDto;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,8 +34,20 @@ public class LoginService {
      * @return LoginResponseDto로 customerId, loginId 반환
      */
     public ResponseEntity<LoginResponseDto> login(LoginRequestDto requestDto) {
-        ResponseEntity<LoginResponseDto> responseEntity = loginClient.doLogin(requestDto);
-        return responseEntity;
+        try {
+            ResponseEntity<LoginResponseDto> responseEntity = loginClient.doLogin(requestDto);
+            return responseEntity;
+        } catch (FeignException e) {
+            ErrorResponseDto<?> errorResponseDto = new ErrorResponseDto<>(
+                    401,
+                    "LOGIN_FAILED",
+                    "로그인에 실패하였습니다.",
+                    RedirectType.REDIRECT,
+                    "/login",
+                    null
+            );
+            throw new CustomApiException(errorResponseDto);
+        }
     }
 
     public void logout(Map<String, String> jwtCookieMap) {
