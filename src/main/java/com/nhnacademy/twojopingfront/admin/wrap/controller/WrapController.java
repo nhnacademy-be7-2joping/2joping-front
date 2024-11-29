@@ -42,7 +42,8 @@ public class WrapController {
                              @RequestPart(value = "wrapImage", required = false) MultipartFile wrapImage) {
         WrapImageRequestDto wrapImageRequestDto = new WrapImageRequestDto(wrapImage);
         WrapCreateResponseDto wrapCreateResponseDto = wrapService.createWrap(wrapDetailRequestDto, wrapImageRequestDto);
-        return "redirect:/admin/wraps/" + wrapCreateResponseDto.wrapId();
+//        return "redirect:/admin/wraps/" + wrapCreateResponseDto.wrapId();
+        return "redirect:/admin/wraps/list";
     }
 
     @GetMapping("/{wrap-id}")
