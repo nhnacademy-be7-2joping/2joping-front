@@ -1,4 +1,4 @@
-package com.nhnacademy.twojopingfront.admin.wrap.dto;
+package com.nhnacademy.twojopingfront.admin.wrap.dto.response;
 
 /**
  * 포장 상품 정보를 반환하는 DTO

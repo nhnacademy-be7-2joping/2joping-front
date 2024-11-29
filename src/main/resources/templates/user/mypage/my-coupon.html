@@ -20,6 +20,8 @@
                     <div class="coupon-main">
                         <p class="coupon-name" th:text="${coupon.couponResponseDto.name}">쿠폰 이름</p>
                         <p class="coupon-expiry" th:text="'유효기간: ' + ${@thymeleafCustomFormatter.formatToMinute(coupon.invalidTime)}">유효기간</p>
+                        <p th:text="'최소 결제 금액: ' + ${@thymeleafCustomFormatter.formatCurrency(coupon.couponResponseDto.couponPolicyResponseDto.usageLimit)} + '원'">최소 결제 금액</p>
+
                         <p class="coupon-discount"
                            th:if="${coupon.couponResponseDto.couponPolicyResponseDto.discountType == 'PERCENT'}"
                            th:text="'할인율: ' + ${coupon.couponResponseDto.couponPolicyResponseDto.discountValue} + '%'">할인 금액</p>
@@ -31,7 +33,7 @@
                     <div class="coupon-hover">
                         <p th:text="${coupon.couponResponseDto.couponPolicyResponseDto.name}">정책 이름</p>
                         <p th:text="'최대 할인 금액: ' + ${coupon.couponResponseDto.couponPolicyResponseDto.maxDiscount} + '원'">최대 할인</p>
-                        <p th:text="'최대 사용 금액: ' + ${coupon.couponResponseDto.couponPolicyResponseDto.usageLimit} + '원'">최대 사용 금액</p>
+                        <p th:text="'최소 결제 금액: ' + ${coupon.couponResponseDto.couponPolicyResponseDto.usageLimit} + '원'">최소 결제 금액</p>
                         <p th:text="${coupon.couponResponseDto.couponPolicyResponseDto.detail}">세부 사항</p>
                     </div>
                 </div>

@@ -13,7 +13,7 @@
     <div class="container mt-4">
         <h2>포장 상품 등록</h2>
         <!-- action 속성을 비워두어 기본 폼 제출로 URL 파라미터가 붙는 현상을 방지 -->
-        <form id="createWrapForm" method="post">
+        <form id="createWrapForm" method="post" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="name" class="form-label">포장 상품 이름</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="포장 상품 이름 입력" required>
@@ -21,6 +21,11 @@
             <div class="mb-3">
                 <label for="wrapPrice" class="form-label">가격</label>
                 <input type="number" class="form-control" id="wrapPrice" name="wrapPrice" placeholder="가격 입력" required min="1">
+            </div>
+
+            <div class="mb-3">
+                <label for="wrapImage">이미지 업로드:</label>
+                <input type="file" id="wrapImage" name="wrapImage" accept="image/*">
             </div>
 
             <div class="mb-3">

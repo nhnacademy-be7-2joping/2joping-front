@@ -16,6 +16,8 @@ import com.nhnacademy.twojopingfront.user.member.adaptor.MemberAdaptor;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberAddressResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberCouponResponseDto;
 import com.nhnacademy.twojopingfront.user.member.dto.response.MemberUpdateResponseDto;
+import com.nhnacademy.twojopingfront.user.member.point.dto.GetMyPageSimplePointHistoriesResponse;
+import com.nhnacademy.twojopingfront.user.member.point.service.PointService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -48,6 +50,8 @@ public class MypageViewController {
     private final LikeAdaptor likeAdaptor;
     private final ReviewService reviewService;
     private final OrderDetailService orderDetailService;
+    private final PointService pointService;
+
     /**
      * 마이페이지 메인 화면으로 이동합니다.
      *
@@ -56,12 +60,19 @@ public class MypageViewController {
      */
     @Operation(summary = "마이페이지 메인 화면", description = "사용자의 마이페이지 메인 화면으로 이동합니다.")
     @GetMapping
-    public String mypageView(Model model) {
+    public String mypageView(@RequestParam(defaultValue = "0") int page,
+                             @RequestParam(defaultValue = "10") int size,
+            Model model) {
+        Long customerId = MemberUtils.getCustomerId();
+
         MemberTierResponse tierResponse = tierAdaptor.getMemberTier();
         model.addAttribute("tier", tierResponse);
 
-        Long customerId = MemberUtils.getCustomerId();
-        List<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(customerId.toString());
+        GetMyPageSimplePointHistoriesResponse response = pointService.getMyPageSimplePointHistories(customerId);
+        model.addAttribute("memberPoint", response.memberPoint());
+        model.addAttribute("getSimplePointHistoriesResponses", response.getSimplePointHistoriesResponses());
+
+        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size,customerId.toString());
         model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/mypage";
     }
@@ -89,8 +100,13 @@ public class MypageViewController {
      */
     @Operation(summary = "주문 목록 페이지", description = "사용자가 자신의 주문 내역을 조회할 수 있는 페이지로 이동합니다.")
     @GetMapping("/order-list")
-    public String orderListView(Model model) {
+    public String orderListView(@RequestParam(defaultValue = "0") int page,
+                                @RequestParam(defaultValue = "10") int size,
+            Model model) {
 
+        Long customerId = MemberUtils.getCustomerId();
+        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size,customerId.toString());
+        model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/order-list";
     }
 
