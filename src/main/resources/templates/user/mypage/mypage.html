@@ -66,6 +66,13 @@
 
                 <div class="point-history-container">
                     <ul class="point-history-list">
+                        <!-- 포인트 내역이 없으면 "포인트 내역이 없습니다" 출력 -->
+                        <li th:if="${getSimplePointHistoriesResponses == null or getSimplePointHistoriesResponses.isEmpty()}" class="point-history-item">
+                            <div class="no-point-history">
+                                포인트 내역이 없습니다
+                            </div>
+                        </li>
+
                         <!-- 포인트 내역 리스트를 반복하여 표시 -->
                         <li th:each="history : ${getSimplePointHistoriesResponses}" class="point-history-item">
                             <div class="point-entry">
@@ -84,10 +91,6 @@
                     포인트 내역 보기
                 </a>
             </div>
-
-
-
-
 
 
             <div class="coupon-container">
