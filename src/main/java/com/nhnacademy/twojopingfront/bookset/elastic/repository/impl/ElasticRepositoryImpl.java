@@ -73,24 +73,24 @@ public class ElasticRepositoryImpl implements ElasticRepositoryCustom {
                     if (keyword != null && !keyword.isBlank()) {
                         b.must(mustQuery -> mustQuery.bool(boolQuery -> {
                             boolQuery.should(titleQuery -> titleQuery.multiMatch(titleMatch -> titleMatch
-                                    .fields("book_title^10", "book_title.ngram^3", "book_title.jaso",
-                                            "book_desc^3", "book_desc.ngram", "book_desc.raw",
-                                            "book_publisher^2", "book_publisher.ngram", "book_publisher.raw")
+                                    .fields("book_title^10", "book_title.ngram^3", "book_title.jaso", "book_title.synonym",
+                                            "book_desc^3", "book_desc.ngram", "book_desc.raw", "book_desc.synonym",
+                                            "book_publisher^2", "book_publisher.ngram", "book_publisher.raw", "book_publisher.synonym")
                                     .query(keyword)));
                             boolQuery.should(categoryQuery -> categoryQuery.nested(categoryNested -> categoryNested
                                     .path("book_category")
                                     .query(categoryMatch -> categoryMatch.multiMatch(categoryMultiMatch -> categoryMultiMatch
-                                            .fields("book_category.name^3", "book_category.name.ngram", "book_category.name.raw")
+                                            .fields("book_category.name^3", "book_category.name.ngram", "book_category.name.raw", "book_category.name.synonym")
                                             .query(keyword)))));
                             boolQuery.should(tagQuery -> tagQuery.nested(tagNested -> tagNested
                                     .path("book_tag")
                                     .query(tagMatch -> tagMatch.multiMatch(tagMultiMatch -> tagMultiMatch
-                                            .fields("book_tag.name^3", "book_tag.name.ngram", "book_tag.name.raw")
+                                            .fields("book_tag.name^3", "book_tag.name.ngram", "book_tag.name.raw", "book_tag.name.synonym")
                                             .query(keyword)))));
                             boolQuery.should(contributorQuery -> contributorQuery.nested(contributorNested -> contributorNested
                                     .path("book_contributor")
                                     .query(contributorMatch -> contributorMatch.multiMatch(contributorMultiMatch -> contributorMultiMatch
-                                            .fields("book_contributor.name^2", "book_contributor.name.ngram", "book_contributor.name.raw")
+                                            .fields("book_contributor.name^2", "book_contributor.name.ngram", "book_contributor.name.raw", "book_contributor.name.synonym")
                                             .query(keyword)))));
                             return boolQuery;
                         }));
