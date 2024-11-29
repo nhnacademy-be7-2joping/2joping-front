@@ -1,9 +1,15 @@
 package com.nhnacademy.twojopingfront.user.service;
 
+import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
+import com.nhnacademy.twojopingfront.common.error.enums.RedirectType;
+import com.nhnacademy.twojopingfront.common.error.exception.backServer.CustomApiException;
 import com.nhnacademy.twojopingfront.user.login.client.LoginClient;
 import com.nhnacademy.twojopingfront.user.login.dto.request.LoginRequestDto;
 import com.nhnacademy.twojopingfront.user.login.dto.response.LoginResponseDto;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +36,32 @@ public class LoginService {
      * @return LoginResponseDto로 customerId, loginId 반환
      */
     public ResponseEntity<LoginResponseDto> login(LoginRequestDto requestDto) {
-        ResponseEntity<LoginResponseDto> responseEntity = loginClient.doLogin(requestDto);
+        ResponseEntity<LoginResponseDto> responseEntity  = null;
+        try{
+            responseEntity = loginClient.doLogin(requestDto);
+        }catch (FeignException e){
+            String errorBody = e.contentUTF8(); // 응답 본문 내용
+            int status = e.status(); // 상태 코드
+            String redirectUrl = null;
+
+            if (e.responseHeaders() != null && e.responseHeaders().containsKey("Request-url")) {
+                redirectUrl = e.responseHeaders().get("Request-url").iterator().next(); // 첫 번째 값 가져오기
+            }
+
+            if(status == 423){
+                throw new CustomApiException(
+                        new ErrorResponseDto(
+                                status,
+                                HttpStatus.LOCKED.name(),
+                                errorBody,
+                                RedirectType.REDIRECT,
+                                redirectUrl,
+                                null
+                                )
+                );
+            }
+
+        }
         return responseEntity;
     }
 
