@@ -19,6 +19,7 @@
             <tr>
                 <th>ID</th>
                 <th>이름</th>
+                <th>이미지</th>
                 <th>가격</th>
                 <th>활성화 여부</th>
                 <th>작업</th>
@@ -27,6 +28,7 @@
             <tbody>
             <tr th:each="wrap : ${wraps}">
                 <td th:text="${wrap.wrapId}"></td>
+                <td><img th:src="${wrap.wrapImage}" alt="이미지" width="50"></td>
                 <td th:text="${wrap.name}"></td>
                 <td th:text="${wrap.wrapPrice}"></td>
                 <td th:text="${wrap.isActive ? '활성' : '비활성'}"></td>

@@ -77,9 +77,8 @@ public class ReviewController {
     public String getReviewsByCustomerId(@RequestParam(defaultValue = "0") int page,
                                          @RequestParam(defaultValue = "10") int size,
                                          Model model) {
-        Long customerId = MemberUtils.getCustomerId();
 
-        Page<ReviewTotalResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size,customerId.toString());
+        Page<ReviewTotalResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size);
         model.addAttribute("reviews", reviews);
         return "review/get-reviews";
     }

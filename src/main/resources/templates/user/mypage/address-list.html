@@ -30,12 +30,12 @@
             </div>
             <div class="form-row">
                 <label for="postalCode">우편번호</label>
-                <input type="text" id="postalCode" name="postalCode" placeholder="우편번호" readonly>
+                <input type="text" id="postalCode" name="postalCode" placeholder="우편번호" readonly  onclick="openPostcodeSearch()">
                 <button type="button" class="search-button" onclick="openPostcodeSearch()">주소 검색</button>
             </div>
             <div class="form-row">
                 <label for="roadAddress">도로명 주소</label>
-                <input type="text" id="roadAddress" name="roadAddress" placeholder="도로명 주소" readonly>
+                <input type="text" id="roadAddress" name="roadAddress" placeholder="도로명 주소" readonly   onclick="openPostcodeSearch()">
             </div>
             <div class="form-row">
                 <label for="detailAddress">상세 주소</label>
@@ -72,20 +72,23 @@
 
 
         <div class="address-card" th:each="address, stat : ${addresses}">
-            <form th:action="@{/addresses/update}" method="post">
+            <form th:action="@{/members/address/{id}(id=${address.memberAddressId})}" method="post">
+                <input type="hidden" name="_method" value="put">
+                <input type="hidden" name="memberAddressId" th:value="${address.memberAddressId}">
+
                 <div class="address-header">
                     <div class="address-title">
                         <span class="view-mode" th:text="${address.addressAlias}"></span>
                         <input type="text" name="addressAlias" th:value="${address.addressAlias}"
                                th:id="'addressAlias-' + ${stat.index}" class="edit-input">
                     </div>
-                    <div class="address-actions">
+                    <div class="address-actions" style="display: flex; align-items: center;">
+                         <span class="default-address-label" th:if="${address.defaultAddress}" style="color: var(--primary-color); font-weight: bold;">&lt;기본 배송지&gt;</span>
                         <button type="button" class="address-action-button edit-btn" onclick="enableEditMode(this)">수정</button>
                         <button type="submit" class="address-action-button save-button" style="display: none;">저장</button>
                         <button type="button" class="address-action-button cancel-button" style="display: none;" onclick="cancelEditMode(this)">취소</button>
-                        <a th:href="@{'/addresses/delete/' + ${address.memberAddressId}}"
-                           class="address-action-button"
-                           onclick="return confirm('이 주소를 삭제하시겠습니까?')">삭제</a>
+                        <a class="address-action-button" href="#" th:onclick="'deleteAddress(' + ${address.memberAddressId} + '); return false;'">삭제</a>
+
                     </div>
                 </div>
                 <div class="address-content">
@@ -99,14 +102,13 @@
                     <label th:for="'postalCode-' + ${stat.index}">우편번호:</label>
                     <span class="view-mode" th:text="${address.postalCode}"></span>
                     <input type="text" name="postalCode" th:value="${address.postalCode}"
-                           th:id="'postalCode-' + ${stat.index}" class="edit-input" readonly>
-                    <button type="button" class="search-button edit-input" onclick="openPostcodeSearch()" style="display: none;">주소 검색</button>
+                           th:id="'postalCode-' + ${stat.index}" class="edit-input" readonly onclick="openEditPostcodeSearch(this)">
                 </div>
                 <div class="address-content">
                     <label th:for="'roadAddress-' + ${stat.index}">도로명:</label>
                     <span class="view-mode" th:text="${address.roadAddress}"></span>
                     <input type="text" name="roadAddress" th:value="${address.roadAddress}"
-                           th:id="'roadAddress-' + ${stat.index}" class="edit-input" readonly>
+                           th:id="'roadAddress-' + ${stat.index}" class="edit-input" readonly onclick="openEditPostcodeSearch(this)">
                 </div>
                 <div class="address-content">
                     <label th:for="'detailAddress-' + ${stat.index}">상세주소:</label>

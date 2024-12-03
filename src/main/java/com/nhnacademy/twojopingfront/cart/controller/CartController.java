@@ -5,6 +5,7 @@ import com.nhnacademy.twojopingfront.cart.dto.CartDeleteDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartRequestDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartResponseDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartUpdateDto;
+import feign.FeignException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -38,14 +39,23 @@ public class CartController {
     public ResponseEntity<String> addCart(HttpServletResponse response,
                                           @CookieValue(name = "cartSession", required = false) String cartSessionId,
                                           @Valid @RequestBody CartRequestDto requestDto) {
-
+        try {
             String newCartSessionId = cartClient.addCart(cartSessionId, requestDto).getBody();
-        if (newCartSessionId != null) {
-            Cookie cookie = new Cookie("cartSession", newCartSessionId);
-            cookie.setHttpOnly(true);
-            cookie.setSecure(false);
-            cookie.setPath("/");
-            response.addCookie(cookie);
+            if (newCartSessionId != null) {
+                Cookie cookie = new Cookie("cartSession", newCartSessionId);
+                cookie.setHttpOnly(true);
+                cookie.setSecure(false);
+                cookie.setPath("/");
+                response.addCookie(cookie);
+            }
+        } catch (FeignException e) {
+            if (e.status() == HttpStatus.UNPROCESSABLE_ENTITY.value()) {
+                return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+            } else if (e.status() == HttpStatus.CONFLICT.value()) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).build();
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
         }
         return ResponseEntity.status(HttpStatus.CREATED).body("add OK");
     }

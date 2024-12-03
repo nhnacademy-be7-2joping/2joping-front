@@ -14,7 +14,7 @@
     <div class="container mt-4">
         <h2>포장 상품 수정</h2>
 
-        <form th:action="@{/admin/wraps/{wrap-id}(wrap-id=${wrap.wrapId})}" method="post">
+        <form th:action="@{/admin/wraps/{wrap-id}(wrap-id=${wrap.wrapId})}" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_method" value="put">
             <div class="mb-3">
                 <label for="name" class="form-label">이름:</label>
@@ -25,6 +25,38 @@
                 <label for="wrapPrice" class="form-label">가격:</label>
                 <input type="number" id="wrapPrice" name="wrapPrice" th:value="${wrap.wrapPrice}" class="form-control" required />
             </div>
+
+            <!-- 이미지 업로드 -->
+            <div class="mb-3">
+                <label for="wrapImage">이미지 업로드:</label>
+                <input type="file" id="wrapImage" name="wrapImage" accept="image/*">
+            </div>
+
+            <!-- 기존 이미지 미리보기 -->
+            <div class="mb-3">
+                <img id="imagePreview" th:src="${wrap.wrapImage != null ? wrap.wrapImage : ''}"
+                     alt="포장상품 이미지 미리보기" class="wrap-image-preview"/>
+            </div>
+
+            <style>
+                .wrap-image-preview {
+                    max-width: 200px; /* 너비 최대값을 200px로 제한 */
+                    max-height: 200px; /* 높이 최대값을 200px로 제한 */
+                    width: auto; /* 너비를 자동으로 조정 */
+                    height: auto; /* 높이를 자동으로 조정 */
+                }
+            </style>
+
+            <div id="deleteCheckboxContainer" class="deleteCheckboxContainer">
+                <label for="deleteImage">이미지 삭제하기</label>
+                <input type="checkbox" id="deleteImage" name="deleteImage" value="true">
+            </div>
+
+            <style>
+                .deleteCheckboxContainer {
+                    margin-bottom: 20px; /* 아래쪽에 20px의 여백 추가 */
+                }
+            </style>
 
             <div class="mb-3">
                 <label class="form-label">활성화 여부</label>
@@ -48,7 +80,6 @@
         </form>
     </div>
 </div>
-
 
 </body>
 </html>

@@ -3,6 +3,8 @@
     --admin-primary-color: #7e7e80; /* 기본 색상 */
     --admin-primary-hover-color: #8ca1bd; /* 호버 시 배경색 */
     --admin-primary-color-rgb: 60, 74, 87; /* RGB 값 */
+    --dropdown-hover-color: #f1f1f1; /* 드롭다운 호버 색상 */
+    --dropdown-border-color: #ddd; /* 드롭다운 경계선 색상 */
 }
 
 /* Reset 기본 스타일 */
@@ -51,38 +53,41 @@
     color: var(--admin-primary-hover-color);
 }
 
+
 /* 두 번째 네비게이션 바 스타일 (왼쪽에 고정) */
 .sub-navbar {
-    position: fixed; /* 화면에 고정 */
-    left: 30px; /* 왼쪽에 붙이기 */
-    top: 150px; /* 상단에 시작 */
-    width: 200px; /* 너비 설정 */
-    height: 100%; /* 화면 전체 높이 */
+    position: fixed;
+    left: 0; /* 왼쪽 고정 */
+    top: 84px; /* 상단 네비게이션 아래 */
+    width: 250px; /* 넓이 키움 */
+    height: calc(100vh - 84px); /* 화면 높이에서 네비게이션 바 높이 제외 */
     background-color: #f8f9fa; /* 배경색 */
     padding: 20px; /* 내부 여백 */
-    border-right: 1px solid #ddd; /* 오른쪽 경계선 */
+    border-right: 1px solid var(--dropdown-border-color); /* 오른쪽 경계선 */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* 살짝 그림자 효과 */
     z-index: 100; /* 다른 요소 위에 배치 */
+    overflow-y: auto; /* 세로 스크롤 활성화 */
 }
 
 .sub-navbar-container {
-    display: flex; /* 플렉스 정렬 */
+    display: flex;
     flex-direction: column; /* 세로 방향 정렬 */
     gap: 15px; /* 링크 간 간격 */
 }
 
+/* 서브 네비게이션 링크 */
 .sub-nav-link {
     text-decoration: none; /* 밑줄 제거 */
     color: #495057; /* 텍스트 색상 */
     font-size: 16px; /* 텍스트 크기 */
     font-weight: bold; /* 굵은 글씨 */
-    padding: 10px 15px; /* 내부 여백 */
-    border-radius: 4px; /* 둥근 모서리 */
+    padding: 12px 18px; /* 내부 여백 */
+    border-radius: 6px; /* 둥근 모서리 */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sub-nav-link:hover {
-    background-color: rgba(var(--admin-primary-color-rgb), 0.2); /* 호버 배경색 */
+    background-color: rgba(var(--admin-primary-color-rgb), 0.1); /* 호버 배경색 */
     color: var(--admin-primary-color); /* 호버 텍스트 색상 */
 }
 
@@ -111,3 +116,65 @@
     color: #666;
 }
 
+/* 드롭다운 메뉴 */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%; /* 드롭다운 너비를 서브바와 맞춤 */
+    margin-bottom: 30px;
+}
+
+.dropbtn {
+    width: 100%; /* 버튼이 서브바 너비와 맞게 */
+    background-color: #4e4e4e; /* 버튼 배경색 */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    padding: 12px 18px; /* 버튼 패딩 */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dropbtn:hover {
+    background-color: #3a3a3a; /* 버튼 호버 배경색 */
+}
+
+/* 드롭다운 메뉴 아이템 */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 5px); /* 버튼 바로 아래에 배치 */
+    background-color: white;
+    width: 100%; /* 부모 요소 너비와 동일하게 설정 */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    border: 1px solid var(--dropdown-border-color); /* 경계선 추가 */
+    border-radius: 6px; /* 둥근 모서리 */
+    z-index: 150;
+}
+
+.dropdown-content a {
+    display: block;
+    text-decoration: none;
+    color: #495057; /* 아이템 텍스트 색상 */
+    font-size: 14px; /* 아이템 텍스트 크기 */
+    padding: 10px 15px; /* 내부 여백 */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--dropdown-hover-color); /* 아이템 호버 배경색 */
+    color: var(--admin-primary-color); /* 아이템 호버 텍스트 색상 */
+}
+
+/* 드롭다운 호버 시 표시 */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
