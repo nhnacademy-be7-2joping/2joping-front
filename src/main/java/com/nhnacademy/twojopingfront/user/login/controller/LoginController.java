@@ -39,7 +39,8 @@ public class LoginController {
      * @return 로그인 페이지 view 이름
      */
     @GetMapping("/login")
-    public String login(@RequestParam(value = "msg", required = false) String message, Model model) {
+    public String login(@RequestParam(value = "msg", required = false) String message,
+                        String errorMessage, Model model) {
         model.addAttribute("message", message);
 
         return "login/login";

@@ -25,6 +25,7 @@
         <input type="text" placeholder="아이디" name="id" required>
         <input type="password" placeholder="비밀번호" name="password" required>
         <button type="submit">로그인</button>
+        <span class="text-error" th:if="${errorMessage != null}" th:text="${errorMessage}"></span>
     </form>
 
     <form id="guest-login" class="login-form" style="display: none;" method="POST" action="/login/non-member">
@@ -37,7 +38,6 @@
         <a href="/member/find-id">ID찾기</a>
         <span class="separator">|</span>
         <a href="/member/find-pwd">비밀번호 찾기</a>
-
     </div>
 </div>
 
