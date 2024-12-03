@@ -70,9 +70,9 @@ public class ReviewService {
     }
 
 
-    public Page<ReviewTotalResponseDto> getReviewsByCustomerId(int page, int size, String customerId) {
+    public Page<ReviewTotalResponseDto> getReviewsByCustomerId(int page, int size) {
 
-        return reviewClient.getReviewsByCustomerId(page,size,customerId);
+        return reviewClient.getReviewsByCustomerId(page,size);
     }
 
     public String saveImage(MultipartFile image) {

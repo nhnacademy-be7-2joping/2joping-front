@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반품/교환 신청</title>
+    <style>
+        /* 전체 배경 및 기본 설정 */
+        body {
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 컨테이너 스타일 */
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 제목 스타일 */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        /* 입력 필드 및 텍스트 영역 */
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* 라벨 스타일 */
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        /* 버튼 스타일 */
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #004494;
+        }
+
+        /* 이전으로 돌아가기 버튼 스타일 */
+        .back-button {
+            background-color: #6c757d;
+            margin-top: 10px;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>반품/교환 신청</h1>
+    <form>
+        <!-- 반품/교환 선택 -->
+        <label for="returnType">반품/교환 선택:</label>
+        <select id="returnType" name="returnType">
+            <option value="return">반품</option>
+            <option value="exchange">교환</option>
+        </select>
+
+        <!-- 반품 사유 -->
+        <label for="reason">반품/교환 사유:</label>
+        <textarea id="reason" name="reason" placeholder="반품/교환 사유를 입력해주세요." required></textarea>
+
+        <!-- 제출 버튼 -->
+        <button type="submit">신청</button>
+    </form>
+    <!-- 이전으로 돌아가기 버튼 -->
+    <button class="back-button" type="button" onclick="history.back()">이전으로 돌아가기</button>
+</div>
+</body>
+</html>
