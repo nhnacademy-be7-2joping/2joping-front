@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -17,7 +16,7 @@ public class OrderDetailService {
     public OrderDetailResponseDto getOrderDetail(Long orderId){
         return orderDetailClient.getOrderDetail(orderId);
     }
-    public Page<OrderDetailResponseDto> getOrderDetailsByCustomerId(int page, int size, String customerId) {
-        return orderDetailClient.getOrderDetailsByCustomerId(page,size,customerId); // FeignClient 호출
+    public Page<OrderDetailResponseDto> getOrderDetailsByCustomerId(int page, int size) {
+        return orderDetailClient.getOrderDetailsByCustomerId(page,size);
     }
 }
