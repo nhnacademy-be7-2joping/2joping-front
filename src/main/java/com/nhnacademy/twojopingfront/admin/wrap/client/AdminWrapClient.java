@@ -25,6 +25,10 @@ public interface AdminWrapClient {
     @GetMapping("/v1/wraps/{wrap-id}")
     WrapUpdateResponseDto getWrap(@PathVariable("wrap-id") Long wrapId);
 
+    @PutMapping("/v1/wraps/{wrap-id}")
+    WrapUpdateResponseDto updateWrap(@PathVariable("wrap-id") Long wrapId,
+                                     @Valid @RequestBody WrapUpdateRequestDto wrapUpdateRequestDto);
+
     @GetMapping("/v1/wraps")
     List<WrapUpdateResponseDto> findAllByIsActiveTrue();
 

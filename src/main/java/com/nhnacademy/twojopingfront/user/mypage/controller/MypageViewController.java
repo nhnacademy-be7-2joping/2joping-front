@@ -72,7 +72,7 @@ public class MypageViewController {
         model.addAttribute("memberPoint", response.memberPoint());
         model.addAttribute("getSimplePointHistoriesResponses", response.getSimplePointHistoriesResponses());
 
-        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size,customerId.toString());
+        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size);
         model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/mypage";
     }
@@ -102,10 +102,9 @@ public class MypageViewController {
     @GetMapping("/order-list")
     public String orderListView(@RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "10") int size,
-            Model model) {
+                                Model model) {
 
-        Long customerId = MemberUtils.getCustomerId();
-        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size,customerId.toString());
+        Page<OrderDetailResponseDto> orderDetails = orderDetailService.getOrderDetailsByCustomerId(page,size);
         model.addAttribute("orderDetails", orderDetails);
         return "user/mypage/order-list";
     }
@@ -154,9 +153,8 @@ public class MypageViewController {
     public String reviewHistoryView(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
                                     Model model) {
-        Long customerId = MemberUtils.getCustomerId();
 
-        Page<ReviewTotalResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size, customerId.toString());
+        Page<ReviewTotalResponseDto> reviews = reviewService.getReviewsByCustomerId(page, size);
         model.addAttribute("reviews", reviews);
         return "user/mypage/review-history";
     }

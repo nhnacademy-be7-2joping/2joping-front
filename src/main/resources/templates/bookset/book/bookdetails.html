@@ -290,6 +290,8 @@
                     alert("장바구니에 추가되었습니다!");
                   } else if (response.status === 422) {
                     alert("장바구니에 이미 해당 상품이 존재합니다.");
+                  } else if (response.status === 409) {
+                    alert("재고가 부족합니다");
                   } else {
                     response.json().then((data) => alert(data.message || "오류 발생!"));
                   }

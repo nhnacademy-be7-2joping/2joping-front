@@ -1,10 +1,7 @@
 package com.nhnacademy.twojopingfront.user.member.adaptor;
 
 import com.nhnacademy.twojopingfront.common.gateway.GatewayClient;
-import com.nhnacademy.twojopingfront.user.member.dto.request.MemberAddressRequestDto;
-import com.nhnacademy.twojopingfront.user.member.dto.request.MemberCreateRequestDto;
-import com.nhnacademy.twojopingfront.user.member.dto.request.MemberUpdateRequesteDto;
-import com.nhnacademy.twojopingfront.user.member.dto.request.MemberWithdrawRequestDto;
+import com.nhnacademy.twojopingfront.user.member.dto.request.*;
 import com.nhnacademy.twojopingfront.user.member.dto.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
@@ -67,6 +64,20 @@ public class MemberAdaptor {
         ResponseEntity<List<MemberAddressResponseDto>> response = gatewayClient.sendToGateway(
                 HttpMethod.POST, MEMBER_ENDPOINT + "/addresses", requestDto,
                 new ParameterizedTypeReference<List<MemberAddressResponseDto>>(){}
+        );
+        return response.getBody();
+
+    }
+    public AddressUpdateResponseDto updateAddress(AddressUpdateRequestDto requestDto, long memberAddressId) {
+        ResponseEntity<AddressUpdateResponseDto> response = gatewayClient.sendToGateway(
+                HttpMethod.PUT, MEMBER_ENDPOINT + "/addresses/"+memberAddressId ,requestDto, AddressUpdateResponseDto.class
+        );
+        return response.getBody();
+
+    }
+    public AddressDeleteResponseDto deleteAddress(long memberAddressId) {
+        ResponseEntity<AddressDeleteResponseDto> response = gatewayClient.sendToGateway(
+                HttpMethod.DELETE, MEMBER_ENDPOINT + "/addresses/"+memberAddressId ,null, AddressDeleteResponseDto.class
         );
         return response.getBody();
 
