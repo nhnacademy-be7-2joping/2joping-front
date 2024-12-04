@@ -2,15 +2,19 @@ package com.nhnacademy.twojopingfront.common.error.handler;
 
 import com.nhnacademy.twojopingfront.common.annotation.RedirectOnError;
 import com.nhnacademy.twojopingfront.common.error.dto.ClientErrorMessage;
+import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
 import com.nhnacademy.twojopingfront.common.error.exception.backServer.CustomApiException;
+import com.nhnacademy.twojopingfront.common.error.exception.backServer.CustomFeignException;
 import com.nhnacademy.twojopingfront.common.error.exception.jwt.InvalidTokenException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.HandlerMethod;
@@ -117,6 +121,13 @@ public class GlobalExceptionHandler {
         } else {
             return "common/error";
         }
+    }
+
+    @ExceptionHandler(CustomFeignException.class)
+    @ResponseBody
+    public ErrorResponseDto<Void> getErrorResponse(CustomFeignException e, HttpServletResponse response) {
+        response.setStatus(e.getErrorResponse().status());
+        return e.getErrorResponse();
     }
 
     @ExceptionHandler(Exception.class)

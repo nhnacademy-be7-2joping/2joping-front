@@ -1,5 +1,7 @@
 package com.nhnacademy.twojopingfront.user.login.controller;
 
+import com.nhnacademy.twojopingfront.order_detail.dto.response.OrderDetailResponseDto;
+import com.nhnacademy.twojopingfront.user.login.dto.request.LoginNonMemberRequestDto;
 import com.nhnacademy.twojopingfront.user.login.dto.request.LoginRequestDto;
 import com.nhnacademy.twojopingfront.user.login.dto.response.LoginResponseDto;
 import com.nhnacademy.twojopingfront.user.service.LoginService;
@@ -35,7 +37,7 @@ public class LoginController {
      * 로그인 페이지
      *
      * @param message alert 위한 메시지 유형
-     * @param model       로그인 상태에 따른 페이지 변경용
+     * @param model   로그인 상태에 따른 페이지 변경용
      * @return 로그인 페이지 view 이름
      */
     @GetMapping("/login")
@@ -82,6 +84,13 @@ public class LoginController {
         return "redirect:/";
     }
 
+    @PostMapping("/login/non-member")
+    public String loginNonMember(@ModelAttribute LoginNonMemberRequestDto loginNonMemberRequestDto, Model model) {
+        List<OrderDetailResponseDto> orderDetailResponseDtos =
+                loginService.getOrderForNonMember(loginNonMemberRequestDto);
+        model.addAttribute("orders", orderDetailResponseDtos);
+        return "/user/nonmember-orders";
+    }
 
     /**
      * 사용자의 로그아웃 요청을 처리하는 메서드.

@@ -4,14 +4,14 @@ import com.nhnacademy.twojopingfront.cart.dto.CartDeleteDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartRequestDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartResponseDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartUpdateDto;
-import com.nhnacademy.twojopingfront.common.interceptor.AccessTokenInterceptor;
+import com.nhnacademy.twojopingfront.common.config.DefaultFeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "cartClient", url = "http://localhost:8082/api/v1/cart", configuration = {AccessTokenInterceptor.class})
+@FeignClient(name = "cartClient", url = "http://localhost:8082/api/v1/cart", configuration = {DefaultFeignConfig.class})
 public interface CartClient {
 
     @GetMapping
