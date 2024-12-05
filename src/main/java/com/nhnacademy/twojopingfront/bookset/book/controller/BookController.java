@@ -173,35 +173,29 @@ public class BookController {
                              @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
                              @RequestPart(value = "detailImage", required = false) MultipartFile detailImage,
                              RedirectAttributes redirectAttributes) {
-        try {
-            BookUpdateHtmlRequestDto updatedDto = new BookUpdateHtmlRequestDto(
-                    bookUpdateHtmlRequestDto.title(),
-                    bookUpdateHtmlRequestDto.description(),
-                    bookUpdateHtmlRequestDto.publisherName(),
-                    bookUpdateHtmlRequestDto.publishedDate(),
-                    bookUpdateHtmlRequestDto.isbn(),
-                    bookUpdateHtmlRequestDto.retailPrice(),
-                    bookUpdateHtmlRequestDto.sellingPrice(),
-                    bookUpdateHtmlRequestDto.giftWrappable(),
-                    bookUpdateHtmlRequestDto.isActive(),
-                    bookUpdateHtmlRequestDto.remainQuantity(),
-                    contributorListJson, // Combined contributors
-                    bookUpdateHtmlRequestDto.topCategoryId(),
-                    bookUpdateHtmlRequestDto.middleCategoryId(),
-                    bookUpdateHtmlRequestDto.bottomCategoryId(),
-                    bookUpdateHtmlRequestDto.tagList(),
-                    bookUpdateHtmlRequestDto.removeThumbnailImage(),
-                    bookUpdateHtmlRequestDto.removeDetailImage()
-            );
-
-            ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
-            bookService.updateBook(bookId, updatedDto, imageUploadRequestDto);
-            redirectAttributes.addFlashAttribute("message", "도서가 성공적으로 수정되었습니다.");
-            return "redirect:/admin/books/get";
-        } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("errorMessage", "도서 생성을 실패했습니다.");
-            return "redirect:/admin/books/get";
-        }
+        BookUpdateHtmlRequestDto updatedDto = new BookUpdateHtmlRequestDto(
+                bookUpdateHtmlRequestDto.title(),
+                bookUpdateHtmlRequestDto.description(),
+                bookUpdateHtmlRequestDto.publisherName(),
+                bookUpdateHtmlRequestDto.publishedDate(),
+                bookUpdateHtmlRequestDto.isbn(),
+                bookUpdateHtmlRequestDto.retailPrice(),
+                bookUpdateHtmlRequestDto.sellingPrice(),
+                bookUpdateHtmlRequestDto.giftWrappable(),
+                bookUpdateHtmlRequestDto.isActive(),
+                bookUpdateHtmlRequestDto.remainQuantity(),
+                contributorListJson,
+                bookUpdateHtmlRequestDto.topCategoryId(),
+                bookUpdateHtmlRequestDto.middleCategoryId(),
+                bookUpdateHtmlRequestDto.bottomCategoryId(),
+                bookUpdateHtmlRequestDto.tagList(),
+                bookUpdateHtmlRequestDto.removeThumbnailImage(),
+                bookUpdateHtmlRequestDto.removeDetailImage()
+        );
+        ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
+        bookService.updateBook(bookId, updatedDto, imageUploadRequestDto);
+        redirectAttributes.addFlashAttribute("message", "도서가 성공적으로 수정되었습니다.");
+        return "redirect:/admin/books/get";
     }
 
     /**
