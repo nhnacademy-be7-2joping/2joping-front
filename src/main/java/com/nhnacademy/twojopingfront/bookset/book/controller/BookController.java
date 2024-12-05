@@ -211,12 +211,7 @@ public class BookController {
      */
     @PutMapping("/admin/books/{book-id}/deactivate")
     public String deactivateBook(@PathVariable("book-id") Long bookId) {
-        try {
-            bookService.deactivateBook(bookId);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return "redirect:/admin/books/get";
-        }
+        bookService.deactivateBook(bookId);
         return "redirect:/admin/books/get";
     }
 }
