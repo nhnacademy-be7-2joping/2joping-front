@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>책 등록</title>
     <link rel="stylesheet" href="/css/book-register-style.css">
+    <!-- Toast UI Editor CSS -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css">
+    <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-dark.css">
 </head>
 <body>
 <div class="container" layout:fragment="content">
     <h2>책 등록</h2>
     <div class="card">
-        <form id="bookRegisterForm" action="/admin/books/register" method="post" enctype="multipart/form-data">
+        <form id="bookRegisterForm" action="/admin/books/register" method="post" enctype="multipart/form-data" onsubmit="setEditorContent(event)">
             <div class="mb-3">
                 <label for="title" class="form-label">책 제목</label>
                 <input type="text" class="form-control" id="title" name="title" placeholder="책 제목을 입력하세요" required>
@@ -19,8 +22,10 @@
 
             <div class="mb-3">
                 <label for="description" class="form-label">설명</label>
-                <textarea class="form-control" id="description" name="description" rows="3" placeholder="책 설명을 입력하세요" required></textarea>
+                <div id="descriptionEditor"></div>
             </div>
+
+            <input type="hidden" id="description" name="description">
 
             <div class="mb-3">
                 <label for="publisherName" class="form-label">출판사</label>
