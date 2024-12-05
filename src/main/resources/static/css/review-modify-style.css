@@ -93,3 +93,13 @@ input[type="checkbox"] {
     width: auto; /* 체크박스 너비를 기본 크기로 설정 */
     height: auto; /* 체크박스 높이를 기본 크기로 설정 */
 }
+
+/* 이전으로 돌아가기 버튼 스타일 */
+.back-button {
+    background-color: #6c757d;
+    margin-top: 10px;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}

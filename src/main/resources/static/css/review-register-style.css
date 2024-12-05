@@ -78,4 +78,12 @@ button:hover {
     padding: 5px;
 }
 
+/* 이전으로 돌아가기 버튼 스타일 */
+.back-button {
+    background-color: #6c757d;
+    margin-top: 10px;
+}
 
+.back-button:hover {
+    background-color: #5a6268;
+}

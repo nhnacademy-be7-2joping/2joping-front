@@ -47,8 +47,25 @@ public class WrapService {
         return wrapClient.findAllByIsActiveTrue();
     }
 
-    public WrapResponseDto updateWrap(Long wrapId, WrapModifyRequestDto wrapRequestDto) {
-        return wrapClient.updateWrap(wrapId, wrapRequestDto).getBody();
+    public WrapUpdateResponseDto updateWrap(Long wrapId,
+                                      WrapUpdateDetailRequestDto wrapUpdateDetailRequestDto,
+                                      WrapImageRequestDto wrapImageRequestDto,
+                                      boolean deleteImage) {
+        String wrapImageUrl = null;
+
+        // 이미지 삭제 여부에 따라 처리
+        if (!deleteImage && wrapImageRequestDto.wrapImage() != null) {
+            wrapImageUrl = saveImage(wrapImageRequestDto.wrapImage());
+        }
+
+        WrapImageUrlRequestDto wrapImageUrlRequestDto = new WrapImageUrlRequestDto(wrapImageUrl);
+
+        WrapUpdateRequestDto wrapUpdateRequestDto = new WrapUpdateRequestDto(
+                wrapUpdateDetailRequestDto,
+                wrapImageUrlRequestDto,
+                deleteImage
+        );
+        return wrapClient.updateWrap(wrapId, wrapUpdateRequestDto);
     }
 
     public String saveImage(MultipartFile image) {

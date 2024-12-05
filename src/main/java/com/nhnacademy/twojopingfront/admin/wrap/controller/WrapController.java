@@ -9,9 +9,12 @@ import com.nhnacademy.twojopingfront.admin.wrap.dto.response.WrapCreateResponseD
 import com.nhnacademy.twojopingfront.admin.wrap.dto.response.WrapResponseDto;
 import com.nhnacademy.twojopingfront.admin.wrap.dto.response.WrapUpdateResponseDto;
 import com.nhnacademy.twojopingfront.admin.wrap.service.WrapService;
+import com.nhnacademy.twojopingfront.bookset.book.dto.request.BookUpdateRequestDto;
 import com.nhnacademy.twojopingfront.review.dto.request.ReviewImageUploadRequestDto;
 import com.nhnacademy.twojopingfront.review.dto.request.ReviewModifyDetailRequestDto;
+import com.nhnacademy.twojopingfront.review.dto.request.ReviewModifyRequestDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewModifyResponseDto;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +42,7 @@ public class WrapController {
                              @RequestPart(value = "wrapImage", required = false) MultipartFile wrapImage) {
         WrapImageRequestDto wrapImageRequestDto = new WrapImageRequestDto(wrapImage);
         WrapCreateResponseDto wrapCreateResponseDto = wrapService.createWrap(wrapDetailRequestDto, wrapImageRequestDto);
-        return "redirect:/admin/wraps/" + wrapCreateResponseDto.wrapId();
+        return "redirect:/admin/wraps/list";
     }
 
     @GetMapping("/{wrap-id}")
@@ -63,15 +66,22 @@ public class WrapController {
         return "admin/wrap/wrap-edit";
     }
 
-    @PutMapping("/{wrap-id}")
+    @PutMapping(value = "/{wrap-id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public String updateWrap(
             @PathVariable("wrap-id") Long wrapId,
-            @RequestParam("name") String name,
-            @RequestParam("wrapPrice") Integer wrapPrice,
-            @RequestParam("isActive") Boolean isActive,
+            @ModelAttribute WrapUpdateDetailRequestDto wrapUpdateDetailRequestDto,
+            @RequestPart(value = "wrapImage", required = false) MultipartFile wrapImage,
+            @RequestParam(value = "deleteImage", required = false, defaultValue = "false") boolean deleteImage,
             RedirectAttributes redirectAttributes) {
-        WrapModifyRequestDto dto = new WrapModifyRequestDto(name, wrapPrice, !Objects.isNull(isActive) && isActive);
-        WrapResponseDto updatedResponseDto = wrapService.updateWrap(wrapId, dto);
+        WrapImageRequestDto wrapImageRequestDto = new WrapImageRequestDto(wrapImage);
+
+        WrapUpdateResponseDto wrapUpdateResponseDto = wrapService.updateWrap(
+                wrapId,
+                wrapUpdateDetailRequestDto,
+                wrapImageRequestDto,
+                deleteImage
+        );
+
         redirectAttributes.addFlashAttribute("message", "업데이트가 성공적으로 완료되었습니다.");
         return "redirect:/admin/wraps/list";
     }
