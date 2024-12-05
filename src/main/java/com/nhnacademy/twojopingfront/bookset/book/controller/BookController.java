@@ -62,7 +62,6 @@ public class BookController {
         bookService.createBook(updatedDto, imageUploadRequestDto);
 
         redirectAttributes.addFlashAttribute("message", "도서가 성공적으로 생성되었습니다.");
-        System.out.println("BookCreateHtmlRequestDto: " + bookCreateHtmlRequestDto);
         return "redirect:/admin/books/get";
     }
 
