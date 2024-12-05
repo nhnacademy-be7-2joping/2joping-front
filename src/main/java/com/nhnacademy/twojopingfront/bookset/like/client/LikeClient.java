@@ -2,13 +2,14 @@ package com.nhnacademy.twojopingfront.bookset.like.client;
 
 import com.nhnacademy.twojopingfront.bookset.like.dto.LikeRequestDto;
 import com.nhnacademy.twojopingfront.bookset.like.dto.LikeResponseDto;
+import com.nhnacademy.twojopingfront.common.interceptor.AccessTokenInterceptor;
 import com.nhnacademy.twojopingfront.like.dto.response.MemberLikeResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "like-service", url = "${gateway.base-url}")
+@FeignClient(name = "like-service", url = "${gateway.base-url}", configuration = AccessTokenInterceptor.class)
 public interface LikeClient {
 
     /**
@@ -17,7 +18,7 @@ public interface LikeClient {
      * @param request 좋아요 요청 정보
      * @return LikeResponseDto
      */
-    @PostMapping("/api/v1/likes")
+    @PostMapping("/v1/likes")
     LikeResponseDto setBookLike(@RequestBody LikeRequestDto request);
 
     /**
@@ -26,7 +27,7 @@ public interface LikeClient {
      * @param bookId 책 ID
      * @return Long 좋아요 개수
      */
-    @GetMapping("/api/v1/likes/count/{book-id}")
+    @GetMapping("/v1/likes/count/{book-id}")
     Long getLikeCount(@PathVariable("book-id") Long bookId);
 
     /**
@@ -35,6 +36,6 @@ public interface LikeClient {
      * @param customerId 사용자 ID
      * @return List<MemberLikeResponseDto>
      */
-    @GetMapping("/api/v1/likes/members")
+    @GetMapping("/v1/likes/members")
     List<MemberLikeResponseDto> getBooksLikedByMember(@RequestHeader("X-Customer-Id") String customerId);
 }

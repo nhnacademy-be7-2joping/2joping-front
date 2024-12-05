@@ -311,7 +311,7 @@
                 const bookId = likeButton.getAttribute("data-book-id");
 
                 // 초기 좋아요 개수 가져오기
-                fetch(`/api/v1/likes/count/${bookId}`, {
+                fetch(`http://localhost:8082/api/v1/likes/count/${bookId}`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",
@@ -349,15 +349,18 @@
                         bookId: parseInt(bookId, 10),
                     };
 
-                    fetch("/api/v1/likes", {
+                    fetch("/add/likes", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
+
                         },
                         body: JSON.stringify(requestData),
                     })
                         .then((response) => {
                             console.log("응답 시작")
+                            console.log(response)
+                            console.log(response.body)
                             if (!response.ok) {
                                 throw new Error("좋아요 요청 실패");
                             }
@@ -370,7 +373,6 @@
                             if (likeCountElement) {
                                 likeCountElement.textContent = data.likeCount; // 좋아요 개수 업데이트
                             }
-                            alert(data.isLiked ? "좋아요가 추가되었습니다!" : "좋아요가 취소되었습니다!");
                         })
                         .catch((error) => {
                             console.error("좋아요 처리 실패:", error);

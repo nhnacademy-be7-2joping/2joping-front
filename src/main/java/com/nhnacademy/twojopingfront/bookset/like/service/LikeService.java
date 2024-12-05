@@ -5,8 +5,9 @@ import com.nhnacademy.twojopingfront.bookset.like.dto.LikeRequestDto;
 import com.nhnacademy.twojopingfront.bookset.like.dto.LikeResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class LikeService {
     private final LikeClient likeClient;
