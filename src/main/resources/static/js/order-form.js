@@ -92,7 +92,7 @@ function collectOrderData() {
         "address": getValueFromId('address'),
         "detail-address": getValueFromId('detail-address'),
         "name": getValueFromId('name'),
-        "phone": getValueFromId('phone'),
+        "phone": document.getElementById('phone').value,
         "email": getValueFromId('email'),
         "requirement": getValueFromId('requirement'),
         "deliveryPolicyId": getValueFromId('delivery-policy-id')
@@ -129,6 +129,7 @@ function collectOrderData() {
 
     // 할인 금액 정보
     orderObject.couponDiscount = discountMap.get('coupon');
+    orderObject.nonMemberPassword = document.getElementById("nonmember-password")?.value ?? "";
 
     console.log(orderObject);
 
@@ -155,16 +156,32 @@ btnPay.addEventListener('click', () => {
         headers: {
             'Content-Type': 'application/json'
         },
+        credentials: 'include',
         body: JSON.stringify(orderDto)
     })
         .then(res => {
-            if (res.ok) {
-                startTossPayment(orderCode);
-            }
+            return res.json().then(data => {
+                console.log(res.body);
+                if (!res.ok) {
+                    throw {status: res.status, statusText: res.statusText, data};
+                }
+                return data;
+            });
+        })
+        .then(data => {
+            const totalCost = data.totalCost;
+            startTossPayment(orderCode, totalCost);
         })
         .catch(error => {
-            alert('주문 처리에 문제가 생겼습니다.');
-            console.error('Error:', error); // 에러 처리
+            if (error.data) {
+                const data = error.data;
+                alert('주문 처리에 문제가 생겼습니다. : ' + data.errorMessage);
+                console.error('Error:', error); // 에러 처리
+                location.href = '/orders/form';
+            } else {
+                console.error('Network or unexpected error:', error);
+                alert('주문 처리에 문제가 생겼습니다.');
+            }
         });
 });
 
@@ -243,6 +260,12 @@ function validateForm() {
         document.getElementById('address').value === ""
     ) {
         alert("배송 정보를 입력해주세요");
+        return false;
+    }
+
+    const nonMemberPasswordText = document.querySelector('input[name=nonmember-password]');
+    if (nonMemberPasswordText && nonMemberPasswordText.value === "") {
+        alert('비회원 비밀번호를 입력해주세요.')
         return false;
     }
 

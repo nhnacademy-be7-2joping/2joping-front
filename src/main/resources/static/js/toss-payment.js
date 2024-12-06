@@ -1,12 +1,10 @@
-async function startTossPayment(orderCode) {
+async function startTossPayment(orderCode, totalCost) {
     const button = document.getElementById("payment-button");
 
     // 도서 금액, 배송비, 할인 기준으로 최종 가격 적용
-    const cost = Number(document.getElementById("total-cost").textContent.replace(',', ''));
-
     const amount = {
         currency: "KRW",
-        value: cost
+        value: totalCost
     };
     // ------  결제위젯 초기화 ------
     // TODO: clientKey는 개발자센터의 결제위젯 연동 키 > 클라이언트 키로 바꾸세요.

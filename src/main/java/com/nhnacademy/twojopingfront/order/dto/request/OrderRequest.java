@@ -13,6 +13,7 @@ public record OrderRequest(
         Integer wrapCost,
         Integer totalCost,
         Integer couponDiscount,
+        String nonMemberPassword,
         String orderCode
 ) {
     record CartItemRequest(

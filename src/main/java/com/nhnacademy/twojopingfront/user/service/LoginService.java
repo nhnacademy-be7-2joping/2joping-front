@@ -3,7 +3,9 @@ package com.nhnacademy.twojopingfront.user.service;
 import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
 import com.nhnacademy.twojopingfront.common.error.enums.RedirectType;
 import com.nhnacademy.twojopingfront.common.error.exception.backServer.CustomApiException;
+import com.nhnacademy.twojopingfront.order_detail.dto.response.OrderDetailResponseDto;
 import com.nhnacademy.twojopingfront.user.login.client.LoginClient;
+import com.nhnacademy.twojopingfront.user.login.dto.request.LoginNonMemberRequestDto;
 import com.nhnacademy.twojopingfront.user.login.dto.request.LoginRequestDto;
 import com.nhnacademy.twojopingfront.user.login.dto.response.LoginResponseDto;
 import feign.FeignException;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -63,6 +66,10 @@ public class LoginService {
 
         }
         return responseEntity;
+    }
+
+    public List<OrderDetailResponseDto> getOrderForNonMember(LoginNonMemberRequestDto loginNonMemberRequestDto) {
+        return List.of();
     }
 
     public void logout(Map<String, String> jwtCookieMap) {

@@ -1,7 +1,7 @@
 package com.nhnacademy.twojopingfront.review.client;
 
 
-import com.nhnacademy.twojopingfront.common.interceptor.AccessTokenInterceptor;
+import com.nhnacademy.twojopingfront.common.config.DefaultFeignConfig;
 import com.nhnacademy.twojopingfront.review.dto.request.ReviewCreateRequestDto;
 import com.nhnacademy.twojopingfront.review.dto.request.ReviewModifyRequestDto;
 import com.nhnacademy.twojopingfront.review.dto.response.ReviewCreateResponseDto;
@@ -13,7 +13,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "review", url = "${url}",configuration = AccessTokenInterceptor.class)
+@FeignClient(name = "review", url = "${url}",configuration = DefaultFeignConfig.class)
 
 public interface ReviewClient {
 

@@ -1,14 +1,13 @@
 package com.nhnacademy.twojopingfront.order.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.common.util.MemberUtils;
 import com.nhnacademy.twojopingfront.order.client.MemberCouponClient;
 import com.nhnacademy.twojopingfront.order.client.OrderClient;
-import com.nhnacademy.twojopingfront.order.client.OrderPostClient;
 import com.nhnacademy.twojopingfront.order.dto.request.OrderRequest;
-import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
-import com.nhnacademy.twojopingfront.payment.controller.dto.request.PaymentRequest;
 import com.nhnacademy.twojopingfront.order.dto.response.OrderCouponResponse;
 import com.nhnacademy.twojopingfront.order.dto.response.OrderTempResponse;
+import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +16,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+    private final ObjectMapper objectMapper;
+
     private final MemberCouponClient memberCouponClient;
     private final OrderClient orderClient;
-    private final OrderPostClient orderPostClient;
 
     public List<OrderCouponResponse> getCoupons() {
         // 익명 사용자인 경우 빈 리스트 반환
@@ -32,6 +32,6 @@ public class OrderService {
     }
 
     public void registerOrder(PaymentResponse paymentResponse) {
-        orderPostClient.postOrder(paymentResponse);
+        orderClient.postOrder(paymentResponse);
     }
 }
