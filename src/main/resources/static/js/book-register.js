@@ -1,3 +1,17 @@
+const editor = new tui.Editor({
+    el: document.querySelector('#descriptionEditor'),
+    initialEditType: 'wysiwyg',
+    previewStyle: 'vertical',
+    height: '300px',
+});
+
+function setEditorContent(event) {
+    const descriptionContent = editor.getHTML();
+    document.getElementById('description').value = descriptionContent;
+
+    return true;
+}
+
 // 상위 카테고리가 변경될 때 중위 카테고리 로드
 document.getElementById('topCategory').addEventListener('change', function () {
     const topCategoryId = this.value;
@@ -57,7 +71,7 @@ document.getElementById("addContributorButton").addEventListener("click", functi
 
         // 중복 추가 방지
         if (!contributors.some(contributor => contributor.name === name && contributor.role === role)) {
-            contributors.push({ name, role });
+            contributors.push({name, role});
 
             // 선택된 항목을 화면에 표시
             const div = document.createElement("div");

@@ -1,3 +1,17 @@
+const editor = new tui.Editor({
+    el: document.querySelector('#descriptionEditor'),
+    initialEditType: 'wysiwyg',
+    previewStyle: 'vertical',
+    height: '300px',
+});
+
+function setEditorContent(event) {
+    const descriptionContent = editor.getHTML();
+    document.getElementById('description').value = descriptionContent;
+
+    return true;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("bookModifyForm");
     const checkboxes = document.querySelectorAll("input[type='checkbox']");

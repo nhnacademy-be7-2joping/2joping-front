@@ -40,35 +40,29 @@ public class BookController {
                              @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
                              @RequestPart(value = "detailImage", required = false) MultipartFile detailImage,
                              RedirectAttributes redirectAttributes) {
-        try {
-            BookCreateHtmlRequestDto updatedDto = new BookCreateHtmlRequestDto(
-                    bookCreateHtmlRequestDto.publisherName(),
-                    bookCreateHtmlRequestDto.title(),
-                    bookCreateHtmlRequestDto.description(),
-                    bookCreateHtmlRequestDto.publishedDate(),
-                    bookCreateHtmlRequestDto.isbn(),
-                    bookCreateHtmlRequestDto.retailPrice(),
-                    bookCreateHtmlRequestDto.sellingPrice(),
-                    bookCreateHtmlRequestDto.giftWrappable(),
-                    bookCreateHtmlRequestDto.isActive(),
-                    bookCreateHtmlRequestDto.remainQuantity(),
-                    contributorListJson,
-                    bookCreateHtmlRequestDto.topCategoryId(),
-                    bookCreateHtmlRequestDto.middleCategoryId(),
-                    bookCreateHtmlRequestDto.bottomCategoryId(),
-                    bookCreateHtmlRequestDto.tagList()
-            );
+        BookCreateHtmlRequestDto updatedDto = new BookCreateHtmlRequestDto(
+                bookCreateHtmlRequestDto.publisherName(),
+                bookCreateHtmlRequestDto.title(),
+                bookCreateHtmlRequestDto.description(),
+                bookCreateHtmlRequestDto.publishedDate(),
+                bookCreateHtmlRequestDto.isbn(),
+                bookCreateHtmlRequestDto.retailPrice(),
+                bookCreateHtmlRequestDto.sellingPrice(),
+                bookCreateHtmlRequestDto.giftWrappable(),
+                bookCreateHtmlRequestDto.isActive(),
+                bookCreateHtmlRequestDto.remainQuantity(),
+                contributorListJson,
+                bookCreateHtmlRequestDto.topCategoryId(),
+                bookCreateHtmlRequestDto.middleCategoryId(),
+                bookCreateHtmlRequestDto.bottomCategoryId(),
+                bookCreateHtmlRequestDto.tagList()
+        );
 
-            ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
-            bookService.createBook(updatedDto, imageUploadRequestDto);
+        ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
+        bookService.createBook(updatedDto, imageUploadRequestDto);
 
-            redirectAttributes.addFlashAttribute("message", "도서가 성공적으로 생성되었습니다.");
-            System.out.println("BookCreateHtmlRequestDto: " + bookCreateHtmlRequestDto);
-            return "redirect:/admin/books/get";
-        } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("errorMessage", "도서 생성을 실패했습니다.");
-            return "redirect:/admin/books/get";
-        }
+        redirectAttributes.addFlashAttribute("message", "도서가 성공적으로 생성되었습니다.");
+        return "redirect:/admin/books/get";
     }
 
     @GetMapping("/admin/books/register")
@@ -173,35 +167,29 @@ public class BookController {
                              @RequestPart(value = "thumbnailImage", required = false) MultipartFile thumbnailImage,
                              @RequestPart(value = "detailImage", required = false) MultipartFile detailImage,
                              RedirectAttributes redirectAttributes) {
-        try {
-            BookUpdateHtmlRequestDto updatedDto = new BookUpdateHtmlRequestDto(
-                    bookUpdateHtmlRequestDto.title(),
-                    bookUpdateHtmlRequestDto.description(),
-                    bookUpdateHtmlRequestDto.publisherName(),
-                    bookUpdateHtmlRequestDto.publishedDate(),
-                    bookUpdateHtmlRequestDto.isbn(),
-                    bookUpdateHtmlRequestDto.retailPrice(),
-                    bookUpdateHtmlRequestDto.sellingPrice(),
-                    bookUpdateHtmlRequestDto.giftWrappable(),
-                    bookUpdateHtmlRequestDto.isActive(),
-                    bookUpdateHtmlRequestDto.remainQuantity(),
-                    contributorListJson, // Combined contributors
-                    bookUpdateHtmlRequestDto.topCategoryId(),
-                    bookUpdateHtmlRequestDto.middleCategoryId(),
-                    bookUpdateHtmlRequestDto.bottomCategoryId(),
-                    bookUpdateHtmlRequestDto.tagList(),
-                    bookUpdateHtmlRequestDto.removeThumbnailImage(),
-                    bookUpdateHtmlRequestDto.removeDetailImage()
-            );
-
-            ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
-            bookService.updateBook(bookId, updatedDto, imageUploadRequestDto);
-            redirectAttributes.addFlashAttribute("message", "도서가 성공적으로 수정되었습니다.");
-            return "redirect:/admin/books/get";
-        } catch (Exception ex) {
-            redirectAttributes.addFlashAttribute("errorMessage", "도서 생성을 실패했습니다.");
-            return "redirect:/admin/books/get";
-        }
+        BookUpdateHtmlRequestDto updatedDto = new BookUpdateHtmlRequestDto(
+                bookUpdateHtmlRequestDto.title(),
+                bookUpdateHtmlRequestDto.description(),
+                bookUpdateHtmlRequestDto.publisherName(),
+                bookUpdateHtmlRequestDto.publishedDate(),
+                bookUpdateHtmlRequestDto.isbn(),
+                bookUpdateHtmlRequestDto.retailPrice(),
+                bookUpdateHtmlRequestDto.sellingPrice(),
+                bookUpdateHtmlRequestDto.giftWrappable(),
+                bookUpdateHtmlRequestDto.isActive(),
+                bookUpdateHtmlRequestDto.remainQuantity(),
+                contributorListJson,
+                bookUpdateHtmlRequestDto.topCategoryId(),
+                bookUpdateHtmlRequestDto.middleCategoryId(),
+                bookUpdateHtmlRequestDto.bottomCategoryId(),
+                bookUpdateHtmlRequestDto.tagList(),
+                bookUpdateHtmlRequestDto.removeThumbnailImage(),
+                bookUpdateHtmlRequestDto.removeDetailImage()
+        );
+        ImageUploadRequestDto imageUploadRequestDto = new ImageUploadRequestDto(thumbnailImage, detailImage);
+        bookService.updateBook(bookId, updatedDto, imageUploadRequestDto);
+        redirectAttributes.addFlashAttribute("message", "도서가 성공적으로 수정되었습니다.");
+        return "redirect:/admin/books/get";
     }
 
     /**
@@ -211,12 +199,7 @@ public class BookController {
      */
     @PutMapping("/admin/books/{book-id}/deactivate")
     public String deactivateBook(@PathVariable("book-id") Long bookId) {
-        try {
-            bookService.deactivateBook(bookId);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return "redirect:/admin/books/get";
-        }
+        bookService.deactivateBook(bookId);
         return "redirect:/admin/books/get";
     }
 }
