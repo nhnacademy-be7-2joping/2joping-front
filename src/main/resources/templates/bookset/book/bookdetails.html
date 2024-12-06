@@ -119,16 +119,17 @@
 
 
               <div class="book-detail-price-amount font-default red bold">
-                <p >금액&nbsp; : &nbsp;</p> <p  id="total-price"
-                                              th:text="(${books.sellingPrice != null ? @customFormatter.formatCurrency(books.sellingPrice) : '정보 없음'} +  '원')"></p>
+                <p >금액&nbsp; : &nbsp;</p> <p  id="total-price" th:text="(${books.sellingPrice != null ? @customFormatter.formatCurrency(books.sellingPrice) : '정보 없음'} +  '원')"></p>
               </div>
-
-
-              <a href="#" class="book-detail-heart" title="좋아요">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="3007" height="3007" viewBox="0 0 3007 3007">
-                  <path fill-rule="nonzero" fill="rgb(77.734375%, 18.821716%, 17.259216%)" fill-opacity="1" d="M 2866.488281 972.351562 C 2710.058594 167.71875 1729.558594 154.269531 1487.78125 906.46875 C 1246.011719 154.28125 265.480469 167.71875 109.074219 972.351562 C -32.855469 1702.371094 1487.78125 2854.109375 1487.78125 2854.109375 C 1487.78125 2854.109375 3008.410156 1702.371094 2866.488281 972.351562 Z M 2866.488281 972.351562 "/>
-                </svg>
-              </a>
+                <a href="#"
+                   class="book-detail-heart"
+                   th:attr="data-book-id=${books.bookId()}"
+                   title="좋아요">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="3007" height="3007" viewBox="0 0 3007 3007">
+                        <path fill-rule="nonzero" fill="rgb(77.734375%, 18.821716%, 17.259216%)" fill-opacity="1" d="M 2866.488281 972.351562 C 2710.058594 167.71875 1729.558594 154.269531 1487.78125 906.46875 C 1246.011719 154.28125 265.480469 167.71875 109.074219 972.351562 C -32.855469 1702.371094 1487.78125 2854.109375 1487.78125 2854.109375 C 1487.78125 2854.109375 3008.410156 1702.371094 2866.488281 972.351562 Z M 2866.488281 972.351562 "/>
+                    </svg>
+                    <span class="like-count"></span> <!-- 좋아요 개수는 JS로 설정 -->
+                </a>
 
             </div>
             <div>
@@ -267,42 +268,121 @@
       });
 
       cartButton.addEventListener("click", function (event) {
-        event.preventDefault();
+          event.preventDefault();
 
-        const cartData = {
-          bookId: parseInt(cartButton.getAttribute("data-book-id"), 10), // 책 ID
-          title: cartButton.getAttribute("data-title"), // 책 제목
-          sellingPrice: parseInt(cartButton.getAttribute("data-selling-price"), 10), // 판매가
-          quantity: parseInt(quantityInput.value, 10) // 선택된 수량
-        };
+          const cartData = {
+              bookId: parseInt(cartButton.getAttribute("data-book-id"), 10), // 책 ID
+              title: cartButton.getAttribute("data-title"), // 책 제목
+              sellingPrice: parseInt(cartButton.getAttribute("data-selling-price"), 10), // 판매가
+              quantity: parseInt(quantityInput.value, 10) // 선택된 수량
+          };
 
-        // AJAX 요청 보내기
-        fetch("/cart", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(cartData)
-        })
-                .then((response) => {
-                    console.log(response.status)
+          // AJAX 요청 보내기
+          fetch("/cart", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(cartData)
+          })
+              .then((response) => {
+                  console.log(response.status)
                   if (response.ok) {
-                    alert("장바구니에 추가되었습니다!");
+                      alert("장바구니에 추가되었습니다!");
                   } else if (response.status === 422) {
-                    alert("장바구니에 이미 해당 상품이 존재합니다.");
+                      alert("장바구니에 이미 해당 상품이 존재합니다.");
                   } else if (response.status === 409) {
-                    alert("재고가 부족합니다");
+                      alert("재고가 부족합니다");
                   } else {
-                    response.json().then((data) => alert(data.message || "오류 발생!"));
+                      response.json().then((data) => alert(data.message || "오류 발생!"));
                   }
-                })
-                .catch((error) => {
+              })
+              .catch((error) => {
                   console.error("Error:", error);
                   alert("장바구니 추가 중 오류가 발생했습니다.");
-                });
+              });
       });
-    });
-  </script>
+
+
+            // 좋아요 버튼 처리
+            const likeButtons = document.querySelectorAll(".book-detail-heart");
+
+            likeButtons.forEach((likeButton) => {
+                const bookId = likeButton.getAttribute("data-book-id");
+
+                // 초기 좋아요 개수 가져오기
+                fetch(`http://localhost:8082/api/v1/likes/count/${bookId}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("좋아요 개수 가져오기 실패");
+                        }
+                        return response.json();
+                    })
+                    .then((likeCount) => {
+                        const likeCountElement = likeButton.querySelector(".like-count");
+                        if (likeCountElement) {
+                            likeCountElement.textContent = likeCount; // 서버에서 받은 좋아요 개수 설정
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("좋아요 개수 초기화 실패:", error);
+                    });
+
+                // 좋아요 버튼 클릭 이벤트
+                likeButton.addEventListener("click", function (event) {
+                    event.preventDefault();
+
+                    const memberId = likeButton.getAttribute("data-member-id");
+
+                    if (!bookId) {
+                        console.error("bookId 또는 memberId가 설정되지 않았습니다.");
+                        alert("좋아요 처리에 필요한 정보가 부족합니다.");
+                        return;
+                    }
+
+                    const requestData = {
+                        bookId: parseInt(bookId, 10),
+                    };
+
+                    fetch("/add/likes", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+
+                        },
+                        body: JSON.stringify(requestData),
+                    })
+                        .then((response) => {
+                            console.log("응답 시작")
+                            console.log(response)
+                            console.log(response.body)
+                            if (!response.ok) {
+                                throw new Error("좋아요 요청 실패");
+                            }
+
+                            return response.json();
+                        })
+                        .then((data) => {
+                            console.log("좋아요 data ")
+                            const likeCountElement = likeButton.querySelector(".like-count");
+                            if (likeCountElement) {
+                                likeCountElement.textContent = data.likeCount; // 좋아요 개수 업데이트
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("좋아요 처리 실패:", error);
+                            alert("좋아요 처리 중 오류가 발생했습니다.");
+                        });
+                });
+            });
+        });
+    </script>
+
 </div>
 </body>
 </html>
