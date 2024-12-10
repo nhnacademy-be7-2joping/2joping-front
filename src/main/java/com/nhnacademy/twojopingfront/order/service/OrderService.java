@@ -16,7 +16,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class OrderService {
-    private final ObjectMapper objectMapper;
 
     private final MemberCouponClient memberCouponClient;
     private final OrderClient orderClient;
@@ -31,7 +30,7 @@ public class OrderService {
         return orderClient.postOrderOnRedis(orderRequest).getBody();
     }
 
-    public void registerOrder(PaymentResponse paymentResponse) {
-        orderClient.postOrder(paymentResponse);
+    public void registerOrder(PaymentResponse paymentResponse, String cartSessionId) {
+        orderClient.postOrder(paymentResponse, cartSessionId);
     }
 }

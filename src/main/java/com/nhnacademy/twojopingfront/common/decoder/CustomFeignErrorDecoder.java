@@ -25,21 +25,27 @@ public class CustomFeignErrorDecoder implements ErrorDecoder {
 
     @Override
     public Exception decode(String methodKey, Response response) {
-        String content = getResponseBody(response);
 
-        if (content.isEmpty()) {
-            return getDefaultErrorResponse();
-        }
+        String content = getResponseBody(response);
+        log.info("{}: {}", response.status(), response.reason());
 
         try {
             if (response.status() >= 500) {
                 return FeignException.errorStatus(methodKey, response);
             }
-            ErrorResponseDto<Void> errorResponseDto = objectMapper.readValue(content, ErrorResponseDto.class);
+            ErrorResponseDto<Void> errorResponseDto =
+                    content.isEmpty() ? createErrorResponse(response)
+                            : objectMapper.readValue(content, ErrorResponseDto.class);
             return new CustomFeignException(errorResponseDto);
         } catch (JsonProcessingException e) {
             return getDefaultErrorResponse();
         }
+    }
+
+    private ErrorResponseDto<Void> createErrorResponse(Response response) {
+        int status = response.status();
+        String errorCode = HttpStatus.valueOf(status).getReasonPhrase();
+        return new ErrorResponseDto<>(status, errorCode, "", null, null, null);
     }
 
     private String getResponseBody(Response response) {

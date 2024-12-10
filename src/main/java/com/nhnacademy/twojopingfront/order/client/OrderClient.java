@@ -2,10 +2,11 @@ package com.nhnacademy.twojopingfront.order.client;
 
 import com.nhnacademy.twojopingfront.common.config.DefaultFeignConfig;
 import com.nhnacademy.twojopingfront.order.dto.request.OrderRequest;
-import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
 import com.nhnacademy.twojopingfront.order.dto.response.OrderTempResponse;
+import com.nhnacademy.twojopingfront.order.dto.response.PaymentResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,5 +23,6 @@ public interface OrderClient {
     ResponseEntity<List<OrderTempResponse>> getOrdersOnRedis();
 
     @PostMapping
-    ResponseEntity<?> postOrder(@RequestBody PaymentResponse paymentResponse);
+    ResponseEntity<?> postOrder(@RequestBody PaymentResponse paymentResponse, @CookieValue(name = "cartSession",
+            required = false) String cartSessionId);
 }

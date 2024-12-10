@@ -10,9 +10,9 @@ import com.nhnacademy.twojopingfront.order.client.MemberClient;
 import com.nhnacademy.twojopingfront.order.client.MemberCouponClient;
 import com.nhnacademy.twojopingfront.order.client.ShipmentPolicyRequestClient;
 import com.nhnacademy.twojopingfront.order.client.WrapClient;
-import com.nhnacademy.twojopingfront.payment.controller.dto.request.PaymentRequest;
 import com.nhnacademy.twojopingfront.order.dto.response.*;
 import com.nhnacademy.twojopingfront.order.service.OrderService;
+import com.nhnacademy.twojopingfront.payment.controller.dto.request.PaymentRequest;
 import com.nhnacademy.twojopingfront.payment.controller.dto.response.PaymentErrorResponse;
 import com.nhnacademy.twojopingfront.user.login.dto.request.LoginNonMemberRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -152,7 +152,9 @@ public class OrderController {
      * @throws Exception Toss 호출 중 발생가능한 예외
      */
     @PostMapping("/confirm")
-    public ResponseEntity<Object> orderConfirm(@RequestBody PaymentRequest paymentRequest) throws Exception {
+    public ResponseEntity<Object> orderConfirm(
+            @RequestBody PaymentRequest paymentRequest,
+            @CookieValue(name = "cartSession", required = false) String cartSessionId) throws Exception {
         Base64.Encoder encoder = Base64.getEncoder();
         String authorizations =
                 "Basic " + encoder.encodeToString((widgetSecretKey + ":").getBytes(StandardCharsets.UTF_8));
@@ -179,7 +181,7 @@ public class OrderController {
         if (isSuccess) {
             // 응답을 PaymentResponse로 변환
             PaymentResponse paymentResponse = objectMapper.readValue(responseStream, PaymentResponse.class);
-            orderService.registerOrder(paymentResponse); // 토스 결제 승인 결과 활용하여 그대로 주문 등록 처리
+            orderService.registerOrder(paymentResponse, cartSessionId); // 토스 결제 승인 결과 활용하여 그대로 주문 등록 처리
             responseStream.close();
             return ResponseEntity.status(code).body(paymentResponse);
         } else {

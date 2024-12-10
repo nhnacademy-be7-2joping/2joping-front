@@ -2,14 +2,14 @@ package com.nhnacademy.twojopingfront.bookset.like.client;
 
 import com.nhnacademy.twojopingfront.bookset.like.dto.LikeRequestDto;
 import com.nhnacademy.twojopingfront.bookset.like.dto.LikeResponseDto;
-import com.nhnacademy.twojopingfront.common.interceptor.AccessTokenInterceptor;
+import com.nhnacademy.twojopingfront.common.config.DefaultFeignConfig;
 import com.nhnacademy.twojopingfront.like.dto.response.MemberLikeResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "like-service", url = "${gateway.base-url}", configuration = AccessTokenInterceptor.class)
+@FeignClient(name = "like-service", url = "${gateway.base-url}", configuration = DefaultFeignConfig.class)
 public interface LikeClient {
 
     /**

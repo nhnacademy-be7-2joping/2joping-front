@@ -5,6 +5,7 @@ import com.nhnacademy.twojopingfront.cart.dto.CartDeleteDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartRequestDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartResponseDto;
 import com.nhnacademy.twojopingfront.cart.dto.CartUpdateDto;
+import com.nhnacademy.twojopingfront.common.error.exception.backServer.CustomFeignException;
 import feign.FeignException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,10 +49,12 @@ public class CartController {
                 cookie.setPath("/");
                 response.addCookie(cookie);
             }
-        } catch (FeignException e) {
-            if (e.status() == HttpStatus.UNPROCESSABLE_ENTITY.value()) {
+        } catch (CustomFeignException e) {
+            int status = e.getErrorResponse().status();
+
+            if (status == HttpStatus.UNPROCESSABLE_ENTITY.value()) {
                 return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
-            } else if (e.status() == HttpStatus.CONFLICT.value()) {
+            } else if (status == HttpStatus.CONFLICT.value()) {
                 return ResponseEntity.status(HttpStatus.CONFLICT).build();
             } else {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

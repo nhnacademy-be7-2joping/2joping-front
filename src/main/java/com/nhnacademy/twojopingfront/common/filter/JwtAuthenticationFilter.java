@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nhnacademy.twojopingfront.common.client.JwtDecodeClient;
 import com.nhnacademy.twojopingfront.common.dto.JwtUserInfoResponseDto;
 import com.nhnacademy.twojopingfront.common.error.dto.ErrorResponseDto;
+import com.nhnacademy.twojopingfront.common.error.exception.backServer.CustomFeignException;
 import com.nhnacademy.twojopingfront.common.error.exception.jwt.InvalidTokenException;
 import com.nhnacademy.twojopingfront.common.security.MemberUserDetails;
 import feign.FeignException;
