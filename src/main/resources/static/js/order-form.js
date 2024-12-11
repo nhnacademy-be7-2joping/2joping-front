@@ -248,6 +248,33 @@ requirementTextArea.addEventListener('input', (e) => {
     charCount.textContent = e.target.value.length;
 });
 
+// 전화번호 넣을 때 자동으로 - 추가
+const phoneInput = document.getElementById('phone');
+phoneInput?.addEventListener('input', (e) => {
+    const SEOUL_PHONE_REGEX = /(\d{2})(\d{1,3})/;
+    const DEFAULT_PHONE_PARTIAL_REGEX = /(\d{3})(\d{1,4})/
+    const DEFAULT_PHONE_REGEX = /(\d{2})(\d{3,4})(\d{1,4})/
+    let value = e.target.value.replace(/[^0-9]/g, '');
+
+    if (value.startsWith('02')) {
+        // 서울 지역번호 (02) 형식
+        if (value.length > 2 && value.length <= 5) {
+            value = value.replace(SEOUL_PHONE_REGEX, '$1-$2');
+        } else if (value.length > 5) {
+            value = value.replace(DEFAULT_PHONE_REGEX, '$1-$2-$3');
+        }
+    } else {
+        // 일반 휴대전화/지역번호 형식
+        if (value.length > 3 && value.length <= 7) {
+            value = value.replace(DEFAULT_PHONE_PARTIAL_REGEX, '$1-$2');
+        } else if (value.length > 7) {
+            value = value.replace(DEFAULT_PHONE_REGEX, '$1-$2-$3');
+        }
+    }
+
+    e.target.value = value;
+});
+
 /* 함수 */
 function validateForm() {
     if (
